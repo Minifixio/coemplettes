@@ -16,7 +16,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 === Membres du groupe
 
-* Nom1
+* Le Gallic Emile
 * Nom2
 * Nom3
 * Nom4
