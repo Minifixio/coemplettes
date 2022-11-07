@@ -18,7 +18,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 * Emile Le Gallic
 * Lancelot Portal
-* Nom3
+* Mody Ba
 * Théo MONNET
 * Nom5
 ##
