@@ -37,6 +37,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 *_Note: 15 lignes max_*
 
+Co-Emplettes est une application pour les courses entre les étudiants du plateau.
+
 Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport.
 
 Il peut s’agir de personnes en voiture ou bien de cyclistes. Les étudiants paieraient alors un petit surplus pour la livraison qui servira à la rémunération du livreur. Cette rémunération pourrait également être complétée à l’aide de publicités sur l’application, idéalement pour des évènements étudiants ou certaines enseignes de distribution, voire pourquoi pas des entreprises ou producteurs locaux.
