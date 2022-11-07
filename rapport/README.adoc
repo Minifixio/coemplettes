@@ -1,5 +1,7 @@
 = Rapport d’avancement: groupe “7.4”
 PACT groupe 7.4
+
+
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :doctype: book
 :stem: latexmath
@@ -11,6 +13,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 
 // Partie non numérotée
+
 
 :sectnums!:
 == « Co-Emplettes »

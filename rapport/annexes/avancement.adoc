@@ -1,23 +1,3 @@
-== Modules et répartitions au sein du groupe
-
-* React Native/App : Emile et Lancelot
-* BDD, API, Serveur, Produit : Théo, Emile et Mody
-* Analyse de graphes : Mody et Emma
-* Système embarqué : Théo
-* SES : Emma et Lancelot
-* Tests & Intégrations : Emma et Théo
-
-[cols=",,",options="header",]
-|====
-| Module | Elèves | Validé par
-| React Native/App | Lancelot et Emile | J.C. Dufourd
-| BBD, API, Serveur, Produit | Emile, Théo et Mody | A. Amarilli
-| Analyse de Graphes | Mody et Emma | Tiphaine Viard
-| Systèmes embarqués | Théo | T. Graba
-| SES| Emma et Lancelot | A. Ouahab
-| Tests et Intégrations| Emma et Théo | Elise Bonnail
-|====
-
 === Suivis des modules (Après PAN1)
 
 Insérez ici votre biblio et vos avancées techniques par module (réunions

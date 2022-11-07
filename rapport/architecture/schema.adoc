@@ -5,6 +5,17 @@ cours d’introduction au Génie Logiciel. N’hésitez pas à faire des
 schémas hiérarchiques, c'est-à-dire avec un bloc d’un schéma général
 raffiné dans un second schéma ; ou des schémas en plusieurs parties.
 
+[cols=",,",options="header",]
+|====
+| Module | Elèves | Validé par
+| React Native/App | Lancelot et Emile | J.C. Dufourd
+| BBD, API, Serveur, Produit | Emile, Théo et Mody | A. Amarilli
+| Analyse de Graphes | Mody et Emma | Tiphaine Viard
+| Systèmes embarqués | Théo | T. Graba
+| SES| Emma et Lancelot | A. Ouahab
+| Tests et Intégrations| Emma et Théo | Elise Bonnail
+|====
+
 *Exemple utilisant http://www.graphviz.org/Documentation.php[graphviz]*
 Voir la liste des outils supportés par http://asciidoctor.org/docs/asciidoctor-diagram/[asciidoctor-diagram].
 **(Vous pouvez, bien sûr, utiliser votre outil de dessin préféré).**
