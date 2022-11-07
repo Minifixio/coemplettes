@@ -16,7 +16,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 === Membres du groupe
 
-* Le Gallic Emile
+* Emile Le Gallic
 * Lancelot Portal
 * Nom3
 * Théo MONNET
