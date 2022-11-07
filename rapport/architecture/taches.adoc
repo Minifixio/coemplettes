@@ -31,14 +31,3 @@ experts.
 | T2.2  | Détection du tempo                                    | …
 | T2.3  | Changement de tempo                                   | …
 |====
-
-[cols=",,",options="header",]
-|====
-| Module | Elèves | Validé par
-| React Native/App | Lancelot et Emile | J.C. Dufourd
-| BBD, API, Serveur, Produit | Emile, Théo et Mody | A. Amarilli
-| Analyse de Graphes | Mody et Emma | Tiphaine Viard
-| Systèmes embarqués | Théo | T. Graba
-| SES| Emma et Lancelot | A. Ouahab
-| Tests et Intégrations| Emma et Théo | Elise Bonnail
-|====
