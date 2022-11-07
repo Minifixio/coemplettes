@@ -12,8 +12,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 // Partie non numérotée
 :sectnums!:
-== « Nom du groupe »
-Co-Emplettes
+== « Co-Emplettes »
 
 === Membres du groupe
 
@@ -22,7 +21,7 @@ Co-Emplettes
 * Nom3
 * Théo MONNET
 * Nom5
-* Nom6
+##
 
 === Tuteur
 
@@ -38,9 +37,12 @@ Co-Emplettes
 
 *_Note: 15 lignes max_*
 
-Décrire votre projet sans le scénariser : De quoi s’agit-il ? En quoi
-cette idée est compatible avec le thème de PACT ? Qu’est-ce qu’il
-permettrait de faire de façon générale.
+Co-Emplettes est une application pour les courses entre les étudiants du plateau.
+Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport. Il peut s’agir de personnes en voiture ou bien de cyclistes. Les étudiants paieraient alors un petit surplus pour la livraison qui servira à la rémunération du livreur. Cette rémunération pourrait également être complétée à l’aide de publicités sur l’application, idéalement pour des évènements étudiants ou certaines enseignes de distribution, voire pourquoi pas des entreprises ou producteurs locaux.
+L’application rassemble tous les drives dans un certain rayon autour du plateau et s’occupe de calculer quel commerce est à privilégier selon plusieurs critères (temps de trajet pour le conducteur, prix, disponibilités…).
+Un système de Locker, dans lequel les courses seront disposées par le livreur, sera mis en place afin que chaque personne puisse venir récupérer ses courses dans un endroit froid selon son emploi du temps.
+L’application pourrait aussi intégrer la livraison pour les groupes en résidence universitaire, dans le cas où aucun étudiant livreur ne soit disponible. L’application privilégiera toujours la livraison par un étudiant.
+Bien que le drive soit l’option par défaut, on pourrait imaginer une option spéciale pour les produits frais pour que le livreur aille chercher les produits dans le magasin. Cela permettrait de choisir des produits plus ou moins mûrs. Pour faire gagner du temps, on peut envisager de cartographier les commerces dans ces zones spécifiques. La vérification se fera via une photo du ticket de caisse.
 
 == English Summary (PAN1)
 
