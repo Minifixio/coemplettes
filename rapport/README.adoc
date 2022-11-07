@@ -1,4 +1,4 @@
-= Rapport d’avancement: groupe “x.y”
+= Rapport d’avancement: groupe 7.4
 PACT groupe xy (Les plus beaux)
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :doctype: book
@@ -21,7 +21,6 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 * Mody Ba
 * Théo MONNET
 * Nom5
-##
 
 === Tuteur
 
@@ -38,6 +37,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 *_Note: 15 lignes max_*
 
 Co-Emplettes est une application pour les courses entre les étudiants du plateau.
+
+L'objectif est de proposer une alternative aux applications comme Uber Eats, mais plus respectueuse de l'environnement et des données personnelles des utilisateurs.
 
 Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport.
 
