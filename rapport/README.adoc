@@ -24,7 +24,6 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 * Lancelot Portal
 * Mody Ba
 * Théo MONNET
-* Nom5
 ##
 
 === Tuteur
