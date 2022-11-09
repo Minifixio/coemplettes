@@ -11,7 +11,7 @@ dessins au crayon, photographiés ou scannés, car ce sont les meilleurs
 supports de discussion : on appelle souvent ces dessins un « storyboard ». Une description textuelle fait le lien entre tous les
 éléments de l’IHM (ou des IHMs).
 
-== Compte: connexion et enregistrement 
+==== Compte: connexion et enregistrement 
 [cols="1,1"]
 |===
 |image:../images/mockup/landing_page.png[] 
@@ -29,7 +29,7 @@ Page "mon compte"
 <<< 
 <<< 
 
-== Création d'une liste de course : choix des produits
+==== Création d'une liste de course : choix des produits
 [cols="1,1"]
 |===
 |image:../images/mockup/menu.png[]
@@ -52,7 +52,7 @@ Page favorits pour faciliter la conception d'une liste de course
 <<< 
 <<< 
 
-== Suivi de la commande passée pour une liste de course
+==== Suivi de la commande passée pour une liste de course
 [cols="1,1"]
 |===
 |image:../images/mockup/ldc_etape1.png[]
@@ -71,7 +71,7 @@ Suivi de la commande côté utilisateur
 <<< 
 
 
-== Interface livreur : gestion des commandes proposées et en cours
+==== Interface livreur : gestion des commandes proposées et en cours
 [cols="1,1"]
 |===
 |image:../images/mockup/commande_proposee_1.png[]
