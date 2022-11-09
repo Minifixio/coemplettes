@@ -51,17 +51,18 @@ Page favorits pour faciliter la conception d'une liste de course
 <<< 
 
 ==== Suivi de la commande passée pour une liste de course
-[cols="1,1,1"]
+[cols="1,1"]
 |===
 |image:../images/mockup/ldc_etape1.png[]
 Liste de course déposée par un utilisateur : en attente d'une assignation à un livreur 
 |image:../images/mockup/ldc_etape2.png[]
 Liste de course acceptée et prise en charge par un livreur
-
 |image:../images/mockup/mes_commandes_1.png[]
 Suivi de la commande côté utilisateur
+
 |image:../images/mockup/mes_commandes_2.png[]
 Suivi de la commande côté utilisateur
+
 |===
 
 
@@ -69,7 +70,7 @@ Suivi de la commande côté utilisateur
 
 
 ==== Interface livreur : gestion des commandes proposées et en cours
-[cols="1,1,1"]
+[cols="1,1,1,1"]
 |===
 |image:../images/mockup/commande_proposee_1.png[]
 Proposition de commande côté livreur : consultation des détails de la commande avant de l'accepter
