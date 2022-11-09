@@ -12,7 +12,7 @@ supports de discussion : on appelle souvent ces dessins un « storyboard ». 
 éléments de l’IHM (ou des IHMs).
 
 ==== Compte: connexion et enregistrement 
-[cols="1,1"]
+[cols="1,1,1"]
 |===
 |image:../images/mockup/landing_page.png[] 
 Landing Page de l'application
@@ -25,12 +25,11 @@ Page de connexion
 Page "mon compte"
 |===
 
-<<< 
-<<< 
+
 <<< 
 
 ==== Création d'une liste de course : choix des produits
-[cols="1,1"]
+[cols="1,1,1"]
 |===
 |image:../images/mockup/menu.png[]
 Menu choix des produits disponibles
@@ -48,12 +47,11 @@ Récapitulatif de la création d'une liste de course
 Page favorits pour faciliter la conception d'une liste de course
 |===
 
-<<< 
-<<< 
+ 
 <<< 
 
 ==== Suivi de la commande passée pour une liste de course
-[cols="1,1"]
+[cols="1,1,1"]
 |===
 |image:../images/mockup/ldc_etape1.png[]
 Liste de course déposée par un utilisateur : en attente d'une assignation à un livreur 
@@ -66,13 +64,12 @@ Suivi de la commande côté utilisateur
 Suivi de la commande côté utilisateur
 |===
 
-<<< 
-<<< 
+
 <<< 
 
 
 ==== Interface livreur : gestion des commandes proposées et en cours
-[cols="1,1"]
+[cols="1,1,1"]
 |===
 |image:../images/mockup/commande_proposee_1.png[]
 Proposition de commande côté livreur : consultation des détails de la commande avant de l'accepter
