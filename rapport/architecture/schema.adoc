@@ -3,7 +3,7 @@
 Insérer ici un ou plusieurs schémas d’architecture du projet. Voir le
 cours d’introduction au Génie Logiciel. N’hésitez pas à faire des
 schémas hiérarchiques, c'est-à-dire avec un bloc d’un schéma général
-raffiné dans un second schéma ; ou des schémas en plusieurs parties.
+raffiné dans un second schéma ; ou des schémas en plusieurs parties.
 
 [cols=",,",options="header",]
 |====
@@ -19,32 +19,6 @@ raffiné dans un second schéma ; ou des schémas en plusieurs parties.
 *Exemple utilisant http://www.graphviz.org/Documentation.php[graphviz]*
 Voir la liste des outils supportés par http://asciidoctor.org/docs/asciidoctor-diagram/[asciidoctor-diagram].
 **(Vous pouvez, bien sûr, utiliser votre outil de dessin préféré).**
-
-[graphviz, arch-diag, svg]
-....
-digraph MonGraph {
-    graph [rankdir = LR, splines=ortho];
-
-    node[shape=record];
-    BlocIn[label="La source", height=2];
-    Hub[label="Le «dispatcheur»", height=4];
-
-    BlocOut1[label="Première sortie", height=2];
-    BlocOut2[label="Seconde  Sortie", height=2];
-
-    BlocIn -> Hub [label="Image"];
-    BlocIn -> Hub [label="Son"];
-    BlocIn -> Hub [label="Émotion"];
-
-    Hub -> BlocOut1 [label="Musique"];
-    Hub -> BlocOut1 [label="Chant"];
-    BlocOut1 -> Hub [label="commande"];
-
-
-    Hub -> BlocOut2 [label="Image"];
-    Hub -> BlocOut2 [label="commande"];
-}
-....
 
 
 ==== Description des blocs
@@ -68,22 +42,5 @@ Description textuelle du bloc 1.
 
 *Exemple utilisant http://blockdiag.com/en/actdiag/index.html[actdiag]*
 **(Vous pouvez, bien sûr, utiliser votre outil de dessin préféré).**
-
-[actdiag, diag_activite, svg]
-....
-actdiag {
-  ecrire -> convertir -> afficher
-
-  lane user {
-     label = "User"
-     ecrire [label = "Décire les matrices"];
-     afficher  [label = "Afficher la courbe"];
-  }
-  lane converter {
-     label = "Convertisseur"
-     convertir [label = "Convertir\n en utilisant\n@@"];
-  }
-}
-....
 
 Voir la liste des outils supportés par http://asciidoctor.org/docs/asciidoctor-diagram/[asciidoctor-diagram].
