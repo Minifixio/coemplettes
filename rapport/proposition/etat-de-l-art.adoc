@@ -10,7 +10,7 @@ bibliographie : « comme démontré dans [2], … »
 
 Notre projet s'ancre dans un cadre d'applications 
 en forte augmentation ces derniers temps : la livraison de courses/repas.
-Dès lors, il es possible de distinguer différents produits
+Dès lors, il est possible de distinguer différents produits
 existants qui se rapproche de notre projet.
 
 ==== Application de livraison de nourriture : Uber Eat, Deliveroo, Just Eat...
@@ -23,10 +23,10 @@ rémunérés pour la course en question.
 Ce modèle s'est récemment développé et popularisé auprès des
 chaines de grande distribution et commerces de proximités 
 qui proposent désormais également leurs services de livraison 
-sur ces mêmes platformes.
+sur ces mêmes plateformes.
 
 C'est sur le principe de livraison que notre application 
-se rapproche des exemples cités précedemment.
+se rapproche des exemples cités précédemment.
 
 Cependant, notre application se démarque par plusieurs aspects :
 * le statut des livreurs : il s'agit d'étudiants qui ne sont pas
@@ -41,8 +41,14 @@ les plus avantageux en proposant au livreur un itinéraire d'achat
 visant à minimiser le cout total des courses pour permettre
 aux étudiants de payer leurs courses au prix des grandes surfaces
 soit inférieur au prix des commerces de proximité du plateau
-et des applcations de livraison.
+et des applications de livraison.
 
-==== Les Drives des grandes surfaces
+==== Les Drives des grandes surfaces et la livraison à domicile
 
+Les courses au Drive sont une solution que nous exploitons dans le projet.
+Le principe du Drive est simple : le client passe sa commande en ligne et
+vient la récupérer en voiture à un créneau choisi dans le super/hypermarché de son choix (le service Drive est rarement proposé dans les petites surfaces). Cela permet un gain de temps et une meilleure gestion de l'emploi du temps pour le client.
 
+Avec la crise sanitaire, les grands distributeurs se sont mis aussi à proposer une livraison des courses à domicile, qui est un service intéressant si la commande passée est conséquente, ce qui n'est pas forcément le cas pour un étudiant qui vit souvent seul.
+
+Le projet se sert des services Drive de plusieurs magasins pour simplifier la tâche de l'étudiant-livreur. Il s'inspire aussi de la livraison à domicile, en ajoutant le système de mise en commun de la commande.
