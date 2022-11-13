@@ -1,27 +1,12 @@
 === Scénarios d’usage
 
-Mettre ici le scénario d’usage que vous avez construit lors des séances
-encadrées par les experts SES. Vous pouvez mettre un scénario amélioré
-(et non celui noté) si vous jugez votre scénario insuffisant pour faire
-comprendre au jury PACT les différentes étapes d’utilisation de votre
-produit/service ou si vous avez changé d’idées entre-temps.
+Guillaume, élève de 2 année à Télécom Paris possède une voiture et va 2 à 3 fois par mois faire les courses au Leclerc de Massy. Le trajet ne lui prend que 15 minutes et le magasin est suffisamment grand pour qu’il ait accès à une plus grande gamme de produits que dans les supérettes à côté de Télécom. Il a entendu parler de Co-Emplettes sur les réseaux sociaux et a décidé de s’inscrire, car cela ne change pratiquement rien à ses habitudes, puisqu’il doit aller faire ses courses quoi qu’il arrive. Ainsi, l’argent gagné par Guillaume depuis son inscription en tant que livreur lui permet d’arrondir ses fins de mois et d’amortir certaines dépenses. Il accepte de prendre les listes de courses des autres pour un maximum de 150€ : c’est un bon compromis entre la place qu’il a dans sa voiture, le temps qu’il met à récupérer ces courses, et la commission qu’il gagne, déterminée par plusieurs facteurs qui dépendent de la course effectuée.
 
-==== XX
+Anna, étudiante étrangère est peu familière avec le plateau de Saclay. Elle fait ses courses au Franprix devant l’école et paye très cher pour peu de produits disponibles, et commande même parfois sur des plateformes en ligne ce qui n’est pas disponible à ce magasin (fournitures scolaires, tissus, ...). Elle se demande donc comment faire pour payer ses courses moins cher, tout en disposant d’une plus grande variété de produits. Elle aimerait beaucoup aller à l’un des supermarchés des alentours, à Palaiseau ou Massy par exemple, mais elle ne possède pas de voiture, et transporter ses courses en bus est long et compliqué.
+Un jour, Anna discute avec l’un de ses amis qui utilise une application de covoiturage pour faire ses courses entre étudiants. Cette application, développée par des Télécommiens il y a quelques années, a beaucoup de succès au sein de l’école. Cela l’intrigue, elle demande plus d’informations. Son ami lui explique qu’il suffit de rentrer sa liste de courses sur l’application et de trouver un conducteur. Plusieurs options sont alors proposées par l’application : le chauffeur peut récupérer les courses en drive ou bien les faire directement en supermarché. Il renseigne ses disponibilités, le tarif minimum/maximum pour lequel il est prêt à se déplacer, sa mobilité (s’il dispose d’une voiture ou non) et donc la distance maximale qu’il peut faire pour aller chercher des courses. Par exemple, le Drive prend moins de temps, mais les horaires disponibles pour récupérer une livraison sont parfois assez limités.
+Pour le conducteur, c’est facile : le trajet optimal pour aller au supermarché lui est donné, et une fois rendu à celui-ci, s’il choisit de faire les courses par lui-même, la carte du magasin cartographié par l’application lui permet d’être le plus efficace possible. En fonction de ce que le conducteur doit acheter une fois en magasin, Co-Emplettes lui propose le trajet qui lui évite de faire des aller-retours dans les rayons.
+Anna crée donc son compte sur l’application, entre sa liste de course, et choisit Guillaume comme conducteur. Une fois que d’autres étudiants ont passé commande auprès de Guillaume, l’application propose lui un trajet vers le supermarché optimal : la distance, mais aussi le nombre de produits disponibles sont pris en compte. Arrivé au supermarché choisi, Guillaume va faire les courses par lui-même car on lui demande des produits frais qu’il préfère choisir plutôt que de récupérer en drive. Il connait bien certains des élèves qui lui demandent de faire leurs courses, et l’un de ceux qui a passé commande ce jour-là préfère que Guillaume lui prenne des fruits pas trop mûrs, afin de pouvoir en profiter toute la semaine. Cette proximité
+ 
+et cette confiance entre élèves n’est pas quelque chose qui se trouve sur les applications de commande en ligne des grands distributeurs. Par ailleurs, une fois en magasin, Guillaume découvre une promotion avantageuse : pour deux paquets de pâtes de la marques X achetés, le troisième est offert. Cela tombe bien, Guillaume a reçu deux commandes pour des pâtes de cette marque, et une commande pour un paquet de pâtes de la marque Y. Heureusement, l’élève ayant passé commande a coché la case “accepter de prendre un produit similaire d’une autre marque si c’est plus avantageux” sur l’application, ce qui permet à Guillaume de profiter de la promotion.
 
-Nulla. Curabitur aliquet leo ac massa. Praesent posuere lectus vitae
-odio. Donec imperdiet urna vel ante. In semper accumsan diam. Vestibulum
-porta justo. Suspendisse egestas commodo eros.
-
-Suspendisse tincidunt mi vel metus. Vivamus non urna in nisi gravida
-congue. Aenean semper orci a eros. Praesent dictum. Maecenas pharetra
-odio ut dui. Pellentesque.
-
-==== YY
-
-Ac mauris.
-
-Duis velit magna, scelerisque vitae, varius ut, aliquam vel, justo.
-Proin ac augue. Nullam auctor lectus vitae arcu. Vestibulum porta justo
-placerat purus. Ut sem nunc, vestibulum nec, sodales vitae, vehicula
-eget, ipsum. Sed nec tortor. Aenean malesuada. Nunc convallis, massa eu
-vestibulum commodo, quam mauris interdum arcu, at pellentesque.
+Une fois rentré à Télécom, Guillaume dépose les paniers de courses qu’il a réalisés dans le frigo partagé spécialement mis en place par les créateurs de l’application de Télécom Paris. Ce locker n’est pas dans un lieu public, mais dans l’enceinte de l’école, ce qui le rend plus sécurisé. Et il permet de conserver les denrées périssables bien au frais, plutôt que dans une conciergerie. Une notification est ensuite envoyée à Anna, qui peut donc venir chercher ses courses. Pour cela, elle doit utiliser le code généré par l’application afin de pouvoir accéder au compartiment dans lequel ses courses ont été déposées. Ainsi, pas de risque de tromper avec un autre sac de courses. Elle a pu acheter tout ce dont elle avait besoin à un prix correct et même des fruits et des légumes frais qui ne sont habituellement pas disponibles au petit Franprix devant l’école. De plus, ce trajet aurait été beaucoup plus long si elle avait dû attendre le bus, et marcher jusqu’au supermarché ensuite, puis faire le retour chargée de ses sacs de courses. Anna est convaincue par Co-Emplettes et sait qu’elle la réutilisera pour ses prochaines courses.
