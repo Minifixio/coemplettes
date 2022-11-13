@@ -1,6 +1,7 @@
-Ceci est votre dépôt pour le projet PACT.
+Dépôt du rapport du projet PACT du groupe 7.4 "Co-Emplettes"
 
-Vous **DEVEZ** modifier ce fichier (`README.md`) et créer tous les
+
+<!-- Vous **DEVEZ** modifier ce fichier (`README.md`) et créer tous les
 répertoires et fichiers dont vous aurez besoin pour votre projet.
 
 # Important, le rapport d'avancement
@@ -20,4 +21,4 @@ Si vous n'en avez pas, vous pouvez, par exemple utiliser:
 
 - [**Visual Studio Code**](https://code.visualstudio.com/) avec l'extension [AsciiDoc](https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode) qui ajoute coloration syntaxique et rendu en temps réel.
 - Ou bien sûr votre éditeur de text préféré **Sublim Text**, **Vim**, **Emacs**,…
-- Une extension pour navigateur Web est aussi disponible pour visualiser le résultat ([**ici**](https://github.com/asciidoctor/asciidoctor-browser-extension)).
+- Une extension pour navigateur Web est aussi disponible pour visualiser le résultat ([**ici**](https://github.com/asciidoctor/asciidoctor-browser-extension)). -->

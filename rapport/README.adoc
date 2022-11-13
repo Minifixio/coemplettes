@@ -25,7 +25,6 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 * Mody Ba
 * Théo MONNET
 * Emma Vasiliu
-##
 
 === Tuteur
 
@@ -76,77 +75,77 @@ While drive-through is the default option, one could imagine a special option fo
 
 image:../images/infographie-1.jpeg[] 
 
-*Notes concenant le rapport*
+// *Notes concenant le rapport*
 
-Les différentes pages du document sont rédigées en utilisant le langage
-AsciiDoc. Le squelette de rapport contient des exemples avec entre autres:
+// Les différentes pages du document sont rédigées en utilisant le langage
+// AsciiDoc. Le squelette de rapport contient des exemples avec entre autres:
 
-* des images,
-* des liens,
-* des équations.
+// * des images,
+// * des liens,
+// * des équations.
 
-La structure du rapport (parties, sections et la relation avec les
-différents fichiers) se trouve dans le fichier courant.
+// La structure du rapport (parties, sections et la relation avec les
+// différents fichiers) se trouve dans le fichier courant.
 
-**Prenez le temps** de supprimer le texte de remplissage et les sections non
-utilisées pour l'instant. Vous pouvez par exemple commenter ces parties non
-utilisées pour qu'elles n'apparaissent pas dans le document final. En Asciidoc,
-il suffit de les précéder de deux slashs (`//`).
+// **Prenez le temps** de supprimer le texte de remplissage et les sections non
+// utilisées pour l'instant. Vous pouvez par exemple commenter ces parties non
+// utilisées pour qu'elles n'apparaissent pas dans le document final. En Asciidoc,
+// il suffit de les précéder de deux slashs (`//`).
 
-<<<
-toc::[]
-<<<
+// <<<
+// toc::[]
+// <<<
 
-// On numérote le reste des sections
-:sectnums:
+// // On numérote le reste des sections
+// :sectnums:
 
-== Étude d’antériorité et justification de la proposition (PAN1)
+// == Étude d’antériorité et justification de la proposition (PAN1)
 
-include::proposition/proposition.adoc[Description de la proposition]
+// include::proposition/proposition.adoc[Description de la proposition]
 
-include::proposition/etat-de-l-art.adoc[Description de l’état de l’art]
+// include::proposition/etat-de-l-art.adoc[Description de l’état de l’art]
 
-<<<
+// <<<
 
-== Scénarios d’usage (PAN1)
+// == Scénarios d’usage (PAN1)
 
-include::scenario/scenario.adoc[Scénarios d’usage]
+// include::scenario/scenario.adoc[Scénarios d’usage]
 
-<<<
+// <<<
 
-== Architecture du projet (PAN1)
+// == Architecture du projet (PAN1)
 
-include::architecture/schema.adoc[Schéma d’architecture]
+// include::architecture/schema.adoc[Schéma d’architecture]
 
-include::architecture/interfaces.adoc[Description des interfaces]
+// include::architecture/interfaces.adoc[Description des interfaces]
 
-include::architecture/sequence.adoc[Diagramme de séquence]
+// include::architecture/sequence.adoc[Diagramme de séquence]
 
-include::architecture/ihm.adoc[Interface utilisateur graphique]
+// include::architecture/ihm.adoc[Interface utilisateur graphique]
 
-<<<
+// <<<
 
-== Organisation du projet (PAN1)
+// == Organisation du projet (PAN1)
 
-include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
+// include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
-include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
+// include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
 
-<<<
+// <<<
 
-[bibliography]
-== Bibliographie (PAN1+)
+// [bibliography]
+// == Bibliographie (PAN1+)
 
-include::References.adoc[Bibliographie]
+// include::References.adoc[Bibliographie]
 
-<<<
+// <<<
 
-== Annexes
+// == Annexes
 
-include::annexes/modifications.adoc[Modifications (PAN2+)]
+// include::annexes/modifications.adoc[Modifications (PAN2+)]
 
-include::annexes/avancement.adoc[Avancement des modules]
+// include::annexes/avancement.adoc[Avancement des modules]
 
-include::annexes/moduleX.adoc[Avancement module X]
+// include::annexes/moduleX.adoc[Avancement module X]
 
-include::annexes/moduleY.adoc[Avancement module Y]
+// include::annexes/moduleY.adoc[Avancement module Y]

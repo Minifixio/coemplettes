@@ -1,8 +1,10 @@
 
-*_Note : Liste des références exploitées. Une référence complète
-donne titre, auteur(s), date, journal, revue, source de publication,
-titre de conférence, numéro, pages. Une webographie est aussi
-envisageable : titre, auteur, date, page web_*
+*_Note : Liste des références exploitées. 
+
+// Une référence complète
+// donne titre, auteur(s), date, journal, revue, source de publication,
+// titre de conférence, numéro, pages. Une webographie est aussi
+// envisageable : titre, auteur, date, page web_*
 
 
 * [[UberEat]]UberEat : _Présentation de l'application_,
