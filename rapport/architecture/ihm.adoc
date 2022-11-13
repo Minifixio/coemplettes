@@ -1,13 +1,87 @@
 === Interface utilisateur graphique
 
-Il peut y avoir une ou plusieurs interfaces utilisateur (UI en anglais),
-ou interface graphique, ou interface homme machine (IHM) : une interface
-sur ordinateur et/ou une interface sur mobile ou tablette (Android),
-selon le nombre d’appareils en jeu.
+Voici une suggestion de présentaiton de
+l'application Android avec les différentes
+sections de l'application du côté utilisateur 
+et du côté livreur
 
-En lien avec un diagramme de séquence, une description simple de chaque
-écran/page est nécessaire. Il est recommandé de faire des dessins, même
-dessins au crayon, photographiés ou scannés, car ce sont les meilleurs
-supports de discussion : on appelle souvent ces dessins un
-« storyboard ». Une description textuelle fait le lien entre tous les
-éléments de l’IHM (ou des IHMs).
+==== Compte: connexion et enregistrement 
+[cols="1,1,1"]
+|===
+|image:../images/mockup/landing_page.png[] 
+Landing Page de l'application
+|image:../images/mockup/s_enregistrer.png[]
+Page d'enregistrement
+
+|image:../images/mockup/se_connecter.png[]
+Page de connexion
+|image:../images/mockup/compte.png[]
+Page "mon compte"
+|===
+
+
+<<< 
+
+==== Création d'une liste de course : choix des produits
+[cols="1,1,1"]
+|===
+|image:../images/mockup/menu.png[]
+Menu choix des produits disponibles
+|image:../images/mockup/produits.png[]
+Liste des produits dans une catégorie
+
+|image:../images/mockup/categories.png[]
+Catégories de produits
+|image:../images/mockup/detail_produit.png[]
+Détail d'un produit
+
+|image:../images/mockup/recapitulatif.png[]
+Récapitulatif de la création d'une liste de course
+|image:../images/mockup/favorits.png[]
+Page favorits pour faciliter la conception d'une liste de course
+|===
+
+ 
+<<< 
+
+==== Suivi de la commande passée pour une liste de course
+[cols="1,1"]
+|===
+|image:../images/mockup/ldc_etape1.png[]
+Liste de course déposée par un utilisateur : en attente d'une assignation à un livreur 
+|image:../images/mockup/ldc_etape2.png[]
+Liste de course acceptée et prise en charge par un livreur
+|image:../images/mockup/mes_commandes_1.png[]
+Suivi de la commande côté utilisateur
+
+|image:../images/mockup/mes_commandes_2.png[]
+Suivi de la commande côté utilisateur
+
+|===
+
+
+<<< 
+
+
+==== Interface livreur : gestion des commandes proposées et en cours
+[cols="1,1,1,1"]
+|===
+|image:../images/mockup/commande_proposee_1.png[]
+Proposition de commande côté livreur : consultation des détails de la commande avant de l'accepter
+|image:../images/mockup/commande_proposee_2.png[]
+Proposition de commande côté livreur : commande acceptée, passage à l'achat
+
+|image:../images/mockup/commande_detail_1.png[]
+Détail de la commande pour faciliter la création des différents paniers lors de l'achat de la commande pour le livreur
+|image:../images/mockup/commande_detail_2.png[]
+Détail de la commande pour faciliter la création des différents paniers lors de l'achat de la commande pour le livreur
+
+|image:../images/mockup/scan_2.png[]
+Scan des tickets de caisses en fin de commande pour calculer le montant total de l'achat
+|image:../images/mockup/scan_1.png[]
+Scan des tickets de caisses en fin de commande pour calculer le montant total de l'achat
+
+|image:../images/mockup/depot_commande.png[]
+Dépôt de la commande au locker par le livreur
+| 
+|===

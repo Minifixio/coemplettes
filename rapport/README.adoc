@@ -1,5 +1,7 @@
-= Rapport d’avancement: groupe 7.4
-PACT groupe xy (Les plus beaux)
+= Rapport d’avancement: groupe “7.4”
+PACT groupe 7.4
+
+
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :doctype: book
 :stem: latexmath
@@ -11,6 +13,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 
 // Partie non numérotée
+
+
 :sectnums!:
 == « Co-Emplettes »
 
@@ -20,7 +24,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 * Lancelot Portal
 * Mody Ba
 * Théo MONNET
-* Nom5
+* Emma Vasiliu
+##
 
 === Tuteur
 
@@ -38,8 +43,6 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 Co-Emplettes est une application pour les courses entre les étudiants du plateau.
 
-L'objectif est de proposer une alternative aux applications comme Uber Eats, mais plus respectueuse de l'environnement et des données personnelles des utilisateurs.
-
 Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport.
 
 Il peut s’agir de personnes en voiture ou bien de cyclistes. Les étudiants paieraient alors un petit surplus pour la livraison qui servira à la rémunération du livreur. Cette rémunération pourrait également être complétée à l’aide de publicités sur l’application, idéalement pour des évènements étudiants ou certaines enseignes de distribution, voire pourquoi pas des entreprises ou producteurs locaux.
@@ -54,14 +57,18 @@ Bien que le drive soit l’option par défaut, on pourrait imaginer une option s
 
 == English Summary (PAN1)
 
-*_Note : 15 lignes max, version anglaise du texte précédent_*
+Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
 
-Ligula dapibus egestas. Donec sed velit ac lectus mattis sagittis.
+The student who delivers the groceries to the others is paid. They can go to the supermarket by car or by bike. The other students would then pay a small fee for the delivery which would be used to pay the student buying the groceries. This remuneration could also be supplemented by advertisements on the application, ideally for student events or certain retailers, or even local businesses or producers.
 
-In hac habitasse platea dictumst. Maecenas in ligula. Duis tincidunt
-odio sollicitudin quam. Nullam non mauris. Phasellus lacinia, velit sit
-amet bibendum euismod, leo diam interdum ligula, eu scelerisque sem
-purus in tellus.
+The application gathers all the Drives in a certain radius around the plateau and calculates which business is to be preferred according to several criteria (travel time for the driver, price, availability...). 
+
+A Locker system, in which the groceries will be arranged by the driver, will be set up so that each person can come and pick up his groceries in a cold place according to his schedule. 
+
+The application could also integrate delivery for groups in university residences, in case no student delivery person is available. The app will always favor delivery by a student. 
+
+While drive-through is the default option, one could imagine a special option for fresh produce to have the delivery person pick up the produce in the store. This would allow for a choice of more or less ripe products. To save time, we could consider mapping the shops in these specific areas. Verification would be done via a photo of the receipt. 
+
 
 <<<
 

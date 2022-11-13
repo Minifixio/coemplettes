@@ -8,7 +8,7 @@ ressemblant à votre projet et les différences éventuelles. Illustrez
 avec des images si besoin. Utilisez des renvois vers votre
 bibliographie : « comme démontré dans [2], … »
 
-==== XXX
+==== Partie 1
 
 Et magnis dis parturient montes, nascetur ridiculus mus.
 
@@ -18,7 +18,7 @@ magnis dis parturient montes, nascetur ridiculus mus. Nulla facilisis
 massa ut massa. Sed nisi purus, malesuada eu, porta vulputate, suscipit
 auctor, nunc.
 
-==== ZZZ
+==== Partie 2
 
 Et magnis dis parturient montes, nascetur ridiculus mus.
 
