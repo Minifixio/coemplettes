@@ -33,7 +33,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 === Encadrant génie logiciel
 
-* xx yy
+* Jean-Claude Dufourd
 
 <<<
 
@@ -71,6 +71,10 @@ While drive-through is the default option, one could imagine a special option fo
 
 
 <<<
+
+== Fonctionnement de l'application (visuel)
+
+image:../images/infographie-1.jpeg[] 
 
 *Notes concenant le rapport*
 
