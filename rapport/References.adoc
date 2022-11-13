@@ -8,3 +8,5 @@ envisageable : titre, auteur, date, page web_*
 * [[UberEat]]UberEat : _Présentation de l'application_,
 https://fr.wikipedia.org/wiki/Uber_Eats
 
+* Reportage TF1 : _https://web.archive.org/web/20220930123923/https://www.tf1.fr/tf1/jt-20h/videos/supermarche-les-courses-du-futur-49282044.html[Les courses du futur]_ (Archive, car non disponible)
+
