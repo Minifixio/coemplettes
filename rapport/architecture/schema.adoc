@@ -16,6 +16,10 @@ raffiné dans un second schéma ; ou des schémas en plusieurs parties.
 | Tests et Intégrations| Emma et Théo | Elise Bonnail
 |====
 
+== Schéma architectural en blocs
+
+image:../images/decoupage_architectural-PACT.png[] 
+
 *Exemple utilisant http://www.graphviz.org/Documentation.php[graphviz]*
 Voir la liste des outils supportés par http://asciidoctor.org/docs/asciidoctor-diagram/[asciidoctor-diagram].
 **(Vous pouvez, bien sûr, utiliser votre outil de dessin préféré).**
