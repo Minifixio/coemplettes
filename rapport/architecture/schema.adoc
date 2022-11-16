@@ -5,7 +5,7 @@
 // schémas hiérarchiques, c'est-à-dire avec un bloc d’un schéma général
 // raffiné dans un second schéma ; ou des schémas en plusieurs parties.
 
-== Répartition en modules
+==== Répartition en modules
 
 [cols=",,",options="header",]
 |====
@@ -18,7 +18,7 @@
 | Tests et Intégrations| Emma et Théo | Elise Bonnail
 |====
 
-== Schéma architectural en blocs
+==== Schéma architectural en blocs
 
 image:../images/decoupage_architectural-PACT.png[] 
 
