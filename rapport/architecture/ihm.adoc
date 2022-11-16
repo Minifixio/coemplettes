@@ -75,12 +75,14 @@ Proposition de commande côté livreur : commande acceptée, passage à l'achat
 Détail de la commande pour faciliter la création des différents paniers lors de l'achat de la commande pour le livreur
 |image:../images/mockup/commande_detail_2.png[]
 Détail de la commande pour faciliter la création des différents paniers lors de l'achat de la commande pour le livreur
+|===
 
+[cols="1,1,1"]
+|===
 |image:../images/mockup/scan_2.png[]
 Scan des tickets de caisses en fin de commande pour calculer le montant total de l'achat
 |image:../images/mockup/scan_1.png[]
 Scan des tickets de caisses en fin de commande pour calculer le montant total de l'achat
-
 |image:../images/mockup/depot_commande.png[]
 Dépôt de la commande au locker par le livreur
 | 

@@ -102,7 +102,7 @@ include::architecture/ihm.adoc[Interface utilisateur graphique]
 
 <<<
 
-== Organisation du projet (PAN2)
+== Organisation du projet (PAN1)
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
