@@ -70,7 +70,7 @@ As the grocery prices are very high on the plateau, the application allows stude
 // il suffit de les précéder de deux slashs (`//`).
 
 <<<
-toc::[]
+:toc:
 <<<
 
 // On numérote le reste des sections
