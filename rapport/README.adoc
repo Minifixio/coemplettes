@@ -1,7 +1,5 @@
-= Rapport d’avancement: groupe “7.4”
-PACT groupe 7.4
-
-
+= Rapport d’avancement: groupe “x.y”
+PACT groupe xy (Les plus beaux)
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :doctype: book
 :stem: latexmath
@@ -11,11 +9,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :sectnums:
 :imagesdir: images
 
-
-// Partie non numérotée
-
-
 :sectnums!:
+
 == « Co-Emplettes »
 
 === Membres du groupe
@@ -47,30 +42,8 @@ Co-Emplettes est une application pour les courses entre les étudiants du platea
 Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
 As the grocery prices are very high on the plateau, the application allows students going shopping in more affordable supermarkets to take other students shopping list and buy tehir groceries. 
 
-
 <<<
-
-
-
-// *Notes concenant le rapport*
-
-// Les différentes pages du document sont rédigées en utilisant le langage
-// AsciiDoc. Le squelette de rapport contient des exemples avec entre autres:
-
-// * des images,
-// * des liens,
-// * des équations.
-
-// La structure du rapport (parties, sections et la relation avec les
-// différents fichiers) se trouve dans le fichier courant.
-
-// **Prenez le temps** de supprimer le texte de remplissage et les sections non
-// utilisées pour l'instant. Vous pouvez par exemple commenter ces parties non
-// utilisées pour qu'elles n'apparaissent pas dans le document final. En Asciidoc,
-// il suffit de les précéder de deux slashs (`//`).
-
-<<<
-:toc:
+toc::[]
 <<<
 
 // On numérote le reste des sections
@@ -94,17 +67,15 @@ include::scenario/scenario.adoc[Scénarios d’usage]
 
 include::architecture/schema.adoc[Schéma d’architecture]
 
-include::architecture/interfaces.adoc[Description des interfaces]
+//include::architecture/interfaces.adoc[Description des interfaces]
 
-// include::architecture/sequence.adoc[Diagramme de séquence]
+include::architecture/sequence.adoc[Diagramme de séquence]
 
 include::architecture/ihm.adoc[Interface utilisateur graphique]
 
 <<<
 
 == Organisation du projet (PAN1)
-
-include::architecture/taches.adoc[Diagramme des tâches]
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 

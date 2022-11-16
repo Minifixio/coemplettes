@@ -47,6 +47,6 @@ Les courses au Drive sont une solution que nous exploitons dans le projet.
 Le principe du Drive est simple : le client passe sa commande en ligne et
 vient la récupérer en voiture à un créneau choisi dans le super/hypermarché de son choix (le service Drive est rarement proposé dans les petites surfaces). Cela permet un gain de temps et une meilleure gestion de l'emploi du temps pour le client.
 
-Avec la crise sanitaire, les grands distributeurs se sont mis aussi à proposer une livraison des courses à domicile (comme Leclerc <<Service livraison Leclerc>>), qui est un service intéressant si la commande passée est conséquente, ce qui n'est pas forcément le cas pour un étudiant qui vit souvent seul.
+Avec la crise sanitaire, les grands distributeurs se sont mis aussi à proposer une livraison des courses à domicile (comme Leclerc <<ServiceLivraisonLeclerc>>), qui est un service intéressant si la commande passée est conséquente, ce qui n'est pas forcément le cas pour un étudiant qui vit souvent seul.
 
 Le projet se sert des services Drive de plusieurs magasins pour simplifier la tâche de l'étudiant-livreur. Il s'inspire aussi de la livraison à domicile, en ajoutant le système de mise en commun de la commande.
