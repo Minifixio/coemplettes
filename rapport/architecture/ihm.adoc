@@ -19,28 +19,32 @@ Page de connexion
 Page "mon compte"
 |===
 
-
+<<<
 
 ==== Création d'une liste de course : choix des produits
-[cols="1,1,1"]
+[cols="1,1,1,1"]
 |===
-|image:../images/mockup/menu.png[]
+|image:../images/mockup/menu.png[scaledwidth=80%]
 Menu choix des produits disponibles
-|image:../images/mockup/produits.png[]
+|image:../images/mockup/produits.png[scaledwidth=80%]
 Liste des produits dans une catégorie
-
-|image:../images/mockup/categories.png[]
+|image:../images/mockup/categories.png[scaledwidth=80%]
 Catégories de produits
 |image:../images/mockup/detail_produit.png[]
 Détail d'un produit
+|===
 
+[cols="1,1,1,1"]
+|===
+|
 |image:../images/mockup/recapitulatif.png[]
 Récapitulatif de la création d'une liste de course
 |image:../images/mockup/favorits.png[]
 Page favorits pour faciliter la conception d'une liste de course
+|
 |===
 
- 
+<<<
 
 ==== Suivi de la commande passée pour une liste de course
 [cols="1,1"]
@@ -57,6 +61,7 @@ Suivi de la commande côté utilisateur
 
 |===
 
+<<<
 
 
 ==== Interface livreur : gestion des commandes proposées et en cours

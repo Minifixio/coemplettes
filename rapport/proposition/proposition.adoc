@@ -35,13 +35,14 @@ The application could also integrate delivery for groups in university residence
 
 While drive-through is the default option, one could imagine a special option for fresh produce to have the delivery person pick up the produce in the store. This would allow for a choice of more or less ripe products. To save time, we could consider mapping the shops in these specific areas. Verification would be done via a photo of the receipt.
 
+<<<
 
 ==== Fonctionnement de l'application (visuel)
 
 image:../images/infographie-1.jpeg[] 
 
 <<<
-   
+
 // *_Note: 2 page max._*
 
 // _Décrire de façon détaillée votre projet : motivations de base/problèmes
