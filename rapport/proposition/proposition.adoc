@@ -40,7 +40,8 @@ While drive-through is the default option, one could imagine a special option fo
 
 image:../images/infographie-1.jpeg[] 
 
-
+<<<
+   
 // *_Note: 2 page max._*
 
 // _Décrire de façon détaillée votre projet : motivations de base/problèmes

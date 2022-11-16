@@ -36,13 +36,13 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 <<<
 
-== Résumé du sujet choisi en français (PAN1)
+=== Résumé du sujet choisi en français (PAN1)
 
 
 Co-Emplettes est une application pour les courses entre les étudiants du plateau. Comme les prix sur le plateau sont très élevés, le but est de permettre aux étudiants qui vont faire leurs courses dans des supermarchés plus abordables de prendre les listes de courses d'autres étudiants pour leur ramener leur courses en échange d'une rémunération.
 
 
-== English Summary (PAN1)
+=== English Summary (PAN1)
 
 Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
 As the grocery prices are very high on the plateau, the application allows students going shopping in more affordable supermarkets to take other students shopping list and buy tehir groceries. 

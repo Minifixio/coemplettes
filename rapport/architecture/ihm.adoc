@@ -20,7 +20,6 @@ Page "mon compte"
 |===
 
 
-<<< 
 
 ==== Création d'une liste de course : choix des produits
 [cols="1,1,1"]
@@ -42,7 +41,6 @@ Page favorits pour faciliter la conception d'une liste de course
 |===
 
  
-<<< 
 
 ==== Suivi de la commande passée pour une liste de course
 [cols="1,1"]
@@ -59,8 +57,6 @@ Suivi de la commande côté utilisateur
 
 |===
 
-
-<<< 
 
 
 ==== Interface livreur : gestion des commandes proposées et en cours

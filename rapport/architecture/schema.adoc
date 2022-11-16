@@ -18,9 +18,13 @@
 | Tests et Intégrations| Emma et Théo | Elise Bonnail
 |====
 
+<<<
+
 ==== Schéma architectural en blocs
 
-image:../images/decoupage_architectural-PACT.png[] 
+image:../images/decoupage_architectural-PACT.png[]
+
+<<<
 
 // *Exemple utilisant http://www.graphviz.org/Documentation.php[graphviz]*
 // Voir la liste des outils supportés par http://asciidoctor.org/docs/asciidoctor-diagram/[asciidoctor-diagram].
