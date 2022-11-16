@@ -38,7 +38,6 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 == Résumé du sujet choisi en français (PAN1)
 
-*_Note: 15 lignes max_*
 
 Co-Emplettes est une application pour les courses entre les étudiants du plateau.
 
