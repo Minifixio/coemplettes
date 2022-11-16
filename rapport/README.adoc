@@ -69,13 +69,13 @@ include::architecture/schema.adoc[Schéma d’architecture]
 
 //include::architecture/interfaces.adoc[Description des interfaces]
 
-include::architecture/sequence.adoc[Diagramme de séquence]
 
 include::architecture/ihm.adoc[Interface utilisateur graphique]
 
 <<<
 
 == Organisation du projet (PAN1)
+include::architecture/taches.adoc[Tâches]
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
