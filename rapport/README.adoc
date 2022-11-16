@@ -69,9 +69,9 @@ As the grocery prices are very high on the plateau, the application allows stude
 // utilisées pour qu'elles n'apparaissent pas dans le document final. En Asciidoc,
 // il suffit de les précéder de deux slashs (`//`).
 
-// <<<
-// toc::[]
-// <<<
+<<<
+toc::[]
+<<<
 
 // On numérote le reste des sections
 :sectnums:
