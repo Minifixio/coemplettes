@@ -1,5 +1,6 @@
 === Description des interfaces (PAN1 / PAN2)
 
+
 Pour le PAN1, il faut identifier et décrire sommairement toutes les
 interfaces entre modules.
 
@@ -14,10 +15,48 @@ précision.
 Si c’est une interface entre deux blocs électroniques, c’est une description
 des signaux électroniques ou protocoles utilisés.
 
-==== InterfaceBloc1-2
 
-Description textuelle d’interface
+==== Liaison Backend-Application
 
-==== InterfaceBloc2-4
 
-Description textuelle d’interface
+L'application a besoin de récupérer plusieurs données de la base de donnée :
+
+
+* les données utilisateur
+* les listes de cours en attente
+* les commandes en cours
+* les codes lockers pour les livreurs/clients
+* les prix et informations des produits
+* les livreurs disponibles pour des courses
+
+Elle a aussi besoin d'écrire des informations dans la base de donnée :
+
+
+* l'ajout d'un utilisateur
+* l'ajout/suppression d'une liste de course client
+* l'ajout/suppression d'un créneau de livraison par un livreur
+* le suivi d'une commande en cours
+
+Cette liaison sera réalisée avec une API interrogée depuis l'application
+qui permettra de commander les demandes faites à la base de donnée
+depuis le Backend
+
+
+==== Liaison Backend-Locker
+
+Le locker doit pouvoir accéder à certaine données de la base de donnée :
+* Code généré pour ouvrir le locker
+
+Il doit également communiquer certaines informations à la Backend :
+* Commandes en cours/récupérées/stockées dans le Locker
+
+
+==== Liaison Application-Backend-Locker
+
+Récupération du code d'ouverture du Locker généré par depuis le Backend
+
+==== Liaison SES-Application
+
+
+L'application doit prendre en compte le business model retenu est essayer d'adapter son design en fonction de ce qui est proposé à l'utilisateur et au livreur
+

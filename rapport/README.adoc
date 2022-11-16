@@ -94,7 +94,7 @@ include::scenario/scenario.adoc[Scénarios d’usage]
 
 include::architecture/schema.adoc[Schéma d’architecture]
 
-// include::architecture/interfaces.adoc[Description des interfaces]
+include::architecture/interfaces.adoc[Description des interfaces]
 
 // include::architecture/sequence.adoc[Diagramme de séquence]
 
