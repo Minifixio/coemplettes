@@ -39,40 +39,18 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 == Résumé du sujet choisi en français (PAN1)
 
 
-Co-Emplettes est une application pour les courses entre les étudiants du plateau.
+Co-Emplettes est une application pour les courses entre les étudiants du plateau. Comme les prix sur le plateau sont très élevés, le but est de permettre aux étudiants qui vont faire leurs courses dans des supermarchés plus abordables de prendre les listes de courses d'autres étudiants pour leur ramener leur courses en échange d'une rémunération.
 
-Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport.
-
-Il peut s’agir de personnes en voiture ou bien de cyclistes. Les étudiants paieraient alors un petit surplus pour la livraison qui servira à la rémunération du livreur. Cette rémunération pourrait également être complétée à l’aide de publicités sur l’application, idéalement pour des évènements étudiants ou certaines enseignes de distribution, voire pourquoi pas des entreprises ou producteurs locaux.
-
-L’application rassemble tous les drives dans un certain rayon autour du plateau et s’occupe de calculer quel commerce est à privilégier selon plusieurs critères (temps de trajet pour le conducteur, prix, disponibilités…).
-
-Un système de Locker, dans lequel les courses seront disposées par le livreur, sera mis en place afin que chaque personne puisse venir récupérer ses courses dans un endroit froid selon son emploi du temps.
-
-L’application pourrait aussi intégrer la livraison pour les groupes en résidence universitaire, dans le cas où aucun étudiant livreur ne soit disponible. L’application privilégiera toujours la livraison par un étudiant.
-
-Bien que le drive soit l’option par défaut, on pourrait imaginer une option spéciale pour les produits frais pour que le livreur aille chercher les produits dans le magasin. Cela permettrait de choisir des produits plus ou moins mûrs. Pour faire gagner du temps, on peut envisager de cartographier les commerces dans ces zones spécifiques. La vérification se fera via une photo du ticket de caisse.
 
 == English Summary (PAN1)
 
 Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
-
-The student who delivers the groceries to the others is paid. They can go to the supermarket by car or by bike. The other students would then pay a small fee for the delivery which would be used to pay the student buying the groceries. This remuneration could also be supplemented by advertisements on the application, ideally for student events or certain retailers, or even local businesses or producers.
-
-The application gathers all the Drives in a certain radius around the plateau and calculates which business is to be preferred according to several criteria (travel time for the driver, price, availability...). 
-
-A Locker system, in which the groceries will be arranged by the driver, will be set up so that each person can come and pick up his groceries in a cold place according to his schedule. 
-
-The application could also integrate delivery for groups in university residences, in case no student delivery person is available. The app will always favor delivery by a student. 
-
-While drive-through is the default option, one could imagine a special option for fresh produce to have the delivery person pick up the produce in the store. This would allow for a choice of more or less ripe products. To save time, we could consider mapping the shops in these specific areas. Verification would be done via a photo of the receipt. 
+As the grocery prices are very high on the plateau, the application allows students going shopping in more affordable supermarkets to take other students shopping list and buy tehir groceries. 
 
 
 <<<
 
-== Fonctionnement de l'application (visuel)
 
-image:../images/infographie-1.jpeg[] 
 
 // *Notes concenant le rapport*
 
@@ -116,15 +94,15 @@ include::scenario/scenario.adoc[Scénarios d’usage]
 
 include::architecture/schema.adoc[Schéma d’architecture]
 
-include::architecture/interfaces.adoc[Description des interfaces]
+// include::architecture/interfaces.adoc[Description des interfaces]
 
-include::architecture/sequence.adoc[Diagramme de séquence]
+// include::architecture/sequence.adoc[Diagramme de séquence]
 
 include::architecture/ihm.adoc[Interface utilisateur graphique]
 
 <<<
 
-== Organisation du projet (PAN1)
+== Organisation du projet (PAN2)
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
