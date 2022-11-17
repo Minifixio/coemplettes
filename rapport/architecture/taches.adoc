@@ -1,22 +1,22 @@
 === Tableau détaillé des tâches
 
-****Note : 2 pages max - les fiches modules seront placées en annexe,
-elles doivent être rédigées avec l’expert.****
+// ****Note : 2 pages max - les fiches modules seront placées en annexe,
+// elles doivent être rédigées avec l’expert.****
 
-Les différents aspects du projet sont découpés en tâches numérotées et
-hiérarchisées (Tâches/sous-tâches, etc.). Chaque tâche est décrite précisément
-et une équipe (typiquement un binôme) est affecté à sa réalisation. Un module
-est typiquement constitué de plusieurs tâches et sous-tâches.
+// Les différents aspects du projet sont découpés en tâches numérotées et
+// hiérarchisées (Tâches/sous-tâches, etc.). Chaque tâche est décrite précisément
+// et une équipe (typiquement un binôme) est affecté à sa réalisation. Un module
+// est typiquement constitué de plusieurs tâches et sous-tâches.
 
-Pour le PAN3, vous aurez à démontrer une version, *intégrée* et fonctionnelle de
-votre projet.
-Entre le PAN3 et le PAN4, vous pourrez améliorer les fonctionnalités intégrées
-sans pour autant en ajouter de nouvelles.
+// Pour le PAN3, vous aurez à démontrer une version, *intégrée* et fonctionnelle de
+// votre projet.
+// Entre le PAN3 et le PAN4, vous pourrez améliorer les fonctionnalités intégrées
+// sans pour autant en ajouter de nouvelles.
 
-Reprenez et complétez le tableau suivant en précisant les différentes tâches et
-sous-tâches ainsi que le (ou les) critères de réussite pour l'intégration au
-PAN3. La définition des critères de réussite doit se faire en accord avec les
-experts.
+// Reprenez et complétez le tableau suivant en précisant les différentes tâches et
+// sous-tâches ainsi que le (ou les) critères de réussite pour l'intégration au
+// PAN3. La définition des critères de réussite doit se faire en accord avec les
+// experts.
 
 [cols=",,^",options="header",]
 |===
