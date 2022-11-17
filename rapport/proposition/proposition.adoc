@@ -4,7 +4,7 @@
 
 Co-Emplettes est une application pour les courses entre les étudiants du plateau.
 
-Le problème initial auquel nous avons voulu répondre est le manque de commerce aux prix abordable sur le plateau de Saclay et donc le coût élevé de la vie étudiante. En effet, de nombreux étudiants vont faire leurs courses ailleurs, dans des supermarchés plus abordables, le plus souvent en voiture, et emmènent souvent des camarades pour chacun puisse aller faire des courses moins chères.
+Le problème initial auquel nous avons voulu répondre est le manque de commerces à des prix abordables sur le plateau de Saclay et donc le coût élevé de la vie étudiante. En effet, de nombreux étudiants vont faire leurs courses ailleurs, dans des supermarchés plus abordables, le plus souvent en voiture, et emmènent des camarades pour que chacun puisse aller faire des courses moins chères.
 L'idée est alors de déléguer l'achat de courses aux étudiants pouvant se déplacer dans ces supermarchés plus abordables et des les ramener sur le campus pour les distribuer aux autres étudiants.
 
 Les étudiants qui s’occupent de la livraison sont rémunérés pour le transport. Il peut s’agir de personnes en voiture ou bien de cyclistes. Les étudiants paieraient alors un petit surplus pour la livraison qui servira à la rémunération du livreur. Cette rémunération pourrait également être complétée à l’aide de publicités sur l’application, idéalement pour des évènements étudiants ou certaines enseignes de distribution, voire pourquoi pas des entreprises ou producteurs locaux.

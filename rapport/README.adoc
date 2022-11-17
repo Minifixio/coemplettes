@@ -1,5 +1,5 @@
-= Rapport d’avancement: groupe “x.y”
-PACT groupe xy (Les plus beaux)
+= Rapport d’avancement: groupe 7.4
+PACT groupe 7.4 (Co-emplettes)
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 :doctype: book
 :stem: latexmath
@@ -40,7 +40,7 @@ Co-Emplettes est une application pour les courses entre les étudiants du platea
 === English Summary (PAN1)
 
 Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
-As the grocery prices are very high on the plateau, the application allows students going shopping in more affordable supermarkets to take other students shopping list and buy tehir groceries. 
+As the grocery prices are very high on the plateau, the app allows students to go shopping in more affordable supermarkets (located further away) and to take other students' shopping list and buy their groceries in exchange of a financial compensation. 
 
 <<<
 toc::[]
@@ -79,7 +79,7 @@ include::architecture/taches.adoc[Tâches]
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
-include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
+//include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
 
 <<<
 
@@ -90,6 +90,7 @@ include::References.adoc[Bibliographie]
 
 <<<
 
+////
 == Annexes
 
 include::annexes/modifications.adoc[Modifications (PAN2+)]
@@ -99,3 +100,4 @@ include::annexes/avancement.adoc[Avancement des modules]
 include::annexes/moduleX.adoc[Avancement module X]
 
 include::annexes/moduleY.adoc[Avancement module Y]
+////
