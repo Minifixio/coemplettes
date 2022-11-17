@@ -14,10 +14,6 @@ existants qui se rapproche de notre projet.
 ==== Application de livraison de nourriture : Uber Eat, Deliveroo, Just Eat...
 
 
-
-image::../images/uber_eat_logo.webp[100,100, role="related thumb left"]
-
-image::../images/just_eat_logo.png[100,100, role="related thumb left"]
 Les applications de type "livraison de nourriture" <<UberEat>> ont d'abord eu 
 comme principale fonction d'être un intermédiaire entre les restaurateurs
 et les clients proposant à ces derniers des livraisons par 
