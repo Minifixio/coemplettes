@@ -15,6 +15,8 @@ existants qui se rapproche de notre projet.
 
 
 
+image::../images/uber_eat_logo.webp[100,100, role="related thumb left"]
+image::../images/just_eat_logo.png[100,100, role="related thumb left"]
 Les applications de type "livraison de nourriture" <<UberEat>> ont d'abord eu 
 comme principale fonction d'être un intermédiaire entre les restaurateurs
 et les clients proposant à ces derniers des livraisons par 
@@ -25,11 +27,9 @@ chaines de grande distribution et commerces de proximités
 qui proposent désormais également leurs services de livraison 
 sur ces mêmes plateformes.
 
-[.float-group]
---
-image::../images/uber_eat_logo.webp[float="left", scaledwidth="20%"]
-image::../images/just_eat_logo.png[float="left", scaledwidth="20%"]
---
+
+
+
 
 C'est sur le principe de livraison que notre application 
 se rapproche des exemples cités précédemment.
