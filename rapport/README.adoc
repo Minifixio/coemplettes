@@ -40,7 +40,7 @@ Co-Emplettes est une application pour les courses entre les étudiants du platea
 === English Summary (PAN1)
 
 Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
-As the grocery prices are very high on the plateau, the app allows students to go shopping in more affordable supermarkets (located further away) and to take other students' shopping list and buy their groceries. 
+As the grocery prices are very high on the plateau, the app allows students to go shopping in more affordable supermarkets (located further away) and to take other students' shopping list and buy their groceries in exchange of a financial compensation. 
 
 <<<
 toc::[]
