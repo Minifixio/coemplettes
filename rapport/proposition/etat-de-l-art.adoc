@@ -1,10 +1,10 @@
 === Description de l’état de l’art
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
-Décrivez, en les citant via la bibliographie, les approches/produits
-ressemblant à votre projet et les différences éventuelles. Illustrez
-avec des images si besoin. Utilisez des renvois vers votre
-bibliographie : « comme démontré dans [2], … »
+// Décrivez, en les citant via la bibliographie, les approches/produits
+// ressemblant à votre projet et les différences éventuelles. Illustrez
+// avec des images si besoin. Utilisez des renvois vers votre
+// bibliographie : « comme démontré dans [2], … »
 
 Notre projet s'ancre dans un cadre d'applications 
 en forte augmentation ces derniers temps : la livraison de courses/repas.

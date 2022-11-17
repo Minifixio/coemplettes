@@ -10,11 +10,11 @@
 [cols=",,",options="header",]
 |====
 | Module | Elèves | Validé par
-| React Native/App | Lancelot et Emile | J.C. Dufourd
-| BBD, API, Serveur, Produit | Emile, Théo et Mody | A. Amarilli
+| React Native/App | Lancelot et Emile | Jean-Claude Dufourd
+| BBD, API, Serveur, Produit | Emile, Théo et Mody | Antoine Amarilli
 | Analyse de Graphes | Mody et Emma | Tiphaine Viard
-| Systèmes embarqués | Théo | T. Graba
-| SES| Emma et Lancelot | A. Ouahab
+| Systèmes embarqués | Théo | Tarik Graba
+| SES| Emma et Lancelot | Alban Ouahab
 | Tests et Intégrations| Emma et Théo | Elise Bonnail
 |====
 
