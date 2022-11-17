@@ -16,6 +16,7 @@ existants qui se rapproche de notre projet.
 
 
 image::../images/uber_eat_logo.webp[100,100, role="related thumb left"]
+
 image::../images/just_eat_logo.png[100,100, role="related thumb left"]
 Les applications de type "livraison de nourriture" <<UberEat>> ont d'abord eu 
 comme principale fonction d'être un intermédiaire entre les restaurateurs
