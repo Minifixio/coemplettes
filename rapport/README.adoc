@@ -31,6 +31,8 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 <<<
 
+image:../images/baniere.png[] 
+
 === Résumé du sujet choisi en français (PAN1)
 
 
