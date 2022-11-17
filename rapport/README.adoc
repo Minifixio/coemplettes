@@ -79,7 +79,7 @@ include::architecture/taches.adoc[Tâches]
 
 include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
 
-include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
+//include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
 
 <<<
 
