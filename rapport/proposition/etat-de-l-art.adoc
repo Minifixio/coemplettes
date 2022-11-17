@@ -1,10 +1,10 @@
 === Description de l’état de l’art
 ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
-Décrivez, en les citant via la bibliographie, les approches/produits
-ressemblant à votre projet et les différences éventuelles. Illustrez
-avec des images si besoin. Utilisez des renvois vers votre
-bibliographie : « comme démontré dans [2], … »
+// Décrivez, en les citant via la bibliographie, les approches/produits
+// ressemblant à votre projet et les différences éventuelles. Illustrez
+// avec des images si besoin. Utilisez des renvois vers votre
+// bibliographie : « comme démontré dans [2], … »
 
 Notre projet s'ancre dans un cadre d'applications 
 en forte augmentation ces derniers temps : la livraison de courses/repas.
@@ -12,6 +12,8 @@ Dès lors, il est possible de distinguer différents produits
 existants qui se rapproche de notre projet.
 
 ==== Application de livraison de nourriture : Uber Eat, Deliveroo, Just Eat...
+
+
 
 Les applications de type "livraison de nourriture" <<UberEat>> ont d'abord eu 
 comme principale fonction d'être un intermédiaire entre les restaurateurs
@@ -23,14 +25,21 @@ chaines de grande distribution et commerces de proximités
 qui proposent désormais également leurs services de livraison 
 sur ces mêmes plateformes.
 
+[.float-group]
+--
+image::../images/uber_eat_logo.webp[float="left", scaledwidth="20%"]
+image::../images/just_eat_logo.png[float="left", scaledwidth="20%"]
+--
+
 C'est sur le principe de livraison que notre application 
 se rapproche des exemples cités précédemment.
 
 Cependant, notre application se démarque par plusieurs aspects :
+
 * le statut des livreurs : il s'agit d'étudiants qui ne sont pas
 employé par une quelconque structure mais qui réalise des missions
 rémunérées librement.
-* le principe des courses groupées : dans notre projet, les commandes de plusieurs clients sont réunies pour une seule 
+ * le principe des courses groupées : dans notre projet, les commandes de plusieurs clients sont réunies pour une seule 
 livraison et ensuite séparées dans les Lockers
 * l'aspect économique : quand la majorité des applications
 citées ci-dessus ont des prix affichés plus élevés que les prix

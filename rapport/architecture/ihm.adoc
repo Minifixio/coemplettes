@@ -1,9 +1,10 @@
 === Interface utilisateur graphique
 
 Voici une suggestion de présentaiton de
-l'application Android avec les différentes
+l'application mobile avec les différentes
 sections de l'application du côté utilisateur 
 et du côté livreur
+
 
 ==== Compte: connexion et enregistrement 
 [cols="1,1,1"]
