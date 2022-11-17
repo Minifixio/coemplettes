@@ -27,7 +27,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 
 === Encadrant génie logiciel
 
-* Jean-Claude Dufourd
+* Elise Bonnail
 
 <<<
 
