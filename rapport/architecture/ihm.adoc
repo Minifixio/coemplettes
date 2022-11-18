@@ -41,7 +41,7 @@ Détail d'un produit
 |image:../images/mockup/recapitulatif.png[]
 Récapitulatif de la création d'une liste de course
 |image:../images/mockup/favorits.png[]
-Page favorits pour faciliter la conception d'une liste de course
+Page favoris pour faciliter la conception d'une liste de course
 |
 |===
 
