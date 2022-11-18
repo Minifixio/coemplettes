@@ -1,6 +1,6 @@
 === Interface utilisateur graphique
 
-Voici une suggestion de présentaiton de
+Voici une suggestion de présentation de
 l'application mobile avec les différentes
 sections de l'application du côté utilisateur 
 et du côté livreur
