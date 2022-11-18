@@ -34,7 +34,7 @@
 | T3.1 | Design de l'application (maquette) | 
 | T3.2 | Développement des fonctions de bases | Les fonctions de base sont intégré à l'application
 | T3.3 | Intégration du Backend | L'application communique avec le serveur (connexion, liste des produits...)
-| T3.3 | Ajout fonctionnalité utilisateurs |
+| T3.4 | Ajout fonctionnalité utilisateurs |
 | T4 | Création du locker | Le locker est fonctionnel et communique avec le serveur
 | T4.1 | Création du circuit éléctronique | Le système contient tous les éléments nécessaires (serrures, carte de contrôle...)
 | T4.2 | Connexion avec le Backend | Le système arrive à communiquer avec le serveur
