@@ -1,0 +1,81 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    school TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL
+);
+
+CREATE TABLE supermarkets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nom TEXT,
+    loc_long FLOAT,
+    loc_lat FLOAT,
+    business_hours TEXT
+);
+
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_type TEXT NOT NULL,
+    average_price INT NOT NULL
+);
+
+CREATE TABLE shippers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INT NOT NULL,
+    capacity INT NOT NULL,
+    has_car BOOL NOT NULL,
+    deliveries_count INT,
+    price_max INT NOT NULL,
+    loc_long FLOAT,
+    loc_lat FLOAT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE deliveries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shipper_id INT NOT NULL,
+    deadline DATETIME NOT NULL,
+    state INT,
+    FOREIGN KEY (shipper_id) REFERENCES shippers(id)
+);
+
+CREATE TABLE carts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id INT NOT NULL,
+    delivery_id INT NOT NULL,
+    creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    deadline DATETIME NOT NULL,
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (delivery_id) REFERENCES deliveries(id)
+);
+
+CREATE TABLE cart_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    weight INT,
+    FOREIGN KEY (cart_id) REFERENCES carts(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE delivery_proposals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shipper_id INT NOT NULL,
+    size INT,
+    creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    deadline DATETIME NOT NULL,
+    FOREIGN KEY (shipper_id) REFERENCES shippers(id)
+);
+
+CREATE TABLE supermarkets_products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INT NOT NULL,
+    supermarket_id INT NOT NULL,
+    price INT NOT NULL,
+    is_available BOOL NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (supermarket_id) REFERENCES supermarkets(id)
+);
