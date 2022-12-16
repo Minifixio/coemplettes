@@ -1,3 +1,4 @@
-#dist
 node_modules
 package-lock.json
+src/credentials.ts
+db_init.sqlite
