@@ -11,7 +11,7 @@
 - connexion pour mapper la BDD sur son port local 5000 : ```ssh ubuntu@137.194.211.70 -L 5000:localhost:3306```
 
 ## Fichiers de configuration en local :
-- ajouter le mdp de la BDD : créer un fichier ```credentials.ts``` contenant le code suivant :
+- ajouter le mdp de la BDD : créer un fichier ```credentials.ts``` dans ```src``` contenant le code suivant :
  ```
  export const db_password = "[MDP LA BDD]"
  # où l'on remplace [MDP LA BDD] par le mdp
