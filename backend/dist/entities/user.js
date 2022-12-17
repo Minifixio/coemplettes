@@ -18,26 +18,26 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 25, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "first_name", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 25, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "last_name", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "school", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 User = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)({ name: "users" })
 ], User);
 exports.User = User;

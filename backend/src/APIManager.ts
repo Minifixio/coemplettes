@@ -8,6 +8,7 @@ export class API {
     tag:string
     app = {} as Express
 
+    // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     constructor(port:number, tag:string) {
         console.log(`[${tag}] Initialisation de l\'api`)
         this.port=port
