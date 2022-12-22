@@ -16,3 +16,6 @@
  export const db_password = "[MDP LA BDD]"
  # où l'on remplace [MDP LA BDD] par le mdp
  ```
+
+## Visualiser le diagramme :
+Aller sur [DrawIO](https://draw.io) et ouvrir le fichier ```BDD-API-diagram.drawio```
