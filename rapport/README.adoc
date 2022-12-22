@@ -1,0 +1,105 @@
+= Rapport d’avancement: groupe 7.4
+PACT groupe 7.4 (Co-emplettes)
+ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
+:doctype: book
+:stem: latexmath
+:source-highlighter: coderay
+:toc-title: Table des matières
+:toc: macro
+:sectnums:
+:imagesdir: images
+
+:sectnums!:
+
+== « Co-Emplettes »
+
+=== Membres du groupe
+
+* Emile Le Gallic
+* Lancelot Portal
+* Mody Ba
+* Théo MONNET
+* Emma Vasiliu
+
+=== Tuteur
+
+* Enzo TARTAGLIONE
+
+=== Encadrant génie logiciel
+
+* Elise Bonnail
+
+<<<
+
+image:../images/baniere.png[] 
+
+=== Résumé du sujet choisi en français (PAN1)
+
+
+Co-Emplettes est une application pour les courses entre les étudiants du plateau. Comme les prix sur le plateau sont très élevés, le but est de permettre aux étudiants qui vont faire leurs courses dans des supermarchés plus abordables de prendre les listes de courses d'autres étudiants pour leur ramener leur courses en échange d'une rémunération.
+
+
+=== English Summary (PAN1)
+
+Co-Emplettes is an app allowing students around the Télécom Paris campus to shop for groceries together. 
+As the grocery prices are very high on the plateau, the app allows students to go shopping in more affordable supermarkets (located further away) and to take other students' shopping list and buy their groceries in exchange of a financial compensation. 
+
+<<<
+toc::[]
+<<<
+
+// On numérote le reste des sections
+:sectnums:
+
+== Étude d’antériorité et justification de la proposition (PAN1)
+
+include::proposition/proposition.adoc[Description de la proposition]
+
+include::proposition/etat-de-l-art.adoc[Description de l’état de l’art]
+
+<<<
+
+== Scénarios d’usage (PAN1)
+
+include::scenario/scenario.adoc[Scénarios d’usage]
+
+<<<
+
+== Architecture du projet (PAN1)
+
+include::architecture/schema.adoc[Schéma d’architecture]
+
+include::architecture/interfaces.adoc[Description des interfaces]
+
+
+include::architecture/ihm.adoc[Interface utilisateur graphique]
+
+<<<
+
+== Organisation du projet (PAN1)
+include::architecture/taches.adoc[Tâches]
+
+include::organisation/planification.adoc[Diagramme de planification temporel des tâches]
+
+//include::organisation/plan-tests.adoc[Plans de test (PAN2+)]
+
+<<<
+
+[bibliography]
+== Bibliographie (PAN1+)
+
+include::References.adoc[Bibliographie]
+
+<<<
+
+////
+== Annexes
+
+include::annexes/modifications.adoc[Modifications (PAN2+)]
+
+include::annexes/avancement.adoc[Avancement des modules]
+
+include::annexes/moduleX.adoc[Avancement module X]
+
+include::annexes/moduleY.adoc[Avancement module Y]
+////
