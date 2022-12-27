@@ -18,11 +18,11 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="LandingPage">
         <Stack.Screen
           name="LandingPage"
           component={LandingPage}
-          options={{title: 'Bienvenue'}}
+          options={{title: 'Bienvenue', headerShown: false}}
         />
         <Stack.Screen
           name="RegisterPage"

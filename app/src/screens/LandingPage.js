@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {
-  View,
-  Button,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
-import BackgroundImage from '../assets/images/StudentShopping1.png';
+import {View, Text, ImageBackground, StyleSheet, Image} from 'react-native';
+import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
+import Logo from '../assets/images/Logo.png';
+import BasicButton from '../components/BasicButton';
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -18,24 +13,26 @@ export default function LandingPage({navigation}) {
         source={BackgroundImage}
         resizeMode="cover"
         style={styles.image}>
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={Logo} />
+        </View>
         <View style={styles.buttonsContainer}>
-          <Text style={styles.text}>Bienvenue sur CoEmplettes</Text>
+          <View style={styles.textButtonsContainer}>
+            <Text style={[styles.text, styles.helloText]}>Bonjour</Text>
+            <Text style={styles.text}>Bienvenue sur CoEmplettes</Text>
+          </View>
 
-          <Separator />
+          <BasicButton
+            navigation={navigation}
+            screenName="RegisterPage"
+            text="S'enregistrer"
+          />
 
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate('RegisterPage')}>
-            <Text style={styles.buttonText}>S'enregistrer</Text>
-          </Pressable>
-
-          <Separator />
-
-          <Pressable
-            style={styles.button}
-            onPress={() => navigation.navigate('LoginPage')}>
-            <Text style={styles.buttonText}>Se connecter</Text>
-          </Pressable>
+          <BasicButton
+            navigation={navigation}
+            screenName="LoginPage"
+            text="Se connecter"
+          />
         </View>
       </ImageBackground>
     </View>
@@ -44,37 +41,50 @@ export default function LandingPage({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flex: 1,
   },
-  buttonsContainer: {
+  logoContainer: {
+    position: 'absolute',
     display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    top: '30%',
+  },
+  buttonsContainer: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    display: 'flex',
+    paddingBottom: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: 10,
-    margin: 10,
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
+  },
+  textButtonsContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginLeft: 40,
+    marginBottom: 20,
   },
   image: {
     flex: 1,
     justifyContent: 'center',
   },
-  button: {
-    backgroundColor: 'green',
-    width: '100%',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  logo: {
+    width: 200,
+    height: 200,
   },
   text: {
     color: 'black',
-    fontSize: 25,
+    fontSize: 20,
+    textAlign: 'left',
+  },
+  helloText: {
+    fontSize: 30,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   separator: {
     marginVertical: 8,
