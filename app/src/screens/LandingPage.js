@@ -4,8 +4,6 @@ import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import Logo from '../assets/images/Logo.png';
 import BasicButton from '../components/BasicButton';
 
-const Separator = () => <View style={styles.separator} />;
-
 export default function LandingPage({navigation}) {
   return (
     <View style={styles.container}>
@@ -23,14 +21,12 @@ export default function LandingPage({navigation}) {
           </View>
 
           <BasicButton
-            navigation={navigation}
-            screenName="RegisterPage"
+            onClick={() => navigation.navigate('RegisterPage')}
             text="S'enregistrer"
           />
 
           <BasicButton
-            navigation={navigation}
-            screenName="LoginPage"
+            onClick={() => navigation.navigate('LoginPage')}
             text="Se connecter"
           />
         </View>
@@ -85,10 +81,5 @@ const styles = StyleSheet.create({
   helloText: {
     fontSize: 30,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });

@@ -27,7 +27,7 @@ const App = () => {
         <Stack.Screen
           name="RegisterPage"
           component={RegisterPage}
-          options={{title: "S'enregsitrer"}}
+          options={{title: "S'enregistrer"}}
         />
         <Stack.Screen
           name="LoginPage"

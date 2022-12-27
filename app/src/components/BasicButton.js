@@ -4,9 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const BasicButton = props => {
   return (
-    <Pressable
-      style={styles.button}
-      onPress={() => props.navigation.navigate(props.screenName)}>
+    <Pressable style={styles.button} onPress={props.onClick}>
       <LinearGradient
         start={{x: 0.0, y: 0.25}}
         end={{x: 0.5, y: 1.0}}
