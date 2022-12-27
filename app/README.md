@@ -11,3 +11,12 @@ Commande : ```npx react-native run-android``` ou ```npm run android```
 
 ### Sur Apple 
 Commande : ```npx react-native run-ios``` ou ```npm run ios```
+
+<br>
+
+## Guides utiles pour apprendre React
+- Concernant la navigation : [ReactNavigation](https://reactnavigation.org/docs/getting-started)
+- Concernant React en général : [Doc React](https://reactjs.org/docs/getting-started.html)
+- documentation expresse sur React Native : [React Native Express](https://www.reactnative.express/)
+
+
