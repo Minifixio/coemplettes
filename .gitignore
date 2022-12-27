@@ -17,5 +17,9 @@ _book
 *.log
 .*.swp
 
+# Emile : local dev
+app/.git
+app/.gitignore
 
-app
+# Temp : android app
+# app
