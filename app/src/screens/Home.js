@@ -35,6 +35,11 @@ const productCategories = [
     icon: require('../assets/icons/drink.png'),
     color: 'blue',
   },
+  {
+    name: 'Céréales',
+    icon: require('../assets/icons/cereal.png'),
+    color: 'orange',
+  },
 ];
 
 const Item = ({name, icon, color}) => (
@@ -53,7 +58,15 @@ function HomePage() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList data={productCategories} horizontal renderItem={renderItem} />
+      <View style={styles.categoriesContainer}>
+        <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
+        <FlatList
+          style={styles.categoriesFlatList}
+          data={productCategories}
+          horizontal
+          renderItem={renderItem}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -63,10 +76,19 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+  categoriesContainer: {
+    display: 'flex',
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    height: 120,
+  },
+  categoriesFlatList: {
+    height: 70,
+  },
   item: {
     padding: 10,
+    height: 60,
     marginVertical: 8,
-    marginHorizontal: 5,
+    marginHorizontal: 2,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -82,6 +104,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
+  },
+  categoryText: {
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 

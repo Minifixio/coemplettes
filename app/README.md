@@ -20,4 +20,9 @@ Commande : ```npx react-native run-ios``` ou ```npm run ios```
 - Concernant React en général : [Doc React](https://reactjs.org/docs/getting-started.html)
 - documentation expresse sur React Native : [React Native Express](https://www.reactnative.express/)
 
+<br>
+
+## Libraries de components / design
+- React Native Element : [lien](https://reactnativeelements.com/)
+
 

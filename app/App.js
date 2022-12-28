@@ -10,7 +10,7 @@ import * as React from 'react';
 import LandingPage from './src/screens/Landing';
 import MainPage from './src/screens/Menu';
 
-const isConnected = true;
+const isConnected = false;
 
 const App = () => {
   if (!isConnected) {

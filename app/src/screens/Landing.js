@@ -10,7 +10,7 @@ import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import Logo from '../assets/images/Logo.png';
 import BasicButton from '../components/BasicButton';
 
-const WelcomePage = navigation => {
+const WelcomePage = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ImageBackground
