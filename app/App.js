@@ -7,36 +7,17 @@
  */
 
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LandingPage from './src/screens/LandingPage';
-import RegisterPage from './src/screens/RegisterPage';
-import LoginPage from './src/screens/LoginPage';
+import LandingPage from './src/screens/Landing';
+import MainPage from './src/screens/Menu';
 
-const Stack = createNativeStackNavigator();
+const isConnected = true;
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LandingPage">
-        <Stack.Screen
-          name="LandingPage"
-          component={LandingPage}
-          options={{title: 'Bienvenue', headerShown: false}}
-        />
-        <Stack.Screen
-          name="RegisterPage"
-          component={RegisterPage}
-          options={{title: "S'enregistrer"}}
-        />
-        <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
-          options={{title: 'Se connecter'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  if (!isConnected) {
+    return <LandingPage />;
+  } else {
+    return <MainPage />;
+  }
 };
 
 export default App;

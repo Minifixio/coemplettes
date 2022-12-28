@@ -5,7 +5,7 @@ import BasicButton from '../components/BasicButton';
 
 const Separator = () => <View style={styles.separator} />;
 
-export default function RegisterPage({navigation}) {
+function RegisterPage({navigation}) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -136,3 +136,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default RegisterPage;
