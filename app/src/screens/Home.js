@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 5,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
