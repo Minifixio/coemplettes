@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, Text, ImageBackground, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Image,
+  Switch,
+} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -10,9 +17,15 @@ import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import Logo from '../assets/images/Logo.png';
 import BasicButton from '../components/BasicButton';
 
-const WelcomePage = ({navigation}) => {
+const WelcomePage = ({navigation, isConnected, setIsConnected}) => {
   return (
     <View style={styles.container}>
+      <Switch
+        style={styles.switch}
+        thumbColor={isConnected ? 'green' : 'red'}
+        onValueChange={() => setIsConnected(true)}
+        value={isConnected}
+      />
       <ImageBackground
         source={BackgroundImage}
         resizeMode="cover"
@@ -43,15 +56,21 @@ const WelcomePage = ({navigation}) => {
 
 const Stack = createNativeStackNavigator();
 
-function LandingPage() {
+function LandingPage({isConnected, setIsConnected}) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="WelcomePage">
         <Stack.Screen
           name="WelcomePage"
-          component={WelcomePage}
-          options={{title: 'Bienvenue', headerShown: false}}
-        />
+          options={{title: 'Bienvenue', headerShown: false}}>
+          {props => (
+            <WelcomePage
+              isConnected={isConnected}
+              setIsConnected={setIsConnected}
+              {...props}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen
           name="RegisterPage"
           component={RegisterPage}
@@ -113,6 +132,11 @@ const styles = StyleSheet.create({
   helloText: {
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  switch: {
+    position: 'absolute',
+    top: 10,
+    zIndex: 1,
   },
 });
 

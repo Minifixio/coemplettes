@@ -7,38 +7,39 @@ import {
   SafeAreaView,
   FlatList,
   StatusBar,
+  Switch,
 } from 'react-native';
 
 const productCategories = [
   {
     name: 'Fruits',
     icon: require('../assets/icons/fruit.png'),
-    color: 'red',
+    color: '#FF7D5A',
   },
   {
     name: 'Legumes',
     icon: require('../assets/icons/vegetable.png'),
-    color: 'green',
+    color: '#0AD300',
   },
   {
     name: 'Epicerie',
     icon: require('../assets/icons/grocery.png'),
-    color: 'yellow',
+    color: '#FFFF5A',
   },
   {
     name: 'Soins',
     icon: require('../assets/icons/care-products.png'),
-    color: 'pink',
+    color: '#FF80F7',
   },
   {
     name: 'Boisons',
     icon: require('../assets/icons/drink.png'),
-    color: 'blue',
+    color: '#2EE5FE',
   },
   {
     name: 'Céréales',
     icon: require('../assets/icons/cereal.png'),
-    color: 'orange',
+    color: '#F1B600',
   },
 ];
 
@@ -51,13 +52,19 @@ const Item = ({name, icon, color}) => (
   </View>
 );
 
-function HomePage() {
+function HomePage({isConnected, setIsConnected}) {
   const renderItem = ({item}) => (
     <Item name={item.name} icon={item.icon} color={item.color} />
   );
 
   return (
     <SafeAreaView style={styles.container}>
+      <Switch
+        style={styles.switch}
+        thumbColor={isConnected ? 'green' : 'red'}
+        onValueChange={() => setIsConnected(false)}
+        value={isConnected}
+      />
       <View style={styles.categoriesContainer}>
         <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
         <FlatList
@@ -111,6 +118,11 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  switch: {
+    position: 'absolute',
+    top: -30,
+    zIndex: 1,
   },
 });
 

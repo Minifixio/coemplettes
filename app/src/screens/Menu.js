@@ -8,15 +8,19 @@ import FavoutritesPage from './Favourites';
 
 const Stack = createNativeStackNavigator();
 
-function MainPage() {
+function MainPage({isConnected, setIsConnected}) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomePage">
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{headerShown: false}}
-        />
+        <Stack.Screen name="HomePage" options={{headerShown: false}}>
+          {props => (
+            <HomePage
+              isConnected={isConnected}
+              setIsConnected={setIsConnected}
+              {...props}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen
           name="AccountPage"
           component={AccountPage}

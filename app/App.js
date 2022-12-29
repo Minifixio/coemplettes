@@ -6,17 +6,21 @@
  * @flow strict-local
  */
 
-import * as React from 'react';
+import React, {useState} from 'react';
 import LandingPage from './src/screens/Landing';
 import MainPage from './src/screens/Menu';
 
-const isConnected = false;
-
 const App = () => {
+  const [isConnected, setIsConnected] = useState(false);
+
   if (!isConnected) {
-    return <LandingPage />;
+    return (
+      <LandingPage isConnected={isConnected} setIsConnected={setIsConnected} />
+    );
   } else {
-    return <MainPage />;
+    return (
+      <MainPage isConnected={isConnected} setIsConnected={setIsConnected} />
+    );
   }
 };
 
