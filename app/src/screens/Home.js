@@ -10,51 +10,31 @@ import {
   Switch,
 } from 'react-native';
 
-const productCategories = [
-  {
-    name: 'Fruits',
-    icon: require('../assets/icons/fruit.png'),
-    color: '#FF7D5A',
-  },
-  {
-    name: 'Legumes',
-    icon: require('../assets/icons/vegetable.png'),
-    color: '#0AD300',
-  },
-  {
-    name: 'Epicerie',
-    icon: require('../assets/icons/grocery.png'),
-    color: '#FFFF5A',
-  },
-  {
-    name: 'Soins',
-    icon: require('../assets/icons/care-products.png'),
-    color: '#FF80F7',
-  },
-  {
-    name: 'Boisons',
-    icon: require('../assets/icons/drink.png'),
-    color: '#2EE5FE',
-  },
-  {
-    name: 'Céréales',
-    icon: require('../assets/icons/cereal.png'),
-    color: '#F1B600',
-  },
-];
+const categoriesIcons = {
+  1: require('../assets/icons/fruit.png'),
+  2: require('../assets/icons/vegetable.png'),
+  3: require('../assets/icons/grocery.png'),
+  4: require('../assets/icons/care-products.png'),
+  5: require('../assets/icons/drink.png'),
+  6: require('../assets/icons/cereal.png'),
+};
 
-const Item = ({name, icon, color}) => (
-  <View style={styles.item}>
-    <View style={[styles.iconContainer, {backgroundColor: color}]}>
-      <Image style={styles.icon} source={icon} />
+const productCategories = require('../assets/json/categories.json').categories;
+
+const Item = function ({name, icon, color, id}) {
+  return (
+    <View style={styles.item}>
+      <View style={[styles.iconContainer, {backgroundColor: color}]}>
+        <Image style={styles.icon} source={categoriesIcons[id]} />
+      </View>
+      <Text>{name}</Text>
     </View>
-    <Text>{name}</Text>
-  </View>
-);
+  );
+};
 
 function HomePage({isConnected, setIsConnected}) {
   const renderItem = ({item}) => (
-    <Item name={item.name} icon={item.icon} color={item.color} />
+    <Item name={item.name} icon={item.icon} color={item.color} id={item.id} />
   );
 
   return (
@@ -74,6 +54,9 @@ function HomePage({isConnected, setIsConnected}) {
           renderItem={renderItem}
         />
       </View>
+      {/* <FlatList numColumns={2}>
+
+      </FlatList> */}
     </SafeAreaView>
   );
 }
@@ -87,6 +70,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'rgba(255,255,255,0.5)',
     height: 120,
+  },
+  productContainer: {
+    display: 'flex',
   },
   categoriesFlatList: {
     height: 70,
