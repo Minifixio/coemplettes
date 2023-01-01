@@ -21,7 +21,7 @@ const categoriesIcons = {
 
 const productCategories = require('../assets/json/categories.json').categories;
 
-const Item = function ({name, icon, color, id}) {
+const Item = function ({name, color, id}) {
   return (
     <View style={styles.item}>
       <View style={[styles.iconContainer, {backgroundColor: color}]}>
@@ -34,7 +34,7 @@ const Item = function ({name, icon, color, id}) {
 
 function HomePage({isConnected, setIsConnected}) {
   const renderItem = ({item}) => (
-    <Item name={item.name} icon={item.icon} color={item.color} id={item.id} />
+    <Item name={item.name} color={item.color} id={item.id} />
   );
 
   return (
