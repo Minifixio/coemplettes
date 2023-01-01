@@ -5,7 +5,7 @@
             "name": "Citron",
             "category_id":0,
             "quantity_type": "pièce",
-            "icon_link": "",
+            "icon_link": "https://media.auchan.fr/A0219901211000040878PRIMARY_512x512/B2CD/",
             "average_price":1.20
         },
         {
@@ -13,7 +13,7 @@
             "name": "Poivron",
             "category_id":1,
             "quantity_type": "pièce",
-            "icon_link": "",
+            "icon_link": "https://media.auchan.fr/A0220100225000648660PRIMARY_512x512/B2CD/",
             "average_price":0.50
         },
         {
@@ -21,7 +21,7 @@
             "name": "Granola",
             "category_id":2,
             "quantity_type": "paquet de 12",
-            "icon_link": "",
+            "icon_link": "https://images.openfoodfacts.org/images/products/762/221/060/1988/front_fr.171.400.jpg",
             "average_price":3.76
         },
         {
@@ -29,15 +29,15 @@
             "name": "Savon Le Marseillais Vanille",
             "category_id":3,
             "quantity_type": "flacon 300ml",
-            "icon_link": "",
+            "icon_link": "https://images.openfoodfacts.org/images/products/357/466/134/7424/front_fr.18.400.jpg",
             "average_price":4.56
         },
         {
             "id":4,
-            "name": "Coca-Cola Zero",
+            "name": "Coca-Cola",
             "category_id":4,
             "quantity_type": "1L",
-            "icon_link": "",
+            "icon_link": "https://images.openfoodfacts.org/images/products/544/900/005/4227/front_fr.218.400.jpg",
             "average_price":2.30
         },
         {
@@ -45,7 +45,7 @@
             "name": "Riz",
             "category_id":5,
             "quantity_type": "500g",
-            "icon_link": "",
+            "icon_link": "https://images.openfoodfacts.org/images/products/356/007/039/3619/front_fr.64.400.jpg",
             "average_price":2.13
         }
     ]

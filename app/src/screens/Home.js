@@ -9,6 +9,7 @@ import {
   StatusBar,
   Switch,
 } from 'react-native';
+import {ProductShowcase} from '../components/ProductShowcase';
 
 const categoriesIcons = {
   1: require('../assets/icons/fruit.png'),
@@ -20,6 +21,9 @@ const categoriesIcons = {
 };
 
 const productCategories = require('../assets/json/categories.json').categories;
+const featuredProducts =
+  require('../assets/json/featured_products.json').featured_products;
+const products = require('../assets/json/products.json').products;
 
 const Item = function ({name, color, id}) {
   return (
@@ -33,8 +37,16 @@ const Item = function ({name, color, id}) {
 };
 
 function HomePage({isConnected, setIsConnected}) {
-  const renderItem = ({item}) => (
+  const renderCategoryItem = ({item}) => (
     <Item name={item.name} color={item.color} id={item.id} />
+  );
+  const renderFeaturedItem = ({item}) => (
+    <ProductShowcase
+      name={item.name}
+      price={item.average_price}
+      id={item.id}
+      image={item.icon_link}
+    />
   );
 
   return (
@@ -51,12 +63,16 @@ function HomePage({isConnected, setIsConnected}) {
           style={styles.categoriesFlatList}
           data={productCategories}
           horizontal
-          renderItem={renderItem}
+          renderItem={renderCategoryItem}
         />
       </View>
-      {/* <FlatList numColumns={2}>
-
-      </FlatList> */}
+      <FlatList
+        numColumns={2}
+        style={styles.categoriesFlatList}
+        data={featuredProducts}
+        horizontal
+        renderItem={renderFeaturedItem}
+      />
     </SafeAreaView>
   );
 }
@@ -76,6 +92,9 @@ const styles = StyleSheet.create({
   },
   categoriesFlatList: {
     height: 70,
+  },
+  featuredFlatList: {
+    height: '100%',
   },
   item: {
     padding: 10,

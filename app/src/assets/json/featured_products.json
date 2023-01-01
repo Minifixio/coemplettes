@@ -1,8 +1,36 @@
 {
     "featured_products": [
-        0,
-        1,
-        2,
-        3
+        {
+            "id":0,
+            "name": "Citron",
+            "category_id":0,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0219901211000040878PRIMARY_512x512/B2CD/",
+            "average_price":1.20
+        },
+        {
+            "id":1,
+            "name": "Poivron",
+            "category_id":1,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0220100225000648660PRIMARY_512x512/B2CD/",
+            "average_price":0.50
+        },
+        {
+            "id":2,
+            "name": "Granola",
+            "category_id":2,
+            "quantity_type": "paquet de 12",
+            "icon_link": "https://images.openfoodfacts.org/images/products/762/221/060/1988/front_fr.171.400.jpg",
+            "average_price":3.76
+        },
+        {
+            "id":3,
+            "name": "Savon Le Marseillais Vanille",
+            "category_id":3,
+            "quantity_type": "flacon 300ml",
+            "icon_link": "https://images.openfoodfacts.org/images/products/357/466/134/7424/front_fr.18.400.jpg",
+            "average_price":4.56
+        }
     ]
 }
