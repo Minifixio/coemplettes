@@ -2,15 +2,20 @@ import * as React from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 
 const ProductShowcase = ({id, name, price, image, onClick}) => {
+  const addBasketIcon = require('../assets/icons/misc/add_basket.png');
   return (
     <View style={styles.container}>
       <View style={styles.productContainer}>
-        <Text style={styles.priceText}>{price}</Text>
-        <Image style={styles.image} source={image} />
+        <Image style={styles.image} source={{uri: image}} />
+        <Text style={styles.priceText}>{price} €</Text>
+
         <Text style={styles.titleText}>{name}</Text>
 
         <Pressable style={styles.addPressable} onPress={onClick}>
-          <Text style={styles.addText}>Ajouter au panier</Text>
+          <View style={styles.pressableView}>
+            <Image style={styles.icon} source={addBasketIcon} />
+            <Text style={styles.addText}>Ajouter au panier</Text>
+          </View>
         </Pressable>
       </View>
     </View>
@@ -19,33 +24,58 @@ const ProductShowcase = ({id, name, price, image, onClick}) => {
 
 const styles = StyleSheet.create({
   productContainer: {
-    flex: 1,
-    width: '60%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 20,
   },
   container: {
-    width: '90%',
-    marginBottom: 5,
+    marginBottom: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '45%',
+    backgroundColor: 'white',
     borderRadius: 10,
   },
   titleText: {
-    color: 'white',
-    fontSize: 20,
-    lineHeight: 70,
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   image: {
-    width: 40,
-    height: 40,
+    width: 120,
+    height: 120,
+  },
+  pressableView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   addPressable: {
-    flex: 1,
+    borderColor: 'black',
+    borderTopWidth: 2,
+    marginTop: 5,
+    width: '100%',
+    height: 30,
+    display: 'flex',
+    justifyContent: 'center',
   },
   addText: {
     fontSize: 14,
+    textAlign: 'center',
   },
   priceText: {
-    fontSize: 10,
+    fontSize: 15,
+    fontWeight: '700',
     color: 'green',
+  },
+  icon: {
+    width: 20,
+    height: 20,
   },
 });
 

@@ -9,15 +9,15 @@ import {
   StatusBar,
   Switch,
 } from 'react-native';
-import {ProductShowcase} from '../components/ProductShowcase';
+import ProductShowcase from '../components/ProductShowcase';
 
 const categoriesIcons = {
-  1: require('../assets/icons/fruit.png'),
-  2: require('../assets/icons/vegetable.png'),
-  3: require('../assets/icons/grocery.png'),
-  4: require('../assets/icons/care-products.png'),
-  5: require('../assets/icons/drink.png'),
-  6: require('../assets/icons/cereal.png'),
+  1: require('../assets/icons/categories/fruit.png'),
+  2: require('../assets/icons/categories/vegetable.png'),
+  3: require('../assets/icons/categories/grocery.png'),
+  4: require('../assets/icons/categories/care-products.png'),
+  5: require('../assets/icons/categories/drink.png'),
+  6: require('../assets/icons/categories/cereal.png'),
 };
 
 const productCategories = require('../assets/json/categories.json').categories;
@@ -46,6 +46,7 @@ function HomePage({isConnected, setIsConnected}) {
       price={item.average_price}
       id={item.id}
       image={item.icon_link}
+      onClick={() => {}}
     />
   );
 
@@ -66,13 +67,19 @@ function HomePage({isConnected, setIsConnected}) {
           renderItem={renderCategoryItem}
         />
       </View>
-      <FlatList
-        numColumns={2}
-        style={styles.categoriesFlatList}
-        data={featuredProducts}
-        horizontal
-        renderItem={renderFeaturedItem}
-      />
+
+      <Text style={[styles.text, styles.categoryText]}>
+        Produits populaires
+      </Text>
+      <View style={styles.fetauredContainer}>
+        <FlatList
+          numColumns={2}
+          columnWrapperStyle={styles.fetauredColumnWrapperStyle}
+          style={styles.categoriesFlatList}
+          data={featuredProducts}
+          renderItem={renderFeaturedItem}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -87,14 +94,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.5)',
     height: 120,
   },
+  fetauredContainer: {
+    display: 'flex',
+  },
   productContainer: {
     display: 'flex',
   },
   categoriesFlatList: {
-    height: 70,
+    height: '100%',
+  },
+  fetauredColumnWrapperStyle: {
+    flex: 1,
+    justifyContent: 'space-around',
   },
   featuredFlatList: {
     height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
   },
   item: {
     padding: 10,

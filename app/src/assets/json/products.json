@@ -21,15 +21,15 @@
             "name": "Granola",
             "category_id":2,
             "quantity_type": "paquet de 12",
-            "icon_link": "https://images.openfoodfacts.org/images/products/762/221/060/1988/front_fr.171.400.jpg",
+            "icon_link": "https://media.auchan.fr/A0220160317000591469PRIMARY_512x512/B2CD/",
             "average_price":3.76
         },
         {
             "id":3,
-            "name": "Savon Le Marseillais Vanille",
+            "name": "Le Marseillais Vanille",
             "category_id":3,
             "quantity_type": "flacon 300ml",
-            "icon_link": "https://images.openfoodfacts.org/images/products/357/466/134/7424/front_fr.18.400.jpg",
+            "icon_link": "https://media.auchan.fr/P02000000000TW9PRIMARY_512x512/B2CD/",
             "average_price":4.56
         },
         {
@@ -37,7 +37,7 @@
             "name": "Coca-Cola",
             "category_id":4,
             "quantity_type": "1L",
-            "icon_link": "https://images.openfoodfacts.org/images/products/544/900/005/4227/front_fr.218.400.jpg",
+            "icon_link": "https://media.auchan.fr/A0220131018000141418PRIMARY_512x512/B2CD/",
             "average_price":2.30
         },
         {
@@ -45,7 +45,7 @@
             "name": "Riz",
             "category_id":5,
             "quantity_type": "500g",
-            "icon_link": "https://images.openfoodfacts.org/images/products/356/007/039/3619/front_fr.64.400.jpg",
+            "icon_link": "https://media.auchan.fr/P020000000016C7PRIMARY_512x512/B2CD/",
             "average_price":2.13
         }
     ]
