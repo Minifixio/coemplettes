@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   addText: {
     fontSize: 14,
     textAlign: 'center',
+    color: 'grey',
   },
   priceText: {
     fontSize: 15,

@@ -12,12 +12,12 @@ import {
 import ProductShowcase from '../components/ProductShowcase';
 
 const categoriesIcons = {
-  1: require('../assets/icons/categories/fruit.png'),
-  2: require('../assets/icons/categories/vegetable.png'),
-  3: require('../assets/icons/categories/grocery.png'),
-  4: require('../assets/icons/categories/care-products.png'),
-  5: require('../assets/icons/categories/drink.png'),
-  6: require('../assets/icons/categories/cereal.png'),
+  0: require('../assets/icons/categories/fruit.png'),
+  1: require('../assets/icons/categories/vegetable.png'),
+  2: require('../assets/icons/categories/grocery.png'),
+  3: require('../assets/icons/categories/care-products.png'),
+  4: require('../assets/icons/categories/drink.png'),
+  5: require('../assets/icons/categories/cereal.png'),
 };
 
 const productCategories = require('../assets/json/categories.json').categories;
@@ -31,7 +31,7 @@ const Item = function ({name, color, id}) {
       <View style={[styles.iconContainer, {backgroundColor: color}]}>
         <Image style={styles.icon} source={categoriesIcons[id]} />
       </View>
-      <Text>{name}</Text>
+      <Text style={{color: 'black'}}>{name}</Text>
     </View>
   );
 };
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    color: 'black',
     fontSize: 20,
   },
   categoryText: {
