@@ -11,7 +11,7 @@ import LandingPage from './src/screens/Landing';
 import MainPage from './src/screens/Menu';
 
 const App = () => {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   if (!isConnected) {
     return (

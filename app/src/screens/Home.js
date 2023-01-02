@@ -46,6 +46,7 @@ function HomePage({isConnected, setIsConnected}) {
       price={item.average_price}
       id={item.id}
       image={item.icon_link}
+      quantityType={item.quantity_type}
       onClick={() => {}}
     />
   );
@@ -68,14 +69,14 @@ function HomePage({isConnected, setIsConnected}) {
         />
       </View>
 
-      <Text style={[styles.text, styles.categoryText]}>
-        Produits populaires
-      </Text>
       <View style={styles.fetauredContainer}>
+        <Text style={[styles.text, styles.categoryText]}>
+          Produits populaires
+        </Text>
         <FlatList
           numColumns={2}
           columnWrapperStyle={styles.fetauredColumnWrapperStyle}
-          style={styles.categoriesFlatList}
+          style={styles.featuredFlatList}
           data={featuredProducts}
           renderItem={renderFeaturedItem}
         />
@@ -92,10 +93,11 @@ const styles = StyleSheet.create({
   categoriesContainer: {
     display: 'flex',
     backgroundColor: 'rgba(255,255,255,0.5)',
-    height: 120,
+    height: '15%',
   },
   fetauredContainer: {
     display: 'flex',
+    height: '85%',
   },
   productContainer: {
     display: 'flex',
@@ -109,8 +111,6 @@ const styles = StyleSheet.create({
   },
   featuredFlatList: {
     height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
   },
   item: {
     padding: 10,

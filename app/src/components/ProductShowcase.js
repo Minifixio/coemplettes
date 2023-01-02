@@ -1,13 +1,15 @@
 import * as React from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 
-const ProductShowcase = ({id, name, price, image, onClick}) => {
+const ProductShowcase = ({id, name, price, image, quantityType, onClick}) => {
   const addBasketIcon = require('../assets/icons/misc/add_basket.png');
   return (
     <View style={styles.container}>
       <View style={styles.productContainer}>
         <Image style={styles.image} source={{uri: image}} />
-        <Text style={styles.priceText}>{price} €</Text>
+        <Text style={styles.priceText}>
+          {price}€ / {quantityType}
+        </Text>
 
         <Text style={styles.titleText}>{name}</Text>
 
