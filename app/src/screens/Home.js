@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'rgba(255,255,255,0.5)',
     height: '15%',
+    marginBottom: 10,
   },
   fetauredContainer: {
     display: 'flex',
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   categoryText: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   switch: {
