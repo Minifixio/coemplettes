@@ -59,8 +59,8 @@ function HomePage({isConnected, setIsConnected}) {
         onValueChange={() => setIsConnected(false)}
         value={isConnected}
       />
+      <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
       <View style={styles.categoriesContainer}>
-        <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
         <FlatList
           style={styles.categoriesFlatList}
           data={productCategories}
@@ -92,13 +92,14 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     display: 'flex',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    height: '15%',
+    backgroundColor: '#e6e6e6',
+    height: '10%',
     marginBottom: 10,
   },
   fetauredContainer: {
     display: 'flex',
     height: '85%',
+    backgroundColor: '#f2f2f2',
   },
   productContainer: {
     display: 'flex',
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 60,
     marginVertical: 8,
-    marginHorizontal: 2,
+    marginHorizontal: 6,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

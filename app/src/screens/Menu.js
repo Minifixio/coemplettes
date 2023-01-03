@@ -53,29 +53,6 @@ function MainPage({isConnected, setIsConnected}) {
         />
       </Tab.Navigator>
     </NavigationContainer>
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="HomePage">
-    //     <Stack.Screen name="HomePage" options={{headerShown: false}}>
-    //       {props => (
-    //         <HomePage
-    //           isConnected={isConnected}
-    //           setIsConnected={setIsConnected}
-    //           {...props}
-    //         />
-    //       )}
-    //     </Stack.Screen>
-    //     <Stack.Screen
-    //       name="AccountPage"
-    //       component={AccountPage}
-    //       options={{title: 'Compte'}}
-    //     />
-    //     <Stack.Screen
-    //       name="FavoutritesPage"
-    //       component={FavoutritesPage}
-    //       options={{title: 'Favorits'}}
-    //     />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
   );
 }
 
