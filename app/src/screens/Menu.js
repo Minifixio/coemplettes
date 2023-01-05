@@ -6,7 +6,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeStack from './Home';
 import AccountPage from './Account';
 import FavoutritesPage from './Favourites';
-import CategoryPage from './Category';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,6 +50,12 @@ function MainPage({isConnected, setIsConnected}) {
           name="FavoutritesPage"
           component={FavoutritesPage}
           options={{title: 'Favorits'}}
+          listeners={{
+            tabPress: e => {
+              //Any custom code here
+              console.log(123);
+            },
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>

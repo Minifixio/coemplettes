@@ -7,11 +7,10 @@ import getProductsInCategory from '../utils/API';
 function CategoryPage({navigation, route}) {
   const {categoryId, name} = route.params;
 
-  navigation.setOptions({title: name});
-
   const [products, setProducts] = useState({});
 
   useEffect(() => {
+    navigation.setOptions({title: name});
     getProductsInCategory(categoryId).then(data => setProducts(data));
   });
 

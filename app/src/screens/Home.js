@@ -70,12 +70,12 @@ function HomePage({navigation, isConnected, setIsConnected}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Switch
+      {/* <Switch
         style={styles.switch}
         thumbColor={isConnected ? 'green' : 'red'}
         onValueChange={() => setIsConnected(false)}
         value={isConnected}
-      />
+      /> */}
       <LinearGradient
         colors={['#e6e6e6', '#ffffff']}
         style={styles.categoriesContainer}>
@@ -136,7 +136,7 @@ function HomeStack({isConnected, setIsConnected}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: 0,
   },
   categoriesContainer: {
     display: 'flex',
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
   chevronIcon: {
     position: 'absolute',
     right: 0,
+    marginTop: 5,
   },
   categoriesButtonPressable: {
     display: 'flex',
@@ -197,6 +198,7 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 25,
     fontWeight: 'bold',
+    marginTop: 5,
   },
   switch: {
     position: 'absolute',
