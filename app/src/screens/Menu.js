@@ -50,12 +50,6 @@ function MainPage({isConnected, setIsConnected}) {
           name="FavoutritesPage"
           component={FavoutritesPage}
           options={{title: 'Favorits'}}
-          listeners={{
-            tabPress: e => {
-              //Any custom code here
-              console.log(123);
-            },
-          }}
         />
       </Tab.Navigator>
     </NavigationContainer>
