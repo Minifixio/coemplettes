@@ -3,9 +3,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomePage from './Home';
+import HomeStack from './Home';
 import AccountPage from './Account';
 import FavoutritesPage from './Favourites';
+import CategoryPage from './Category';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,7 @@ function MainPage({isConnected, setIsConnected}) {
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
 
-            if (route.name === 'HomePage') {
+            if (route.name === 'Home') {
               iconName = focused ? 'md-home' : 'md-home-outline';
             } else if (route.name === 'AccountPage') {
               iconName = focused ? 'person-circle' : 'person-circle-outline';
@@ -32,9 +33,9 @@ function MainPage({isConnected, setIsConnected}) {
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
         })}>
-        <Tab.Screen name="HomePage" options={{headerShown: false}}>
+        <Tab.Screen name="Home" options={{headerShown: false}}>
           {props => (
-            <HomePage
+            <HomeStack
               isConnected={isConnected}
               setIsConnected={setIsConnected}
               {...props}

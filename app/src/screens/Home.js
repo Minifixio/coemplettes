@@ -13,6 +13,9 @@ import {
 import ProductShowcase from '../components/ProductShowcase';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CategoryPage from './Category';
 
 const categoriesIcons = {
   0: require('../assets/icons/categories/fruit.png'),
@@ -27,9 +30,16 @@ const productCategories = require('../assets/json/categories.json').categories;
 const featuredProducts =
   require('../assets/json/featured_products.json').featured_products;
 
-const Item = function ({name, color, id}) {
+const Item = function ({name, color, id, navigation}) {
   return (
-    <Pressable style={styles.item}>
+    <Pressable
+      style={styles.item}
+      onPress={() => {
+        navigation.navigate('CategoryPage', {
+          categoryId: id,
+          name: name,
+        });
+      }}>
       <View style={[styles.iconContainer, {backgroundColor: color}]}>
         <Image style={styles.icon} source={categoriesIcons[id]} />
       </View>
@@ -38,9 +48,14 @@ const Item = function ({name, color, id}) {
   );
 };
 
-function HomePage({isConnected, setIsConnected}) {
+function HomePage({navigation, isConnected, setIsConnected}) {
   const renderCategoryItem = ({item}) => (
-    <Item name={item.name} color={item.color} id={item.id} />
+    <Item
+      name={item.name}
+      color={item.color}
+      id={item.id}
+      navigation={navigation}
+    />
   );
   const renderFeaturedItem = ({item}) => (
     <ProductShowcase
@@ -95,6 +110,26 @@ function HomePage({isConnected, setIsConnected}) {
         />
       </View>
     </SafeAreaView>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function HomeStack({isConnected, setIsConnected}) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="HomePage" options={{headerShown: false}}>
+        {props => (
+          <HomePage
+            isConnected={isConnected}
+            setIsConnected={setIsConnected}
+            {...props}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen name="CategoryPage" component={CategoryPage} />
+    </Stack.Navigator>
   );
 }
 
@@ -170,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomePage;
+export default HomeStack;

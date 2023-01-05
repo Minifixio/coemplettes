@@ -1,9 +1,20 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ProductShowcase from '../components/ProductShowcase';
+import getProductsInCategory from '../utils/API';
 
-function CategoryPage({id, name, products}) {
+function CategoryPage({navigation, route}) {
+  const {categoryId, name} = route.params;
+
+  navigation.setOptions({title: name});
+
+  const [products, setProducts] = useState({});
+
+  useEffect(() => {
+    getProductsInCategory(categoryId).then(data => setProducts(data));
+  });
+
   const renderProductItem = ({item}) => (
     <ProductShowcase
       name={item.name}
@@ -36,6 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   productsFlatList: {
+    marginTop: 10,
     height: '100%',
   },
 });
