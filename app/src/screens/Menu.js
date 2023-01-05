@@ -1,11 +1,13 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeStack from './Home';
 import AccountPage from './Account';
 import FavoutritesPage from './Favourites';
+import CartPage from './Cart';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,13 +26,24 @@ function MainPage({isConnected, setIsConnected}) {
               iconName = focused ? 'person-circle' : 'person-circle-outline';
             } else if (route.name === 'FavoutritesPage') {
               iconName = focused ? 'star' : 'star-outline';
+            } else if (route.name === 'CartPage') {
+              iconName = focused ? 'basket' : 'basket-outline';
+              size = 35;
+              color = 'white';
             }
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+            if (route.name === 'CartPage') {
+              return (
+                <View style={styles.cartTabItem}>
+                  <Ionicons name={iconName} size={size} color={color} />
+                </View>
+              );
+            } else {
+              return <Ionicons name={iconName} size={size} color={color} />;
+            }
           },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: 'green',
+          tabBarInactiveTintColor: 'grey',
         })}>
         <Tab.Screen name="Home" options={{headerShown: false}}>
           {props => (
@@ -51,9 +64,28 @@ function MainPage({isConnected, setIsConnected}) {
           component={FavoutritesPage}
           options={{title: 'Favorits'}}
         />
+        <Tab.Screen
+          name="CartPage"
+          component={CartPage}
+          options={{title: '', tabBarShowLabel: false}}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  cartTabItem: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+    borderRadius: 50,
+    width: 70,
+    height: 70,
+    marginBottom: 20,
+    marginRight: 10,
+  },
+});
 
 export default MainPage;
