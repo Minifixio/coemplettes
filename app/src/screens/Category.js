@@ -3,7 +3,7 @@ import {StyleSheet, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ProductShowcase from '../components/ProductShowcase';
 
-function CategoryPage({name, products}) {
+function CategoryPage({id, name, products}) {
   const renderProductItem = ({item}) => (
     <ProductShowcase
       name={item.name}

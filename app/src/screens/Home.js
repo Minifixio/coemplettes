@@ -26,7 +26,6 @@ const categoriesIcons = {
 const productCategories = require('../assets/json/categories.json').categories;
 const featuredProducts =
   require('../assets/json/featured_products.json').featured_products;
-const products = require('../assets/json/products.json').products;
 
 const Item = function ({name, color, id}) {
   return (
