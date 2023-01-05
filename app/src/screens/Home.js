@@ -8,8 +8,11 @@ import {
   FlatList,
   StatusBar,
   Switch,
+  Pressable,
 } from 'react-native';
 import ProductShowcase from '../components/ProductShowcase';
+import LinearGradient from 'react-native-linear-gradient';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const categoriesIcons = {
   0: require('../assets/icons/categories/fruit.png'),
@@ -27,12 +30,12 @@ const products = require('../assets/json/products.json').products;
 
 const Item = function ({name, color, id}) {
   return (
-    <View style={styles.item}>
+    <Pressable style={styles.item}>
       <View style={[styles.iconContainer, {backgroundColor: color}]}>
         <Image style={styles.icon} source={categoriesIcons[id]} />
       </View>
       <Text style={{color: 'black'}}>{name}</Text>
-    </View>
+    </Pressable>
   );
 };
 
@@ -59,15 +62,26 @@ function HomePage({isConnected, setIsConnected}) {
         onValueChange={() => setIsConnected(false)}
         value={isConnected}
       />
-      <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
-      <View style={styles.categoriesContainer}>
+      <LinearGradient
+        colors={['#e6e6e6', '#ffffff']}
+        style={styles.categoriesContainer}>
+        <Pressable style={styles.categoriesButtonPressable}>
+          <Text style={[styles.text, styles.categoryText]}>Catégories</Text>
+          <Ionicons
+            style={styles.chevronIcon}
+            name="md-chevron-forward"
+            size={25}
+            color="black"
+          />
+        </Pressable>
+
         <FlatList
           style={styles.categoriesFlatList}
           data={productCategories}
           horizontal
           renderItem={renderCategoryItem}
         />
-      </View>
+      </LinearGradient>
 
       <View style={styles.fetauredContainer}>
         <Text style={[styles.text, styles.categoryText]}>
@@ -93,13 +107,20 @@ const styles = StyleSheet.create({
   categoriesContainer: {
     display: 'flex',
     backgroundColor: '#e6e6e6',
-    height: '10%',
-    marginBottom: 10,
+    height: '15%',
   },
   fetauredContainer: {
     display: 'flex',
     height: '85%',
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'white',
+  },
+  chevronIcon: {
+    position: 'absolute',
+    right: 0,
+  },
+  categoriesButtonPressable: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   productContainer: {
     display: 'flex',
