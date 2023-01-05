@@ -6,16 +6,16 @@ import {
   Image,
   SafeAreaView,
   FlatList,
-  StatusBar,
   Switch,
   Pressable,
 } from 'react-native';
-import ProductShowcase from '../components/ProductShowcase';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import ProductShowcase from '../components/ProductShowcase';
 import CategoryPage from './Category';
+import ProductPage from './Product';
 
 const categoriesIcons = {
   0: require('../assets/icons/categories/fruit.png'),
@@ -59,12 +59,21 @@ function HomePage({navigation, isConnected, setIsConnected}) {
   );
   const renderFeaturedItem = ({item}) => (
     <ProductShowcase
+      navigation={navigation}
       name={item.name}
       price={item.average_price}
       id={item.id}
       image={item.icon_link}
       quantityType={item.quantity_type}
-      onClick={() => {}}
+      onClick={() => {
+        navigation.navigate('ProductPage', {
+          categoryId: item.category_id,
+          name: item.name,
+          quantityType: item.quantity_type,
+          iconLink: item.icon_link,
+          averagePrice: item.average_price,
+        });
+      }}
     />
   );
 
@@ -129,6 +138,7 @@ function HomeStack({isConnected, setIsConnected}) {
       </Stack.Screen>
 
       <Stack.Screen name="CategoryPage" component={CategoryPage} />
+      <Stack.Screen name="ProductPage" component={ProductPage} />
     </Stack.Navigator>
   );
 }

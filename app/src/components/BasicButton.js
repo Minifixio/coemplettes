@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     backgroundColor:
       'linear-gradient(61deg, rgba(205,239,137,1) 35%, rgba(88,156,0,1) 100%)',
     width: '90%',
+    height: 70,
     marginBottom: 5,
     borderRadius: 10,
   },

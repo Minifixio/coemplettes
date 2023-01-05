@@ -16,12 +16,21 @@ function CategoryPage({navigation, route}) {
 
   const renderProductItem = ({item}) => (
     <ProductShowcase
+      navigation={navigation}
       name={item.name}
       price={item.average_price}
       id={item.id}
       image={item.icon_link}
       quantityType={item.quantity_type}
-      onClick={() => {}}
+      onClick={() => {
+        navigation.navigate('ProductPage', {
+          categoryId: item.category_id,
+          name: item.name,
+          quantityType: item.quantity_type,
+          iconLink: item.icon_link,
+          averagePrice: item.average_price,
+        });
+      }}
     />
   );
   return (

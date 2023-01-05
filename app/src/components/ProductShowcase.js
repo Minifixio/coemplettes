@@ -2,17 +2,27 @@ import * as React from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ProductShowcase = ({id, name, price, image, quantityType, onClick}) => {
+const ProductShowcase = ({
+  navigation,
+  id,
+  name,
+  price,
+  image,
+  quantityType,
+  onClick,
+}) => {
   const addBasketIcon = require('../assets/icons/misc/add_basket.png');
   return (
     <LinearGradient colors={['#ffffff', '#e6e6e6']} style={styles.container}>
       <View style={styles.productContainer}>
-        <Image style={styles.image} source={{uri: image}} />
-        <Text style={styles.priceText}>
-          {price}€ / {quantityType}
-        </Text>
+        <Pressable style={styles.pressableProduct} onPress={onClick}>
+          <Image style={styles.image} source={{uri: image}} />
+          <Text style={styles.priceText}>
+            {price}€ / {quantityType}
+          </Text>
 
-        <Text style={styles.titleText}>{name}</Text>
+          <Text style={styles.titleText}>{name}</Text>
+        </Pressable>
 
         <Pressable style={styles.addPressable} onPress={onClick}>
           <View style={styles.pressableView}>
@@ -41,6 +51,11 @@ const styles = StyleSheet.create({
     width: '45%',
     backgroundColor: '#e6e6e6',
     borderRadius: 10,
+  },
+  pressableProduct: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   titleText: {
     color: 'black',
