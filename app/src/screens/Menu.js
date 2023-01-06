@@ -67,7 +67,7 @@ function MainPage({isConnected, setIsConnected}) {
         <Tab.Screen
           name="CartPage"
           component={CartPage}
-          options={{title: '', tabBarShowLabel: false}}
+          options={{title: ''}}
         />
       </Tab.Navigator>
     </NavigationContainer>
