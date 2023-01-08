@@ -36,9 +36,6 @@ function ProductPage({navigation, route}) {
             colorMax={'#f04048'}
             colorMin={'#40c5f4'}
             value={quantity}
-            onChange={num => {
-              console.log(num);
-            }}
           />
           <BasicButton
             style={styles.button}
