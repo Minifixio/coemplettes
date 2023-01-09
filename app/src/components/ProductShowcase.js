@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,9 +14,24 @@ const ProductShowcase = ({
   onClick,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
-  const [quantitySelected, setQuantitySelected] = useState(0);
+  //const [quantitySelected, setQuantitySelected] = useState(0);
+  const quantitySelected = 0;
+
   const pressableCliked = () => {
-    setQuantitySelected(!quantitySelected);
+    if (isSelected) {
+      console.log(quantitySelected);
+    } else {
+      setIsSelected(true);
+    }
+  };
+
+  const inputChanged = val => {
+    // eslint-disable-next-line no-alert
+    if (val === 0) {
+      setIsSelected(false);
+    } else {
+      alert(`${val} ${name} ajouté au panier`);
+    }
   };
 
   return (
@@ -45,6 +60,7 @@ const ProductShowcase = ({
               <Text style={styles.addText}>Ajouter au panier</Text>
             </View>
           )}
+          {/* Sinon on montre l'input pour choisir la quantité */}
           {isSelected && (
             <View style={styles.inputSpinnerView}>
               <InputSpinner
@@ -59,6 +75,9 @@ const ProductShowcase = ({
                 colorMax={'#f04048'}
                 colorMin={'#40c5f4'}
                 value={quantitySelected}
+                onChange={num => {
+                  inputChanged(num);
+                }}
               />
             </View>
           )}
