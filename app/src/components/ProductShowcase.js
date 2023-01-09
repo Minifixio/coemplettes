@@ -26,10 +26,10 @@ const ProductShowcase = ({
   };
 
   const inputChanged = val => {
-    // eslint-disable-next-line no-alert
     if (val === 0) {
       setIsSelected(false);
     } else {
+      // eslint-disable-next-line no-alert
       alert(`${val} ${name} ajouté au panier`);
     }
   };

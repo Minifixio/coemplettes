@@ -1,6 +1,6 @@
 const products = require('../assets/json/products.json').products;
 
-async function getProductsInCategory(categoryId) {
+export async function getProductsInCategory(categoryId) {
   let res = [];
   for (let product of products) {
     if (product.category_id === categoryId) {
@@ -10,8 +10,14 @@ async function getProductsInCategory(categoryId) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(res);
-    }, 1500);
+    }, 1000);
   });
 }
 
-export default getProductsInCategory;
+export function getProducts() {
+  return products;
+}
+
+export function getProduct(id) {
+  return products.find(product => product.id === id);
+}
