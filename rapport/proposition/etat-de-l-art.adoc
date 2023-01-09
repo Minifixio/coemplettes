@@ -6,7 +6,7 @@ ifdef::env-gitlab,env-browser[:outfilesuffix: .adoc]
 // avec des images si besoin. Utilisez des renvois vers votre
 // bibliographie : « comme démontré dans [2], … »
 
-Notre projet s'ancre dans un cadre d'applications 
+Notre projet s'ancre dans un cadre d'applications BLABLABLA
 en forte augmentation ces derniers temps : la livraison de courses/repas.
 Dès lors, il est possible de distinguer différents produits
 existants qui se rapproche de notre projet.
