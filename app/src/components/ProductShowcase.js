@@ -1,36 +1,48 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputSpinner from 'react-native-input-spinner';
+import {CartContext} from '../utils/CartProvider';
 
 const ProductShowcase = ({
   navigation,
   id,
   name,
-  price,
-  image,
+  averagePrice,
+  iconLink,
   quantityType,
-  onClick,
+  categoryId,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
-  //const [quantitySelected, setQuantitySelected] = useState(0);
-  const quantitySelected = 0;
+  const [quantity, setQuantity] = useState(0);
+  const {addToCart} = useContext(CartContext);
+
+  function onClick() {
+    navigation.navigate('ProductPage', {
+      id: id,
+      name: name,
+      quantityType: quantityType,
+      iconLink: iconLink,
+      averagePrice: averagePrice,
+      categoryId: categoryId,
+    });
+  }
 
   const pressableCliked = () => {
     if (isSelected) {
-      console.log(quantitySelected);
+      console.log(quantity);
     } else {
       setIsSelected(true);
     }
   };
 
   const inputChanged = val => {
+    setQuantity(val);
     if (val === 0) {
       setIsSelected(false);
     } else {
-      // eslint-disable-next-line no-alert
-      alert(`${val} ${name} ajouté au panier`);
+      addToCart(id, quantity);
     }
   };
 
@@ -38,9 +50,9 @@ const ProductShowcase = ({
     <LinearGradient colors={['#ffffff', '#e6e6e6']} style={styles.container}>
       <View style={styles.productContainer}>
         <Pressable style={styles.pressableProduct} onPress={onClick}>
-          <Image style={styles.image} source={{uri: image}} />
+          <Image style={styles.image} source={{uri: iconLink}} />
           <Text style={styles.priceText}>
-            {price}€ / {quantityType}
+            {averagePrice}€ / {quantityType}
           </Text>
 
           <Text style={styles.titleText}>{name}</Text>
@@ -74,7 +86,7 @@ const ProductShowcase = ({
                 step={1}
                 colorMax={'#f04048'}
                 colorMin={'#40c5f4'}
-                value={quantitySelected}
+                value={quantity}
                 onChange={num => {
                   inputChanged(num);
                 }}

@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import InputSpinner from 'react-native-input-spinner';
 import BasicButton from '../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
+import {CartContext} from '../utils/CartProvider';
 
 function ProductPage({navigation, route}) {
-  const {name, categoryId, quantityType, iconLink, averagePrice} = route.params;
+  const {name, id, categoryId, quantityType, iconLink, averagePrice} =
+    route.params;
   const [quantity, setQuantity] = useState(0);
+  const {addToCart} = useContext(CartContext);
 
   useEffect(() => {
     navigation.setOptions({title: ''});
@@ -36,10 +39,13 @@ function ProductPage({navigation, route}) {
             colorMax={'#f04048'}
             colorMin={'#40c5f4'}
             value={quantity}
+            onChange={num => {
+              setQuantity(num);
+            }}
           />
           <BasicButton
             style={styles.button}
-            onClick={() => navigation.navigate('HomePage')}
+            onClick={() => addToCart(id, quantity)}
             text="Ajouter au panier"
           />
         </View>
