@@ -38,11 +38,16 @@ const ProductShowcase = ({
   };
 
   const inputChanged = val => {
+    const valTemp = val;
     setQuantity(val);
     if (val === 0) {
       setIsSelected(false);
     } else {
-      addToCart(id, quantity);
+      if (valTemp > quantity) {
+        addToCart(id, 1);
+      } else {
+        addToCart(id, 1);
+      }
     }
   };
 

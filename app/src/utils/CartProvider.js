@@ -1,5 +1,4 @@
 import React, {createContext, useState} from 'react';
-import {StyleSheet, Text, View, Pressable} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {getProduct} from '../services/ProductService';
 export const CartContext = createContext();
@@ -25,14 +24,16 @@ export function CartProvider(props) {
             id,
             quantity: quantity,
             product,
-            totalPrice: product.price,
+            totalPrice:
+              Math.round(quantity * product.average_price * 100) / 100,
           },
         ];
       } else {
         return prevItems.map(item => {
           if (item.id === id) {
             item.quantity += quantity;
-            item.totalPrice += product.price;
+            item.totalPrice +=
+              Math.round(quantity * product.average_price * 100) / 100;
           }
           return item;
         });
@@ -52,49 +53,7 @@ export function CartProvider(props) {
     <CartContext.Provider
       value={{items, setItems, getItemsCount, addToCart, getTotalPrice}}>
       {props.children}
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        style={styles.modal}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.bottomView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              {lastItemAdded.quantity} de {lastItemAdded.name} ajoutés au panier
-            </Text>
-          </View>
-        </View>
-      </Modal> */}
       <Toast />
     </CartContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  bottomView: {
-    height: 20,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    color: 'black',
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});
