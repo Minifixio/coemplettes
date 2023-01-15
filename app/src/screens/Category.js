@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ProductShowcase from '../components/ProductShowcase';
-import getProductsInCategory from '../services/ProductService';
+import {getProductsInCategory} from '../services/ProductService';
 
 function CategoryPage({navigation, route}) {
   const {categoryId, name} = route.params;
@@ -12,24 +12,14 @@ function CategoryPage({navigation, route}) {
   useEffect(() => {
     navigation.setOptions({title: name});
     getProductsInCategory(categoryId).then(data => setProducts(data));
-  });
+  }, [navigation, categoryId, name]);
 
   const renderProductItem = ({item}) => (
     <ProductShowcase
       navigation={navigation}
-      name={item.name}
-      price={item.average_price}
       id={item.id}
-      image={item.icon_link}
-      quantityType={item.quantity_type}
       onClick={() => {
-        navigation.navigate('ProductPage', {
-          categoryId: item.category_id,
-          name: item.name,
-          quantityType: item.quantity_type,
-          iconLink: item.icon_link,
-          averagePrice: item.average_price,
-        });
+        navigation.navigate('ProductPage', {id: item.id});
       }}
     />
   );

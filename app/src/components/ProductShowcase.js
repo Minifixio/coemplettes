@@ -1,22 +1,21 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputSpinner from 'react-native-input-spinner';
 import {CartContext} from '../utils/CartProvider';
+import {getProduct} from '../services/ProductService';
 
-const ProductShowcase = ({
-  navigation,
-  id,
-  name,
-  averagePrice,
-  iconLink,
-  quantityType,
-  categoryId,
-}) => {
+const ProductShowcase = ({navigation, id}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState({});
   const {addToCart} = useContext(CartContext);
+
+  useEffect(() => {
+    navigation.setOptions({title: ''});
+    setProduct(getProduct(id));
+  }, [id, navigation]);
 
   function onClick() {
     navigation.navigate('ProductPage', {id});
@@ -48,12 +47,12 @@ const ProductShowcase = ({
     <LinearGradient colors={['#ffffff', '#e6e6e6']} style={styles.container}>
       <View style={styles.productContainer}>
         <Pressable style={styles.pressableProduct} onPress={onClick}>
-          <Image style={styles.image} source={{uri: iconLink}} />
+          <Image style={styles.image} source={{uri: product.icon_link}} />
           <Text style={styles.priceText}>
-            {averagePrice}€ / {quantityType}
+            {product.average_price}€ / {product.quantity_type}
           </Text>
 
-          <Text style={styles.titleText}>{name}</Text>
+          <Text style={styles.titleText}>{product.name}</Text>
         </Pressable>
 
         <Pressable style={styles.addPressable} onPress={pressableCliked}>

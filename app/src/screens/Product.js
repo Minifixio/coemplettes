@@ -15,7 +15,6 @@ function ProductPage({navigation, route}) {
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-    console.log(id, getProduct(id));
     setProduct(getProduct(id));
   }, [id, navigation]);
 

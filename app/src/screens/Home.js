@@ -30,7 +30,7 @@ const productCategories = require('../assets/json/categories.json').categories;
 const featuredProducts =
   require('../assets/json/featured_products.json').featured_products;
 
-const Item = function ({name, color, id, navigation}) {
+const CategoryItem = function ({name, color, id, navigation}) {
   return (
     <Pressable
       style={styles.item}
@@ -50,7 +50,7 @@ const Item = function ({name, color, id, navigation}) {
 
 function HomePage({navigation, isConnected, setIsConnected}) {
   const renderCategoryItem = ({item}) => (
-    <Item
+    <CategoryItem
       name={item.name}
       color={item.color}
       id={item.id}
@@ -58,15 +58,7 @@ function HomePage({navigation, isConnected, setIsConnected}) {
     />
   );
   const renderFeaturedItem = ({item}) => (
-    <ProductShowcase
-      navigation={navigation}
-      name={item.name}
-      averagePrice={item.average_price}
-      id={item.id}
-      categoryId={item.categoryId}
-      iconLink={item.icon_link}
-      quantityType={item.quantity_type}
-    />
+    <ProductShowcase navigation={navigation} id={item.id} />
   );
 
   return (
