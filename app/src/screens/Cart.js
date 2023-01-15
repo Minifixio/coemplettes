@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,50 +7,99 @@ import {
   FlatList,
   Pressable,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import {getProduct} from '../services/ProductService';
 import {CartContext} from '../utils/CartProvider';
 import LinearGradient from 'react-native-linear-gradient';
+import SwipeableFlatList from 'react-native-swipeable-list';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ProductCartItem = function ({name, price, quantity, iconLink}) {
+const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    setProduct(getProduct(id));
+  }, [navigation, id]);
+
+  function onClick() {
+    navigation.navigate('ProductPage', {id});
+  }
+
   return (
     <View style={styles.cardShadow}>
       <LinearGradient
         colors={['#ffffff', '#e6e6e6']}
         style={styles.productCartItemContainer}>
         <Pressable style={styles.productCartItemPressable}>
-          <View style={styles.imageProductContainer}>
-            <Image style={styles.icon} source={{uri: iconLink}} />
-          </View>
+          <TouchableOpacity
+            style={styles.imageProductContainer}
+            onPress={onClick}>
+            <Image style={styles.icon} source={{uri: product.icon_link}} />
+          </TouchableOpacity>
           <View style={styles.nameQuantityView}>
-            <Text style={styles.productNameText}>{name}</Text>
-            <Text style={styles.productQuantityText}>x{quantity}</Text>
+            <Text style={styles.productNameText}>{product.name}</Text>
+            <Text style={styles.productQuantityText}>
+              x{quantity} {product.quantity_type}
+            </Text>
           </View>
-          <Text style={styles.productPriceText}>{price}€</Text>
+          <Text style={styles.productPriceText}>{totalPrice}€</Text>
         </Pressable>
       </LinearGradient>
     </View>
   );
 };
 
-function CartPage() {
-  const {addToCart, items} = useContext(CartContext);
+function CartPage({navigation}) {
+  const {addToCart, removeFromCart, items} = useContext(CartContext);
   console.log(items);
+
+  function remove(id) {
+    removeFromCart(id);
+  }
+
+  const quickActions = (index, qaItem) => {
+    return (
+      <View style={styles.deleteButtonContainer}>
+        <View style={styles.deleteButton}>
+          <Pressable onPress={() => remove(qaItem)}>
+            <Ionicons name="trash" size={40} color="black" />
+          </Pressable>
+        </View>
+      </View>
+    );
+  };
 
   const renderProductItem = ({item}) => (
     <ProductCartItem
-      name={item.product.name}
-      price={item.totalPrice}
+      id={item.id}
+      navigation={navigation}
       quantity={item.quantity}
-      iconLink={item.product.icon_link}
+      totalPrice={item.totalPrice}
     />
   );
 
+  const extractItemKey = item => {
+    return item.id.toString();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+      {/* Si la cart est vide on affiche ce message */}
+      {items.length === 0 && (
+        <View style={styles.emptyTextView}>
+          <Text style={styles.emptyText}>Ton panier est vide !</Text>
+          <Ionicons name="sad" size={40} color="black" />
+        </View>
+      )}
+
+      <SwipeableFlatList
         style={styles.featuredFlatList}
         data={items}
         renderItem={renderProductItem}
+        keyExtractor={extractItemKey}
+        maxSwipeDistance={70}
+        renderQuickActions={({index, item}) => quickActions(index, item)}
       />
     </SafeAreaView>
   );
@@ -122,10 +171,33 @@ const styles = StyleSheet.create({
   cardShadow: {
     borderRadius: 16,
     backgroundColor: 'transparent',
-
     height: 100,
     padding: 5,
     marginTop: 2,
+  },
+  deleteButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  deleteButtonText: {
+    color: 'black',
+  },
+  deleteButton: {
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: '400',
+  },
+  emptyTextView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
 });
 

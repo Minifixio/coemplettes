@@ -41,6 +41,12 @@ export function CartProvider(props) {
     });
   }
 
+  function removeFromCart(id) {
+    setItems(prevItems => {
+      prevItems.filter(item => item.id !== id);
+    });
+  }
+
   function getItemsCount() {
     return items.reduce((sum, item) => sum + item.quantity, 0);
   }
@@ -51,7 +57,14 @@ export function CartProvider(props) {
 
   return (
     <CartContext.Provider
-      value={{items, setItems, getItemsCount, addToCart, getTotalPrice}}>
+      value={{
+        items,
+        setItems,
+        getItemsCount,
+        addToCart,
+        getTotalPrice,
+        removeFromCart,
+      }}>
       {props.children}
       <Toast />
     </CartContext.Provider>

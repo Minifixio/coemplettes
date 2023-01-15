@@ -5,28 +5,35 @@ import InputSpinner from 'react-native-input-spinner';
 import BasicButton from '../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
 import {CartContext} from '../utils/CartProvider';
+import {getProduct} from '../services/ProductService';
 
 function ProductPage({navigation, route}) {
-  const {name, id, categoryId, quantityType, iconLink, averagePrice} =
-    route.params;
   const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState({});
   const {addToCart} = useContext(CartContext);
+  const {id} = route.params;
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-  });
+    console.log(id, getProduct(id));
+    setProduct(getProduct(id));
+  }, [id, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{uri: iconLink}} />
+        <Image style={styles.image} source={{uri: product.icon_link}} />
       </View>
       <LinearGradient
         colors={['#ffffff', '#e6e6e6']}
         style={styles.infoContainer}>
-        <Text style={[styles.text, styles.priceText]}>{averagePrice}€</Text>
-        <Text style={[styles.text, styles.nameText]}>{name}</Text>
-        <Text style={[styles.text, styles.quantityText]}>{quantityType}</Text>
+        <Text style={[styles.text, styles.priceText]}>
+          {product.averagePrice}€
+        </Text>
+        <Text style={[styles.text, styles.nameText]}>{product.name}</Text>
+        <Text style={[styles.text, styles.quantityText]}>
+          {product.quantity_type}
+        </Text>
         <View style={styles.buttonsContainer}>
           <InputSpinner
             style={styles.inputSpinner}

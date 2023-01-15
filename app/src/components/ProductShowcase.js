@@ -19,14 +19,7 @@ const ProductShowcase = ({
   const {addToCart} = useContext(CartContext);
 
   function onClick() {
-    navigation.navigate('ProductPage', {
-      id: id,
-      name: name,
-      quantityType: quantityType,
-      iconLink: iconLink,
-      averagePrice: averagePrice,
-      categoryId: categoryId,
-    });
+    navigation.navigate('ProductPage', {id});
   }
 
   const pressableCliked = () => {
