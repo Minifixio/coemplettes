@@ -27,6 +27,15 @@ export class Shipper {
     @Column({ type: "float", nullable:true })
     loc_lat!: number
 
+    @Column({ type: "varchar", nullable:true })
+    drive!: string
+
+    @Column({ type: "boolean", nullable:true })
+    shop!: boolean
+
+    @Column({ type: "varchar", nullable:true })
+    availability!: string
+
     @OneToOne(type => User, user => user)
     @JoinColumn(
         { name: 'user_id', referencedColumnName: 'id'}

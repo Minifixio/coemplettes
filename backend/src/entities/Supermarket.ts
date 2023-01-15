@@ -6,7 +6,7 @@ export class Supermarket {
     id!: number
 
     @Column({ type: "varchar", length: 100, nullable:true })
-    nom!: string
+    name!: string
 
     @Column({ type: "float", nullable:true })
     loc_long!: number
@@ -14,6 +14,6 @@ export class Supermarket {
     @Column({ type: "float", nullable:true })
     loc_lat!: number
 
-    @Column({ type: "varchar", length: 25, nullable:true })
+    @Column({ type: "varchar", length: 200, nullable:true })
     business_hours!: string
 }

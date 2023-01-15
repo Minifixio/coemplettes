@@ -19,4 +19,7 @@ export class User {
 
     @Column({ type: "varchar", length: 100, nullable:false })
     phone!: string
+
+    @Column({ type: "varchar", length: 200, nullable:false })
+    pwdhash!: string
 }
