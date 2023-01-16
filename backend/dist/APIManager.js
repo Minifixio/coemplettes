@@ -7,6 +7,7 @@ exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const port = 3000;
 class API {
+    // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     constructor(port, tag) {
         this.app = {};
         console.log(`[${tag}] Initialisation de l\'api`);

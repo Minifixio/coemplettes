@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = void 0;
 const data_source_1 = require("./data-source");
-const user_1 = require("./entities/user");
+const User_1 = require("./entities/User");
 class DB {
     constructor() {
     }
@@ -27,7 +27,7 @@ class DB {
     test() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
-                .getRepository(user_1.User)
+                .getRepository(User_1.User)
                 .createQueryBuilder("user")
                 .where("user.first_name = :first_name", { first_name: "John" })
                 .getOne();

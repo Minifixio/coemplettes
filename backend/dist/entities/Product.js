@@ -9,39 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Product = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+let Product = class Product {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Product.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 50, nullable: false }),
+    __metadata("design:type", String)
+], Product.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 25, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "first_name", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 25, nullable: false }),
-    __metadata("design:type", String)
-], User.prototype, "last_name", void 0);
+], Product.prototype, "quantity_type", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "school", void 0);
+], Product.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
+    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    __metadata("design:type", Number)
+], Product.prototype, "category_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "phone", void 0);
+], Product.prototype, "icon_link", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 200, nullable: false }),
-    __metadata("design:type", String)
-], User.prototype, "pwdhash", void 0);
-User = __decorate([
-    (0, typeorm_1.Entity)({ name: "users" })
-], User);
-exports.User = User;
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    __metadata("design:type", Number)
+], Product.prototype, "average_price", void 0);
+Product = __decorate([
+    (0, typeorm_1.Entity)({ name: "products" })
+], Product);
+exports.Product = Product;
