@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from "typeorm"
+import { Shipper } from "./Shipper"
 
 @Entity({name: "users"})
 export class User {
@@ -22,4 +23,8 @@ export class User {
 
     @Column({ type: "varchar", length: 200, nullable:false })
     pwdhash!: string
+
+    @OneToOne(() => Shipper)
+    @JoinColumn()
+    shipper_profile!: Shipper
 }

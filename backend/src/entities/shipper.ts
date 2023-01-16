@@ -36,9 +36,7 @@ export class Shipper {
     @Column({ type: "varchar", nullable:true })
     availability!: string
 
-    @OneToOne(type => User, user => user)
-    @JoinColumn(
-        { name: 'user_id', referencedColumnName: 'id'}
-    )
+    @OneToOne(() => User, user => user.shipper_profile)
+    @JoinColumn()
     user!: User
 }
