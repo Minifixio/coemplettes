@@ -1,0 +1,13 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "first_name": "John",
+            "last_name": "Mikeal",
+            "school": "Télécom Paris",
+            "email": "johnmikeal@telecom-paris.fr",
+            "phone": "+33612345689",
+            "password": "hello"
+        }
+    ]
+}
