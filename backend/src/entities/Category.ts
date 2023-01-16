@@ -7,4 +7,10 @@ export class Category {
 
     @Column({ type: "varchar", length: 50, nullable:false })
     name!: string
+
+    @Column({ type: "varchar", nullable:false })
+    icon_link!: string
+
+    @Column({ type: "varchar", nullable:true })
+    color!: string
 }

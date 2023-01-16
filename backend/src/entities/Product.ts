@@ -14,12 +14,12 @@ export class Product {
     @Column({ type: "varchar", length: 100, nullable:false })
     description!: string
 
-    @Column({ type: "varchar", nullable:false })
+    @Column({ type: "int", nullable:false })
     category_id!: number
 
     @Column({ type: "varchar", nullable:false })
     icon_link!: string
 
-    @Column({ type: "int", nullable:false })
+    @Column({ type: "float", nullable:false })
     average_price!: number
 }

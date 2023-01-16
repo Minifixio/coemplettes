@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
 ], Product.prototype, "category_id", void 0);
 __decorate([
@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "icon_link", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    (0, typeorm_1.Column)({ type: "float", nullable: false }),
     __metadata("design:type", Number)
 ], Product.prototype, "average_price", void 0);
 Product = __decorate([

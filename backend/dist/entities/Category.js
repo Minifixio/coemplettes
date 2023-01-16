@@ -21,6 +21,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 50, nullable: false }),
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    __metadata("design:type", String)
+], Category.prototype, "icon_link", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Category.prototype, "color", void 0);
 Category = __decorate([
     (0, typeorm_1.Entity)({ name: "category" })
 ], Category);
