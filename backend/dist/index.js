@@ -16,7 +16,6 @@ function main() {
         const api = new APIManager_1.API(3000, 'api');
         const db = new DBManager_1.DB();
         yield db.initialize();
-        db.writeFromJSON("products");
     });
 }
 main();

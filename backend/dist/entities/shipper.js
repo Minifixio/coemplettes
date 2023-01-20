@@ -59,8 +59,8 @@ __decorate([
     __metadata("design:type", String)
 ], Shipper.prototype, "availability", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(type => User_1.User, user => user),
-    (0, typeorm_1.JoinColumn)({ name: 'user_id', referencedColumnName: 'id' }),
+    (0, typeorm_1.OneToOne)(() => User_1.User, user => user.shipper_profile),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", User_1.User)
 ], Shipper.prototype, "user", void 0);
 Shipper = __decorate([

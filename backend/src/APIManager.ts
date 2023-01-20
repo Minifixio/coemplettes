@@ -24,6 +24,12 @@ export class API {
             res.send('Backend CoEmplettes !');
         });
     }
+
+    private initializeGETparam(entryPointName: string, paramName: string, callback: ((c: any) => Promise<any>)) {
+        this.app.get(`/${entryPointName}/:${paramName}`, async (req: Request, res: Response) => {
+            const data = await callback(req.params[paramName])
+        })
+    }
 }
 
 

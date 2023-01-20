@@ -37,6 +37,12 @@ const data_source_1 = require("./data-source");
 const User_1 = require("./entities/User");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const Shipper_1 = require("./entities/Shipper");
+const Cart_1 = require("./entities/Cart");
+const Delivery_1 = require("./entities/Delivery");
+const DeliveryProposal_1 = require("./entities/DeliveryProposal");
+const Product_1 = require("./entities/Product");
+const Category_1 = require("./entities/Category");
 class DB {
     constructor() {
     }
@@ -56,6 +62,129 @@ class DB {
                 .createQueryBuilder("user")
                 .where("user.first_name = :first_name", { first_name: "John" })
                 .getOne();
+            return res;
+        });
+    }
+    getUserByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(User_1.User)
+                .createQueryBuilder("user")
+                .where("user.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getShipperByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Shipper_1.Shipper)
+                .createQueryBuilder("shipper")
+                .where("shipper.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getCartByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getDeliveryByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Delivery_1.Delivery)
+                .createQueryBuilder("delivery")
+                .where("delivery.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getDeliveryProposalByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(DeliveryProposal_1.DeliveryProposal)
+                .createQueryBuilder("delivery_proposal")
+                .where("delivery_proposal.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getProductByID(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Product_1.Product)
+                .createQueryBuilder("product")
+                .where("product.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    getUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(User_1.User)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getShippers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Shipper_1.Shipper)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getCarts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getDeliveries() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Delivery_1.Delivery)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getDeliveryProposals() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(DeliveryProposal_1.DeliveryProposal)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getCategories() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Category_1.Category)
+                .createQueryBuilder()
+                .getMany();
+            return res;
+        });
+    }
+    getProducts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield data_source_1.AppDataSource
+                .getRepository(Product_1.Product)
+                .createQueryBuilder()
+                .getMany();
             return res;
         });
     }
