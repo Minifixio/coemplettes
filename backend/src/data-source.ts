@@ -1,6 +1,14 @@
 import { DataSource } from 'typeorm';
 import { db_password } from './credentials';
+import { Cart } from './entities/Cart';
+import { CartItem } from './entities/CartItem';
+import { Category } from './entities/Category';
+import { Delivery } from './entities/Delivery';
+import { DeliveryProposal } from './entities/DeliveryProposal';
+import { Product } from './entities/Product';
 import { Shipper } from './entities/Shipper';
+import { Supermarket } from './entities/Supermarket';
+import { SupermarketProduct } from './entities/SupermarketProduct';
 import { User } from './entities/User';
 
 
@@ -15,5 +23,5 @@ export const AppDataSource = new DataSource({
     database: "COEMP",
     password:db_password,
     logging: true,
-    entities: [User, Shipper]
+    entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct]
 })

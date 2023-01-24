@@ -65,7 +65,7 @@ class DB {
             return res;
         });
     }
-    getUserByID(id) {
+    static getUserByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(User_1.User)
@@ -75,7 +75,7 @@ class DB {
             return res;
         });
     }
-    getShipperByID(id) {
+    static getShipperByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Shipper_1.Shipper)
@@ -85,7 +85,7 @@ class DB {
             return res;
         });
     }
-    getCartByID(id) {
+    static getCartByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Cart_1.Cart)
@@ -95,7 +95,7 @@ class DB {
             return res;
         });
     }
-    getDeliveryByID(id) {
+    static getDeliveryByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Delivery_1.Delivery)
@@ -105,7 +105,7 @@ class DB {
             return res;
         });
     }
-    getDeliveryProposalByID(id) {
+    static getDeliveryProposalByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
@@ -115,7 +115,7 @@ class DB {
             return res;
         });
     }
-    getProductByID(id) {
+    static getProductByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Product_1.Product)
@@ -125,7 +125,7 @@ class DB {
             return res;
         });
     }
-    getUsers() {
+    static getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(User_1.User)
@@ -134,7 +134,7 @@ class DB {
             return res;
         });
     }
-    getShippers() {
+    static getShippers() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Shipper_1.Shipper)
@@ -143,7 +143,7 @@ class DB {
             return res;
         });
     }
-    getCarts() {
+    static getCarts() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Cart_1.Cart)
@@ -152,7 +152,7 @@ class DB {
             return res;
         });
     }
-    getDeliveries() {
+    static getDeliveries() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Delivery_1.Delivery)
@@ -161,7 +161,7 @@ class DB {
             return res;
         });
     }
-    getDeliveryProposals() {
+    static getDeliveryProposals() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
@@ -170,7 +170,7 @@ class DB {
             return res;
         });
     }
-    getCategories() {
+    static getCategories() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Category_1.Category)
@@ -179,7 +179,7 @@ class DB {
             return res;
         });
     }
-    getProducts() {
+    static getProducts() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Product_1.Product)
@@ -188,7 +188,7 @@ class DB {
             return res;
         });
     }
-    writeFromJSON(tableName) {
+    static writeFromJSON(tableName) {
         return __awaiter(this, void 0, void 0, function* () {
             fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', (error, data) => __awaiter(this, void 0, void 0, function* () {
                 const parsedData = JSON.parse(data)[tableName];

@@ -9,43 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupermarketProducts = void 0;
+exports.SupermarketProduct = void 0;
 const typeorm_1 = require("typeorm");
 const Product_1 = require("./Product");
 const Supermarket_1 = require("./Supermarket");
-let SupermarketProducts = class SupermarketProducts {
+let SupermarketProduct = class SupermarketProduct {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], SupermarketProducts.prototype, "id", void 0);
+], SupermarketProduct.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], SupermarketProducts.prototype, "product_id", void 0);
+], SupermarketProduct.prototype, "product_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], SupermarketProducts.prototype, "supermarket_id", void 0);
+], SupermarketProduct.prototype, "supermarket_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], SupermarketProducts.prototype, "price", void 0);
+], SupermarketProduct.prototype, "price", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "boolean", nullable: false }),
     __metadata("design:type", Boolean)
-], SupermarketProducts.prototype, "is_available", void 0);
+], SupermarketProduct.prototype, "is_available", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Product_1.Product, product => product),
     (0, typeorm_1.JoinColumn)({ name: 'product_id', referencedColumnName: 'id' }),
     __metadata("design:type", Product_1.Product)
-], SupermarketProducts.prototype, "product", void 0);
+], SupermarketProduct.prototype, "product", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Supermarket_1.Supermarket, supermarket => supermarket),
     (0, typeorm_1.JoinColumn)({ name: 'supermarket_id', referencedColumnName: 'id' }),
     __metadata("design:type", Supermarket_1.Supermarket)
-], SupermarketProducts.prototype, "supermarket", void 0);
-SupermarketProducts = __decorate([
+], SupermarketProduct.prototype, "supermarket", void 0);
+SupermarketProduct = __decorate([
     (0, typeorm_1.Entity)({ name: "supermarket_products" })
-], SupermarketProducts);
-exports.SupermarketProducts = SupermarketProducts;
+], SupermarketProduct);
+exports.SupermarketProduct = SupermarketProduct;

@@ -3,7 +3,7 @@ import { Product } from "./Product"
 import { Supermarket } from "./Supermarket"
 
 @Entity({name: "supermarket_products"})
-export class SupermarketProducts {
+export class SupermarketProduct {
     @PrimaryGeneratedColumn()
     id!: number
 

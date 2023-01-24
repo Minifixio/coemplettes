@@ -23,8 +23,4 @@ export class User {
 
     @Column({ type: "varchar", length: 200, nullable:false })
     pwdhash!: string
-
-    @OneToOne(() => Shipper)
-    @JoinColumn()
-    shipper_profile!: Shipper
 }

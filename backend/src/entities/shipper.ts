@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm"
-import { User } from "./User"
 
 @Entity({name: "shippers"})
 export class Shipper {
@@ -35,8 +34,4 @@ export class Shipper {
 
     @Column({ type: "varchar", nullable:true })
     availability!: string
-
-    @OneToOne(() => User, user => user.shipper_profile)
-    @JoinColumn()
-    user!: User
 }
