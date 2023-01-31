@@ -17,5 +17,11 @@
  # où l'on remplace [MDP LA BDD] par le mdp
  ```
 
+## Tester le code 
+Aller dans le dossier `/backend` et faire `npm run dev`.
+Cela lance une instance du process Node qui se rafraichit à chaque fois que vous faites une modif dans le code.
+Cela évite d'avoir à relancer le process à chaque fois.
+
+
 ## Visualiser le diagramme :
 Aller sur [DrawIO](https://draw.io) et ouvrir le fichier ```BDD-API-diagram.drawio```
