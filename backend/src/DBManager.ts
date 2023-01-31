@@ -21,6 +21,7 @@ export class DB {
         .catch((error) => console.log(error))
     }
 
+    // Fonction de test
     public async test() {
         const res = await AppDataSource
         .getRepository(User)
@@ -29,6 +30,10 @@ export class DB {
         .getOne()
         return res
     }
+
+    /**
+     * Pour toutes les fonctions de type get... voir la doc de TypeORM
+     */
 
     public static async getUserByID(id: number): Promise<User | null> {
         const res = await AppDataSource
@@ -140,6 +145,7 @@ export class DB {
         return res
     }
 
+    // On lit un fichier JSON et on écrit ses données dans la BDD
     public static async writeFromJSON(tableName: string) {
         fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', async (error, data: any) => {
             const parsedData = JSON.parse(data)[tableName]
