@@ -13,6 +13,10 @@
 ## Ou est stocké le serveur sur la machine distante ?
 A l'adresse `/var/www/coemplettes` !
 
+## Utilisation d'un token Git pour pull depuis GitLab :
+Commande : `git fetch https://{username}:{token}@gitlab.telecom-paris.fr/pact/2022-2023/pact74
+
+
 ## Fichiers de configuration en local :
 - ajouter le mdp de la BDD : créer un fichier ```credentials.ts``` dans ```src``` contenant le code suivant :
  ```
