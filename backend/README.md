@@ -10,6 +10,9 @@
 - connexion : ```ssh ubuntu@137.194.211.70```
 - connexion pour mapper la BDD sur son port local 5000 : ```ssh ubuntu@137.194.211.70 -L 5000:localhost:3306```
 
+## Ou est stocké le serveur sur la machine distante ?
+A l'adresse `/var/www/coemplettes` !
+
 ## Fichiers de configuration en local :
 - ajouter le mdp de la BDD : créer un fichier ```credentials.ts``` dans ```src``` contenant le code suivant :
  ```
