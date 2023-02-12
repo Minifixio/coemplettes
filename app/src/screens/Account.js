@@ -79,7 +79,7 @@ function AccountStack() {
       />
       <Stack.Screen
         name="CurrentCartOrderPage"
-        options={[{title: 'Ma commande'}, {headerShown: false}]}
+        options={{title: 'Ma commande'}}
         component={CurrentCartOrder}
       />
     </Stack.Navigator>
