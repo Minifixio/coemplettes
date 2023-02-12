@@ -14,6 +14,22 @@ import {CartContext} from '../utils/CartProvider';
 import LinearGradient from 'react-native-linear-gradient';
 import SwipeableFlatList from 'react-native-swipeable-list';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import BasicButton from '../components/BasicButton';
+
+const Divider = () => {
+  return (
+    <View
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{
+        height: 10,
+        color: 'black',
+        width: '90%',
+        borderBottomColor: 'black',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      }}
+    />
+  );
+};
 
 const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
   const [product, setProduct] = useState({});
@@ -51,7 +67,8 @@ const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
 };
 
 function CartPage({navigation}) {
-  const {addToCart, removeFromCart, items} = useContext(CartContext);
+  const {addToCart, getTotalPrice, removeFromCart, items} =
+    useContext(CartContext);
   console.log(items);
 
   function remove(id) {
@@ -93,6 +110,7 @@ function CartPage({navigation}) {
         </View>
       )}
 
+      {/* Liste des items dans le panier */}
       <SwipeableFlatList
         style={styles.featuredFlatList}
         data={items}
@@ -101,6 +119,31 @@ function CartPage({navigation}) {
         maxSwipeDistance={70}
         renderQuickActions={({index, item}) => quickActions(index, item)}
       />
+
+      {/* Carton avec le total estimé et le bouton de validation */}
+      <View style={styles.bottomCard}>
+        <View style={styles.totalTextView}>
+          <Text style={styles.subtotalText}>Sous-total</Text>
+          <Text style={styles.subtotalText}>{getTotalPrice()}€</Text>
+        </View>
+        <View style={styles.totalTextView}>
+          <Text style={styles.subtotalText}>Pour le livreur</Text>
+          <Text style={styles.subtotalText}>1.5€</Text>
+        </View>
+
+        <Divider />
+
+        <View style={styles.totalTextView}>
+          <Text style={styles.totalText}>Total</Text>
+          <Text style={styles.totalText}>{getTotalPrice() + 1.5}€</Text>
+        </View>
+
+        <BasicButton
+          style={styles.validationButton}
+          onClick={() => {}}
+          text="Passer la commande"
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -110,6 +153,44 @@ const styles = StyleSheet.create({
     padding: 2,
     paddingLeft: 10,
     paddingRight: 0,
+  },
+  container: {
+    height: '100%',
+  },
+  totalTextView: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  subtotalText: {
+    color: 'black',
+    fontSize: 15,
+  },
+  totalText: {
+    color: 'black',
+    fontSize: 30,
+  },
+  bottomCard: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'left',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 16,
+    elevation: 24,
+  },
+  validationButton: {
+    size: '90%',
   },
   imageProductContainer: {
     display: 'flex',
@@ -137,7 +218,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   productQuantityText: {
-    fontSize: 24,
+    fontSize: 15,
     color: 'black',
   },
   productCartItemPressable: {
