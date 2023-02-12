@@ -79,7 +79,7 @@ function CartPage({navigation}) {
     return (
       <View style={styles.deleteButtonContainer}>
         <View style={styles.deleteButton}>
-          <Pressable onPress={() => remove(qaItem)}>
+          <Pressable onPress={() => remove(qaItem.id)}>
             <Ionicons name="trash" size={40} color="black" />
           </Pressable>
         </View>

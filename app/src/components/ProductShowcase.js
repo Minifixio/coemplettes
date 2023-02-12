@@ -10,7 +10,7 @@ const ProductShowcase = ({navigation, id}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState({});
-  const {addToCart} = useContext(CartContext);
+  const {addToCart, removeFromCart} = useContext(CartContext);
 
   useEffect(() => {
     navigation.setOptions({title: ''});
@@ -34,11 +34,13 @@ const ProductShowcase = ({navigation, id}) => {
     setQuantity(val);
     if (val === 0) {
       setIsSelected(false);
+      removeFromCart(id);
+      return;
     } else {
       if (valTemp > quantity) {
         addToCart(id, 1);
       } else {
-        addToCart(id, 1);
+        addToCart(id, -1);
       }
     }
   };

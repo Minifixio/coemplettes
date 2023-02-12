@@ -42,9 +42,8 @@ export function CartProvider(props) {
   }
 
   function removeFromCart(id) {
-    setItems(prevItems => {
-      prevItems.filter(item => item.id !== id);
-    });
+    const newItems = items.filter(item => item.id !== id);
+    setItems(newItems);
   }
 
   function getItemsCount() {
