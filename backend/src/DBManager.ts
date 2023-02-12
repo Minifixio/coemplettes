@@ -34,7 +34,6 @@ export class DB {
     /**
      * Pour toutes les fonctions de type get... voir la doc de TypeORM
      */
-
     public static async getUserByID(id: number): Promise<User | null> {
         const res = await AppDataSource
         .getRepository(User)

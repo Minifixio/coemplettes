@@ -55,6 +55,7 @@ class DB {
                 .catch((error) => console.log(error));
         });
     }
+    // Fonction de test
     test() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
@@ -65,6 +66,9 @@ class DB {
             return res;
         });
     }
+    /**
+     * Pour toutes les fonctions de type get... voir la doc de TypeORM
+     */
     static getUserByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
@@ -188,6 +192,7 @@ class DB {
             return res;
         });
     }
+    // On lit un fichier JSON et on écrit ses données dans la BDD
     static writeFromJSON(tableName) {
         return __awaiter(this, void 0, void 0, function* () {
             fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', (error, data) => __awaiter(this, void 0, void 0, function* () {
