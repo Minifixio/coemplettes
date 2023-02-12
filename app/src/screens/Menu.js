@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CartProvider} from '../utils/CartProvider';
 
 import HomeStack from './Home';
-import AccountPage from './Account';
 import FavoutritesPage from './Favourites';
 import CartPage from './Cart';
+import AccountStack from './Account';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,7 +24,7 @@ function MainPage({isConnected, setIsConnected}) {
 
               if (route.name === 'Home') {
                 iconName = focused ? 'md-home' : 'md-home-outline';
-              } else if (route.name === 'AccountPage') {
+              } else if (route.name === 'Account') {
                 iconName = focused ? 'person-circle' : 'person-circle-outline';
               } else if (route.name === 'FavoutritesPage') {
                 iconName = focused ? 'star' : 'star-outline';
@@ -57,8 +57,8 @@ function MainPage({isConnected, setIsConnected}) {
             )}
           </Tab.Screen>
           <Tab.Screen
-            name="AccountPage"
-            component={AccountPage}
+            name="Account"
+            component={AccountStack}
             options={{title: 'Compte'}}
           />
           <Tab.Screen

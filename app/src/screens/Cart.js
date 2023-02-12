@@ -121,29 +121,33 @@ function CartPage({navigation}) {
       />
 
       {/* Carton avec le total estimé et le bouton de validation */}
-      <View style={styles.bottomCard}>
-        <View style={styles.totalTextView}>
-          <Text style={styles.subtotalText}>Sous-total</Text>
-          <Text style={styles.subtotalText}>{getTotalPrice()}€</Text>
-        </View>
-        <View style={styles.totalTextView}>
-          <Text style={styles.subtotalText}>Pour le livreur</Text>
-          <Text style={styles.subtotalText}>1.5€</Text>
-        </View>
+      {items.length > 0 && (
+        <View style={styles.bottomCard}>
+          <View style={styles.totalTextView}>
+            <Text style={styles.subtotalText}>Sous-total</Text>
+            <Text style={styles.subtotalText}>{getTotalPrice()}€</Text>
+          </View>
+          <View style={styles.totalTextView}>
+            <Text style={styles.subtotalText}>Pour le livreur</Text>
+            <Text style={styles.subtotalText}>1.5€</Text>
+          </View>
 
-        <Divider />
+          <Divider />
 
-        <View style={styles.totalTextView}>
-          <Text style={styles.totalText}>Total</Text>
-          <Text style={styles.totalText}>{getTotalPrice() + 1.5}€</Text>
+          <View style={styles.totalTextView}>
+            <Text style={styles.totalText}>Total</Text>
+            <Text style={styles.totalText}>{getTotalPrice() + 1.5}€</Text>
+          </View>
+
+          <BasicButton
+            style={styles.validationButton}
+            onClick={() => {
+              navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+            }}
+            text="Passer la commande"
+          />
         </View>
-
-        <BasicButton
-          style={styles.validationButton}
-          onClick={() => {}}
-          text="Passer la commande"
-        />
-      </View>
+      )}
     </SafeAreaView>
   );
 }

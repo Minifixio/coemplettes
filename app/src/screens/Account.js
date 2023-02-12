@@ -9,12 +9,14 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CurrentCartOrder from './CurrentCartOrder';
 
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
 
 function MenuItem({text, icon, goTo}) {
   return (
-    <Pressable>
+    <Pressable style={styles.menuItemPressable} onPress={goTo}>
       <View style={styles.menuItemView}>
         <Ionicons name={icon} size={30} color="green" />
         <Text style={styles.menuItemText}>{text}</Text>
@@ -29,7 +31,7 @@ function MenuItem({text, icon, goTo}) {
   );
 }
 
-function AccountPage() {
+function AccountPage({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={['#ffffff', '#f2f2f2']} style={styles.photoView}>
@@ -42,7 +44,13 @@ function AccountPage() {
           icon="person-circle-outline"
           goTo={() => {}}
         />
-        <MenuItem text="Mes commandes" icon="cart-outline" goTo={() => {}} />
+        <MenuItem
+          text="Mes commandes"
+          icon="cart-outline"
+          goTo={() => {
+            navigation.push('CurrentCartOrderPage');
+          }}
+        />
         <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} />
         <MenuItem
           text="Mes disponibilités"
@@ -60,9 +68,30 @@ function AccountPage() {
   );
 }
 
+const Stack = createNativeStackNavigator();
+function AccountStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="AccountPage"
+        options={{headerShown: false}}
+        component={AccountPage}
+      />
+      <Stack.Screen
+        name="CurrentCartOrderPage"
+        options={[{title: 'Ma commande'}, {headerShown: false}]}
+        component={CurrentCartOrder}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  menuItemPressable: {
+    display: 'flex',
   },
   photoView: {
     display: 'flex',
@@ -99,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountPage;
+export default AccountStack;
