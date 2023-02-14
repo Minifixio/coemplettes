@@ -59,7 +59,7 @@ function MainPage({isConnected, setIsConnected}) {
           <Tab.Screen
             name="Account"
             component={AccountStack}
-            options={{title: 'Compte'}}
+            options={{title: 'Compte', headerShown: false}}
           />
           <Tab.Screen
             name="FavoutritesPage"

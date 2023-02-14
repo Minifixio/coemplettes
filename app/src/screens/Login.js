@@ -1,11 +1,36 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
+import {userLogin} from '../services/UserService';
 import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../components/BasicButton';
+import Toast from 'react-native-toast-message';
 
 const Separator = () => <View style={styles.separator} />;
 
 function LoginPage({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const userLogin = async () => {
+    try {
+      const loginValid = await userLogin(email, password, true);
+
+      if (loginValid) {
+        navigation.navigate('LandingPage');
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Le mot de passe ou email est incorrect',
+        });
+      }
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: 'Le mot de passe ou email est incorrect',
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -22,7 +47,9 @@ function LoginPage({navigation}) {
             textAlign={'left'}
             style={styles.textInput}
             placeholder="Email."
-            placeholderTextColor="#003f5c"
+            placeholderTextColor="black"
+            onChangeText={val => setEmail(val)}
+            defaultValue={email}
           />
 
           <TextInput
@@ -30,15 +57,20 @@ function LoginPage({navigation}) {
             placeholder="Mot de passe."
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
+            onChangeText={val => setPassword(val)}
+            defaultValue={password}
           />
           <Separator />
 
           <BasicButton
-            onClick={() => navigation.navigate('LandingPage')}
+            onClick={() => {
+              userLogin();
+            }}
             text="Se connecter"
           />
         </View>
       </ImageBackground>
+      <Toast />
     </View>
   );
 }
@@ -51,8 +83,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: 8,
     margin: 3,
-    backgroundColor: 'white',
     width: '100%',
+    color: 'black',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#d9d9d9',

@@ -27,7 +27,7 @@ function ProductPage({navigation, route}) {
         colors={['#ffffff', '#e6e6e6']}
         style={styles.infoContainer}>
         <Text style={[styles.text, styles.priceText]}>
-          {product.averagePrice}€
+          {product.average_price}€
         </Text>
         <Text style={[styles.text, styles.nameText]}>{product.name}</Text>
         <Text style={[styles.text, styles.quantityText]}>
