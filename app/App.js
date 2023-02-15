@@ -1,14 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React, {useState} from 'react';
+import React, {createContext, useState} from 'react';
 import LandingPage from './src/screens/Landing';
 import MainPage from './src/screens/Menu';
+export const LoginContext = createContext();
 
 const App = () => {
   const [isConnected, setIsConnected] = useState(false);

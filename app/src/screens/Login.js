@@ -7,16 +7,15 @@ import Toast from 'react-native-toast-message';
 
 const Separator = () => <View style={styles.separator} />;
 
-function LoginPage({navigation}) {
+function LoginPage({navigation, setIsConnected}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const userLogin = async () => {
+  const login = async () => {
     try {
       const loginValid = await userLogin(email, password, true);
-
       if (loginValid) {
-        navigation.navigate('LandingPage');
+        setIsConnected(true);
       } else {
         Toast.show({
           type: 'error',
@@ -64,7 +63,7 @@ function LoginPage({navigation}) {
 
           <BasicButton
             onClick={() => {
-              userLogin();
+              login();
             }}
             text="Se connecter"
           />

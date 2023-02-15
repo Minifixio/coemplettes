@@ -79,6 +79,7 @@ function LandingPage({isConnected, setIsConnected}) {
         <Stack.Screen
           name="LoginPage"
           component={LoginPage}
+          setIsConnected={setIsConnected}
           options={{title: 'Se connecter'}}
         />
       </Stack.Navigator>

@@ -1,8 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "com.coemplettesapp-mergeDebugResources-31:/values/values.xml",
+            "outputFile": "com.coemplettesapp-mergeDebugResources-32:/values/values.xml",
             "map": [
+                {
+                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/pact74/app/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "54",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "267"
+                    },
+                    "to": {
+                        "startLines": "828",
+                        "startColumns": "4",
+                        "startOffsets": "60032",
+                        "endLines": "831",
+                        "endColumns": "12",
+                        "endOffsets": "60210"
+                    }
+                },
                 {
                     "source": "/Users/emile/.gradle/caches/transforms-3/ff7f9e1ea9c2e709fffb9e018f2252cf/transformed/material-1.1.0/res/values/values.xml",
                     "from": {
@@ -37,25 +56,6 @@
                         "startOffsets": "37634,37703",
                         "endColumns": "68,56",
                         "endOffsets": "37698,37755"
-                    }
-                },
-                {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/app/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "54",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "267"
-                    },
-                    "to": {
-                        "startLines": "828",
-                        "startColumns": "4",
-                        "startOffsets": "60032",
-                        "endLines": "831",
-                        "endColumns": "12",
-                        "endOffsets": "60210"
                     }
                 },
                 {
@@ -109,23 +109,6 @@
                         "startOffsets": "40601",
                         "endColumns": "49",
                         "endOffsets": "40646"
-                    }
-                },
-                {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/app/android/app/src/main/res/values/strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "51",
-                        "endOffsets": "63"
-                    },
-                    "to": {
-                        "startLines": "698",
-                        "startColumns": "4",
-                        "startOffsets": "44503",
-                        "endColumns": "51",
-                        "endOffsets": "44550"
                     }
                 },
                 {
@@ -315,20 +298,20 @@
                     }
                 },
                 {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/app/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
+                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/pact74/app/android/app/src/main/res/values/strings.xml",
                     "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "156,262",
-                        "endColumns": "63,68",
-                        "endOffsets": "215,326"
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "51",
+                        "endOffsets": "63"
                     },
                     "to": {
-                        "startLines": "661,662",
-                        "startColumns": "4,4",
-                        "startOffsets": "41901,41965",
-                        "endColumns": "63,68",
-                        "endOffsets": "41960,42029"
+                        "startLines": "698",
+                        "startColumns": "4",
+                        "startOffsets": "44503",
+                        "endColumns": "51",
+                        "endOffsets": "44550"
                     }
                 },
                 {
@@ -365,6 +348,23 @@
                         "endLines": "57,346,347,348,356,357,358,587,6431",
                         "endColumns": "55,58,47,55,74,75,71,65,24",
                         "endOffsets": "3301,22510,22558,22614,23300,23376,23448,37999,362751"
+                    }
+                },
+                {
+                    "source": "/Users/emile/Documents/ETUDES/Télécom/PACT/dev/pact74/app/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
+                    "from": {
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "156,262",
+                        "endColumns": "63,68",
+                        "endOffsets": "215,326"
+                    },
+                    "to": {
+                        "startLines": "661,662",
+                        "startColumns": "4,4",
+                        "startOffsets": "41901,41965",
+                        "endColumns": "63,68",
+                        "endOffsets": "41960,42029"
                     }
                 },
                 {
