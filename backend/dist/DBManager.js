@@ -34,15 +34,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = void 0;
 const data_source_1 = require("./data-source");
-const User_1 = require("./entities/User");
+const User_1 = require("./tables/User");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-const Shipper_1 = require("./entities/Shipper");
-const Cart_1 = require("./entities/Cart");
-const Delivery_1 = require("./entities/Delivery");
-const DeliveryProposal_1 = require("./entities/DeliveryProposal");
-const Product_1 = require("./entities/Product");
-const Category_1 = require("./entities/Category");
+const Shipper_1 = require("./tables/Shipper");
+const Cart_1 = require("./tables/Cart");
+const Delivery_1 = require("./tables/Delivery");
+const DeliveryProposal_1 = require("./tables/DeliveryProposal");
+const Product_1 = require("./tables/Product");
+const Category_1 = require("./tables/Category");
 class DB {
     constructor() {
     }
