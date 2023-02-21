@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
-const port = 3000;
+const port = 3306;
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
