@@ -18,7 +18,7 @@ import { User } from './tables/User';
 export const AppDataSource = new DataSource({
     type: "mariadb",
     host: "localhost",
-    port: 3036,
+    port: 5000,
     username:"admin",
     database: "COEMP",
     password:db_password,
