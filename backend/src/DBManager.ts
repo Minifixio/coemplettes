@@ -1,13 +1,13 @@
 import { AppDataSource } from "./data-source";
-import { User } from "./entities/User";
+import { User } from "./tables/User";
 import * as fs from 'fs';
 import * as path from 'path';
-import { Shipper } from "./entities/Shipper";
-import { Cart } from "./entities/Cart";
-import { Delivery } from "./entities/Delivery";
-import { DeliveryProposal } from "./entities/DeliveryProposal";
-import { Product } from "./entities/Product";
-import { Category } from "./entities/Category";
+import { Shipper } from "./tables/Shipper";
+import { Cart } from "./tables/Cart";
+import { Delivery } from "./tables/Delivery";
+import { DeliveryProposal } from "./tables/DeliveryProposal";
+import { Product } from "./tables/Product";
+import { Category } from "./tables/Category";
 
 export class DB {
     constructor() {

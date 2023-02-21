@@ -1,15 +1,15 @@
 import { DataSource } from 'typeorm';
 import { db_password } from './credentials';
-import { Cart } from './entities/Cart';
-import { CartItem } from './entities/CartItem';
-import { Category } from './entities/Category';
-import { Delivery } from './entities/Delivery';
-import { DeliveryProposal } from './entities/DeliveryProposal';
-import { Product } from './entities/Product';
-import { Shipper } from './entities/Shipper';
-import { Supermarket } from './entities/Supermarket';
-import { SupermarketProduct } from './entities/SupermarketProduct';
-import { User } from './entities/User';
+import { Cart } from './tables/Cart';
+import { CartItem } from './tables/CartItem';
+import { Category } from './tables/Category';
+import { Delivery } from './tables/Delivery';
+import { DeliveryProposal } from './tables/DeliveryProposal';
+import { Product } from './tables/Product';
+import { Shipper } from './tables/Shipper';
+import { Supermarket } from './tables/Supermarket';
+import { SupermarketProduct } from './tables/SupermarketProduct';
+import { User } from './tables/User';
 
 
 // Les entités sont référencées dans le dossier /entities
