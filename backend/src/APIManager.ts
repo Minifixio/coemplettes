@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import { DB } from './DBManager';
 import { EntryPoint } from './models/EntryPoint';
 
-const port = 3306;
+const port = 3000;
 
 export class API {
 
