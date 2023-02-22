@@ -14,7 +14,7 @@
 A l'adresse `/var/www/coemplettes` !
 
 ## Utilisation d'un token Git pour pull depuis GitLab :
-Commande : `git fetch https://{username}:{token}@gitlab.telecom-paris.fr/pact/2022-2023/pact74`
+Commande : `git pull -f https://{username}:{token}@gitlab.telecom-paris.fr/pact/2022-2023/pact74 backend`
 
 ## Notes pour la config Git de GitLab :
 Il y a : `git config core.sparsecheckout true`
