@@ -15,7 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
-const port = 3306;
+var bodyParser = require('body-parser');
+const port = 3000;
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
@@ -35,6 +36,7 @@ class API {
             { method: "GET", entryPointName: "products", paramName: null, callbackNoParam: () => DBManager_1.DB.getProducts() },
             { method: "GET", entryPointName: "product", paramName: "id", callbackParam: (id) => DBManager_1.DB.getProductByID(id) },
             { method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
+            { method: "POST", entryPointName: "user", paramName: null, callbackParam: (user) => DBManager_1.DB.addUser(user) },
         ];
         console.log(`[${tag}] Initialisation de l\'api`);
         this.port = port;
@@ -57,8 +59,8 @@ class API {
                 }
             }
             else if (ep.method === "POST") {
-                if (ep.callbackNoParam) {
-                    this.initPOST(ep.entryPointName, ep.callbackNoParam);
+                if (ep.callbackParam) {
+                    this.initPOST(ep.entryPointName, ep.callbackParam);
                 }
             }
         });
@@ -69,6 +71,8 @@ class API {
     initApp() {
         // On crée un objet Express (API)
         this.app = (0, express_1.default)();
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
         // On le fait écouter sur le port en quesiton
         this.app.listen(port, () => {
             console.log(`Le serveur est live à l'adresse : https://localhost:${port}`);
@@ -114,6 +118,7 @@ class API {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(`Init POST ${entryPointName}`);
             this.app.post(`/${entryPointName}`, (req, res) => __awaiter(this, void 0, void 0, function* () {
+                console.log(req.body);
                 const data = yield callback(req.body);
                 res.send(data);
             }));

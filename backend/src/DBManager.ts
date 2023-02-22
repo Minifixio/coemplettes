@@ -144,6 +144,15 @@ export class DB {
         return res
     }
 
+    public static async addUser(user: User) {
+        await AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(User)
+        .values(user)
+        .execute()
+    }
+
     // On lit un fichier JSON et on écrit ses données dans la BDD
     public static async writeFromJSON(tableName: string) {
         fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', async (error, data: any) => {

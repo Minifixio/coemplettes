@@ -19,7 +19,7 @@ const User_1 = require("./tables/User");
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "mariadb",
     host: "localhost",
-    port: 3036,
+    port: 5000,
     username: "admin",
     database: "COEMP",
     password: credentials_1.db_password,

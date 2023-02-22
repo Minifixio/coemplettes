@@ -192,6 +192,16 @@ class DB {
             return res;
         });
     }
+    static addUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield data_source_1.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(User_1.User)
+                .values(user)
+                .execute();
+        });
+    }
     // On lit un fichier JSON et on écrit ses données dans la BDD
     static writeFromJSON(tableName) {
         return __awaiter(this, void 0, void 0, function* () {

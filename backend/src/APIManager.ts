@@ -1,6 +1,9 @@
 import express, { Express, Request, Response } from 'express';
 import { DB } from './DBManager';
 import { EntryPoint } from './models/EntryPoint';
+import { User } from './tables/User';
+
+var bodyParser = require('body-parser')
 
 const port = 3000;
 
@@ -24,6 +27,9 @@ export class API {
         {method: "GET", entryPointName: "products", paramName: null, callbackNoParam: () => DB.getProducts()},
         {method: "GET", entryPointName: "product", paramName: "id", callbackParam: (id: number) => DB.getProductByID(id)},
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
+
+        {method: "POST", entryPointName: "user", paramName: null, callbackParam: (user: User) => DB.addUser(user)},
+
     ]
 
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
@@ -49,8 +55,8 @@ export class API {
                     this.initGETnoParams(ep.entryPointName, ep.callbackNoParam)
                 }
             } else if (ep.method === "POST") {
-                if (ep.callbackNoParam) {
-                    this.initPOST(ep.entryPointName, ep.callbackNoParam)
+                if (ep.callbackParam) {
+                    this.initPOST(ep.entryPointName, ep.callbackParam)
                 }
             }
         })
@@ -63,6 +69,8 @@ export class API {
 
         // On crée un objet Express (API)
         this.app = express();
+        this.app.use(bodyParser.urlencoded({ extended: false }))
+        this.app.use(bodyParser.json())
 
         // On le fait écouter sur le port en quesiton
         this.app.listen(port, () => {
@@ -109,6 +117,7 @@ export class API {
     private async initPOST(entryPointName: string, callback: ((c: any) => Promise<any>)) {
         console.log(`Init POST ${entryPointName}`)
         this.app.post(`/${entryPointName}`, async (req: Request, res: Response) => {
+            console.log(req.body)
             const data = await callback(req.body)
             res.send(data)
         })
