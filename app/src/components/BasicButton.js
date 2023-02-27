@@ -3,12 +3,14 @@ import {Text, StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const BasicButton = props => {
+  const valid = props.valid === undefined ? true : props.valid;
+
   return (
     <Pressable style={styles.button} onPress={props.onClick}>
       <LinearGradient
         start={{x: 0.0, y: 0.25}}
         end={{x: 0.5, y: 1.0}}
-        colors={['#a1f542', '#539903']}
+        colors={valid ? ['#a1f542', '#539903'] : ['#FF1500', '#B80F00']}
         style={styles.linearGradient}>
         <Text style={styles.buttonText}>{props.text}</Text>
       </LinearGradient>
