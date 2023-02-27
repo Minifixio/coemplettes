@@ -10,11 +10,9 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import CurrentCartOrder from './CurrentCartOrder';
-import ShipperAccountStack from './ShipperAccount';
+import DeliveryTracking from './DeliveryTracking';
 
-const users = require('../assets/json/users.json').users;
-
+const shippers = require('../assets/json/shippers.json').shippers;
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
 
 function MenuItem({text, icon, goTo}) {
@@ -34,16 +32,14 @@ function MenuItem({text, icon, goTo}) {
   );
 }
 
-function AccountPage({navigation}) {
+function ShipperAccountPage({navigation}) {
   /**
    * MOCKUP DATAS
    *
-   * user
-   * isShipper
+   * shipper
    */
 
-  const user = users[0];
-  const isShipper = true;
+  const shipper = shippers[0];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,63 +49,40 @@ function AccountPage({navigation}) {
 
       <View style={styles.menuView}>
         <MenuItem
-          text="Informations personnelles"
+          text="Informations livreur"
           icon="person-circle-outline"
           goTo={() => {}}
         />
         <MenuItem
-          text="Mes commandes"
+          text="Mes livraisons"
           icon="cart-outline"
           goTo={() => {
-            navigation.push('CurrentCartOrderPage');
+            navigation.push('DeliveryTracking');
           }}
         />
-        <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} />
-        {isShipper && (
-          <MenuItem
-            text="Profil livreur"
-            icon="ios-people-outline"
-            goTo={() => {
-              navigation.push('ShipperAccountStack');
-            }}
-          />
-        )}
-        {!isShipper && (
-          <MenuItem
-            text="Devenir livreur"
-            icon="ios-car-outline"
-            goTo={() => {}}
-          />
-        )}
         <MenuItem
-          text="Moyens de paiement"
-          icon="wallet-outline"
+          text="Mes disponibilités"
+          icon="log-out-outline"
           goTo={() => {}}
         />
-        <MenuItem text="Déconnexion" icon="log-out-outline" goTo={() => {}} />
       </View>
     </SafeAreaView>
   );
 }
 
 const Stack = createNativeStackNavigator();
-function AccountStack() {
+function ShipperAccountStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="AccountPage"
+        name="ShipperAccountPage"
         options={{headerShown: false}}
-        component={AccountPage}
+        component={ShipperAccountPage}
       />
       <Stack.Screen
-        name="CurrentCartOrderPage"
-        options={{title: 'Ma commande'}}
-        component={CurrentCartOrder}
-      />
-      <Stack.Screen
-        name="ShipperAccountStack"
-        options={{title: 'Profil livreur'}}
-        component={ShipperAccountStack}
+        name="DeliveryTracking"
+        options={{headerShown: false}}
+        component={DeliveryTracking}
       />
     </Stack.Navigator>
   );
@@ -158,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountStack;
+export default ShipperAccountStack;
