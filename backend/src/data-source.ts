@@ -1,7 +1,15 @@
 import { DataSource } from 'typeorm';
 import { db_password } from './credentials';
-import { Shipper } from './entities/Shipper';
-import { User } from './entities/User';
+import { Cart } from './tables/Cart';
+import { CartItem } from './tables/CartItem';
+import { Category } from './tables/Category';
+import { Delivery } from './tables/Delivery';
+import { DeliveryProposal } from './tables/DeliveryProposal';
+import { Product } from './tables/Product';
+import { Shipper } from './tables/Shipper';
+import { Supermarket } from './tables/Supermarket';
+import { SupermarketProduct } from './tables/SupermarketProduct';
+import { User } from './tables/User';
 
 
 // Les entités sont référencées dans le dossier /entities
@@ -10,10 +18,10 @@ import { User } from './entities/User';
 export const AppDataSource = new DataSource({
     type: "mariadb",
     host: "localhost",
-    port:5000,
+    port: 3306,
     username:"admin",
     database: "COEMP",
     password:db_password,
     logging: true,
-    entities: [User, Shipper]
+    entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct]
 })

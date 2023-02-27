@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm"
-import { User } from "./User"
 
 @Entity({name: "shippers"})
 export class Shipper {
@@ -27,9 +26,12 @@ export class Shipper {
     @Column({ type: "float", nullable:true })
     loc_lat!: number
 
-    @OneToOne(type => User, user => user)
-    @JoinColumn(
-        { name: 'user_id', referencedColumnName: 'id'}
-    )
-    user!: User
+    @Column({ type: "varchar", nullable:true })
+    drive!: string
+
+    @Column({ type: "boolean", nullable:true })
+    shop!: boolean
+
+    @Column({ type: "varchar", nullable:true })
+    disponibilities!: string
 }

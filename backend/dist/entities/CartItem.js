@@ -9,55 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Shipper = void 0;
+exports.CartItem = void 0;
 const typeorm_1 = require("typeorm");
-let Shipper = class Shipper {
+const Cart_1 = require("./Cart");
+const Product_1 = require("./Product");
+let CartItem = class CartItem {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Shipper.prototype, "id", void 0);
+], CartItem.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], Shipper.prototype, "user_id", void 0);
+], CartItem.prototype, "cart_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], Shipper.prototype, "capacity", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "boolean", nullable: false }),
-    __metadata("design:type", Boolean)
-], Shipper.prototype, "has_car", void 0);
+], CartItem.prototype, "product_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)
-], Shipper.prototype, "deliveries_count", void 0);
+], CartItem.prototype, "weight", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], Shipper.prototype, "price_max", void 0);
+], CartItem.prototype, "quantity", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float", nullable: true }),
-    __metadata("design:type", Number)
-], Shipper.prototype, "loc_long", void 0);
+    (0, typeorm_1.ManyToOne)(type => Cart_1.Cart, cart => cart),
+    (0, typeorm_1.JoinColumn)({ name: 'cart_id', referencedColumnName: 'id' }),
+    __metadata("design:type", Cart_1.Cart)
+], CartItem.prototype, "cart", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float", nullable: true }),
-    __metadata("design:type", Number)
-], Shipper.prototype, "loc_lat", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
-    __metadata("design:type", String)
-], Shipper.prototype, "drive", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
-    __metadata("design:type", Boolean)
-], Shipper.prototype, "shop", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
-    __metadata("design:type", String)
-], Shipper.prototype, "availability", void 0);
-Shipper = __decorate([
-    (0, typeorm_1.Entity)({ name: "shippers" })
-], Shipper);
-exports.Shipper = Shipper;
+    (0, typeorm_1.ManyToOne)(type => Product_1.Product, product => product),
+    (0, typeorm_1.JoinColumn)({ name: 'product_id', referencedColumnName: 'id' }),
+    __metadata("design:type", Product_1.Product)
+], CartItem.prototype, "product", void 0);
+CartItem = __decorate([
+    (0, typeorm_1.Entity)({ name: "cart_items" })
+], CartItem);
+exports.CartItem = CartItem;

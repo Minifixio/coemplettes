@@ -13,7 +13,7 @@ export class Delivery {
     deadline!: Date
     
     @Column({ type: "int", nullable:true })
-    state!: number
+    status!: number
 
     @ManyToOne(type => Shipper, shipper => shipper)
     @JoinColumn(

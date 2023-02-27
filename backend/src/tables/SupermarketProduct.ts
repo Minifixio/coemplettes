@@ -1,10 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm"
 import { Product } from "./Product"
-import { Shipper } from "./Shipper"
 import { Supermarket } from "./Supermarket"
 
 @Entity({name: "supermarket_products"})
-export class SupermarketProducts {
+export class SupermarketProduct {
     @PrimaryGeneratedColumn()
     id!: number
 
