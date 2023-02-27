@@ -104,26 +104,29 @@ export class DB {
         return res
     }
 
-    public static async getCarts(): Promise<Cart[] | null> {
+    public static async getCarts(owner_id: number): Promise<Cart[] | null> {
         const res = await AppDataSource
         .getRepository(Cart)
-        .createQueryBuilder()
+        .createQueryBuilder("cart")
+        .where("cart.owner_id = :owner_id", {owner_id: owner_id})
         .getMany()
         return res
     }
 
-    public static async getDeliveries(): Promise<Delivery[] | null> {
+    public static async getDeliveries(shipper_id: number): Promise<Delivery[] | null> {
         const res = await AppDataSource
         .getRepository(Delivery)
-        .createQueryBuilder()
+        .createQueryBuilder("delivery")
+        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getMany()
         return res
     }
 
-    public static async getDeliveryProposals(): Promise<DeliveryProposal[] | null> {
+    public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
         const res = await AppDataSource
         .getRepository(DeliveryProposal)
-        .createQueryBuilder()
+        .createQueryBuilder("delivery_proposal")
+        .where("delivery_proposal.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getMany()
         return res
     }
@@ -136,10 +139,11 @@ export class DB {
         return res
     }
 
-    public static async getProducts(): Promise<Product[] | null> {
+    public static async getProducts(category_id: number): Promise<Product[] | null> {
         const res = await AppDataSource
         .getRepository(Product)
-        .createQueryBuilder()
+        .createQueryBuilder("product")
+        .where("product.category_id = :category_id", {category_id: category_id})
         .getMany()
         return res
     }
@@ -152,6 +156,43 @@ export class DB {
         .values(user)
         .execute()
     }
+
+    public static async addShipper(shipper: Shipper) {
+        await AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(Shipper)
+        .values(shipper)
+        .execute()
+    }
+
+    public static async addCart(cart: Cart) {
+        await AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(Cart)
+        .values(cart)
+        .execute()
+    }
+
+    public static async addDeliveryProposal(delivery_proposal: DeliveryProposal) {
+        await AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(DeliveryProposal)
+        .values(delivery_proposal)
+        .execute()
+    }
+
+    public static async addProduct(product: Product) {
+        await AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(Product)
+        .values(product)
+        .execute()
+    }
+
 
     // On lit un fichier JSON et on écrit ses données dans la BDD
     public static async writeFromJSON(tableName: string) {

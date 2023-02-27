@@ -29,7 +29,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)
-], Delivery.prototype, "state", void 0);
+], Delivery.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
     (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'id' }),

@@ -1,11 +1,13 @@
 import express, { Express, Request, Response } from 'express';
 import { DB } from './DBManager';
 import { EntryPoint } from './models/EntryPoint';
+import { Cart } from './tables/Cart';
+import { DeliveryProposal } from './tables/DeliveryProposal';
+import { Product } from './tables/Product';
+import { Shipper } from './tables/Shipper';
 import { User } from './tables/User';
 
 var bodyParser = require('body-parser')
-
-const port = 3000;
 
 export class API {
 
@@ -18,18 +20,29 @@ export class API {
     entryPoints: Array<EntryPoint> = [
         {method: "GET", entryPointName: "users", paramName: null, callbackNoParam: () => DB.getUsers()},
         {method: "GET", entryPointName: "user", paramName: "id", callbackParam: (id: number) => DB.getUserByID(id)},
+
         {method: "GET", entryPointName: "shippers", paramName: null, callbackNoParam: () => DB.getShippers()},
         {method: "GET", entryPointName: "shipper", paramName: "id", callbackParam: (id: number) => DB.getShipperByID(id)},
-        {method: "GET", entryPointName: "carts", paramName: null, callbackNoParam: () => DB.getCarts()},
-        {method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id: number) => DB.getCartByID(id)},
-        {method: "GET", entryPointName: "deliveries", paramName: null, callbackNoParam: () => DB.getDeliveries()},
-        {method: "GET", entryPointName: "delivery", paramName: "id", callbackParam: (id: number) => DB.getDeliveryByID(id)},
-        {method: "GET", entryPointName: "products", paramName: null, callbackNoParam: () => DB.getProducts()},
+
+        {method: "GET", entryPointName: "products", paramName: "category_id", callbackParam: (category_id: number) => DB.getProducts(category_id)},
         {method: "GET", entryPointName: "product", paramName: "id", callbackParam: (id: number) => DB.getProductByID(id)},
+
+        {method: "GET", entryPointName: "carts", paramName: "owner_id", callbackParam: (owner_id: number) => DB.getCarts(owner_id)},
+        {method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id: number) => DB.getCartByID(id)},
+        
+        {method: "GET", entryPointName: "deliveries", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveries(shipper_id)},
+        {method: "GET", entryPointName: "delivery", paramName: "id", callbackParam: (id: number) => DB.getDeliveryByID(id)},
+
+        {method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposals(shipper_id)},
+        {method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id: number) => DB.getDeliveryProposalByID(id)},
+
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
         {method: "POST", entryPointName: "user", paramName: null, callbackParam: (user: User) => DB.addUser(user)},
-
+        {method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper: Shipper) => DB.addShipper(shipper)},
+        {method: "POST", entryPointName: "cart", paramName: null, callbackParam: (cart: Cart) => DB.addCart(cart)},
+        {method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
+        {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},
     ]
 
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
@@ -73,8 +86,8 @@ export class API {
         this.app.use(bodyParser.json())
 
         // On le fait écouter sur le port en quesiton
-        this.app.listen(port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${port}`);
+        this.app.listen(this.port, () => {
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
         });
 
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne

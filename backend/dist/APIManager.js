@@ -16,7 +16,6 @@ exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
 var bodyParser = require('body-parser');
-const port = 3000;
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
@@ -29,14 +28,20 @@ class API {
             { method: "GET", entryPointName: "user", paramName: "id", callbackParam: (id) => DBManager_1.DB.getUserByID(id) },
             { method: "GET", entryPointName: "shippers", paramName: null, callbackNoParam: () => DBManager_1.DB.getShippers() },
             { method: "GET", entryPointName: "shipper", paramName: "id", callbackParam: (id) => DBManager_1.DB.getShipperByID(id) },
-            { method: "GET", entryPointName: "carts", paramName: null, callbackNoParam: () => DBManager_1.DB.getCarts() },
-            { method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id) => DBManager_1.DB.getCartByID(id) },
-            { method: "GET", entryPointName: "deliveries", paramName: null, callbackNoParam: () => DBManager_1.DB.getDeliveries() },
-            { method: "GET", entryPointName: "delivery", paramName: "id", callbackParam: (id) => DBManager_1.DB.getDeliveryByID(id) },
-            { method: "GET", entryPointName: "products", paramName: null, callbackNoParam: () => DBManager_1.DB.getProducts() },
+            { method: "GET", entryPointName: "products", paramName: "category_id", callbackParam: (category_id) => DBManager_1.DB.getProducts(category_id) },
             { method: "GET", entryPointName: "product", paramName: "id", callbackParam: (id) => DBManager_1.DB.getProductByID(id) },
+            { method: "GET", entryPointName: "carts", paramName: "owner_id", callbackParam: (owner_id) => DBManager_1.DB.getCarts(owner_id) },
+            { method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id) => DBManager_1.DB.getCartByID(id) },
+            { method: "GET", entryPointName: "deliveries", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveries(shipper_id) },
+            { method: "GET", entryPointName: "delivery", paramName: "id", callbackParam: (id) => DBManager_1.DB.getDeliveryByID(id) },
+            { method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposals(shipper_id) },
+            { method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id) => DBManager_1.DB.getDeliveryProposalByID(id) },
             { method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
             { method: "POST", entryPointName: "user", paramName: null, callbackParam: (user) => DBManager_1.DB.addUser(user) },
+            { method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper) => DBManager_1.DB.addShipper(shipper) },
+            { method: "POST", entryPointName: "cart", paramName: null, callbackParam: (cart) => DBManager_1.DB.addCart(cart) },
+            { method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
+            { method: "POST", entryPointName: "product", paramName: null, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
         ];
         console.log(`[${tag}] Initialisation de l\'api`);
         this.port = port;
@@ -74,8 +79,8 @@ class API {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
         // On le fait écouter sur le port en quesiton
-        this.app.listen(port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${port}`);
+        this.app.listen(this.port, () => {
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
         });
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
         this.app.get('/', (req, res) => {

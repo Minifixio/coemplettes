@@ -20,8 +20,8 @@ export class Cart {
     @Column({ type: "datetime", nullable:false })
     deadline!: Date
     
-    @Column({ type: "int", nullable:true })
-    state!: number
+    @Column({ type: "int", nullable:false })
+    status!: number
 
     @ManyToMany(type => User, owner => owner)
     @JoinColumn(

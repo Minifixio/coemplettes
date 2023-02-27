@@ -33,5 +33,5 @@ export class Shipper {
     shop!: boolean
 
     @Column({ type: "varchar", nullable:true })
-    availability!: string
+    disponibilities!: string
 }

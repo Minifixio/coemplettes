@@ -147,29 +147,32 @@ class DB {
             return res;
         });
     }
-    static getCarts() {
+    static getCarts(owner_id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Cart_1.Cart)
-                .createQueryBuilder()
+                .createQueryBuilder("cart")
+                .where("cart.owner_id = :owner_id", { owner_id: owner_id })
                 .getMany();
             return res;
         });
     }
-    static getDeliveries() {
+    static getDeliveries(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Delivery_1.Delivery)
-                .createQueryBuilder()
+                .createQueryBuilder("delivery")
+                .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
         });
     }
-    static getDeliveryProposals() {
+    static getDeliveryProposals(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
-                .createQueryBuilder()
+                .createQueryBuilder("delivery_proposal")
+                .where("delivery_proposal.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
         });
@@ -183,11 +186,12 @@ class DB {
             return res;
         });
     }
-    static getProducts() {
+    static getProducts(category_id) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield data_source_1.AppDataSource
                 .getRepository(Product_1.Product)
-                .createQueryBuilder()
+                .createQueryBuilder("product")
+                .where("product.category_id = :category_id", { category_id: category_id })
                 .getMany();
             return res;
         });
@@ -199,6 +203,46 @@ class DB {
                 .insert()
                 .into(User_1.User)
                 .values(user)
+                .execute();
+        });
+    }
+    static addShipper(shipper) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield data_source_1.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(Shipper_1.Shipper)
+                .values(shipper)
+                .execute();
+        });
+    }
+    static addCart(cart) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield data_source_1.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(Cart_1.Cart)
+                .values(cart)
+                .execute();
+        });
+    }
+    static addDeliveryProposal(delivery_proposal) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield data_source_1.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(DeliveryProposal_1.DeliveryProposal)
+                .values(delivery_proposal)
+                .execute();
+        });
+    }
+    static addProduct(product) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield data_source_1.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(Product_1.Product)
+                .values(product)
                 .execute();
         });
     }

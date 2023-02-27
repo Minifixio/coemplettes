@@ -56,7 +56,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
-], Shipper.prototype, "availability", void 0);
+], Shipper.prototype, "disponibilities", void 0);
 Shipper = __decorate([
     (0, typeorm_1.Entity)({ name: "shippers" })
 ], Shipper);

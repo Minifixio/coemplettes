@@ -36,9 +36,9 @@ __decorate([
     __metadata("design:type", Date)
 ], Cart.prototype, "deadline", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: true }),
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
-], Cart.prototype, "state", void 0);
+], Cart.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(type => User_1.User, owner => owner),
     (0, typeorm_1.JoinColumn)({ name: 'owner_id', referencedColumnName: 'id' }),
