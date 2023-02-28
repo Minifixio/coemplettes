@@ -56,7 +56,7 @@ function HomePage({navigation, isConnected, setIsConnected}) {
   useEffect(() => {
     ProductService.getFeaturedProducts().then(res => setFeaturedProducts(res));
     ProductService.getCategories().then(res => setCategories(res));
-  });
+  }, []);
 
   const renderCategoryItem = ({item}) => (
     <CategoryItem

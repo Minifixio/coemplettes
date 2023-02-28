@@ -26,6 +26,7 @@ export class ProductService {
   }
 
   static async getProduct(id) {
+    console.log('GET : product ' + id);
     try {
       const res = await API.get('product', id);
       return res.json();
@@ -36,6 +37,7 @@ export class ProductService {
   }
 
   static async getProductInCategory(category_id) {
+    console.log('GET : get product in category ' + category_id);
     try {
       const res = await API.get('products', category_id);
       return res.json();

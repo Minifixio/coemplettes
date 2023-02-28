@@ -15,9 +15,12 @@ function ProductPage({navigation, route}) {
   const {addToCart} = useContext(CartContext);
   const {id} = route.params;
 
+  ProductService.getProduct(id).then(res => setProduct(res));
+
   useEffect(() => {
     navigation.setOptions({title: ''});
-    setProduct(ProductService._getProduct(id));
+    ProductService.getProduct(id).then(res => setProduct(res));
+    //setProduct(ProductService._getProduct(id));
   }, [id, navigation]);
 
   return (
