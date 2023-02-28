@@ -1,10 +1,25 @@
-import * as React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import BasicButton from '../components/BasicButton';
 const deliveries = require('../assets/json/deliveries.json').deliveries;
 
-const StatusItem = ({iconName, title, subtitle, selected}) => {
+const StatusItem = ({
+  iconName,
+  title,
+  subtitle,
+  selected,
+  buttonText,
+  onPress,
+}) => {
   return (
     <View style={styles.statusItemContainer}>
       <View
@@ -24,6 +39,15 @@ const StatusItem = ({iconName, title, subtitle, selected}) => {
       <View style={styles.statusItemTextView}>
         <Text style={styles.statusItemTitle}>{title}</Text>
         <Text style={styles.statusItemSubtitle}>{subtitle}</Text>
+
+        {buttonText && selected && (
+          <Button
+            style={styles.cartInfoButton}
+            title={buttonText}
+            color="grey"
+            onPress={onPress}
+          />
+        )}
       </View>
     </View>
   );
@@ -35,69 +59,104 @@ function DeliveryTracking() {
    *
    * status
    **/
-  const status = deliveries[0].status;
+  var [status, setStatus] = useState(deliveries[0].status);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient colors={['#ffffff', '#f2f2f2']} style={styles.container}>
-        <View style={styles.statusItemContainer}>
-          <View
-            style={[
-              styles.statusItemIconView,
-              status === 1
-                ? styles.statusItemIconViewSelected
-                : styles.statusItemIconViewUnselected,
-            ]}>
-            <Ionicons
-              style={styles.statusItemIcon}
-              name="ios-cube-outline"
-              size={40}
-              color={status === 1 ? '#159c00' : 'grey'}
-            />
-          </View>
-          <View style={styles.statusItemTextView}>
-            <Text style={styles.statusItemTitle}>Commande placée</Text>
-            <Text style={styles.statusItemSubtitle}>11/03/2023</Text>
-            <Button
-              style={styles.cartInfoButton}
-              title="Voir la commande"
-              color="grey"
-              onPress={() => {}}
-            />
-          </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <LinearGradient
+          colors={['#ffffff', '#f2f2f2']}
+          style={styles.container}>
+          <StatusItem
+            title="Commande reçue"
+            subtitle="11/03/2023"
+            iconName="ios-cube-outline"
+            selected={true}
+            buttonText="Voir la commande"
+            onPress={() => {
+              setStatus(status + 1);
+            }}
+          />
+          <StatusItem
+            title="Commande acceptée"
+            subtitle="13/03/2023"
+            iconName="md-checkmark"
+            selected={status >= 2}
+          />
+          <StatusItem
+            title="Commande en attente d'achat"
+            subtitle="13/03/2023"
+            iconName="ios-time-outline"
+            selected={status >= 3}
+          />
+          <StatusItem
+            title="Commande en cours d'achat"
+            subtitle="14/03/2023"
+            iconName="ios-cart-outline"
+            selected={status >= 4}
+          />
+          <StatusItem
+            title="Commande déposée"
+            subtitle="14/03/2023"
+            iconName="ios-archive-outline"
+            selected={status >= 6}
+          />
+        </LinearGradient>
+      </ScrollView>
+      {status === 1 && (
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
+              setStatus(3);
+            }}
+            text="Accepter la commande"
+          />
         </View>
-        <StatusItem
-          title="Commande acceptée"
-          subtitle="13/03/2023"
-          iconName="md-checkmark"
-          selected={false}
-        />
-        <StatusItem
-          title="Commande en attente d'achat"
-          subtitle="13/03/2023"
-          iconName="ios-time-outline"
-          selected={false}
-        />
-        <StatusItem
-          title="Commande en cours d'achat"
-          subtitle="14/03/2023"
-          iconName="ios-cart-outline"
-          selected={false}
-        />
-        <StatusItem
-          title="Commande déposée"
-          subtitle="14/03/2023"
-          iconName="ios-archive-outline"
-          selected={false}
-        />
-      </LinearGradient>
-    </View>
+      )}
+      {status === 3 && (
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
+              setStatus(4);
+            }}
+            text="Je débute l'achat"
+          />
+        </View>
+      )}
+      {status === 4 && (
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
+              setStatus(5);
+            }}
+            text="Compléter la liste de course"
+          />
+        </View>
+      )}
+      {status === 5 && (
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
+              setStatus(5);
+            }}
+            text="Recevoir le code Locker"
+          />
+        </View>
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+  },
+  scrollView: {
+    height: '100%',
   },
   statusItemContainer: {
     margin: 10,
@@ -152,6 +211,13 @@ const styles = StyleSheet.create({
   statusItemIcon: {
     width: 40,
     height: 40,
+  },
+  buttonView: {
+    position: 'absolute',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    bottom: 10,
   },
 });
 

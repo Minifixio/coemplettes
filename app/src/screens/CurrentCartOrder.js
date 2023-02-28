@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import BasicButton from '../components/BasicButton';
 const carts = require('../assets/json/carts.json').carts;
@@ -15,8 +15,7 @@ function CurrentCartOrder({navigation, route}) {
    */
 
   const cart = carts[0];
-  const delivery = deliveries[cart.delivery_id];
-  const status = cart.status;
+  const [status, setStatus] = useState(cart.status);
 
   return (
     <View style={styles.container}>
@@ -36,7 +35,7 @@ function CurrentCartOrder({navigation, route}) {
         <View
           style={[
             styles.progressLine,
-            status === 2 || status === 3
+            status >= 2
               ? styles.progressLineSelected
               : styles.progressLineUnselected,
           ]}
@@ -46,7 +45,7 @@ function CurrentCartOrder({navigation, route}) {
           <View
             style={[
               styles.progressCircle,
-              status === 2 || status === 3
+              status >= 2
                 ? styles.progressCircleSelected
                 : styles.progressCircleUnselected,
             ]}>
@@ -146,7 +145,9 @@ function CurrentCartOrder({navigation, route}) {
           <BasicButton
             style={styles.button}
             valid={false}
-            onClick={() => {}}
+            onClick={() => {
+              setStatus(status + 1);
+            }}
             text="Annuler la liste"
           />
         </View>
@@ -155,7 +156,9 @@ function CurrentCartOrder({navigation, route}) {
         <View style={styles.buttonView}>
           <BasicButton
             style={styles.button}
-            onClick={() => {}}
+            onClick={() => {
+              setStatus(status + 1);
+            }}
             text="Valider et payer la caution"
           />
         </View>
@@ -164,7 +167,9 @@ function CurrentCartOrder({navigation, route}) {
         <View style={styles.buttonView}>
           <BasicButton
             style={styles.button}
-            onClick={() => {}}
+            onClick={() => {
+              setStatus(1);
+            }}
             text="Récupérer mon code Locker"
           />
         </View>

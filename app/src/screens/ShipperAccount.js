@@ -65,6 +65,11 @@ function ShipperAccountPage({navigation}) {
           icon="log-out-outline"
           goTo={() => {}}
         />
+        <MenuItem
+          text="Propositions de livraison"
+          icon="ios-basket-outline"
+          goTo={() => {}}
+        />
       </View>
     </SafeAreaView>
   );
