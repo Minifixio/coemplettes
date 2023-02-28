@@ -8,6 +8,7 @@ const CartItem_1 = require("./tables/CartItem");
 const Category_1 = require("./tables/Category");
 const Delivery_1 = require("./tables/Delivery");
 const DeliveryProposal_1 = require("./tables/DeliveryProposal");
+const FeaturedProduct_1 = require("./tables/FeaturedProduct");
 const Product_1 = require("./tables/Product");
 const Shipper_1 = require("./tables/Shipper");
 const Supermarket_1 = require("./tables/Supermarket");
@@ -25,7 +26,7 @@ function initAppDataSource(dbPort) {
         database: "COEMP",
         password: credentials_1.db_password,
         logging: true,
-        entities: [User_1.User, Shipper_1.Shipper, Product_1.Product, Category_1.Category, Cart_1.Cart, CartItem_1.CartItem, Delivery_1.Delivery, DeliveryProposal_1.DeliveryProposal, Supermarket_1.Supermarket, SupermarketProduct_1.SupermarketProduct]
+        entities: [User_1.User, Shipper_1.Shipper, Product_1.Product, Category_1.Category, Cart_1.Cart, CartItem_1.CartItem, Delivery_1.Delivery, DeliveryProposal_1.DeliveryProposal, Supermarket_1.Supermarket, SupermarketProduct_1.SupermarketProduct, FeaturedProduct_1.FeaturedProduct]
     });
     return AppDataSource;
 }

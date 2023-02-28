@@ -155,7 +155,8 @@ export class DB {
     public static async getFeaturedProducts(): Promise<FeaturedProduct[] | null> {
         const res = await this.AppDataSource
         .getRepository(FeaturedProduct)
-        .createQueryBuilder()
+        .createQueryBuilder("featured_product")
+        .leftJoinAndSelect("featured_product.product", "product")
         .getMany()
         return res
     }

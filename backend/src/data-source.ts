@@ -5,6 +5,7 @@ import { CartItem } from './tables/CartItem';
 import { Category } from './tables/Category';
 import { Delivery } from './tables/Delivery';
 import { DeliveryProposal } from './tables/DeliveryProposal';
+import { FeaturedProduct } from './tables/FeaturedProduct';
 import { Product } from './tables/Product';
 import { Shipper } from './tables/Shipper';
 import { Supermarket } from './tables/Supermarket';
@@ -24,7 +25,7 @@ export function initAppDataSource(dbPort: number) {
         database: "COEMP",
         password:db_password,
         logging: true,
-        entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct]
+        entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct, FeaturedProduct]
     })
     return AppDataSource
 }
