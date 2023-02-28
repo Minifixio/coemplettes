@@ -25,7 +25,7 @@ export function initAppDataSource(dbPort: number) {
         database: "COEMP",
         password:db_password,
         logging: true,
-        entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct, FeaturedProduct]
+        entities: [__dirname + "/tables/*.js"]
     })
     return AppDataSource
 }
