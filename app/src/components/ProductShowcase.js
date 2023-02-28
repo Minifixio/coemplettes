@@ -1,10 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {Text, Pressable, StyleSheet, View, Image} from 'react-native';
+
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputSpinner from 'react-native-input-spinner';
+
 import {CartContext} from '../utils/CartProvider';
-import {getProduct} from '../services/ProductService';
+import {ProductService} from '../services/ProductService';
 
 const ProductShowcase = ({navigation, id}) => {
   const [isSelected, setIsSelected] = useState(false);
@@ -14,7 +16,7 @@ const ProductShowcase = ({navigation, id}) => {
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-    setProduct(getProduct(id));
+    setProduct(ProductService._getProduct(id));
   }, [id, navigation]);
 
   function onClick() {

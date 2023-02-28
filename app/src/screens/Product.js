@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
 import InputSpinner from 'react-native-input-spinner';
 import BasicButton from '../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
+
 import {CartContext} from '../utils/CartProvider';
-import {getProduct} from '../services/ProductService';
+import {ProductService} from '../services/ProductService';
 
 function ProductPage({navigation, route}) {
   const [quantity, setQuantity] = useState(0);
@@ -15,7 +17,7 @@ function ProductPage({navigation, route}) {
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-    setProduct(getProduct(id));
+    setProduct(ProductService._getProduct(id));
   }, [id, navigation]);
 
   return (
