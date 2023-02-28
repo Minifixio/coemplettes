@@ -9,6 +9,7 @@ import { DeliveryProposal } from "./tables/DeliveryProposal";
 import { Product } from "./tables/Product";
 import { Category } from "./tables/Category";
 import { DataSource } from "typeorm";
+import { FeaturedProduct } from "./tables/FeaturedProduct";
 
 export class DB {
 
@@ -147,6 +148,14 @@ export class DB {
         .getRepository(Product)
         .createQueryBuilder("product")
         .where("product.category_id = :category_id", {category_id: category_id})
+        .getMany()
+        return res
+    }
+
+    public static async getFeaturedProducts(): Promise<FeaturedProduct[] | null> {
+        const res = await this.AppDataSource
+        .getRepository(FeaturedProduct)
+        .createQueryBuilder()
         .getMany()
         return res
     }

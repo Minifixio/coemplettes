@@ -27,6 +27,8 @@ export class API {
         {method: "GET", entryPointName: "products", paramName: "category_id", callbackParam: (category_id: number) => DB.getProducts(category_id)},
         {method: "GET", entryPointName: "product", paramName: "id", callbackParam: (id: number) => DB.getProductByID(id)},
 
+        {method: "GET", entryPointName: "featured_products", paramName: null, callbackNoParam: () => DB.getFeaturedProducts()},
+
         {method: "GET", entryPointName: "carts", paramName: "owner_id", callbackParam: (owner_id: number) => DB.getCarts(owner_id)},
         {method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id: number) => DB.getCartByID(id)},
         
