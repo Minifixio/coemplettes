@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProductShowcase from '../components/ProductShowcase';
 import CategoryPage from './Category';
 import ProductPage from './Product';
+import {ProductService} from '../services/ProductService';
 
 const categoriesIcons = {
   0: require('../assets/icons/categories/fruit.png'),
@@ -26,8 +27,8 @@ const categoriesIcons = {
   5: require('../assets/icons/categories/cereal.png'),
 };
 
-const productCategories = require('../assets/json/categories.json').categories;
-const featuredProducts =
+const _categories = require('../assets/json/categories.json').categories;
+const _featuredProducts =
   require('../assets/json/featured_products.json').featured_products;
 
 const CategoryItem = function ({name, color, id, navigation}) {
@@ -49,6 +50,14 @@ const CategoryItem = function ({name, color, id, navigation}) {
 };
 
 function HomePage({navigation, isConnected, setIsConnected}) {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    ProductService.getFeaturedProducts().then(res => setFeaturedProducts(res));
+    ProductService.getCategories().then(res => setCategories(res));
+  });
+
   const renderCategoryItem = ({item}) => (
     <CategoryItem
       name={item.name}
@@ -84,7 +93,7 @@ function HomePage({navigation, isConnected, setIsConnected}) {
 
         <FlatList
           style={styles.categoriesFlatList}
-          data={productCategories}
+          data={categories}
           horizontal
           renderItem={renderCategoryItem}
         />

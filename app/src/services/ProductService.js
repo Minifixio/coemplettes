@@ -28,8 +28,9 @@ export class ProductService {
   static async getProduct(id) {
     try {
       const res = await API.get('product', id);
-      return res;
+      return res.json();
     } catch (e) {
+      console.error(e);
       return null;
     }
   }
@@ -37,17 +38,31 @@ export class ProductService {
   static async getProductInCategory(category_id) {
     try {
       const res = await API.get('products', category_id);
-      return res;
+      return res.json();
     } catch (e) {
+      console.error(e);
       return null;
     }
   }
 
   static async getFeaturedProducts() {
+    console.log('GET : featured products');
     try {
       const res = await API.get('featured_products');
-      return res;
+      return res.json();
     } catch (e) {
+      console.error(e);
+      return null;
+    }
+  }
+
+  static async getCategories() {
+    console.log('GET : categories');
+    try {
+      const res = await API.get('categories');
+      return res.json();
+    } catch (e) {
+      console.error(e);
       return null;
     }
   }

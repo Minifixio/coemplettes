@@ -2,9 +2,13 @@ const apiURL = 'http://137.194.211.70';
 
 export class API {
   static async get(entrypoint, param) {
-    return param
-      ? fetch(`${apiURL}/${entrypoint}/${param}`).json()
-      : fetch(`${apiURL}/${entrypoint}`).json();
+    if (param === undefined) {
+      console.log(`GET : ${apiURL}/${entrypoint}`);
+      return fetch(`${apiURL}/${entrypoint}`);
+    } else {
+      console.log(`GET : ${apiURL}/${entrypoint}/${param}`);
+      return fetch(`${apiURL}/${entrypoint}/${param}`);
+    }
   }
 
   static async post(entrypoint, data) {
