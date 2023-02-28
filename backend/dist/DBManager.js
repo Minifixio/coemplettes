@@ -44,21 +44,21 @@ const DeliveryProposal_1 = require("./tables/DeliveryProposal");
 const Product_1 = require("./tables/Product");
 const Category_1 = require("./tables/Category");
 class DB {
-    constructor() {
-    }
-    initialize() {
+    static initialize(dbPort) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource.initialize()
+            console.log("Connexion à la base de donnée sur le port " + dbPort + "\n");
+            this.AppDataSource = (0, data_source_1.initAppDataSource)(dbPort);
+            yield this.AppDataSource.initialize()
                 .then(() => {
-                console.log("Base de donnée initilaisée!");
+                console.log("Base de donnée initilaisée!\n");
             })
                 .catch((error) => console.log(error));
         });
     }
     // Fonction de test
-    test() {
+    static test() {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder("user")
                 .where("user.first_name = :first_name", { first_name: "John" })
@@ -71,7 +71,7 @@ class DB {
      */
     static getUserByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder("user")
                 .where("user.id = :id", { id: id })
@@ -81,7 +81,7 @@ class DB {
     }
     static getShipperByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder("shipper")
                 .where("shipper.id = :id", { id: id })
@@ -91,7 +91,7 @@ class DB {
     }
     static getCartByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
                 .where("cart.id = :id", { id: id })
@@ -101,7 +101,7 @@ class DB {
     }
     static getDeliveryByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
                 .where("delivery.id = :id", { id: id })
@@ -111,7 +111,7 @@ class DB {
     }
     static getDeliveryProposalByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
                 .createQueryBuilder("delivery_proposal")
                 .where("delivery_proposal.id = :id", { id: id })
@@ -121,7 +121,7 @@ class DB {
     }
     static getProductByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Product_1.Product)
                 .createQueryBuilder("product")
                 .where("product.id = :id", { id: id })
@@ -131,7 +131,7 @@ class DB {
     }
     static getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder()
                 .getMany();
@@ -140,7 +140,7 @@ class DB {
     }
     static getShippers() {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder()
                 .getMany();
@@ -149,7 +149,7 @@ class DB {
     }
     static getCarts(owner_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
                 .where("cart.owner_id = :owner_id", { owner_id: owner_id })
@@ -159,7 +159,7 @@ class DB {
     }
     static getDeliveries(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
@@ -169,7 +169,7 @@ class DB {
     }
     static getDeliveryProposals(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
                 .createQueryBuilder("delivery_proposal")
                 .where("delivery_proposal.shipper_id = :shipper_id", { shipper_id: shipper_id })
@@ -179,7 +179,7 @@ class DB {
     }
     static getCategories() {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Category_1.Category)
                 .createQueryBuilder()
                 .getMany();
@@ -188,7 +188,7 @@ class DB {
     }
     static getProducts(category_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const res = yield data_source_1.AppDataSource
+            const res = yield this.AppDataSource
                 .getRepository(Product_1.Product)
                 .createQueryBuilder("product")
                 .where("product.category_id = :category_id", { category_id: category_id })
@@ -198,7 +198,7 @@ class DB {
     }
     static addUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource
+            yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(User_1.User)
@@ -208,7 +208,7 @@ class DB {
     }
     static addShipper(shipper) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource
+            yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(Shipper_1.Shipper)
@@ -218,7 +218,7 @@ class DB {
     }
     static addCart(cart) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource
+            yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(Cart_1.Cart)
@@ -228,7 +228,7 @@ class DB {
     }
     static addDeliveryProposal(delivery_proposal) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource
+            yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(DeliveryProposal_1.DeliveryProposal)
@@ -238,7 +238,7 @@ class DB {
     }
     static addProduct(product) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield data_source_1.AppDataSource
+            yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(Product_1.Product)
@@ -251,7 +251,7 @@ class DB {
         return __awaiter(this, void 0, void 0, function* () {
             fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', (error, data) => __awaiter(this, void 0, void 0, function* () {
                 const parsedData = JSON.parse(data)[tableName];
-                yield data_source_1.AppDataSource
+                yield this.AppDataSource
                     .createQueryBuilder()
                     .insert()
                     .into(tableName)
