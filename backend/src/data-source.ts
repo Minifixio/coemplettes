@@ -15,13 +15,16 @@ import { User } from './tables/User';
 // Les entités sont référencées dans le dossier /entities
 // On ne fait que traduire les données de la base de donnée en TypeScript
 // Pour les types utilisés pour MariaDB, voir : https://orkhan.gitbook.io/typeorm/docs/entities#column-types-for-mysql-mariadb
-export const AppDataSource = new DataSource({
-    type: "mariadb",
-    host: "localhost",
-    port: 3306,
-    username:"admin",
-    database: "COEMP",
-    password:db_password,
-    logging: true,
-    entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct]
-})
+export function initAppDataSource(dbPort: number) {
+    const AppDataSource = new DataSource({
+        type: "mariadb",
+        host: "localhost",
+        port: dbPort,
+        username:"admin",
+        database: "COEMP",
+        password:db_password,
+        logging: true,
+        entities: [User, Shipper, Product, Category, Cart, CartItem, Delivery, DeliveryProposal, Supermarket, SupermarketProduct]
+    })
+    return AppDataSource
+}

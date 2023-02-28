@@ -1,4 +1,4 @@
-import { AppDataSource } from "./data-source";
+import { initAppDataSource } from "./data-source";
 import { User } from "./tables/User";
 import * as fs from 'fs';
 import * as path from 'path';
@@ -8,22 +8,25 @@ import { Delivery } from "./tables/Delivery";
 import { DeliveryProposal } from "./tables/DeliveryProposal";
 import { Product } from "./tables/Product";
 import { Category } from "./tables/Category";
+import { DataSource } from "typeorm";
 
 export class DB {
-    constructor() {
-    }
 
-    public async initialize() {
-        await AppDataSource.initialize()
+    static AppDataSource: DataSource;
+
+    static async initialize(dbPort: number) {
+        console.log("Connexion à la base de donnée sur le port " + dbPort + "\n")
+        this.AppDataSource = initAppDataSource(dbPort)
+        await this.AppDataSource.initialize()
         .then(() => {
-            console.log("Base de donnée initilaisée!")
+            console.log("Base de donnée initilaisée!\n")
         })
         .catch((error) => console.log(error))
     }
 
     // Fonction de test
-    public async test() {
-        const res = await AppDataSource
+    static async test() {
+        const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder("user")
         .where("user.first_name = :first_name", { first_name: "John" })
@@ -35,7 +38,7 @@ export class DB {
      * Pour toutes les fonctions de type get... voir la doc de TypeORM
      */
     public static async getUserByID(id: number): Promise<User | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder("user")
         .where("user.id = :id", { id: id })
@@ -44,7 +47,7 @@ export class DB {
     }
 
     public static async getShipperByID(id: number): Promise<Shipper | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Shipper)
         .createQueryBuilder("shipper")
         .where("shipper.id = :id", { id: id })
@@ -53,7 +56,7 @@ export class DB {
     }
 
     public static async getCartByID(id: number): Promise<Cart | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
         .where("cart.id = :id", { id: id })
@@ -62,7 +65,7 @@ export class DB {
     }
 
     public static async getDeliveryByID(id: number): Promise<Delivery | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
         .where("delivery.id = :id", { id: id })
@@ -71,7 +74,7 @@ export class DB {
     }
 
     public static async getDeliveryProposalByID(id: number): Promise<DeliveryProposal | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(DeliveryProposal)
         .createQueryBuilder("delivery_proposal")
         .where("delivery_proposal.id = :id", { id: id })
@@ -80,7 +83,7 @@ export class DB {
     }
 
     public static async getProductByID(id: number): Promise<Product | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Product)
         .createQueryBuilder("product")
         .where("product.id = :id", { id: id })
@@ -89,7 +92,7 @@ export class DB {
     }
 
     public static async getUsers(): Promise<User[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder()
         .getMany()
@@ -97,7 +100,7 @@ export class DB {
     }
 
     public static async getShippers(): Promise<Shipper[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Shipper)
         .createQueryBuilder()
         .getMany()
@@ -105,7 +108,7 @@ export class DB {
     }
 
     public static async getCarts(owner_id: number): Promise<Cart[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
         .where("cart.owner_id = :owner_id", {owner_id: owner_id})
@@ -114,7 +117,7 @@ export class DB {
     }
 
     public static async getDeliveries(shipper_id: number): Promise<Delivery[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
@@ -123,7 +126,7 @@ export class DB {
     }
 
     public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(DeliveryProposal)
         .createQueryBuilder("delivery_proposal")
         .where("delivery_proposal.shipper_id = :shipper_id", {shipper_id: shipper_id})
@@ -132,7 +135,7 @@ export class DB {
     }
 
     public static async getCategories(): Promise<Category[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Category)
         .createQueryBuilder()
         .getMany()
@@ -140,7 +143,7 @@ export class DB {
     }
 
     public static async getProducts(category_id: number): Promise<Product[] | null> {
-        const res = await AppDataSource
+        const res = await this.AppDataSource
         .getRepository(Product)
         .createQueryBuilder("product")
         .where("product.category_id = :category_id", {category_id: category_id})
@@ -149,7 +152,7 @@ export class DB {
     }
 
     public static async addUser(user: User) {
-        await AppDataSource
+        await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(User)
@@ -158,7 +161,7 @@ export class DB {
     }
 
     public static async addShipper(shipper: Shipper) {
-        await AppDataSource
+        await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(Shipper)
@@ -167,7 +170,7 @@ export class DB {
     }
 
     public static async addCart(cart: Cart) {
-        await AppDataSource
+        await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(Cart)
@@ -176,7 +179,7 @@ export class DB {
     }
 
     public static async addDeliveryProposal(delivery_proposal: DeliveryProposal) {
-        await AppDataSource
+        await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(DeliveryProposal)
@@ -185,7 +188,7 @@ export class DB {
     }
 
     public static async addProduct(product: Product) {
-        await AppDataSource
+        await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(Product)
@@ -198,7 +201,7 @@ export class DB {
     public static async writeFromJSON(tableName: string) {
         fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', async (error, data: any) => {
             const parsedData = JSON.parse(data)[tableName]
-            await AppDataSource
+            await this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(tableName)
