@@ -1,4 +1,9 @@
 import express, { Express, Request, Response } from 'express';
+import jsonwebtoken from 'jsonwebtoken';
+import cors from 'cors';
+import morgan from 'cors';
+
+
 import { DB } from './DBManager';
 import { EntryPoint } from './models/EntryPoint';
 import { Cart } from './tables/Cart';
@@ -84,6 +89,8 @@ export class API {
 
         // On crée un objet Express (API)
         this.app = express();
+        this.app.use(cors)
+        this.app.use(morgan('tiny')) 
         this.app.use(bodyParser.urlencoded({ extended: false }))
         this.app.use(bodyParser.json())
 
