@@ -33,10 +33,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DB = void 0;
-const data_source_1 = require("./data-source");
-const User_1 = require("./tables/User");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const data_source_1 = require("./data-source");
+const User_1 = require("./tables/User");
 const Shipper_1 = require("./tables/Shipper");
 const Cart_1 = require("./tables/Cart");
 const Delivery_1 = require("./tables/Delivery");
@@ -44,6 +44,7 @@ const DeliveryProposal_1 = require("./tables/DeliveryProposal");
 const Product_1 = require("./tables/Product");
 const Category_1 = require("./tables/Category");
 const FeaturedProduct_1 = require("./tables/FeaturedProduct");
+const OAuth_1 = require("./tables/OAuth");
 class DB {
     static initialize(dbPort) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -65,6 +66,26 @@ class DB {
                 .where("user.first_name = :first_name", { first_name: "John" })
                 .getOne();
             return res;
+        });
+    }
+    static createAccessToken(token, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.AppDataSource
+                .createQueryBuilder()
+                .update(OAuth_1.OAuth)
+                .set({ access_token: token })
+                .where("user_id = :user_id", { user_id: userId })
+                .execute();
+        });
+    }
+    static storeRefreshToken(token, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.AppDataSource
+                .createQueryBuilder()
+                .update(OAuth_1.OAuth)
+                .set({ refresh_token: token })
+                .where("user_id = :user_id", { user_id: userId })
+                .execute();
         });
     }
     /**
@@ -209,12 +230,15 @@ class DB {
     }
     static addUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.AppDataSource
+            const id = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(User_1.User)
                 .values(user)
+                .returning("id")
                 .execute();
+            console.log(id.identifiers[0].id);
+            return 1;
         });
     }
     static addShipper(shipper) {

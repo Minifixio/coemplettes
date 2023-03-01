@@ -1,7 +1,5 @@
 import express, { Express, Request, Response } from 'express';
-import jsonwebtoken from 'jsonwebtoken';
 import cors from 'cors';
-import morgan from 'cors';
 
 
 import { DB } from './DBManager';
@@ -62,6 +60,27 @@ export class API {
         this.initEntryPoints()
     }
 
+    /**
+     * On itialise l'App
+     */
+    private initApp() {
+
+        // On crée un objet Express (API)
+        this.app = express();
+        this.app.use(bodyParser.urlencoded({ extended: false }))
+        this.app.use(bodyParser.json())
+
+        // On le fait écouter sur le port en quesiton
+        this.app.listen(this.port, () => {
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
+        });
+
+        // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
+        this.app.get('/', (req: Request, res: Response) => {
+            res.send('Backend CoEmplettes !');
+        });
+    }
+
     /** 
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
@@ -80,29 +99,6 @@ export class API {
                 }
             }
         })
-    }
-
-    /**
-     * On itialise l'App
-     */
-    private initApp() {
-
-        // On crée un objet Express (API)
-        this.app = express();
-        this.app.use(cors)
-        this.app.use(morgan('tiny')) 
-        this.app.use(bodyParser.urlencoded({ extended: false }))
-        this.app.use(bodyParser.json())
-
-        // On le fait écouter sur le port en quesiton
-        this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
-        });
-
-        // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
-        this.app.get('/', (req: Request, res: Response) => {
-            res.send('Backend CoEmplettes !');
-        });
     }
 
     /**
@@ -141,7 +137,7 @@ export class API {
         this.app.post(`/${entryPointName}`, async (req: Request, res: Response) => {
             console.log(req.body)
             const data = await callback(req.body)
-            res.send(data)
+            res.sendStatus(200)
         })
     }
 }

@@ -1,15 +1,19 @@
+import * as fs from 'fs';
+import * as path from 'path'
+import bcrypt from 'bcrypt';
+
+import { DataSource } from "typeorm";
+
 import { initAppDataSource } from "./data-source";
 import { User } from "./tables/User";
-import * as fs from 'fs';
-import * as path from 'path';
 import { Shipper } from "./tables/Shipper";
 import { Cart } from "./tables/Cart";
 import { Delivery } from "./tables/Delivery";
 import { DeliveryProposal } from "./tables/DeliveryProposal";
 import { Product } from "./tables/Product";
 import { Category } from "./tables/Category";
-import { DataSource } from "typeorm";
 import { FeaturedProduct } from "./tables/FeaturedProduct";
+import { OAuth } from './tables/OAuth';
 
 export class DB {
 
@@ -31,6 +35,49 @@ export class DB {
         .getRepository(User)
         .createQueryBuilder("user")
         .where("user.first_name = :first_name", { first_name: "John" })
+        .getOne()
+        return res
+    }
+
+    static async addUserAuth(accessToken: string, refreshToken: string, userId: number, expiresAt: number) {
+        const oauth: OAuth = {
+            user_id: userId,
+            access_token: accessToken,
+            expires_at: expiresAt,
+            refresh_token: refreshToken
+        }
+
+        await this.AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(OAuth)
+        .values(oauth)
+        .execute()
+    }
+
+    static async storeAccessToken(token: string, userId: number, expiresAt: number) {
+        return await this.AppDataSource
+        .createQueryBuilder()
+        .update(OAuth)
+        .set({access_token: token, expires_at: expiresAt})
+        .where("user_id = :user_id", {user_id: userId})
+        .execute()
+    }
+
+    static async storeRefreshToken(token: string, userId: number){
+        return await this.AppDataSource
+        .createQueryBuilder()
+        .update(OAuth)
+        .set({refresh_token: token})
+        .where("user_id = :user_id", {user_id: userId})
+        .execute()
+    }
+
+    static async getAuthInfos(userId: number) {
+        const res = await this.AppDataSource
+        .getRepository(OAuth)
+        .createQueryBuilder("oauth")
+        .where("oauth.user_id = :id", { id: userId })
         .getOne()
         return res
     }
@@ -162,12 +209,16 @@ export class DB {
     }
 
     public static async addUser(user: User) {
-        await this.AppDataSource
+        const req = await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(User)
         .values(user)
+        .returning("id")
         .execute()
+
+        const id: number = req.identifiers[0].id
+        return id
     }
 
     public static async addShipper(shipper: Shipper) {

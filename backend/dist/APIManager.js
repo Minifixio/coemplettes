@@ -51,6 +51,23 @@ class API {
         this.initEntryPoints();
     }
     /**
+     * On itialise l'App
+     */
+    initApp() {
+        // On crée un objet Express (API)
+        this.app = (0, express_1.default)();
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
+        // On le fait écouter sur le port en quesiton
+        this.app.listen(this.port, () => {
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
+        });
+        // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
+        this.app.get('/', (req, res) => {
+            res.send('Backend CoEmplettes !');
+        });
+    }
+    /**
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
     initEntryPoints() {
@@ -69,23 +86,6 @@ class API {
                     this.initPOST(ep.entryPointName, ep.callbackParam);
                 }
             }
-        });
-    }
-    /**
-     * On itialise l'App
-     */
-    initApp() {
-        // On crée un objet Express (API)
-        this.app = (0, express_1.default)();
-        this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(bodyParser.json());
-        // On le fait écouter sur le port en quesiton
-        this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
-        });
-        // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
-        this.app.get('/', (req, res) => {
-            res.send('Backend CoEmplettes !');
         });
     }
     /**
@@ -126,7 +126,7 @@ class API {
             this.app.post(`/${entryPointName}`, (req, res) => __awaiter(this, void 0, void 0, function* () {
                 console.log(req.body);
                 const data = yield callback(req.body);
-                res.send(data);
+                res.sendStatus(200);
             }));
         });
     }
