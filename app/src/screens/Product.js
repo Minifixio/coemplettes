@@ -15,12 +15,9 @@ function ProductPage({navigation, route}) {
   const {addToCart} = useContext(CartContext);
   const {id} = route.params;
 
-  ProductService.getProduct(id).then(res => setProduct(res));
-
   useEffect(() => {
     navigation.setOptions({title: ''});
     ProductService.getProduct(id).then(res => setProduct(res));
-    //setProduct(ProductService._getProduct(id));
   }, [id, navigation]);
 
   return (
@@ -108,8 +105,8 @@ const styles = StyleSheet.create({
     color: 'green',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: 200,
+    height: 200,
   },
 });
 

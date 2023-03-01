@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     marginTop: 5,
+    marginLeft: 10,
   },
   switch: {
     position: 'absolute',
