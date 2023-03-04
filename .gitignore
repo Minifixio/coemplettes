@@ -20,6 +20,7 @@ _book
 # Emile : local dev
 app/.git
 app/.gitignore
+backend/.env
 
 # Temp : android app
 # app
