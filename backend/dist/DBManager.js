@@ -68,12 +68,31 @@ class DB {
             return res;
         });
     }
-    static createAccessToken(token, userId) {
+    static addUserAuth(accessToken, refreshToken, userId, expiresAt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const oauth = {
+                user_id: userId,
+                access_token: accessToken,
+                expires_at: expiresAt,
+                refresh_token: refreshToken
+            };
+            console.log("Adding user auth :");
+            console.log(oauth);
+            console.log('\n');
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(OAuth_1.OAuth)
+                .values(oauth)
+                .execute();
+        });
+    }
+    static storeAccessToken(token, userId, expiresAt) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.AppDataSource
                 .createQueryBuilder()
                 .update(OAuth_1.OAuth)
-                .set({ access_token: token })
+                .set({ access_token: token, expires_at: expiresAt })
                 .where("user_id = :user_id", { user_id: userId })
                 .execute();
         });
@@ -88,6 +107,16 @@ class DB {
                 .execute();
         });
     }
+    static getAuthInfos(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.AppDataSource
+                .getRepository(OAuth_1.OAuth)
+                .createQueryBuilder("oauth")
+                .where("oauth.user_id = :id", { id: userId })
+                .getOne();
+            return res;
+        });
+    }
     /**
      * Pour toutes les fonctions de type get... voir la doc de TypeORM
      */
@@ -97,6 +126,16 @@ class DB {
                 .getRepository(User_1.User)
                 .createQueryBuilder("user")
                 .where("user.id = :id", { id: id })
+                .getOne();
+            return res;
+        });
+    }
+    static getUserByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.AppDataSource
+                .getRepository(User_1.User)
+                .createQueryBuilder("user")
+                .where("user.email = :email", { email: email })
                 .getOne();
             return res;
         });
@@ -228,17 +267,32 @@ class DB {
             return res;
         });
     }
+    static getTokens(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const req = yield this.AppDataSource
+                .getRepository(OAuth_1.OAuth)
+                .createQueryBuilder("oauth")
+                .where("oauth.user_id = :user_id", { user_id: userId })
+                .getOne();
+            if (req) {
+                return { accessToken: req.access_token, refreshToken: req.refresh_token };
+            }
+            else {
+                return null;
+            }
+        });
+    }
     static addUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const id = yield this.AppDataSource
+            const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(User_1.User)
                 .values(user)
                 .returning("id")
                 .execute();
-            console.log(id.identifiers[0].id);
-            return 1;
+            const id = req.identifiers[0].id;
+            return id;
         });
     }
     static addShipper(shipper) {

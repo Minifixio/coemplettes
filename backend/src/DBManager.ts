@@ -42,12 +42,17 @@ export class DB {
     }
 
     static async addUserAuth(accessToken: string, refreshToken: string, userId: number, expiresAt: number) {
+
         const oauth: OAuth = {
             user_id: userId,
             access_token: accessToken,
             expires_at: expiresAt,
             refresh_token: refreshToken
         }
+
+        console.log("Adding user auth :")
+        console.log(oauth)
+        console.log('\n')
 
         await this.AppDataSource
         .createQueryBuilder()

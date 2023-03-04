@@ -1,6 +1,4 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
-import cors from 'cors';
-
 
 import { DB } from './DBManager';
 import { EntryPoint } from './models/EntryPoint';
@@ -13,6 +11,18 @@ import { AuthManager } from './AuthManager';
 import { AuthError, AuthErrors } from './models/AuthErrors';
 
 var bodyParser = require('body-parser')
+
+interface RequestParams {
+    [key: string]: string;
+}
+
+interface ResponseBody {}
+
+interface RequestBody {}
+
+interface RequestQuery {
+    user_id: number;
+}
 
 export class API {
 
@@ -52,12 +62,12 @@ export class API {
         {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},
     ]
 
-    authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    authMiddleware = async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction) => {
         const authHeader = req.headers.authorization
 
         if (authHeader) {
             const accessToken = authHeader.split(' ')[1]
-            const userId = req.user_id
+            const userId = req.query.user_id
             if (userId) {
                 const user = await DB.getUserByID(userId)
 
@@ -96,10 +106,11 @@ export class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
     constructor(port:number, tag?:string) {
-        console.log(`[${tag}] Initialisation de l\'api`)
+        console.log(`[${tag}] Initialisation de l\'api\n`)
         this.port=port
         this.tag=tag
         this.initApp()
+        this.initAuth()
         this.initEntryPoints()
     }
 
@@ -115,7 +126,7 @@ export class API {
 
         // On le fait écouter sur le port en quesiton
         this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
 
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
@@ -128,7 +139,7 @@ export class API {
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
     private initEntryPoints() {
-        console.log('Initilisation des entry-points!')
+        console.log('Initilisation des entry-points!\n')
         this.entryPoints.forEach(ep => {
             if (ep.method === "GET") {
                 if (ep.paramName && ep.callbackParam) {
@@ -154,7 +165,7 @@ export class API {
         console.log(`Init GET ${entryPointName} with param ${paramName}`)
         // Pour récupérer le paramètre dans Express la syntaxe est :
         // app.get(`/entryPointName/:paramName) avec les ':'
-        this.app.get(`/${entryPointName}/:${paramName}`, this.authMiddleware, async (req: Request, res: Response) => {
+        this.app.get(`/${entryPointName}/:${paramName}`, this.authMiddleware, async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
             const data = await callback(req.params[paramName])
             res.send(data)
         })
@@ -165,7 +176,7 @@ export class API {
      */
     private initGETnoParams(entryPointName: string, callback: (() => Promise<any>)) {
         console.log(`Init GET ${entryPointName} with no params`)
-        this.app.get(`/${entryPointName}`, this.authMiddleware, async (req: Request, res: Response) => {
+        this.app.get(`/${entryPointName}`, this.authMiddleware, async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
             const data = await callback()
             res.send(data)
         })
@@ -177,7 +188,7 @@ export class API {
      */
     private initPOST(entryPointName: string, callback: ((c: any) => Promise<any>)) {
         console.log(`Init POST ${entryPointName}`)
-        this.app.post(`/${entryPointName}`, this.authMiddleware, async (req: Request, res: Response) => {
+        this.app.post(`/${entryPointName}`, this.authMiddleware, async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
             console.log(req.body)
             const data = await callback(req.body)
             res.sendStatus(200)
@@ -185,9 +196,15 @@ export class API {
     }
 
     private initAuth() {
+        console.log("Initialisation du système d'autehntification\n")
         this.app.post('/register', async (req: Request, res: Response) => {
+
             const user = req.body.user
             const password = req.body.password
+
+            console.log('Register user :')
+            console.log(user)
+            console.log('\n')
 
             try {
                 const userId = await AuthManager.register(user, password)
@@ -203,6 +220,8 @@ export class API {
             const email = req.body.email
             const password = req.body.password
 
+            console.log(`Login user : ${email}\n`)
+
             try {
                 const userId = await AuthManager.login(email, password)
                 const tokens = await AuthManager.generateAuth(userId)
@@ -215,6 +234,8 @@ export class API {
         this.app.post('/refresh', async (req: Request, res: Response) => {
             const email = req.body.email
             const refreshToken = req.body.refresh_token
+
+            console.log(`Refresh user : ${email}\n`)
 
             try {
                 const tokens = await AuthManager.refreshAuth(email, refreshToken)

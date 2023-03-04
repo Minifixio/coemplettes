@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
+const AuthManager_1 = require("./AuthManager");
 var bodyParser = require('body-parser');
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
@@ -44,10 +45,51 @@ class API {
             { method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
             { method: "POST", entryPointName: "product", paramName: null, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
         ];
-        console.log(`[${tag}] Initialisation de l\'api`);
+        this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const authHeader = req.headers.authorization;
+            if (authHeader) {
+                const accessToken = authHeader.split(' ')[1];
+                const userId = req.query.user_id;
+                if (userId) {
+                    const user = yield DBManager_1.DB.getUserByID(userId);
+                    if (!user) {
+                        res.status(401).json({
+                            "error": "user_unknown",
+                            "error_message": "user_id inconnu"
+                        });
+                    }
+                    else {
+                        const validAccess = yield AuthManager_1.AuthManager.checkAuth(userId, accessToken);
+                        if (validAccess) {
+                            next();
+                        }
+                        else {
+                            res.status(401).json({
+                                "error": "invalid_access_token",
+                                "error_message": "access_token invalide"
+                            });
+                        }
+                    }
+                }
+                else {
+                    res.status(400).json({
+                        "error": "user_id_missing",
+                        "error_message": "user_id_missing non fourni"
+                    });
+                }
+            }
+            else {
+                res.status(400).json({
+                    "error": "auth_header_missing",
+                    "error_message": "fournir un authorization header"
+                });
+            }
+        });
+        console.log(`[${tag}] Initialisation de l\'api\n`);
         this.port = port;
         this.tag = tag;
         this.initApp();
+        this.initAuth();
         this.initEntryPoints();
     }
     /**
@@ -60,7 +102,7 @@ class API {
         this.app.use(bodyParser.json());
         // On le fait écouter sur le port en quesiton
         this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}`);
+            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
         this.app.get('/', (req, res) => {
@@ -71,7 +113,7 @@ class API {
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
     initEntryPoints() {
-        console.log('Initilisation des entry-points!');
+        console.log('Initilisation des entry-points!\n');
         this.entryPoints.forEach(ep => {
             if (ep.method === "GET") {
                 if (ep.paramName && ep.callbackParam) {
@@ -95,40 +137,77 @@ class API {
      * Exemple : 'GET localhost:3000/user/12' pour récupérer les données de l'utilisateur 12
      */
     initGETwithParams(entryPointName, paramName, callback) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Init GET ${entryPointName} with param ${paramName}`);
-            // Pour récupérer le paramètre dans Express la syntaxe est :
-            // app.get(`/entryPointName/:paramName) avec les ':'
-            this.app.get(`/${entryPointName}/:${paramName}`, (req, res) => __awaiter(this, void 0, void 0, function* () {
-                const data = yield callback(req.params[paramName]);
-                res.send(data);
-            }));
-        });
+        console.log(`Init GET ${entryPointName} with param ${paramName}`);
+        // Pour récupérer le paramètre dans Express la syntaxe est :
+        // app.get(`/entryPointName/:paramName) avec les ':'
+        this.app.get(`/${entryPointName}/:${paramName}`, this.authMiddleware, (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield callback(req.params[paramName]);
+            res.send(data);
+        }));
     }
     /**
      * Initialisation d'une entrée GET sans paramètre
      */
     initGETnoParams(entryPointName, callback) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Init GET ${entryPointName} with no params`);
-            this.app.get(`/${entryPointName}`, (req, res) => __awaiter(this, void 0, void 0, function* () {
-                const data = yield callback();
-                res.send(data);
-            }));
-        });
+        console.log(`Init GET ${entryPointName} with no params`);
+        this.app.get(`/${entryPointName}`, this.authMiddleware, (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield callback();
+            res.send(data);
+        }));
     }
     /**
      * Initialisation d'une entrée POST
      */
     initPOST(entryPointName, callback) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Init POST ${entryPointName}`);
-            this.app.post(`/${entryPointName}`, (req, res) => __awaiter(this, void 0, void 0, function* () {
-                console.log(req.body);
-                const data = yield callback(req.body);
-                res.sendStatus(200);
-            }));
-        });
+        console.log(`Init POST ${entryPointName}`);
+        this.app.post(`/${entryPointName}`, this.authMiddleware, (req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const data = yield callback(req.body);
+            res.sendStatus(200);
+        }));
+    }
+    initAuth() {
+        console.log("Initialisation du système d'autehntification\n");
+        this.app.post('/register', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.body.user;
+            const password = req.body.password;
+            console.log('Register user :');
+            console.log(user);
+            console.log('\n');
+            try {
+                const userId = yield AuthManager_1.AuthManager.register(user, password);
+                const tokens = yield AuthManager_1.AuthManager.getTokens(userId);
+                res.status(200).json(tokens);
+            }
+            catch (e) {
+                res.status(401).json(e);
+            }
+        }));
+        this.app.post('/login', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const email = req.body.email;
+            const password = req.body.password;
+            console.log(`Login user : ${email}\n`);
+            try {
+                const userId = yield AuthManager_1.AuthManager.login(email, password);
+                const tokens = yield AuthManager_1.AuthManager.generateAuth(userId);
+                res.send(tokens);
+            }
+            catch (e) {
+                res.status(401).json(e);
+            }
+        }));
+        this.app.post('/refresh', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const email = req.body.email;
+            const refreshToken = req.body.refresh_token;
+            console.log(`Refresh user : ${email}\n`);
+            try {
+                const tokens = yield AuthManager_1.AuthManager.refreshAuth(email, refreshToken);
+                res.send(tokens);
+            }
+            catch (e) {
+                res.status(401).json(e);
+            }
+        }));
     }
 }
 exports.API = API;

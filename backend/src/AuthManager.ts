@@ -3,10 +3,9 @@ import * as bcrypt from 'bcrypt';
 
 import { SECRET } from './credentials';
 import { DB } from './DBManager';
-import { User } from './tables/User';
 import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
-import { AuthError, AuthErrors } from './models/AuthErrors';
+import { AuthErrors } from './models/AuthErrors';
 
 const TOKEN_DURATION = 1000 * 60 * 10
 

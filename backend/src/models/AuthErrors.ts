@@ -10,7 +10,7 @@ export class AuthErrors {
     }
     static USER_ID_MISSING: AuthError = {
         error: "user_id_missing",
-        error_message: "user_id_missing non fourni"
+        error_message: "user_id non fourni"
     }
     static USER_UNKNOWN: AuthError = {
         error: "user_unknown",
