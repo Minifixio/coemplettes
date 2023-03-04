@@ -77,15 +77,11 @@ export class API {
                         "error_message": "user_id inconnu"
                     })
                 } else {
-                    const validAccess = await AuthManager.checkAuth(userId, accessToken)
-
-                    if (validAccess) {
+                    try {
+                        await AuthManager.checkAuth(userId, accessToken)
                         next()
-                    } else {
-                        res.status(401).json({
-                            "error": "invalid_access_token",
-                            "error_message": "access_token invalide"
-                        })
+                    } catch (e: any) {
+                        res.status(401).json(e)
                     }
                 }
 

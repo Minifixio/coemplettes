@@ -59,15 +59,12 @@ class API {
                         });
                     }
                     else {
-                        const validAccess = yield AuthManager_1.AuthManager.checkAuth(userId, accessToken);
-                        if (validAccess) {
+                        try {
+                            yield AuthManager_1.AuthManager.checkAuth(userId, accessToken);
                             next();
                         }
-                        else {
-                            res.status(401).json({
-                                "error": "invalid_access_token",
-                                "error_message": "access_token invalide"
-                            });
+                        catch (e) {
+                            res.status(401).json(e);
                         }
                     }
                 }

@@ -40,3 +40,11 @@ AuthErrors.NO_ACCESS_TOKEN = {
     error: "no_access_token",
     error_message: "pas d\'access token"
 };
+AuthErrors.ACCESS_TOKEN_EXPIRED = {
+    error: "access_token_expired",
+    error_message: "l'access token a expiré"
+};
+AuthErrors.NO_AUTH_INFOS = {
+    error: "no_auth_infos",
+    error_message: "pas d'informations dans la table oauth"
+};

@@ -99,15 +99,26 @@ export class AuthManager {
      * @param accessToken 
      * @returns true si l'accessToken est valide / false sinon
      */
-    static async checkAuth(userId: number, accessToken: string): Promise<boolean> {
-        const authInfos = await DB.getAuthInfos(userId)
-        if (accessToken !== authInfos?.access_token) {
-            return false
-        }
-        if (authInfos.expires_at > new Date().getTime()) {
-            return false
-        }
-        return true
+    static async checkAuth(userId: number, accessToken: string): Promise<void> {
+
+        return new Promise(async (resolve, reject) => {
+            const authInfos = await DB.getAuthInfos(userId)
+
+            if (authInfos) {
+                if (accessToken !== authInfos?.access_token) {
+                    reject(AuthErrors.INVALID_ACCESS_TOKEN)
+                }
+                if (authInfos.expires_at < new Date().getTime()) {
+                    reject(AuthErrors.ACCESS_TOKEN_EXPIRED)
+                }
+
+                resolve()
+            } else {
+                reject(AuthErrors.NO_AUTH_INFOS)
+            }
+
+        })
+
     }
 
     /**
@@ -147,7 +158,7 @@ export class AuthManager {
                 await DB.storeAccessToken(newAccessToken, user.id, new Date().getTime() + TOKEN_DURATION)
                 await DB.storeRefreshToken(refreshToken, user.id)
                 const res: TokenResponse = {accessToken: newAccessToken, refreshToken: newRefreshToken}
-                return res
+                resolve(res)
             } else {
                 reject(AuthErrors.USER_UNKNOWN)
             }

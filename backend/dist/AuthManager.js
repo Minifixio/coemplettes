@@ -128,14 +128,21 @@ class AuthManager {
      */
     static checkAuth(userId, accessToken) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authInfos = yield DBManager_1.DB.getAuthInfos(userId);
-            if (accessToken !== (authInfos === null || authInfos === void 0 ? void 0 : authInfos.access_token)) {
-                return false;
-            }
-            if (authInfos.expires_at > new Date().getTime()) {
-                return false;
-            }
-            return true;
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                const authInfos = yield DBManager_1.DB.getAuthInfos(userId);
+                if (authInfos) {
+                    if (accessToken !== (authInfos === null || authInfos === void 0 ? void 0 : authInfos.access_token)) {
+                        reject(AuthErrors_1.AuthErrors.INVALID_ACCESS_TOKEN);
+                    }
+                    if (authInfos.expires_at < new Date().getTime()) {
+                        reject(AuthErrors_1.AuthErrors.ACCESS_TOKEN_EXPIRED);
+                    }
+                    resolve();
+                }
+                else {
+                    reject(AuthErrors_1.AuthErrors.NO_AUTH_INFOS);
+                }
+            }));
         });
     }
     /**
@@ -175,7 +182,7 @@ class AuthManager {
                     yield DBManager_1.DB.storeAccessToken(newAccessToken, user.id, new Date().getTime() + TOKEN_DURATION);
                     yield DBManager_1.DB.storeRefreshToken(refreshToken, user.id);
                     const res = { accessToken: newAccessToken, refreshToken: newRefreshToken };
-                    return res;
+                    resolve(res);
                 }
                 else {
                     reject(AuthErrors_1.AuthErrors.USER_UNKNOWN);

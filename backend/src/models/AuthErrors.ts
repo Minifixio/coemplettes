@@ -40,4 +40,12 @@ export class AuthErrors {
         error: "no_access_token",
         error_message: "pas d\'access token"
     }
+    static ACCESS_TOKEN_EXPIRED: AuthError = {
+        error: "access_token_expired",
+        error_message: "l'access token a expiré"
+    }
+    static NO_AUTH_INFOS: AuthError = {
+        error: "no_auth_infos",
+        error_message: "pas d'informations dans la table oauth"
+    }
 }
