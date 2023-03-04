@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 
 
@@ -9,6 +9,8 @@ import { DeliveryProposal } from './tables/DeliveryProposal';
 import { Product } from './tables/Product';
 import { Shipper } from './tables/Shipper';
 import { User } from './tables/User';
+import { AuthManager } from './AuthManager';
+import { AuthError, AuthErrors } from './models/AuthErrors';
 
 var bodyParser = require('body-parser')
 
@@ -49,6 +51,47 @@ export class API {
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
         {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},
     ]
+
+    authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+        const authHeader = req.headers.authorization
+
+        if (authHeader) {
+            const accessToken = authHeader.split(' ')[1]
+            const userId = req.user_id
+            if (userId) {
+                const user = await DB.getUserByID(userId)
+
+                if (!user) {
+                    res.status(401).json({
+                        "error": "user_unknown",
+                        "error_message": "user_id inconnu"
+                    })
+                } else {
+                    const validAccess = await AuthManager.checkAuth(userId, accessToken)
+
+                    if (validAccess) {
+                        next()
+                    } else {
+                        res.status(401).json({
+                            "error": "invalid_access_token",
+                            "error_message": "access_token invalide"
+                        })
+                    }
+                }
+
+            } else {
+                res.status(400).json({
+                    "error": "user_id_missing",
+                    "error_message": "user_id_missing non fourni"
+                })
+            }
+        } else {
+            res.status(400).json({
+                "error": "auth_header_missing",
+                "error_message": "fournir un authorization header"
+            })
+        }
+    }
 
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
@@ -107,11 +150,11 @@ export class API {
      * Il s'appelle lorsque l'on souhaite récupérer des données en rapport avec ce paramètre
      * Exemple : 'GET localhost:3000/user/12' pour récupérer les données de l'utilisateur 12
      */
-    private async initGETwithParams(entryPointName: string, paramName: string, callback: ((c: any) => Promise<any>)) {
+    private initGETwithParams(entryPointName: string, paramName: string, callback: ((c: any) => Promise<any>)) {
         console.log(`Init GET ${entryPointName} with param ${paramName}`)
         // Pour récupérer le paramètre dans Express la syntaxe est :
         // app.get(`/entryPointName/:paramName) avec les ':'
-        this.app.get(`/${entryPointName}/:${paramName}`, async (req: Request, res: Response) => {
+        this.app.get(`/${entryPointName}/:${paramName}`, this.authMiddleware, async (req: Request, res: Response) => {
             const data = await callback(req.params[paramName])
             res.send(data)
         })
@@ -120,9 +163,9 @@ export class API {
     /**
      * Initialisation d'une entrée GET sans paramètre
      */
-    private async initGETnoParams(entryPointName: string, callback: (() => Promise<any>)) {
+    private initGETnoParams(entryPointName: string, callback: (() => Promise<any>)) {
         console.log(`Init GET ${entryPointName} with no params`)
-        this.app.get(`/${entryPointName}`, async (req: Request, res: Response) => {
+        this.app.get(`/${entryPointName}`, this.authMiddleware, async (req: Request, res: Response) => {
             const data = await callback()
             res.send(data)
         })
@@ -132,12 +175,53 @@ export class API {
     /**
      * Initialisation d'une entrée POST
      */
-    private async initPOST(entryPointName: string, callback: ((c: any) => Promise<any>)) {
+    private initPOST(entryPointName: string, callback: ((c: any) => Promise<any>)) {
         console.log(`Init POST ${entryPointName}`)
-        this.app.post(`/${entryPointName}`, async (req: Request, res: Response) => {
+        this.app.post(`/${entryPointName}`, this.authMiddleware, async (req: Request, res: Response) => {
             console.log(req.body)
             const data = await callback(req.body)
             res.sendStatus(200)
+        })
+    }
+
+    private initAuth() {
+        this.app.post('/register', async (req: Request, res: Response) => {
+            const user = req.body.user
+            const password = req.body.password
+
+            try {
+                const userId = await AuthManager.register(user, password)
+                const tokens = await AuthManager.getTokens(userId)
+                res.status(200).json(tokens)
+            } catch (e: any) {
+                res.status(401).json(e)
+            }
+
+        })
+
+        this.app.post('/login', async (req: Request, res: Response) => {
+            const email = req.body.email
+            const password = req.body.password
+
+            try {
+                const userId = await AuthManager.login(email, password)
+                const tokens = await AuthManager.generateAuth(userId)
+                res.send(tokens)
+            } catch (e: any) {
+                res.status(401).json(e)
+            }
+        })
+        
+        this.app.post('/refresh', async (req: Request, res: Response) => {
+            const email = req.body.email
+            const refreshToken = req.body.refresh_token
+
+            try {
+                const tokens = await AuthManager.refreshAuth(email, refreshToken)
+                res.send(tokens)
+            } catch (e: any) {
+                res.status(401).json(e)
+            }
         })
     }
 }

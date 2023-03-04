@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from "typeorm"
-import { Shipper } from "./Shipper"
+import { UserInterface } from "../models/User"
 
 @Entity({name: "users"})
-export class User {
+export class User implements UserInterface {
     @PrimaryGeneratedColumn()
     id!: number
 

@@ -14,6 +14,8 @@ import { Product } from "./tables/Product";
 import { Category } from "./tables/Category";
 import { FeaturedProduct } from "./tables/FeaturedProduct";
 import { OAuth } from './tables/OAuth';
+import { TokenResponse } from './models/TokenResponse';
+import { UserDefault } from './models/UserDefault';
 
 export class DB {
 
@@ -90,6 +92,15 @@ export class DB {
         .getRepository(User)
         .createQueryBuilder("user")
         .where("user.id = :id", { id: id })
+        .getOne()
+        return res
+    }
+
+    public static async getUserByEmail(email: string): Promise<User | null> {
+        const res = await this.AppDataSource
+        .getRepository(User)
+        .createQueryBuilder("user")
+        .where("user.email = :email", { email: email })
         .getOne()
         return res
     }
@@ -208,7 +219,22 @@ export class DB {
         return res
     }
 
-    public static async addUser(user: User) {
+    public static async getTokens(userId: number): Promise<TokenResponse | null> {
+        const req = await this.AppDataSource
+        .getRepository(OAuth)
+        .createQueryBuilder("oauth")
+        .where("oauth.user_id = :user_id", {user_id: userId})
+        .getOne()
+        
+        if(req) {
+            return {accessToken: req.access_token, refreshToken: req.refresh_token}
+        } else {
+            return null
+        }
+
+    }
+
+    public static async addUser(user: UserDefault) {
         const req = await this.AppDataSource
         .createQueryBuilder()
         .insert()
