@@ -1,6 +1,6 @@
 const apiURL = 'http://137.194.211.70';
 
-export class API {
+export class APIService {
   static async get(entrypoint, param) {
     if (param === undefined) {
       console.log(`GET : ${apiURL}/${entrypoint}`);
