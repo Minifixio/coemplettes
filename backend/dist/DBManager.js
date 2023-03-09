@@ -76,7 +76,7 @@ class DB {
                 expires_at: expiresAt,
                 refresh_token: refreshToken
             };
-            console.log("Adding user auth :");
+            console.log("[DBManager] Ajout d\'informations d\'auth pour le user n°'" + userId);
             console.log(oauth);
             console.log('\n');
             yield this.AppDataSource
@@ -89,6 +89,7 @@ class DB {
     }
     static storeAccessToken(token, userId, expiresAt) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Sauvegarde de l'access token dans la BDD");
             return yield this.AppDataSource
                 .createQueryBuilder()
                 .update(OAuth_1.OAuth)
@@ -99,6 +100,7 @@ class DB {
     }
     static storeRefreshToken(token, userId) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Sauvegarde du refresh token dans la BDD");
             return yield this.AppDataSource
                 .createQueryBuilder()
                 .update(OAuth_1.OAuth)
@@ -109,6 +111,7 @@ class DB {
     }
     static getAuthInfos(userId) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos d'auth pour le user n°" + userId + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(OAuth_1.OAuth)
                 .createQueryBuilder("oauth")
@@ -122,6 +125,7 @@ class DB {
      */
     static getUserByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos d'user n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder("user")
@@ -132,6 +136,7 @@ class DB {
     }
     static getUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos pour : " + email + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder("user")
@@ -142,6 +147,7 @@ class DB {
     }
     static getShipperByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos de shipper n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder("shipper")
@@ -152,6 +158,7 @@ class DB {
     }
     static getCartByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos de la cart n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
@@ -162,6 +169,7 @@ class DB {
     }
     static getDeliveryByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos de la delivery n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
@@ -172,6 +180,7 @@ class DB {
     }
     static getDeliveryProposalByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos de la delivery proposal n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
                 .createQueryBuilder("delivery_proposal")
@@ -182,6 +191,7 @@ class DB {
     }
     static getProductByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des infos du produit n°" + id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Product_1.Product)
                 .createQueryBuilder("product")
@@ -192,6 +202,7 @@ class DB {
     }
     static getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de tous les users dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(User_1.User)
                 .createQueryBuilder()
@@ -201,6 +212,7 @@ class DB {
     }
     static getShippers() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de tous les shippers dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder()
@@ -210,6 +222,7 @@ class DB {
     }
     static getCarts(owner_id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des carts pour le user n°" + owner_id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
@@ -220,6 +233,7 @@ class DB {
     }
     static getDeliveries(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des deliveries pour le shipper n°" + shipper_id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
@@ -230,6 +244,7 @@ class DB {
     }
     static getDeliveryProposals(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des delivery proposals pour le shipper n°" + shipper_id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
                 .createQueryBuilder("delivery_proposal")
@@ -240,6 +255,7 @@ class DB {
     }
     static getCategories() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des categories dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Category_1.Category)
                 .createQueryBuilder()
@@ -249,6 +265,7 @@ class DB {
     }
     static getProducts(category_id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des produits pour la catégorie n°" + category_id + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Product_1.Product)
                 .createQueryBuilder("product")
@@ -259,6 +276,7 @@ class DB {
     }
     static getFeaturedProducts() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des produits phares dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(FeaturedProduct_1.FeaturedProduct)
                 .createQueryBuilder("featured_product")
@@ -269,6 +287,7 @@ class DB {
     }
     static getTokens(userId) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des tokens pour le user n°" + userId + " dans la BDD");
             const req = yield this.AppDataSource
                 .getRepository(OAuth_1.OAuth)
                 .createQueryBuilder("oauth")
@@ -284,6 +303,8 @@ class DB {
     }
     static addUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout du user :");
+            console.log(user);
             const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -297,6 +318,8 @@ class DB {
     }
     static addShipper(shipper) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout du shipper :");
+            console.log(shipper);
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -307,6 +330,8 @@ class DB {
     }
     static addCart(cart) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout de la cart :");
+            console.log(cart);
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -317,6 +342,8 @@ class DB {
     }
     static addDeliveryProposal(delivery_proposal) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout de la delivery proposal :");
+            console.log(delivery_proposal);
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -327,6 +354,8 @@ class DB {
     }
     static addProduct(product) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout du produit :");
+            console.log(product);
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()

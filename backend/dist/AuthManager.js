@@ -41,6 +41,7 @@ const AuthErrors_1 = require("./models/AuthErrors");
 const TOKEN_DURATION = 1000 * 60 * 10;
 class AuthManager {
     static createRefreshToken(accessToken, userId) {
+        console.log('[AuthManager] Création d\'un refresh token pour le user n°' + userId);
         const token = jwt.sign({
             user_id: userId,
             access_token: accessToken,
@@ -49,6 +50,7 @@ class AuthManager {
         return token;
     }
     static createAccessToken(userId, email, pwdhash) {
+        console.log('[AuthManager] Création d\'un access token pour ' + email);
         const token = jwt.sign({
             user_id: userId,
             email: email,
@@ -65,10 +67,12 @@ class AuthManager {
      */
     static register(user, password) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log('[AuthManager] Enregistrement de ' + user.email);
             const res = new Promise((resolve, reject) => {
                 bcrypt.hash(password, 10, (err, hash) => __awaiter(this, void 0, void 0, function* () {
                     const userExists = (yield DBManager_1.DB.getUserByEmail(user.email)) === null ? false : true;
                     if (userExists) {
+                        console.log('[AuthManager] Erreur : l\'email ' + user.email + ' existe déjà.');
                         reject(AuthErrors_1.AuthErrors.REGISTRATION_FAILED_EMAIL);
                     }
                     else {

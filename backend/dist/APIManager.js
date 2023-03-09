@@ -186,8 +186,8 @@ class API {
             console.log(`Login user : ${email}\n`);
             try {
                 const userId = yield AuthManager_1.AuthManager.login(email, password);
-                const tokens = yield AuthManager_1.AuthManager.generateAuth(userId);
-                res.send(tokens);
+                const tokens = yield AuthManager_1.AuthManager.getTokens(userId);
+                res.status(200).json(tokens);
             }
             catch (e) {
                 res.status(401).json(e);
@@ -199,7 +199,7 @@ class API {
             console.log(`Refresh user : ${email}\n`);
             try {
                 const tokens = yield AuthManager_1.AuthManager.refreshAuth(email, refreshToken);
-                res.send(tokens);
+                res.status(200).json(tokens);
             }
             catch (e) {
                 res.status(401).json(e);
