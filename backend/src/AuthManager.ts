@@ -12,6 +12,7 @@ const TOKEN_DURATION = 1000 * 60 * 10
 export class AuthManager {
 
     static createRefreshToken(accessToken: string, userId: number){
+        console.log('[AuthManager] Création d\'un refresh token pour le user n°' + userId)
         const token = jwt.sign({
             user_id: userId,
             access_token: accessToken,
@@ -22,6 +23,7 @@ export class AuthManager {
     }
 
     static createAccessToken(userId: number, email: string, pwdhash: string) {
+        console.log('[AuthManager] Création d\'un access token pour ' + email)
         const token = jwt.sign({
             user_id: userId,
             email: email,
@@ -39,11 +41,15 @@ export class AuthManager {
      * @returns userId si l'enregistrement a fonctionné / erreur sinon
      */
     static async register(user: UserDefault, password: string): Promise<number> {
+        console.log('[AuthManager] Enregistrement de ' + user.email)
         const res = new Promise<number>((resolve, reject) => {
-            bcrypt.hash(password, 10, async (err, hash: string) => {
 
+            bcrypt.hash(password, 10, async (err, hash: string) => {
+                
                 const userExists = (await DB.getUserByEmail(user.email)) === null ? false : true
+
                 if (userExists) {
+                    console.log('[AuthManager] Erreur : l\'email ' + user.email + ' existe déjà.')
                     reject(AuthErrors.REGISTRATION_FAILED_EMAIL)
                 } else {
                     user.pwdhash = hash

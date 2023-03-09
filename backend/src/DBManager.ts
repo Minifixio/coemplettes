@@ -50,7 +50,7 @@ export class DB {
             refresh_token: refreshToken
         }
 
-        console.log("Adding user auth :")
+        console.log("[DBManager] Ajout d\'informations d\'auth pour le user n°'" + userId)
         console.log(oauth)
         console.log('\n')
 
@@ -63,6 +63,7 @@ export class DB {
     }
 
     static async storeAccessToken(token: string, userId: number, expiresAt: number) {
+        console.log("[DBManager] Sauvegarde de l'access token dans la BDD")
         return await this.AppDataSource
         .createQueryBuilder()
         .update(OAuth)
@@ -72,6 +73,7 @@ export class DB {
     }
 
     static async storeRefreshToken(token: string, userId: number){
+        console.log("[DBManager] Sauvegarde du refresh token dans la BDD")
         return await this.AppDataSource
         .createQueryBuilder()
         .update(OAuth)
@@ -81,6 +83,7 @@ export class DB {
     }
 
     static async getAuthInfos(userId: number) {
+        console.log("[DBManager] Récupération des infos d'auth pour le user n°" + userId + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(OAuth)
         .createQueryBuilder("oauth")
@@ -93,6 +96,7 @@ export class DB {
      * Pour toutes les fonctions de type get... voir la doc de TypeORM
      */
     public static async getUserByID(id: number): Promise<User | null> {
+        console.log("[DBManager] Récupération des infos d'user n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder("user")
@@ -102,6 +106,7 @@ export class DB {
     }
 
     public static async getUserByEmail(email: string): Promise<User | null> {
+        console.log("[DBManager] Récupération des infos pour : " + email + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder("user")
@@ -111,6 +116,7 @@ export class DB {
     }
 
     public static async getShipperByID(id: number): Promise<Shipper | null> {
+        console.log("[DBManager] Récupération des infos de shipper n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Shipper)
         .createQueryBuilder("shipper")
@@ -120,6 +126,7 @@ export class DB {
     }
 
     public static async getCartByID(id: number): Promise<Cart | null> {
+        console.log("[DBManager] Récupération des infos de la cart n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
@@ -129,6 +136,7 @@ export class DB {
     }
 
     public static async getDeliveryByID(id: number): Promise<Delivery | null> {
+        console.log("[DBManager] Récupération des infos de la delivery n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
@@ -138,6 +146,7 @@ export class DB {
     }
 
     public static async getDeliveryProposalByID(id: number): Promise<DeliveryProposal | null> {
+        console.log("[DBManager] Récupération des infos de la delivery proposal n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(DeliveryProposal)
         .createQueryBuilder("delivery_proposal")
@@ -147,6 +156,7 @@ export class DB {
     }
 
     public static async getProductByID(id: number): Promise<Product | null> {
+        console.log("[DBManager] Récupération des infos du produit n°" + id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Product)
         .createQueryBuilder("product")
@@ -156,6 +166,7 @@ export class DB {
     }
 
     public static async getUsers(): Promise<User[] | null> {
+        console.log("[DBManager] Récupération de tous les users dans la BDD")
         const res = await this.AppDataSource
         .getRepository(User)
         .createQueryBuilder()
@@ -164,6 +175,7 @@ export class DB {
     }
 
     public static async getShippers(): Promise<Shipper[] | null> {
+        console.log("[DBManager] Récupération de tous les shippers dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Shipper)
         .createQueryBuilder()
@@ -172,6 +184,7 @@ export class DB {
     }
 
     public static async getCarts(owner_id: number): Promise<Cart[] | null> {
+        console.log("[DBManager] Récupération des carts pour le user n°" + owner_id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
@@ -181,6 +194,7 @@ export class DB {
     }
 
     public static async getDeliveries(shipper_id: number): Promise<Delivery[] | null> {
+        console.log("[DBManager] Récupération des deliveries pour le shipper n°" + shipper_id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
@@ -190,6 +204,7 @@ export class DB {
     }
 
     public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
+        console.log("[DBManager] Récupération des delivery proposals pour le shipper n°" + shipper_id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(DeliveryProposal)
         .createQueryBuilder("delivery_proposal")
@@ -199,6 +214,7 @@ export class DB {
     }
 
     public static async getCategories(): Promise<Category[] | null> {
+        console.log("[DBManager] Récupération des categories dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Category)
         .createQueryBuilder()
@@ -207,6 +223,7 @@ export class DB {
     }
 
     public static async getProducts(category_id: number): Promise<Product[] | null> {
+        console.log("[DBManager] Récupération des produits pour la catégorie n°" + category_id + " dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Product)
         .createQueryBuilder("product")
@@ -216,6 +233,7 @@ export class DB {
     }
 
     public static async getFeaturedProducts(): Promise<FeaturedProduct[] | null> {
+        console.log("[DBManager] Récupération des produits phares dans la BDD")
         const res = await this.AppDataSource
         .getRepository(FeaturedProduct)
         .createQueryBuilder("featured_product")
@@ -225,6 +243,7 @@ export class DB {
     }
 
     public static async getTokens(userId: number): Promise<TokenResponse | null> {
+        console.log("[DBManager] Récupération des tokens pour le user n°" + userId + " dans la BDD")
         const req = await this.AppDataSource
         .getRepository(OAuth)
         .createQueryBuilder("oauth")
@@ -240,6 +259,8 @@ export class DB {
     }
 
     public static async addUser(user: UserDefault) {
+        console.log("[DBManager] Ajout du user :")
+        console.log(user)
         const req = await this.AppDataSource
         .createQueryBuilder()
         .insert()
@@ -253,6 +274,8 @@ export class DB {
     }
 
     public static async addShipper(shipper: Shipper) {
+        console.log("[DBManager] Ajout du shipper :")
+        console.log(shipper)
         await this.AppDataSource
         .createQueryBuilder()
         .insert()
@@ -262,6 +285,8 @@ export class DB {
     }
 
     public static async addCart(cart: Cart) {
+        console.log("[DBManager] Ajout de la cart :")
+        console.log(cart)
         await this.AppDataSource
         .createQueryBuilder()
         .insert()
@@ -271,6 +296,8 @@ export class DB {
     }
 
     public static async addDeliveryProposal(delivery_proposal: DeliveryProposal) {
+        console.log("[DBManager] Ajout de la delivery proposal :")
+        console.log(delivery_proposal)
         await this.AppDataSource
         .createQueryBuilder()
         .insert()
@@ -280,6 +307,8 @@ export class DB {
     }
 
     public static async addProduct(product: Product) {
+        console.log("[DBManager] Ajout du produit :")
+        console.log(product)
         await this.AppDataSource
         .createQueryBuilder()
         .insert()
