@@ -833,6 +833,23 @@
                     }
                 },
                 {
+                    "source": "/Users/emile/Documents/ETUDES/Télécom Paris/1A/PACT/dev/pact74/app/android/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "51",
+                        "endOffsets": "63"
+                    },
+                    "to": {
+                        "startLines": "698",
+                        "startColumns": "4",
+                        "startOffsets": "44503",
+                        "endColumns": "51",
+                        "endOffsets": "44550"
+                    }
+                },
+                {
                     "source": "/Users/emile/.gradle/caches/transforms-3/03f04a3f11198ce3b7c6cedb9b41266b/transformed/jetified-flipper-0.125.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3",
@@ -866,40 +883,6 @@
                         "endLines": "7113",
                         "endColumns": "24",
                         "endOffsets": "385891"
-                    }
-                },
-                {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/1A/PACT/dev/pact74/app/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
-                    "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "156,262",
-                        "endColumns": "63,68",
-                        "endOffsets": "215,326"
-                    },
-                    "to": {
-                        "startLines": "661,662",
-                        "startColumns": "4,4",
-                        "startOffsets": "41901,41965",
-                        "endColumns": "63,68",
-                        "endOffsets": "41960,42029"
-                    }
-                },
-                {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/1A/PACT/dev/pact74/app/android/app/src/main/res/values/strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "51",
-                        "endOffsets": "63"
-                    },
-                    "to": {
-                        "startLines": "698",
-                        "startColumns": "4",
-                        "startOffsets": "44503",
-                        "endColumns": "51",
-                        "endOffsets": "44550"
                     }
                 },
                 {
@@ -1009,6 +992,23 @@
                     }
                 },
                 {
+                    "source": "/Users/emile/Documents/ETUDES/Télécom Paris/1A/PACT/dev/pact74/app/android/app/build/generated/res/resValues/debug/values/gradleResValues.xml",
+                    "from": {
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "156,262",
+                        "endColumns": "63,68",
+                        "endOffsets": "215,326"
+                    },
+                    "to": {
+                        "startLines": "661,662",
+                        "startColumns": "4,4",
+                        "startOffsets": "41901,41965",
+                        "endColumns": "63,68",
+                        "endOffsets": "41960,42029"
+                    }
+                },
+                {
                     "source": "/Users/emile/.gradle/caches/transforms-3/3cb37a6faf29ddf73604c194d6dae8fd/transformed/cardview-1.0.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,35,36,37,38,45,47,50,7",
@@ -1025,25 +1025,6 @@
                         "endLines": "8,110,111,112,113,287,288,289,859,2681,2684,2687,5317",
                         "endColumns": "51,60,61,61,63,58,56,53,12,12,12,12,24",
                         "endOffsets": "515,6788,6850,6912,6976,18669,18726,18780,62075,178425,178551,178679,324129"
-                    }
-                },
-                {
-                    "source": "/Users/emile/Documents/ETUDES/Télécom/1A/PACT/dev/pact74/app/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "54",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "267"
-                    },
-                    "to": {
-                        "startLines": "828",
-                        "startColumns": "4",
-                        "startOffsets": "60032",
-                        "endLines": "831",
-                        "endColumns": "12",
-                        "endOffsets": "60210"
                     }
                 },
                 {
@@ -1156,6 +1137,25 @@
                         "startOffsets": "40504",
                         "endColumns": "42",
                         "endOffsets": "40542"
+                    }
+                },
+                {
+                    "source": "/Users/emile/Documents/ETUDES/Télécom Paris/1A/PACT/dev/pact74/app/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "54",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "267"
+                    },
+                    "to": {
+                        "startLines": "828",
+                        "startColumns": "4",
+                        "startOffsets": "60032",
+                        "endLines": "831",
+                        "endColumns": "12",
+                        "endOffsets": "60210"
                     }
                 },
                 {

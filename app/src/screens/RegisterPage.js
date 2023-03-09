@@ -1,11 +1,39 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
 import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../components/BasicButton';
+import Toast from 'react-native-toast-message';
+import {AuthService} from '../services/AuthService';
 
 const Separator = () => <View style={styles.separator} />;
 
 function RegisterPage({navigation}) {
+  const [firstName, setFirstName] = useState('Lolo');
+  const [lastName, setLastName] = useState('Popo');
+  const [email, setEmail] = useState('lolo@telecom-paris.fr');
+  const [school, setSchool] = useState('Telecom Paris');
+  const [phone, setPhone] = useState('0645342398');
+  const [password, setPassword] = useState('haha');
+
+  const register = async () => {
+    try {
+      const user = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        school: school,
+        phone: phone,
+      };
+      await AuthService.register(user, password);
+    } catch (e) {
+      console.log('[Register] Erreur : \n', e);
+      Toast.show({
+        type: 'error',
+        text1: 'Erreur',
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -26,6 +54,8 @@ function RegisterPage({navigation}) {
               style={[styles.textInput, styles.nameInput]}
               placeholder="Nom."
               placeholderTextColor="#003f5c"
+              onChangeText={newText => setLastName(newText)}
+              defaultValue={lastName}
             />
 
             <TextInput
@@ -33,6 +63,8 @@ function RegisterPage({navigation}) {
               style={[styles.textInput, styles.nameInput]}
               placeholder="Prénom."
               placeholderTextColor="#003f5c"
+              onChangeText={newText => setFirstName(newText)}
+              defaultValue={firstName}
             />
           </View>
           <TextInput
@@ -40,18 +72,24 @@ function RegisterPage({navigation}) {
             style={styles.textInput}
             placeholder="Email."
             placeholderTextColor="#003f5c"
+            onChangeText={newText => setEmail(newText)}
+            defaultValue={email}
           />
 
           <TextInput
             style={styles.textInput}
             placeholder="Ecole."
             placeholderTextColor="#003f5c"
+            onChangeText={newText => setSchool(newText)}
+            defaultValue={school}
           />
 
           <TextInput
             style={styles.textInput}
             placeholder="Téléphone."
             placeholderTextColor="#003f5c"
+            onChangeText={newText => setPhone(newText)}
+            defaultValue={phone}
           />
 
           <TextInput
@@ -59,15 +97,15 @@ function RegisterPage({navigation}) {
             placeholder="Mot de passe."
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
+            onChangeText={newText => setPassword(newText)}
+            defaultValue={password}
           />
           <Separator />
 
-          <BasicButton
-            onClick={() => navigation.navigate('LandingPage')}
-            text="S'enregistrer"
-          />
+          <BasicButton onClick={() => register()} text="S'enregistrer" />
         </View>
       </ImageBackground>
+      <Toast />
     </View>
   );
 }

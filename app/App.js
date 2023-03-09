@@ -4,7 +4,7 @@ import MainPage from './src/screens/Menu';
 export const LoginContext = createContext();
 
 const App = () => {
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
 
   if (!isConnected) {
     return (

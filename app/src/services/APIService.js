@@ -1,24 +1,112 @@
+import {AuthService} from './AuthService';
+
 const apiURL = 'http://137.194.211.70';
 
 export class APIService {
-  static async get(entrypoint, param) {
-    if (param === undefined) {
-      console.log(`GET : ${apiURL}/${entrypoint}`);
-      return fetch(`${apiURL}/${entrypoint}`);
+  static async get(entrypoint, param, auth = true) {
+    let options = {
+      method: 'GET',
+    };
+
+    if (auth) {
+      const accessToken = await AuthService.getAccessToken();
+      const userId = await AuthService.getUserId();
+      var authHeaders = new Headers();
+      authHeaders.append('Authorization', 'Bearer ' + accessToken);
+      options.headers = authHeaders;
+
+      var urlPath =
+        param === undefined
+          ? `${apiURL}/${entrypoint}?user_id=${userId}`
+          : `${apiURL}/${entrypoint}/${param}?user_id=${userId}`;
+
+      const res = await fetch(urlPath, options);
+
+      if (res.status === 401) {
+        const msg = await res.json();
+        console.log(
+          `[API] Accès à la ressource ${urlPath} impossible : \n`,
+          msg,
+        );
+        await AuthService.refreshAuth();
+        const newAccessToken = await AuthService.getAccessToken();
+
+        var newAuthHeaders = new Headers();
+        newAuthHeaders.append('Authorization', 'Bearer ' + newAccessToken);
+        options.headers = newAuthHeaders;
+
+        const newRes = await fetch(urlPath, options);
+        return newRes;
+      }
+      if (!res.ok) {
+        const msg = await res.json();
+        console.log(
+          `[API] Accès à la ressource ${urlPath} impossible : \n`,
+          msg,
+        );
+      }
+      return res;
     } else {
-      console.log(`GET : ${apiURL}/${entrypoint}/${param}`);
-      return fetch(`${apiURL}/${entrypoint}/${param}`);
+      var urlPath =
+        param === undefined
+          ? `${apiURL}/${entrypoint}`
+          : `${apiURL}/${entrypoint}/${param}`;
+
+      const res = await fetch(urlPath, options);
+
+      return res;
     }
   }
 
-  static async post(entrypoint, data) {
-    return fetch(`${apiURL}/${entrypoint}`, {
+  static async post(entrypoint, data, auth = true) {
+    let options = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    });
+    };
+
+    if (auth) {
+      const accessToken = await AuthService.getAccessToken();
+      const userId = await AuthService.getUserId();
+      var authHeaders = new Headers();
+      authHeaders.append('Authorization', 'Bearer ' + accessToken);
+      options.headers = authHeaders;
+
+      var urlPath = `${apiURL}/${entrypoint}?user_id=${userId}`;
+
+      const res = await fetch(urlPath, options);
+
+      if (res.status === 401) {
+        const msg = await res.json();
+        console.log(
+          `[API] Accès à la ressource ${urlPath} impossible : \n`,
+          msg,
+        );
+        await AuthService.refreshAuth();
+        const newAccessToken = await AuthService.getAccessToken();
+
+        var newAuthHeaders = new Headers();
+        newAuthHeaders.append('Authorization', 'Bearer ' + newAccessToken);
+        options.headers = newAuthHeaders;
+
+        const newRes = await fetch(urlPath, options);
+        return newRes;
+      }
+      if (!res.ok) {
+        const msg = await res.json();
+        console.log(
+          `[API] Accès à la ressource ${urlPath} impossible : \n`,
+          msg,
+        );
+      }
+      return res;
+    } else {
+      var urlPath = `${apiURL}/${entrypoint}`;
+      const res = await fetch(urlPath, options);
+      return res;
+    }
   }
 }
