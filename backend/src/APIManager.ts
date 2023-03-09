@@ -220,7 +220,7 @@ export class API {
 
             try {
                 const userId = await AuthManager.login(email, password)
-                const tokens = await AuthManager.generateAuth(userId)
+                const tokens = await AuthManager.getTokens(userId)
                 res.status(200).json(tokens)
             } catch (e: any) {
                 res.status(401).json(e)
