@@ -51,6 +51,7 @@ export class AuthService {
 
   static async login(email, password) {
     try {
+      console.log('[Auth] Phase de login');
       const res = await APIService.post('login', {email, password}, false);
 
       if (res.status === 401) {
