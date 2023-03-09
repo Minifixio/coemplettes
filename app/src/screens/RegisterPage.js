@@ -25,11 +25,19 @@ function RegisterPage({navigation}) {
         phone: phone,
       };
       await AuthService.register(user, password);
+      console.log('[Register] Enregistrement avec succès! \n');
+      Toast.show({
+        type: 'success',
+        text1: 'Enregistrement effectué !',
+      });
     } catch (e) {
       console.log('[Register] Erreur : \n', e);
+
       Toast.show({
         type: 'error',
-        text1: 'Erreur',
+        text1: e.error_message
+          ? 'Erreur : ' + e.error_message
+          : "Erreur lors de l'enregistrement",
       });
     }
   };

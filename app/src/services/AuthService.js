@@ -43,7 +43,7 @@ export class AuthService {
 
         resolve();
       } catch (e) {
-        console.log("[Auth] L'enregistrement a échoué failed : \n", e);
+        console.log("[Auth] L'enregistrement a échoué : \n", e);
         reject(e);
       }
     });

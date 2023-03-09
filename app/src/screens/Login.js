@@ -4,14 +4,35 @@ import {userLogin} from '../services/UserService';
 import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../components/BasicButton';
 import Toast from 'react-native-toast-message';
+import {AuthService} from '../services/AuthService';
 
 const Separator = () => <View style={styles.separator} />;
 
 function LoginPage({navigation, setIsConnected}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('lolo@telecom-paris.fr');
+  const [password, setPassword] = useState('haha');
 
   const login = async () => {
+    try {
+      await AuthService.login(email, password);
+      console.log('[Login] Connexion avec succès! \n');
+      Toast.show({
+        type: 'success',
+        text1: 'Connexion effectué !',
+      });
+    } catch (e) {
+      console.log('[Login] Erreur : \n', e);
+
+      Toast.show({
+        type: 'error',
+        text1: e.error_message
+          ? 'Erreur : ' + e.error_message
+          : 'Erreur lors de la connexion',
+      });
+    }
+  };
+
+  const _login = async () => {
     try {
       const loginValid = await userLogin(email, password, true);
       if (loginValid) {
