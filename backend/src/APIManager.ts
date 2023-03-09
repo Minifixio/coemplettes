@@ -221,7 +221,7 @@ export class API {
             try {
                 const userId = await AuthManager.login(email, password)
                 const tokens = await AuthManager.generateAuth(userId)
-                res.send(tokens)
+                res.status(200).json(tokens)
             } catch (e: any) {
                 res.status(401).json(e)
             }
@@ -235,7 +235,7 @@ export class API {
 
             try {
                 const tokens = await AuthManager.refreshAuth(email, refreshToken)
-                res.send(tokens)
+                res.status(200).json(tokens)
             } catch (e: any) {
                 res.status(401).json(e)
             }
