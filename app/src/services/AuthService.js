@@ -157,6 +157,23 @@ export class AuthService {
       );
     }
   }
+
+  static async loadUser() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userInfosJSON = await AsyncStorage.getItem('@user_infos');
+
+        if (userInfosJSON == null || JSON.parse(userInfosJSON) === {}) {
+          reject();
+        } else {
+          await this.refreshAuth();
+          resolve();
+        }
+      } catch (e) {
+        reject();
+      }
+    });
+  }
 }
 
 // TODO : penser à stocker user_id de manière dynamique pour éviter à aller à avoir le chercher à chaque fois pour faire un appel d'API

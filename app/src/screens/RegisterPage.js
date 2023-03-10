@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
 import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../components/BasicButton';
 import Toast from 'react-native-toast-message';
-import {AuthService} from '../services/AuthService';
+import {AuthContext} from '../utils/AuthProvider';
 
 const Separator = () => <View style={styles.separator} />;
 
 function RegisterPage({navigation}) {
+  const {register} = useContext(AuthContext);
+
   const [firstName, setFirstName] = useState('Lolo');
   const [lastName, setLastName] = useState('Popo');
   const [email, setEmail] = useState('lolo@telecom-paris.fr');
@@ -15,7 +17,7 @@ function RegisterPage({navigation}) {
   const [phone, setPhone] = useState('0645342398');
   const [password, setPassword] = useState('haha');
 
-  const register = async () => {
+  const registerUser = async () => {
     try {
       const user = {
         first_name: firstName,
@@ -24,15 +26,12 @@ function RegisterPage({navigation}) {
         school: school,
         phone: phone,
       };
-      await AuthService.register(user, password);
-      console.log('[Register] Enregistrement avec succès! \n');
+      await register(user, password);
       Toast.show({
         type: 'success',
         text1: 'Enregistrement effectué !',
       });
     } catch (e) {
-      console.log('[Register] Erreur : \n', e);
-
       Toast.show({
         type: 'error',
         text1: e.error_message
@@ -110,7 +109,7 @@ function RegisterPage({navigation}) {
           />
           <Separator />
 
-          <BasicButton onClick={() => register()} text="S'enregistrer" />
+          <BasicButton onClick={() => registerUser()} text="S'enregistrer" />
         </View>
       </ImageBackground>
       <Toast />

@@ -1,52 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
-import {userLogin} from '../services/UserService';
 import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../components/BasicButton';
 import Toast from 'react-native-toast-message';
-import {AuthService} from '../services/AuthService';
+import {AuthContext} from '../utils/AuthProvider';
 
 const Separator = () => <View style={styles.separator} />;
 
 function LoginPage({navigation, setIsConnected}) {
+  const {login} = useContext(AuthContext);
+
   const [email, setEmail] = useState('lolo@telecom-paris.fr');
   const [password, setPassword] = useState('haha');
 
-  const login = async () => {
+  const userLogin = async () => {
     try {
-      await AuthService.login(email, password);
-      console.log('[Login] Connexion avec succès! \n');
+      await login(email, password);
       Toast.show({
         type: 'success',
         text1: 'Connexion effectué !',
       });
     } catch (e) {
-      console.log('[Login] Erreur : \n', e);
-
       Toast.show({
         type: 'error',
         text1: e.error_message
           ? 'Erreur : ' + e.error_message
           : 'Erreur lors de la connexion',
-      });
-    }
-  };
-
-  const _login = async () => {
-    try {
-      const loginValid = await userLogin(email, password, true);
-      if (loginValid) {
-        setIsConnected(true);
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Le mot de passe ou email est incorrect',
-        });
-      }
-    } catch (e) {
-      Toast.show({
-        type: 'error',
-        text1: 'Le mot de passe ou email est incorrect',
       });
     }
   };

@@ -58,32 +58,30 @@ const Stack = createNativeStackNavigator();
 
 function LandingPage({isConnected, setIsConnected}) {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="WelcomePage">
-        <Stack.Screen
-          name="WelcomePage"
-          options={{title: 'Bienvenue', headerShown: false}}>
-          {props => (
-            <WelcomePage
-              isConnected={isConnected}
-              setIsConnected={setIsConnected}
-              {...props}
-            />
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          name="RegisterPage"
-          component={RegisterPage}
-          options={{title: "S'enregistrer"}}
-        />
-        <Stack.Screen
-          name="LoginPage"
-          component={LoginPage}
-          setIsConnected={setIsConnected}
-          options={{title: 'Se connecter'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="WelcomePage">
+      <Stack.Screen
+        name="WelcomePage"
+        options={{title: 'Bienvenue', headerShown: false}}>
+        {props => (
+          <WelcomePage
+            isConnected={isConnected}
+            setIsConnected={setIsConnected}
+            {...props}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="RegisterPage"
+        component={RegisterPage}
+        options={{title: "S'enregistrer"}}
+      />
+      <Stack.Screen
+        name="LoginPage"
+        component={LoginPage}
+        setIsConnected={setIsConnected}
+        options={{title: 'Se connecter'}}
+      />
+    </Stack.Navigator>
   );
 }
 
