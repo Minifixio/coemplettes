@@ -162,7 +162,7 @@ export class AuthManager {
                 const newAccessToken = this.createAccessToken(user.id, user.email, user.pwdhash)
                 const newRefreshToken = this.createRefreshToken(newAccessToken, user.id)
                 await DB.storeAccessToken(newAccessToken, user.id, new Date().getTime() + TOKEN_DURATION)
-                await DB.storeRefreshToken(refreshToken, user.id)
+                await DB.storeRefreshToken(newRefreshToken, user.id)
                 const res: TokenResponse = {accessToken: newAccessToken, refreshToken: newRefreshToken}
                 resolve(res)
             } else {
