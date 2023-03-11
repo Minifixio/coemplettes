@@ -58,9 +58,11 @@ function HomePage({navigation, isConnected, setIsConnected}) {
       try {
         const featuredProductsData = await ProductService.getFeaturedProducts();
         console.log('[Home] Featured products : ', featuredProductsData);
+        setFeaturedProducts(featuredProductsData);
 
         const categoriesData = await ProductService.getCategories();
         console.log('[Home] Categories : ', categoriesData);
+        setCategories(categoriesData);
       } catch (e) {
         console.log('[Home] Erreur de chargement des données');
       }

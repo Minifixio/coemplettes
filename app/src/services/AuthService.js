@@ -123,7 +123,10 @@ export class AuthService {
   static async storeTokens(tokens) {
     console.log('[Auth] Stockage de nouveaux tokens');
     try {
-      const tokensJSON = JSON.stringify(tokens);
+      const tokensJSON = JSON.stringify({
+        access_token: tokens.accessToken,
+        refresh_token: tokens.refreshToken,
+      });
       await AsyncStorage.setItem('@tokens', tokensJSON);
     } catch (e) {
       console.log('[Auth] Impossible de stocker les nouveaux tokens : \n', e);
@@ -148,9 +151,12 @@ export class AuthService {
 
   static async getAccessToken() {
     try {
-      console.log('[Auth] Accès au token depuis le local storage...');
       const tokensJSON = await AsyncStorage.getItem('@tokens');
       const tokens = JSON.parse(tokensJSON);
+      console.log(
+        '[Auth] Accès au access token depuis le local storage : ',
+        tokens.access_token,
+      );
       return tokens.access_token;
     } catch (e) {
       console.log(
