@@ -54,14 +54,18 @@ function HomePage({navigation, isConnected, setIsConnected}) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    ProductService.getFeaturedProducts().then(res => {
-      console.log('[Home] Featured products : ', res);
-      setFeaturedProducts(res);
-    });
-    ProductService.getCategories().then(res => {
-      console.log('[Home] Categories : ', res);
-      setCategories(res);
-    });
+    const fetchData = async () => {
+      try {
+        const featuredProductsData = await ProductService.getFeaturedProducts();
+        console.log('[Home] Featured products : ', featuredProductsData);
+
+        const categoriesData = await ProductService.getCategories();
+        console.log('[Home] Categories : ', categoriesData);
+      } catch (e) {
+        console.log('[Home] Erreur de chargement des données');
+      }
+    };
+    fetchData();
   }, []);
 
   const renderCategoryItem = ({item}) => (

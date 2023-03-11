@@ -50,24 +50,28 @@ export class ProductService {
   }
 
   static async getFeaturedProducts() {
-    console.log('[ProductService] GET : featured products');
-    try {
-      const res = await APIService.get('featured_products');
-      return res.json();
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
+    return new Promise(async (resolve, reject) => {
+      console.log('[ProductService] GET : featured products');
+      try {
+        const res = await APIService.get('featured_products');
+        resolve(res.json());
+      } catch (e) {
+        console.error(e);
+        reject();
+      }
+    });
   }
 
   static async getCategories() {
-    console.log('[ProductService] GET : categories');
-    try {
-      const res = await APIService.get('categories');
-      return res.json();
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
+    return new Promise(async (resolve, reject) => {
+      console.log('[ProductService] GET : categories');
+      try {
+        const res = await APIService.get('categories');
+        resolve(res.json());
+      } catch (e) {
+        console.error(e);
+        reject();
+      }
+    });
   }
 }
