@@ -68,6 +68,8 @@ export class API {
         if (authHeader) {
             const accessToken = authHeader.split(' ')[1]
             const userId = req.query.user_id
+            console.log(`[API] Middleware > user_id : ${userId} & access_token : ${accessToken}\n`)
+
             if (userId) {
                 const user = await DB.getUserByID(userId)
 
@@ -102,7 +104,7 @@ export class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
     constructor(port:number, tag?:string) {
-        console.log(`[${tag}] Initialisation de l\'api\n`)
+        console.log(`[API] Initialisation de l\'api\n`)
         this.port=port
         this.tag=tag
         this.initApp()
@@ -122,7 +124,7 @@ export class API {
 
         // On le fait écouter sur le port en quesiton
         this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
+            console.log(`[API] Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
 
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
@@ -135,7 +137,7 @@ export class API {
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
     private initEntryPoints() {
-        console.log('Initilisation des entry-points!\n')
+        console.log('[API] Initilisation des entry-points!\n')
         this.entryPoints.forEach(ep => {
             if (ep.method === "GET") {
                 if (ep.paramName && ep.callbackParam) {
@@ -183,7 +185,7 @@ export class API {
      * Initialisation d'une entrée POST
      */
     private initPOST(entryPointName: string, callback: ((c: any) => Promise<any>)) {
-        console.log(`Init POST ${entryPointName}`)
+        console.log(`[API] Init POST ${entryPointName}`)
         this.app.post(`/${entryPointName}`, this.authMiddleware, async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response) => {
             console.log(req.body)
             const data = await callback(req.body)
@@ -192,13 +194,13 @@ export class API {
     }
 
     private initAuth() {
-        console.log("Initialisation du système d'autehntification\n")
+        console.log("[API] Initialisation du système d'autehntification\n")
         this.app.post('/register', async (req: Request, res: Response) => {
 
             const user = req.body.user
             const password = req.body.password
 
-            console.log('Register user :')
+            console.log('[API] Register user :')
             console.log(user)
             console.log('\n')
 
@@ -216,7 +218,7 @@ export class API {
             const email = req.body.email
             const password = req.body.password
 
-            console.log(`Login user : ${email}\n`)
+            console.log(`[API] Login user : ${email}\n`)
 
             try {
                 const userId = await AuthManager.login(email, password)
@@ -231,7 +233,7 @@ export class API {
             const email = req.body.email
             const refreshToken = req.body.refresh_token
 
-            console.log(`Refresh user : ${email}\n`)
+            console.log(`[API] Refresh user : ${email}\n`)
 
             try {
                 const tokens = await AuthManager.refreshAuth(email, refreshToken)

@@ -7,7 +7,7 @@ import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
 import { AuthErrors } from './models/AuthErrors';
 
-const TOKEN_DURATION = 1000 * 60 * 10
+const TOKEN_DURATION = 1000 * 60 * 30
 
 export class AuthManager {
 
@@ -57,6 +57,7 @@ export class AuthManager {
                     const accessToken = this.createAccessToken(userId, user.email, hash)
                     const refreshToken = this.createRefreshToken(accessToken, userId)
                     await DB.addUserAuth(accessToken, refreshToken, userId, new Date().getTime() + TOKEN_DURATION)
+                    console.log('[AuthManager] Enregistrement effecuté!')
                     resolve(userId)
                 }
             })
@@ -73,9 +74,12 @@ export class AuthManager {
      */
     static async login(email: string, password: string): Promise<number> {
 
+        console.log(`[Auth] Login pour ${email}`)
+
         const res = new Promise<number>(async (resolve, reject) => {
             const user = await DB.getUserByEmail(email)
             if (user == null) {
+                console.log(`[Auth] Login impossible : email inconnu`)
                 reject(AuthErrors.LOGIN_FAILED_EMAIL)
             } else {
                 if (user?.pwdhash) {
@@ -85,12 +89,15 @@ export class AuthManager {
                             const refreshToken = this.createRefreshToken(accessToken, user.id)
                             await DB.storeAccessToken(accessToken, user.id, new Date().getTime() + TOKEN_DURATION)
                             await DB.storeRefreshToken(refreshToken, user.id)
+                            console.log(`[Auth] Login effectué!`)
                             return resolve(user.id)
                         } else {
+                            console.log(`[Auth] Login impossible : mauvais password`)
                             return reject(AuthErrors.LOGIN_FAILED_PASSWORD)
                         }
                     });
                 } else {
+                    console.log(`[Auth] Login impossible : mauvais password`)
                     return reject(AuthErrors.LOGIN_FAILED_PASSWORD)
                 }
             }
@@ -112,14 +119,17 @@ export class AuthManager {
 
             if (authInfos) {
                 if (accessToken !== authInfos?.access_token) {
+                    console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > invalid access token`)
                     reject(AuthErrors.INVALID_ACCESS_TOKEN)
                 }
                 if (authInfos.expires_at < new Date().getTime()) {
+                    console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > access token expired`)
                     reject(AuthErrors.ACCESS_TOKEN_EXPIRED)
                 }
 
                 resolve()
             } else {
+                console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > no auth infos`)
                 reject(AuthErrors.NO_AUTH_INFOS)
             }
 
@@ -136,8 +146,10 @@ export class AuthManager {
     static async checkRefresh(userId: number, refreshToken: string): Promise<boolean> {
         const authInfos = await DB.getAuthInfos(userId)
         if (refreshToken !== authInfos?.refresh_token) {
+            console.log(`[Auth] Check de refresh pour user n°${userId} incorrect`)
             return false
         } else {
+            console.log(`[Auth] Check de refresh pour user n°${userId} correct`)
             return true
         }
     }
@@ -149,6 +161,7 @@ export class AuthManager {
      * @returns true si le refresh a fonctionné i.e le refreshToken est valide / false sinon
      */
     static async refreshAuth(email: string, refreshToken: string): Promise<TokenResponse> {
+        console.log(`[Auth] Refresh > email : ${email} & refresh_token : ${refreshToken}`)
         
         return new Promise<TokenResponse>(async (resolve, reject) => {
             const user = await DB.getUserByEmail(email)
@@ -156,6 +169,7 @@ export class AuthManager {
                 const validRefresh = await this.checkRefresh(user.id, refreshToken)
 
                 if (!validRefresh) {
+                    console.log('[Auth] Refresh impossible : invalid refresh')
                     reject(AuthErrors.INVALID_REFRESH_TOKEN)
                 } 
         
@@ -164,8 +178,10 @@ export class AuthManager {
                 await DB.storeAccessToken(newAccessToken, user.id, new Date().getTime() + TOKEN_DURATION)
                 await DB.storeRefreshToken(newRefreshToken, user.id)
                 const res: TokenResponse = {accessToken: newAccessToken, refreshToken: newRefreshToken}
+                console.log('[Auth] Refresh effectué!')
                 resolve(res)
             } else {
+                console.log('[Auth] Refresh impossible : user unknown')
                 reject(AuthErrors.USER_UNKNOWN)
             }
         })
@@ -181,9 +197,11 @@ export class AuthManager {
                 await DB.storeAccessToken(accessToken, userId, new Date().getTime() + TOKEN_DURATION)
                 await DB.storeRefreshToken(refreshToken, userId)
                 const res: TokenResponse = {accessToken, refreshToken}
+                console.log('[Auth] Génération d\'auth effectuée!')
                 return res
 
             } else {
+                console.log('[Auth] Génération d\'auth impossible : user unknown')
                 reject(AuthErrors.USER_UNKNOWN)
             }
         })
