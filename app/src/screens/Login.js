@@ -63,7 +63,7 @@ function LoginPage({navigation, setIsConnected}) {
 
           <BasicButton
             onClick={() => {
-              login();
+              userLogin();
             }}
             text="Se connecter"
           />

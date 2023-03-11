@@ -6,7 +6,7 @@ import {APIService} from './APIService';
  * - les tokens (refresh & access)
  *  - key : @token / objet {access_token, refresh_token}
  * - l'id, l'email, le nom, le prénom de l'utilisateur
- *  - key : @user_infos / objet {user_id, email, first_name, last_name}
+ *  - key : @user_infos / objet {user_id, email}
  */
 
 export class AuthService {
@@ -31,15 +31,13 @@ export class AuthService {
           reject(msg);
         }
 
-        const tokens = await res.json();
+        const resJSON = await res.json();
+        const userId = resJSON.user_id;
+        const tokens = resJSON.tokens;
         console.log('[Auth] Enregistrement correct, tokens : \n', tokens);
+
         await this.storeTokens(tokens);
-        await this.storeUserInfos(
-          user.id,
-          user.email,
-          user.firstName,
-          user.lastName,
-        );
+        await this.storeUserInfos(userId, user.email);
 
         resolve();
       } catch (e) {
@@ -50,56 +48,76 @@ export class AuthService {
   }
 
   static async login(email, password) {
-    try {
-      console.log('[Auth] Phase de login');
-      const res = await APIService.post('login', {email, password}, false);
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log('[Auth] Phase de login');
+        const res = await APIService.post('login', {email, password}, false);
 
-      if (res.status === 401) {
-        const msg = await res.json();
-        console.log('[Auth] La connexion a échouée (unauthorized): \n', msg);
-      }
-      if (!res.ok) {
-        const msg = await res.json();
-        console.log('[Auth] La connexion a échouée : \n', msg);
-      }
+        if (res.status === 401) {
+          const msg = await res.json();
+          console.log('[Auth] La connexion a échouée (unauthorized): \n', msg);
+          reject(msg);
+        }
+        if (!res.ok) {
+          const msg = await res.json();
+          console.log('[Auth] La connexion a échouée : \n', msg);
+          reject(msg);
+        }
 
-      const tokens = await res.json();
-      await this.storeTokens(tokens);
-    } catch (e) {
-      console.log('[Auth] La connexion a échouée : \n', e);
-    }
+        const resJSON = await res.json();
+        console.log('[Auth] Résultat de la connexion : \n', resJSON);
+        const userId = resJSON.user_id;
+        const tokens = resJSON.tokens;
+
+        await this.storeTokens(tokens);
+        await this.storeUserInfos(userId, email);
+        resolve();
+      } catch (e) {
+        console.log('[Auth] La connexion a échouée : \n', e);
+        reject(e);
+      }
+    });
   }
 
   static async refreshAuth() {
-    console.log('[Auth] Refresh des tokens');
-    try {
-      const tokensJSON = await AsyncStorage.getItem('@tokens');
-      const tokens = JSON.parse(tokensJSON);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const tokensJSON = await AsyncStorage.getItem('@tokens');
+        const tokens = JSON.parse(tokensJSON);
 
-      const userInfosJSON = await AsyncStorage.getItem('@user_infos');
-      const userInfos = JSON.parse(userInfosJSON);
+        const userInfosJSON = await AsyncStorage.getItem('@user_infos');
+        const userInfos = JSON.parse(userInfosJSON);
 
-      const res = await APIService.post(
-        'refresh',
-        {
-          email: userInfos.email,
-          refresh_token: tokens.refresh_token,
-        },
-        false,
-      );
+        console.log('[Auth] Refresh des tokens : ', userInfos, tokens);
 
-      if (res.status === 401) {
-        console.log('[Auth] Le refresh a échoué (unauthorized): \n', res.body);
+        const res = await APIService.post(
+          'refresh',
+          {
+            email: userInfos.email,
+            refresh_token: tokens.refresh_token,
+          },
+          false,
+        );
+
+        if (res.status === 401) {
+          const msg = await res.json();
+          console.log('[Auth] Le refresh a échoué (unauthorized): \n', msg);
+          reject(msg);
+        }
+        if (!res.ok) {
+          const msg = await res.json();
+          console.log('[Auth] Le refresh a échoué : \n', msg);
+          reject(msg);
+        }
+
+        const newTokens = await res.json();
+        await this.storeTokens(newTokens);
+        resolve();
+      } catch (e) {
+        console.log('[Auth] Le refresh a échoué : \n', e);
+        reject(e);
       }
-      if (!res.ok) {
-        console.log('[Auth] Le refresh a échoué : \n', res.body);
-      }
-
-      const newTokens = await res.json();
-      await this.storeTokens(newTokens);
-    } catch (e) {
-      console.log('[Auth] Le refresh a échoué : \n', e);
-    }
+    });
   }
 
   static async storeTokens(tokens) {
@@ -112,14 +130,12 @@ export class AuthService {
     }
   }
 
-  static async storeUserInfos(userId, email, firstName, lastName) {
+  static async storeUserInfos(userId, email) {
     console.log('[Auth] Stockage des informations utilisateur');
     try {
       const userJSON = JSON.stringify({
         user_id: userId,
         email,
-        first_name: firstName,
-        last_name: lastName,
       });
       await AsyncStorage.setItem('@user_infos', userJSON);
     } catch (e) {
