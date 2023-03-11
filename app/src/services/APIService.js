@@ -20,6 +20,8 @@ export class APIService {
           ? `${apiURL}/${entrypoint}?user_id=${userId}`
           : `${apiURL}/${entrypoint}/${param}?user_id=${userId}`;
 
+      console.log('[API] Get : ' + urlPath);
+
       const res = await fetch(urlPath, options);
 
       if (res.status === 401) {

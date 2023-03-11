@@ -54,8 +54,14 @@ function HomePage({navigation, isConnected, setIsConnected}) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    ProductService.getFeaturedProducts().then(res => setFeaturedProducts(res));
-    ProductService.getCategories().then(res => setCategories(res));
+    ProductService.getFeaturedProducts().then(res => {
+      console.log('[Home] Featured products : ', res);
+      setFeaturedProducts(res);
+    });
+    ProductService.getCategories().then(res => {
+      console.log('[Home] Categories : ', res);
+      setCategories(res);
+    });
   }, []);
 
   const renderCategoryItem = ({item}) => (
@@ -72,12 +78,6 @@ function HomePage({navigation, isConnected, setIsConnected}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Switch
-        style={styles.switch}
-        thumbColor={isConnected ? 'green' : 'red'}
-        onValueChange={() => setIsConnected(false)}
-        value={isConnected}
-      /> */}
       <LinearGradient
         colors={['#e6e6e6', '#ffffff']}
         style={styles.categoriesContainer}>

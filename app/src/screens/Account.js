@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {AuthContext} from '../utils/AuthProvider';
 import CurrentCartOrder from './CurrentCartOrder';
 import ShipperAccountStack from './ShipperAccount';
 
@@ -35,6 +36,8 @@ function MenuItem({text, icon, goTo}) {
 }
 
 function AccountPage({navigation}) {
+  const {logout} = useContext(AuthContext);
+
   /**
    * MOCKUP DATAS
    *
@@ -86,7 +89,13 @@ function AccountPage({navigation}) {
           icon="wallet-outline"
           goTo={() => {}}
         />
-        <MenuItem text="Déconnexion" icon="log-out-outline" goTo={() => {}} />
+        <MenuItem
+          text="Déconnexion"
+          icon="log-out-outline"
+          goTo={() => {
+            logout();
+          }}
+        />
       </View>
     </SafeAreaView>
   );

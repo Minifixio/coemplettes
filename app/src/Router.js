@@ -3,9 +3,14 @@ import {AuthContext} from './utils/AuthProvider';
 import {NavigationContainer} from '@react-navigation/native';
 import LandingPage from './screens/Landing';
 import MainPage from './screens/Menu';
+import Loading from './screens/Loading';
 
 const Router = () => {
-  const {isLoggedIn} = useContext(AuthContext);
+  const {isLoggedIn, isLoading} = useContext(AuthContext);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <NavigationContainer>

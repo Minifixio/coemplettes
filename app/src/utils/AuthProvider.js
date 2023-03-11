@@ -11,16 +11,22 @@ export function AuthProvider(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     AuthService.loadUser()
       .then(() => {
         setIsLoggedIn(true);
+        setIsLoading(false);
       })
       .catch(() => {
         setIsLoggedIn(false);
+        setIsLoading(false);
       });
   }, []);
 
-  const logout = () => {};
+  const logout = async () => {
+    await AuthService.logout();
+    setIsLoggedIn(false);
+  };
 
   const login = (email, password) =>
     new Promise(async (resolve, reject) => {
@@ -53,6 +59,7 @@ export function AuthProvider(props) {
       value={{
         isLoggedIn,
         setIsLoggedIn,
+        isLoading,
         login,
         logout,
         register,

@@ -174,6 +174,10 @@ export class AuthService {
       }
     });
   }
+
+  static async logout() {
+    await AsyncStorage.setItem('@user_infos', JSON.stringify({}));
+  }
 }
 
 // TODO : penser à stocker user_id de manière dynamique pour éviter à aller à avoir le chercher à chaque fois pour faire un appel d'API

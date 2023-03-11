@@ -1,4 +1,4 @@
-import {API} from './APIService';
+import {APIService} from './APIService';
 
 const products = require('../assets/json/products.json').products;
 
@@ -26,9 +26,9 @@ export class ProductService {
   }
 
   static async getProduct(id) {
-    console.log('GET : product ' + id);
+    console.log('[ProductService] GET : product ' + id);
     try {
-      const res = await API.get('product', id);
+      const res = await APIService.get('product', id);
       return res.json();
     } catch (e) {
       console.error(e);
@@ -37,9 +37,11 @@ export class ProductService {
   }
 
   static async getProductInCategory(category_id) {
-    console.log('GET : get product in category ' + category_id);
+    console.log(
+      '[ProductService] GET : get product in category ' + category_id,
+    );
     try {
-      const res = await API.get('products', category_id);
+      const res = await APIService.get('products', category_id);
       return res.json();
     } catch (e) {
       console.error(e);
@@ -48,9 +50,9 @@ export class ProductService {
   }
 
   static async getFeaturedProducts() {
-    console.log('GET : featured products');
+    console.log('[ProductService] GET : featured products');
     try {
-      const res = await API.get('featured_products');
+      const res = await APIService.get('featured_products');
       return res.json();
     } catch (e) {
       console.error(e);
@@ -59,9 +61,9 @@ export class ProductService {
   }
 
   static async getCategories() {
-    console.log('GET : categories');
+    console.log('[ProductService] GET : categories');
     try {
-      const res = await API.get('categories');
+      const res = await APIService.get('categories');
       return res.json();
     } catch (e) {
       console.error(e);
