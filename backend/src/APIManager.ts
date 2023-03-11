@@ -205,7 +205,7 @@ export class API {
             try {
                 const userId = await AuthManager.register(user, password)
                 const tokens = await AuthManager.getTokens(userId)
-                res.status(200).json(tokens)
+                res.status(200).json({user_id: userId, tokens})
             } catch (e: any) {
                 res.status(401).json(e)
             }
@@ -220,8 +220,8 @@ export class API {
 
             try {
                 const userId = await AuthManager.login(email, password)
-                const tokens = await AuthManager.getTokens(userId)
-                res.status(200).json(tokens)
+                const tokens = await AuthManager.getTokens(userId) 
+                res.status(200).json({user_id: userId, tokens})
             } catch (e: any) {
                 res.status(401).json(e)
             }
