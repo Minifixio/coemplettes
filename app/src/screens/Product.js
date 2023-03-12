@@ -53,7 +53,7 @@ function ProductPage({navigation, route}) {
           />
           <BasicButton
             style={styles.button}
-            onClick={() => addToCart(id, quantity)}
+            onClick={() => addToCart(product, quantity)}
             text="Ajouter au panier"
           />
         </View>

@@ -75,6 +75,7 @@ export class APIService {
       const userId = await AuthService.getUserId();
       var authHeaders = new Headers();
       authHeaders.append('Authorization', 'Bearer ' + accessToken);
+      authHeaders.append('Content-Type', 'application/json');
       options.headers = authHeaders;
 
       var urlPath = `${apiURL}/${entrypoint}?user_id=${userId}`;

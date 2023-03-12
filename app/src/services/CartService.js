@@ -22,7 +22,7 @@ export class CartService {
         console.log('\n');
 
         const res = await APIService.post('cart', {
-          cart,
+          cart: cart,
           cart_items: cartItems,
         });
 

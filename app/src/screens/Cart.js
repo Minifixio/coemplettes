@@ -91,7 +91,7 @@ function CartPage({navigation}) {
   async function confirmDeadline() {
     try {
       setOpenDatePicker(false);
-      await CartService.addCart(deadline, items);
+      await CartService.addCart(deadline.getTime(), items);
       Toast.show({
         type: 'success',
         text1: 'Carte validée !',
