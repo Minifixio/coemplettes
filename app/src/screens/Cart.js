@@ -76,7 +76,8 @@ const ProductCartItem = function ({
 };
 
 function CartPage({navigation}) {
-  const {getTotalPrice, removeFromCart, items} = useContext(CartContext);
+  const {getTotalPrice, removeFromCart, items, eraseCart} =
+    useContext(CartContext);
   const [deadline, setDeadline] = useState(new Date());
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
@@ -96,7 +97,8 @@ function CartPage({navigation}) {
         type: 'success',
         text1: 'Carte validée !',
       });
-      //navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+      eraseCart();
+      navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
     } catch (e) {
       Toast.show({
         type: 'error',

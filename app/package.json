@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.7",
     "react": "18.1.0",
     "react-native": "0.70.6",
+    "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-date-picker": "^4.2.9",
     "react-native-input-spinner": "^1.7.12",
     "react-native-linear-gradient": "^2.6.2",

@@ -51,6 +51,10 @@ export function CartProvider(props) {
     return items.reduce((sum, item) => sum + item.totalPrice, 0);
   }
 
+  function eraseCart() {
+    setItems([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
