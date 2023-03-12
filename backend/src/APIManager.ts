@@ -9,6 +9,7 @@ import { Shipper } from './tables/Shipper';
 import { User } from './tables/User';
 import { AuthManager } from './AuthManager';
 import { AuthError, AuthErrors } from './models/AuthErrors';
+import { CartItem } from './tables/CartItem';
 
 var bodyParser = require('body-parser')
 
@@ -57,7 +58,7 @@ export class API {
 
         {method: "POST", entryPointName: "user", paramName: null, callbackParam: (user: User) => DB.addUser(user)},
         {method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper: Shipper) => DB.addShipper(shipper)},
-        {method: "POST", entryPointName: "cart", paramName: null, callbackParam: (cart: Cart) => DB.addCart(cart)},
+        {method: "POST", entryPointName: "cart", paramName: null, callbackParam: (data: {cart: Cart, cart_items: CartItem[]}) => DB.addCart(data.cart, data.cart_items)},
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
         {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},
     ]

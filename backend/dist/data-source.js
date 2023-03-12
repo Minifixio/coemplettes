@@ -14,7 +14,6 @@ function initAppDataSource(dbPort) {
         username: "admin",
         database: "COEMP",
         password: credentials_1.db_password,
-        logging: true,
         entities: [__dirname + "/tables/*.js"]
     });
     return AppDataSource;

@@ -28,10 +28,6 @@ __decorate([
     __metadata("design:type", Number)
 ], CartItem.prototype, "product_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: true }),
-    __metadata("design:type", Number)
-], CartItem.prototype, "weight", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
 ], CartItem.prototype, "quantity", void 0);

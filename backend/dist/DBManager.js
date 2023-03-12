@@ -45,6 +45,7 @@ const Product_1 = require("./tables/Product");
 const Category_1 = require("./tables/Category");
 const FeaturedProduct_1 = require("./tables/FeaturedProduct");
 const OAuth_1 = require("./tables/OAuth");
+const CartItem_1 = require("./tables/CartItem");
 class DB {
     static initialize(dbPort) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -328,15 +329,25 @@ class DB {
                 .execute();
         });
     }
-    static addCart(cart) {
+    static addCart(cart, cartItems) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Ajout de la cart :");
             console.log(cart);
-            yield this.AppDataSource
+            cart.status = 0;
+            const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
                 .into(Cart_1.Cart)
                 .values(cart)
+                .returning("id")
+                .execute();
+            const cartId = req.identifiers[0].id;
+            cartItems.map(item => { item.cart_id = cartId; });
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(CartItem_1.CartItem)
+                .values(cartItems)
                 .execute();
         });
     }

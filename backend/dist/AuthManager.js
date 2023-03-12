@@ -38,7 +38,7 @@ const bcrypt = __importStar(require("bcrypt"));
 const credentials_1 = require("./credentials");
 const DBManager_1 = require("./DBManager");
 const AuthErrors_1 = require("./models/AuthErrors");
-const TOKEN_DURATION = 1000 * 60 * 10;
+const TOKEN_DURATION = 1000 * 60 * 30;
 class AuthManager {
     static createRefreshToken(accessToken, userId) {
         console.log('[AuthManager] Création d\'un refresh token pour le user n°' + userId);
@@ -81,6 +81,7 @@ class AuthManager {
                         const accessToken = this.createAccessToken(userId, user.email, hash);
                         const refreshToken = this.createRefreshToken(accessToken, userId);
                         yield DBManager_1.DB.addUserAuth(accessToken, refreshToken, userId, new Date().getTime() + TOKEN_DURATION);
+                        console.log('[AuthManager] Enregistrement effecuté!');
                         resolve(userId);
                     }
                 }));
@@ -96,9 +97,11 @@ class AuthManager {
      */
     static login(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(`[Auth] Login pour ${email}`);
             const res = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 const user = yield DBManager_1.DB.getUserByEmail(email);
                 if (user == null) {
+                    console.log(`[Auth] Login impossible : email inconnu`);
                     reject(AuthErrors_1.AuthErrors.LOGIN_FAILED_EMAIL);
                 }
                 else {
@@ -109,14 +112,17 @@ class AuthManager {
                                 const refreshToken = this.createRefreshToken(accessToken, user.id);
                                 yield DBManager_1.DB.storeAccessToken(accessToken, user.id, new Date().getTime() + TOKEN_DURATION);
                                 yield DBManager_1.DB.storeRefreshToken(refreshToken, user.id);
+                                console.log(`[Auth] Login effectué!`);
                                 return resolve(user.id);
                             }
                             else {
+                                console.log(`[Auth] Login impossible : mauvais password`);
                                 return reject(AuthErrors_1.AuthErrors.LOGIN_FAILED_PASSWORD);
                             }
                         }));
                     }
                     else {
+                        console.log(`[Auth] Login impossible : mauvais password`);
                         return reject(AuthErrors_1.AuthErrors.LOGIN_FAILED_PASSWORD);
                     }
                 }
@@ -136,14 +142,17 @@ class AuthManager {
                 const authInfos = yield DBManager_1.DB.getAuthInfos(userId);
                 if (authInfos) {
                     if (accessToken !== (authInfos === null || authInfos === void 0 ? void 0 : authInfos.access_token)) {
+                        console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > invalid access token`);
                         reject(AuthErrors_1.AuthErrors.INVALID_ACCESS_TOKEN);
                     }
                     if (authInfos.expires_at < new Date().getTime()) {
+                        console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > access token expired`);
                         reject(AuthErrors_1.AuthErrors.ACCESS_TOKEN_EXPIRED);
                     }
                     resolve();
                 }
                 else {
+                    console.log(`[Auth] Check d\'auth pour user n°${userId} incorrect > no auth infos`);
                     reject(AuthErrors_1.AuthErrors.NO_AUTH_INFOS);
                 }
             }));
@@ -159,9 +168,11 @@ class AuthManager {
         return __awaiter(this, void 0, void 0, function* () {
             const authInfos = yield DBManager_1.DB.getAuthInfos(userId);
             if (refreshToken !== (authInfos === null || authInfos === void 0 ? void 0 : authInfos.refresh_token)) {
+                console.log(`[Auth] Check de refresh pour user n°${userId} incorrect`);
                 return false;
             }
             else {
+                console.log(`[Auth] Check de refresh pour user n°${userId} correct`);
                 return true;
             }
         });
@@ -174,21 +185,25 @@ class AuthManager {
      */
     static refreshAuth(email, refreshToken) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(`[Auth] Refresh > email : ${email} & refresh_token : ${refreshToken}`);
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 const user = yield DBManager_1.DB.getUserByEmail(email);
                 if (user) {
                     const validRefresh = yield this.checkRefresh(user.id, refreshToken);
                     if (!validRefresh) {
+                        console.log('[Auth] Refresh impossible : invalid refresh');
                         reject(AuthErrors_1.AuthErrors.INVALID_REFRESH_TOKEN);
                     }
                     const newAccessToken = this.createAccessToken(user.id, user.email, user.pwdhash);
                     const newRefreshToken = this.createRefreshToken(newAccessToken, user.id);
                     yield DBManager_1.DB.storeAccessToken(newAccessToken, user.id, new Date().getTime() + TOKEN_DURATION);
-                    yield DBManager_1.DB.storeRefreshToken(refreshToken, user.id);
+                    yield DBManager_1.DB.storeRefreshToken(newRefreshToken, user.id);
                     const res = { accessToken: newAccessToken, refreshToken: newRefreshToken };
+                    console.log('[Auth] Refresh effectué!');
                     resolve(res);
                 }
                 else {
+                    console.log('[Auth] Refresh impossible : user unknown');
                     reject(AuthErrors_1.AuthErrors.USER_UNKNOWN);
                 }
             }));
@@ -204,9 +219,11 @@ class AuthManager {
                     yield DBManager_1.DB.storeAccessToken(accessToken, userId, new Date().getTime() + TOKEN_DURATION);
                     yield DBManager_1.DB.storeRefreshToken(refreshToken, userId);
                     const res = { accessToken, refreshToken };
+                    console.log('[Auth] Génération d\'auth effectuée!');
                     return res;
                 }
                 else {
+                    console.log('[Auth] Génération d\'auth impossible : user unknown');
                     reject(AuthErrors_1.AuthErrors.USER_UNKNOWN);
                 }
             }));

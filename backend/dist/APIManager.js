@@ -41,7 +41,7 @@ class API {
             { method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
             { method: "POST", entryPointName: "user", paramName: null, callbackParam: (user) => DBManager_1.DB.addUser(user) },
             { method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper) => DBManager_1.DB.addShipper(shipper) },
-            { method: "POST", entryPointName: "cart", paramName: null, callbackParam: (cart) => DBManager_1.DB.addCart(cart) },
+            { method: "POST", entryPointName: "cart", paramName: null, callbackParam: (data) => DBManager_1.DB.addCart(data.cart, data.cart_items) },
             { method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
             { method: "POST", entryPointName: "product", paramName: null, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
         ];
@@ -50,6 +50,7 @@ class API {
             if (authHeader) {
                 const accessToken = authHeader.split(' ')[1];
                 const userId = req.query.user_id;
+                console.log(`[API] Middleware > user_id : ${userId} & access_token : ${accessToken}\n`);
                 if (userId) {
                     const user = yield DBManager_1.DB.getUserByID(userId);
                     if (!user) {
@@ -82,7 +83,7 @@ class API {
                 });
             }
         });
-        console.log(`[${tag}] Initialisation de l\'api\n`);
+        console.log(`[API] Initialisation de l\'api\n`);
         this.port = port;
         this.tag = tag;
         this.initApp();
@@ -99,7 +100,7 @@ class API {
         this.app.use(bodyParser.json());
         // On le fait écouter sur le port en quesiton
         this.app.listen(this.port, () => {
-            console.log(`Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
+            console.log(`[API] Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
         this.app.get('/', (req, res) => {
@@ -110,7 +111,7 @@ class API {
      * On itilialise les entrypoints en mappant à chaque fois les fonctions associées à chaque entrypoint
      */
     initEntryPoints() {
-        console.log('Initilisation des entry-points!\n');
+        console.log('[API] Initilisation des entry-points!\n');
         this.entryPoints.forEach(ep => {
             if (ep.method === "GET") {
                 if (ep.paramName && ep.callbackParam) {
@@ -156,7 +157,7 @@ class API {
      * Initialisation d'une entrée POST
      */
     initPOST(entryPointName, callback) {
-        console.log(`Init POST ${entryPointName}`);
+        console.log(`[API] Init POST ${entryPointName}`);
         this.app.post(`/${entryPointName}`, this.authMiddleware, (req, res) => __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
             const data = yield callback(req.body);
@@ -164,17 +165,17 @@ class API {
         }));
     }
     initAuth() {
-        console.log("Initialisation du système d'autehntification\n");
+        console.log("[API] Initialisation du système d'autehntification\n");
         this.app.post('/register', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.body.user;
             const password = req.body.password;
-            console.log('Register user :');
+            console.log('[API] Register user :');
             console.log(user);
             console.log('\n');
             try {
                 const userId = yield AuthManager_1.AuthManager.register(user, password);
                 const tokens = yield AuthManager_1.AuthManager.getTokens(userId);
-                res.status(200).json(tokens);
+                res.status(200).json({ user_id: userId, tokens });
             }
             catch (e) {
                 res.status(401).json(e);
@@ -183,11 +184,11 @@ class API {
         this.app.post('/login', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const email = req.body.email;
             const password = req.body.password;
-            console.log(`Login user : ${email}\n`);
+            console.log(`[API] Login user : ${email}\n`);
             try {
                 const userId = yield AuthManager_1.AuthManager.login(email, password);
                 const tokens = yield AuthManager_1.AuthManager.getTokens(userId);
-                res.status(200).json(tokens);
+                res.status(200).json({ user_id: userId, tokens });
             }
             catch (e) {
                 res.status(401).json(e);
@@ -196,7 +197,7 @@ class API {
         this.app.post('/refresh', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const email = req.body.email;
             const refreshToken = req.body.refresh_token;
-            console.log(`Refresh user : ${email}\n`);
+            console.log(`[API] Refresh user : ${email}\n`);
             try {
                 const tokens = yield AuthManager_1.AuthManager.refreshAuth(email, refreshToken);
                 res.status(200).json(tokens);

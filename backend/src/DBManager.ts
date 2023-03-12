@@ -16,6 +16,7 @@ import { FeaturedProduct } from "./tables/FeaturedProduct";
 import { OAuth } from './tables/OAuth';
 import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
+import { CartItem } from './tables/CartItem';
 
 export class DB {
 
@@ -284,14 +285,27 @@ export class DB {
         .execute()
     }
 
-    public static async addCart(cart: Cart) {
+    public static async addCart(cart: Cart, cartItems: CartItem[]) {
         console.log("[DBManager] Ajout de la cart :")
         console.log(cart)
-        await this.AppDataSource
+        cart.status=0;
+
+        const req = await this.AppDataSource
         .createQueryBuilder()
         .insert()
         .into(Cart)
         .values(cart)
+        .returning("id")
+        .execute()
+
+        const cartId: number = req.identifiers[0].id
+        cartItems.map(item => {item.cart_id = cartId})
+
+        await this.AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(CartItem)
+        .values(cartItems)
         .execute()
     }
 

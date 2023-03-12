@@ -13,9 +13,6 @@ export class CartItem {
     @Column({ type: "int", nullable:false })
     product_id!: number
 
-    @Column({ type: "int", nullable:true })
-    weight!: number
-
     @Column({ type: "int", nullable:false })
     quantity!: number
 
