@@ -6,9 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputSpinner from 'react-native-input-spinner';
 
 import {CartContext} from '../utils/CartProvider';
-import {ProductService} from '../services/ProductService';
 
-const ProductShowcase = ({navigation, id}) => {
+const ProductShowcase = ({navigation, id, productData}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState({});
@@ -16,11 +15,11 @@ const ProductShowcase = ({navigation, id}) => {
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-    setProduct(ProductService._getProduct(id));
-  }, [id, navigation]);
+    setProduct(productData);
+  }, [id, navigation, productData]);
 
   function onClick() {
-    navigation.navigate('ProductPage', {id});
+    navigation.navigate('ProductPage', {id, productData});
   }
 
   const pressableCliked = () => {
@@ -32,6 +31,7 @@ const ProductShowcase = ({navigation, id}) => {
   };
 
   const inputChanged = val => {
+    console.log(`[ProductShowcase] Added one ${product.name} to the cart`);
     const valTemp = val;
     setQuantity(val);
     if (val === 0) {
@@ -40,9 +40,9 @@ const ProductShowcase = ({navigation, id}) => {
       return;
     } else {
       if (valTemp > quantity) {
-        addToCart(id, 1);
+        addToCart(product, 1);
       } else {
-        addToCart(id, -1);
+        addToCart(product, -1);
       }
     }
   };

@@ -26,27 +26,31 @@ export class ProductService {
   }
 
   static async getProduct(id) {
-    console.log('[ProductService] GET : product ' + id);
-    try {
-      const res = await APIService.get('product', id);
-      return res.json();
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
+    return new Promise(async (resolve, reject) => {
+      console.log('[ProductService] GET : product ' + id);
+      try {
+        const res = await APIService.get('product', id);
+        resolve(res.json());
+      } catch (e) {
+        console.error(e);
+        reject();
+      }
+    });
   }
 
   static async getProductInCategory(category_id) {
-    console.log(
-      '[ProductService] GET : get product in category ' + category_id,
-    );
-    try {
-      const res = await APIService.get('products', category_id);
-      return res.json();
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
+    return new Promise(async (resolve, reject) => {
+      console.log(
+        '[ProductService] GET : get product in category ' + category_id,
+      );
+      try {
+        const res = await APIService.get('products', category_id);
+        resolve(res.json());
+      } catch (e) {
+        console.error(e);
+        reject();
+      }
+    });
   }
 
   static async getFeaturedProducts() {

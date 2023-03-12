@@ -1,27 +1,24 @@
 import React, {createContext, useState} from 'react';
 import Toast from 'react-native-toast-message';
-import {getProduct} from '../services/ProductService';
 export const CartContext = createContext();
 
 export function CartProvider(props) {
   // on stocke les items de la Cart dans la variable "items"
   const [items, setItems] = useState([]);
 
-  function addToCart(id, quantity) {
-    const product = getProduct(id);
-
+  function addToCart(product, quantity) {
     Toast.show({
       type: 'success',
       text1: `${quantity} ${product.quantity_type} de ${product.name} ajoutés au panier!`,
     });
 
     setItems(prevItems => {
-      const item = prevItems.find(item => item.id === id);
+      const item = prevItems.find(item => item.id === product.id);
       if (!item) {
         return [
           ...prevItems,
           {
-            id,
+            id: product.id,
             quantity: quantity,
             product,
             totalPrice:
@@ -30,7 +27,7 @@ export function CartProvider(props) {
         ];
       } else {
         return prevItems.map(item => {
-          if (item.id === id) {
+          if (item.id === product.id) {
             item.quantity += quantity;
             item.totalPrice +=
               Math.round(quantity * product.average_price * 100) / 100;

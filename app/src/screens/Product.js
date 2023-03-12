@@ -7,18 +7,18 @@ import BasicButton from '../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {CartContext} from '../utils/CartProvider';
-import {ProductService} from '../services/ProductService';
 
 function ProductPage({navigation, route}) {
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState({});
   const {addToCart} = useContext(CartContext);
-  const {id} = route.params;
+  const {productData, id} = route.params;
 
   useEffect(() => {
     navigation.setOptions({title: ''});
-    ProductService.getProduct(id).then(res => setProduct(res));
-  }, [id, navigation]);
+    //ProductService.getProduct(id).then(res => setProduct(res));
+    setProduct(productData);
+  }, [navigation, productData]);
 
   return (
     <SafeAreaView style={styles.container}>

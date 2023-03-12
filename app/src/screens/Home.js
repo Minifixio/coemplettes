@@ -79,7 +79,11 @@ function HomePage({navigation, isConnected, setIsConnected}) {
     />
   );
   const renderFeaturedItem = ({item}) => (
-    <ProductShowcase navigation={navigation} id={item.id} />
+    <ProductShowcase
+      navigation={navigation}
+      id={item.id}
+      productData={item.product}
+    />
   );
 
   return (

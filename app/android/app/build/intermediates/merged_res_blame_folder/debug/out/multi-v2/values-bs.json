@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.coemplettesapp-mergeDebugResources-32:/values-bs/values-bs.xml",
+            "outputFile": "com.coemplettesapp-mergeDebugResources-34:/values-bs/values-bs.xml",
             "map": [
                 {
                     "source": "/Users/emile/.gradle/caches/transforms-3/1b40e4574e76bff5831ef4bf4270480d/transformed/appcompat-1.4.1/res/values-bs/values-bs.xml",

@@ -7,7 +7,6 @@ import {
   Image,
   Switch,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import RegisterPage from './RegisterPage';

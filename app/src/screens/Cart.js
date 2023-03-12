@@ -9,12 +9,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {getProduct} from '../services/ProductService';
 import {CartContext} from '../utils/CartProvider';
 import LinearGradient from 'react-native-linear-gradient';
 import SwipeableFlatList from 'react-native-swipeable-list';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../components/BasicButton';
+import DatePicker from 'react-native-date-picker';
+import {CartService} from '../services/CartService';
+import Toast from 'react-native-toast-message';
 
 const Divider = () => {
   return (
@@ -31,15 +33,20 @@ const Divider = () => {
   );
 };
 
-const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
+const ProductCartItem = function ({
+  productData,
+  quantity,
+  totalPrice,
+  navigation,
+}) {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    setProduct(getProduct(id));
-  }, [navigation, id]);
+    setProduct(productData);
+  }, [productData]);
 
   function onClick() {
-    navigation.navigate('ProductPage', {id});
+    navigation.navigate('ProductPage', {id: product.id, productData});
   }
 
   return (
@@ -59,7 +66,9 @@ const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
               x{quantity} {product.quantity_type}
             </Text>
           </View>
-          <Text style={styles.productPriceText}>{totalPrice}€</Text>
+          <Text style={styles.productPriceText}>
+            {Math.round(totalPrice * 100) / 100}€
+          </Text>
         </Pressable>
       </LinearGradient>
     </View>
@@ -67,12 +76,33 @@ const ProductCartItem = function ({id, quantity, totalPrice, navigation}) {
 };
 
 function CartPage({navigation}) {
-  const {addToCart, getTotalPrice, removeFromCart, items} =
-    useContext(CartContext);
-  console.log(items);
+  const {getTotalPrice, removeFromCart, items} = useContext(CartContext);
+  const [deadline, setDeadline] = useState(new Date());
+  const [openDatePicker, setOpenDatePicker] = useState(false);
 
   function remove(id) {
     removeFromCart(id);
+  }
+
+  function selectDeadline() {
+    setOpenDatePicker(true);
+  }
+
+  async function confirmDeadline() {
+    try {
+      setOpenDatePicker(false);
+      await CartService.addCart(deadline, items);
+      Toast.show({
+        type: 'success',
+        text1: 'Carte validée !',
+      });
+      //navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: "Erreur lors de l'ajout de carte!",
+      });
+    }
   }
 
   const quickActions = (index, qaItem) => {
@@ -93,6 +123,7 @@ function CartPage({navigation}) {
       navigation={navigation}
       quantity={item.quantity}
       totalPrice={item.totalPrice}
+      productData={item.product}
     />
   );
 
@@ -125,7 +156,9 @@ function CartPage({navigation}) {
         <View style={styles.bottomCard}>
           <View style={styles.totalTextView}>
             <Text style={styles.subtotalText}>Sous-total</Text>
-            <Text style={styles.subtotalText}>{getTotalPrice()}€</Text>
+            <Text style={styles.subtotalText}>
+              {Math.round(getTotalPrice() * 100) / 100}€
+            </Text>
           </View>
           <View style={styles.totalTextView}>
             <Text style={styles.subtotalText}>Pour le livreur</Text>
@@ -136,18 +169,37 @@ function CartPage({navigation}) {
 
           <View style={styles.totalTextView}>
             <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalText}>{getTotalPrice() + 1.5}€</Text>
+            <Text style={styles.totalText}>
+              {Math.round(getTotalPrice() * 100) / 100 + 1.5}€
+            </Text>
           </View>
 
           <BasicButton
             style={styles.validationButton}
             onClick={() => {
-              navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+              selectDeadline();
+              //navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
             }}
             text="Passer la commande"
           />
+          <DatePicker
+            modal
+            title="Sélectionner une date limite"
+            confirmText="Valider ma commande"
+            cancelText="Annuler"
+            locale="fr"
+            open={openDatePicker}
+            date={deadline}
+            onConfirm={date => {
+              confirmDeadline();
+            }}
+            onCancel={() => {
+              setOpenDatePicker(false);
+            }}
+          />
         </View>
       )}
+      <Toast />
     </SafeAreaView>
   );
 }
