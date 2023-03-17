@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ShipperInformationPage from './ShipperInformations';
 import DeliveryTracking from './DeliveryTracking';
 import BasicButton from '../components/BasicButton';
+import {UserContext} from '../utils/UserProvider';
 
 const shippers = require('../assets/json/shippers.json').shippers;
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
@@ -35,17 +36,19 @@ function MenuItem({text, icon, goTo}) {
 }
 
 function ShipperAccountPage({navigation}) {
+  const {shipperInfos} = useContext(UserContext);
+
   /**
    * MOCKUP DATAS
    *
-   * shipper
-   * isShipper
+   * _shipper
+   * _isShipper
    */
 
-  const isShipper = false;
-  const shipper = shippers[0];
+  const _isShipper = false;
+  const _shipper = shippers[0];
 
-  if (isShipper) {
+  if (shipperInfos !== {}) {
     return (
       <SafeAreaView style={styles.container}>
         <LinearGradient

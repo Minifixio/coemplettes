@@ -3,10 +3,15 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import InputSpinner from 'react-native-input-spinner';
+import BasicButton from '../components/BasicButton';
+import {AuthService} from '../services/AuthService';
+import {UserService} from '../services/UserService';
+import Toast from 'react-native-toast-message';
 
-function ShipperInformationPage() {
+function ShipperInformationPage({navigation}) {
   const [priceMax, setPriceMax] = useState(50);
   const [capacity, setCapacity] = useState(2);
+  const [disponibilities, setDisponibilities] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   // Indiquent si le shipper peut aller au Drive / en magasin
   const [drive, setDrive] = useState(false);
@@ -14,10 +19,34 @@ function ShipperInformationPage() {
 
   const [hasCar, setHasCar] = useState(false);
 
+  const createProfile = async () => {
+    try {
+      const shipperInfos = {
+        capacity,
+        price_max: priceMax,
+        drive,
+        has_car: hasCar,
+        shop,
+        disponibilities: disponibilities.join(''),
+      };
+      await UserService.createShipperProfile(shipperInfos);
+      Toast.show({
+        type: 'success',
+        text1: 'Tu es désormais livreur !',
+      });
+      navigation.navigate('ShipperAccountPage');
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: 'Erreur lors de la création du profil livreur',
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.mainTextView}>
-        <Text style={styles.mainText}>Devenir livreur</Text>
+        <Text style={styles.mainText}>Profil livreur</Text>
       </View>
       <View style={styles.priceMaxView}>
         <Text style={styles.priceMaxText}>Prix maximum d'une commande</Text>
@@ -104,7 +133,11 @@ function ShipperInformationPage() {
             text="Lundi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[0] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -117,7 +150,11 @@ function ShipperInformationPage() {
             text="Mardi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[1] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -130,7 +167,11 @@ function ShipperInformationPage() {
             text="Mercredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[2] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -143,7 +184,11 @@ function ShipperInformationPage() {
             text="Jeudi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[3] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -156,7 +201,11 @@ function ShipperInformationPage() {
             text="Vendredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[4] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -169,7 +218,11 @@ function ShipperInformationPage() {
             text="Samedi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[5] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -182,10 +235,24 @@ function ShipperInformationPage() {
             text="Dimanche"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            onPress={isChecked => {}}
+            onPress={isChecked => {
+              const d = disponibilities;
+              d[6] = isChecked ? 1 : 0;
+              setDisponibilities(d);
+            }}
           />
         </View>
       </View>
+      <View style={styles.buttonView}>
+        <BasicButton
+          style={styles.button}
+          onClick={() => {
+            createProfile();
+          }}
+          text="Valider mon profil"
+        />
+      </View>
+      <Toast />
     </SafeAreaView>
   );
 }
@@ -211,8 +278,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
+    paddingRight: 20,
+    paddingLeft: 20,
     marginBottom: 10,
-    padding: 20,
   },
   priceMaxText: {
     fontSize: 20,
@@ -225,9 +293,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 20,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
   capacityText: {
     fontSize: 20,
@@ -259,6 +326,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+    marginBottom: 10,
   },
   disponibilitiesText: {
     color: 'black',
@@ -267,6 +335,11 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     margin: 5,
+  },
+  buttonView: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

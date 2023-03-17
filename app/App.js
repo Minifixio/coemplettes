@@ -1,12 +1,12 @@
 import React from 'react';
 import Router from './src/Router';
-import {AuthProvider} from './src/utils/AuthProvider';
+import {UserProvider} from './src/utils/UserProvider';
 
 const App = () => {
   return (
-    <AuthProvider>
+    <UserProvider>
       <Router />
-    </AuthProvider>
+    </UserProvider>
   );
 };
 

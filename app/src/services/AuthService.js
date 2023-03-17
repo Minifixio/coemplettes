@@ -39,7 +39,7 @@ export class AuthService {
         await this.storeTokens(tokens);
         await this.storeUserInfos(userId, user.email);
 
-        resolve();
+        resolve(userId);
       } catch (e) {
         console.log("[Auth] L'enregistrement a échoué : \n", e);
         reject(e);
@@ -71,7 +71,7 @@ export class AuthService {
 
         await this.storeTokens(tokens);
         await this.storeUserInfos(userId, email);
-        resolve();
+        resolve(userId);
       } catch (e) {
         console.log('[Auth] La connexion a échouée : \n', e);
         reject(e);
@@ -189,7 +189,8 @@ export class AuthService {
           reject();
         } else {
           await this.refreshAuth();
-          resolve();
+          const userInfos = JSON.parse(userInfosJSON);
+          resolve(userInfos.user_id);
         }
       } catch (e) {
         reject();

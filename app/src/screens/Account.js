@@ -10,7 +10,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AuthContext} from '../utils/AuthProvider';
+import {UserContext} from '../utils/UserProvider';
 import CurrentCartOrder from './CurrentCartOrder';
 import ShipperAccountStack from './ShipperAccount';
 
@@ -36,17 +36,17 @@ function MenuItem({text, icon, goTo}) {
 }
 
 function AccountPage({navigation}) {
-  const {logout} = useContext(AuthContext);
+  const {logout, shipperInfos} = useContext(UserContext);
 
   /**
    * MOCKUP DATAS
    *
-   * user
-   * isShipper
+   * _user
+   * _isShipper
    */
 
-  const user = users[0];
-  const isShipper = true;
+  const _user = users[0];
+  const _isShipper = true;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,7 +68,7 @@ function AccountPage({navigation}) {
           }}
         />
         <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} />
-        {isShipper && (
+        {shipperInfos !== {} && (
           <MenuItem
             text="Profil livreur"
             icon="ios-people-outline"
@@ -77,7 +77,7 @@ function AccountPage({navigation}) {
             }}
           />
         )}
-        {!isShipper && (
+        {shipperInfos === {} && (
           <MenuItem
             text="Devenir livreur"
             icon="ios-car-outline"
