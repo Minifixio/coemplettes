@@ -7,7 +7,7 @@ import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
 import { AuthErrors } from './models/AuthErrors';
 
-const TOKEN_DURATION = 1000 * 60 * 30
+const TOKEN_DURATION = 1000 * 60 * 60 * 3
 
 export class AuthManager {
 

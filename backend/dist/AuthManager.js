@@ -38,7 +38,7 @@ const bcrypt = __importStar(require("bcrypt"));
 const credentials_1 = require("./credentials");
 const DBManager_1 = require("./DBManager");
 const AuthErrors_1 = require("./models/AuthErrors");
-const TOKEN_DURATION = 1000 * 60 * 30;
+const TOKEN_DURATION = 1000 * 60 * 60 * 3;
 class AuthManager {
     static createRefreshToken(accessToken, userId) {
         console.log('[AuthManager] Création d\'un refresh token pour le user n°' + userId);

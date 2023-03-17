@@ -18,7 +18,7 @@ export class AuthErrors {
     }
     static INVALID_ACCESS_TOKEN: AuthError = {
         error: "invalid_access_token",
-        error_message: "fournir un access_token invalide header"
+        error_message: "l'access_token fournit est invalide"
     }
     static REGISTRATION_FAILED_EMAIL: AuthError = {
         error: "registration_failed_email",
@@ -34,7 +34,7 @@ export class AuthErrors {
     }
     static INVALID_REFRESH_TOKEN: AuthError = {
         error: "invalid_refresh_token",
-        error_message: "refresh_token invalide"
+        error_message: "le refresh_token fournit est invalide"
     }
     static NO_ACCESS_TOKEN: AuthError = {
         error: "no_access_token",
