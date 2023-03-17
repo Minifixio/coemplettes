@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import InputSpinner from 'react-native-input-spinner';
@@ -7,8 +7,10 @@ import BasicButton from '../components/BasicButton';
 import {AuthService} from '../services/AuthService';
 import {UserService} from '../services/UserService';
 import Toast from 'react-native-toast-message';
+import {UserContext} from '../utils/UserProvider';
 
 function ShipperInformationPage({navigation}) {
+  const {updateShipperProfile} = useContext(UserContext);
   const [priceMax, setPriceMax] = useState(50);
   const [capacity, setCapacity] = useState(2);
   const [disponibilities, setDisponibilities] = useState([0, 0, 0, 0, 0, 0, 0]);
@@ -19,7 +21,7 @@ function ShipperInformationPage({navigation}) {
 
   const [hasCar, setHasCar] = useState(false);
 
-  const createProfile = async () => {
+  const updateProfile = async () => {
     try {
       const shipperInfos = {
         capacity,
@@ -29,7 +31,7 @@ function ShipperInformationPage({navigation}) {
         shop,
         disponibilities: disponibilities.join(''),
       };
-      await UserService.createShipperProfile(shipperInfos);
+      await updateShipperProfile(shipperInfos);
       Toast.show({
         type: 'success',
         text1: 'Tu es désormais livreur !',
@@ -247,7 +249,7 @@ function ShipperInformationPage({navigation}) {
         <BasicButton
           style={styles.button}
           onClick={() => {
-            createProfile();
+            updateProfile();
           }}
           text="Valider mon profil"
         />

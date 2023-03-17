@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -37,6 +37,7 @@ function MenuItem({text, icon, goTo}) {
 
 function AccountPage({navigation}) {
   const {logout, shipperInfos} = useContext(UserContext);
+  const [isShipper, setIsShipper] = useState(false);
 
   /**
    * MOCKUP DATAS
@@ -47,6 +48,17 @@ function AccountPage({navigation}) {
 
   const _user = users[0];
   const _isShipper = true;
+
+  useEffect(() => {
+    console.log('[ShipperAccount] Shipper infos : ', shipperInfos);
+    if (shipperInfos.user_id) {
+      console.log('[ShipperAccount] He is a shipper !');
+      setIsShipper(true);
+    } else {
+      console.log('[ShipperAccount] He is not a shipper !');
+      setIsShipper(false);
+    }
+  }, [shipperInfos, isShipper, setIsShipper]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,7 +80,7 @@ function AccountPage({navigation}) {
           }}
         />
         <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} />
-        {shipperInfos !== {} && (
+        {isShipper && (
           <MenuItem
             text="Profil livreur"
             icon="ios-people-outline"
@@ -77,11 +89,13 @@ function AccountPage({navigation}) {
             }}
           />
         )}
-        {shipperInfos === {} && (
+        {!isShipper && (
           <MenuItem
             text="Devenir livreur"
             icon="ios-car-outline"
-            goTo={() => {}}
+            goTo={() => {
+              navigation.push('ShipperAccountStack');
+            }}
           />
         )}
         <MenuItem

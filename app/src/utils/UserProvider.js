@@ -72,6 +72,25 @@ export function UserProvider(props) {
     });
   };
 
+  const updateShipperProfile = shipper => {
+    if (shipperInfos === {}) {
+      return createShipperProfile();
+    } else {
+      return new Promise(async (resolve, reject) => {
+        console.log('[UserProvider] Mise à jour du shipper : ', shipper);
+        try {
+          shipper.user_id = userInfos.id;
+          await APIService.post('shipper', shipper);
+          setShipperInfos(shipper);
+          resolve();
+        } catch (e) {
+          console.log('[UserProvider] Impossible de mettre à jour le shipper');
+          reject(e);
+        }
+      });
+    }
+  };
+
   /**
    * FONCTIONS D'AUTHENTIFICATION
    */
@@ -112,18 +131,27 @@ export function UserProvider(props) {
     return new Promise(async (resolve, reject) => {
       console.log('[UserProvider] Mises à jour des infos utilisateurs');
       try {
-        const user = await APIService.get('user', userId);
+        const user = await (await APIService.get('user', userId)).json();
         setUserInfos(user);
 
-        const shipper = await APIService.get('shipper', userId);
-        if (shipper !== null) {
-          console.log("[UserProvider] L'utilisateur a un profil shipper");
-          setShipperInfos(shipper);
+        try {
+          const shipper = await (
+            await APIService.get('shipper', userId)
+          ).json();
+          if (shipper !== null) {
+            console.log("[UserProvider] L'utilisateur a un profil shipper");
+            setShipperInfos(shipper);
+          }
+          resolve();
+        } catch (e) {
+          console.log("[UserProvider] L'utilisateur n'a pas de profil shipper");
+          setShipperInfos({});
+          resolve();
         }
-        resolve();
       } catch (e) {
         console.log(
           '[UserProvider] Erreur lors de la mise à jour des infos utilisateurs',
+          e,
         );
         reject();
       }
@@ -141,6 +169,7 @@ export function UserProvider(props) {
         register,
         userInfos,
         shipperInfos,
+        updateShipperProfile,
       }}>
       {props.children}
     </UserContext.Provider>
