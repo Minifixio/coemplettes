@@ -277,12 +277,30 @@ export class DB {
     public static async addShipper(shipper: Shipper) {
         console.log("[DBManager] Ajout du shipper :")
         console.log(shipper)
-        await this.AppDataSource
-        .createQueryBuilder()
-        .insert()
-        .into(Shipper)
-        .values(shipper)
-        .execute()
+
+        const shipperFound = await this.AppDataSource
+        .getRepository(Shipper)
+        .createQueryBuilder("shipper")
+        .where("shipper.user_id = :user_id", { user_id: shipper.user_id })
+        .getOne()
+
+        if (shipperFound === null) {
+            await this.AppDataSource
+            .createQueryBuilder()
+            .insert()
+            .into(Shipper)
+            .values(shipper)
+            .execute()
+        } else {
+            await this.AppDataSource
+            .createQueryBuilder()
+            .update(Shipper)
+            .set(shipper)
+            .where("user_id = :user_id", { user_id: shipper.user_id })
+            .execute()
+        }
+
+
     }
 
     public static async addCart(cart: Cart, cartItems: CartItem[]) {
