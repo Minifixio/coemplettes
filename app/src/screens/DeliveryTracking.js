@@ -68,38 +68,22 @@ function DeliveryTracking() {
           colors={['#ffffff', '#f2f2f2']}
           style={styles.container}>
           <StatusItem
-            title="Commande reçue"
-            subtitle="11/03/2023"
-            iconName="ios-cube-outline"
-            selected={true}
-            buttonText="Voir la commande"
-            onPress={() => {
-              setStatus(status + 1);
-            }}
-          />
-          <StatusItem
             title="Commande acceptée"
             subtitle="13/03/2023"
             iconName="md-checkmark"
-            selected={status >= 2}
-          />
-          <StatusItem
-            title="Commande en attente d'achat"
-            subtitle="13/03/2023"
-            iconName="ios-time-outline"
-            selected={status >= 3}
+            selected={status >= 1}
           />
           <StatusItem
             title="Commande en cours d'achat"
             subtitle="14/03/2023"
             iconName="ios-cart-outline"
-            selected={status >= 4}
+            selected={status >= 2}
           />
           <StatusItem
             title="Commande déposée"
             subtitle="14/03/2023"
             iconName="ios-archive-outline"
-            selected={status >= 6}
+            selected={status >= 3}
           />
         </LinearGradient>
       </ScrollView>
@@ -108,9 +92,20 @@ function DeliveryTracking() {
           <BasicButton
             style={styles.button}
             onClick={() => {
+              setStatus(2);
+            }}
+            text="Je débute l'achat"
+          />
+        </View>
+      )}
+      {status === 2 && (
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
               setStatus(3);
             }}
-            text="Accepter la commande"
+            text="Compléter la liste de course"
           />
         </View>
       )}
@@ -120,28 +115,6 @@ function DeliveryTracking() {
             style={styles.button}
             onClick={() => {
               setStatus(4);
-            }}
-            text="Je débute l'achat"
-          />
-        </View>
-      )}
-      {status === 4 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(5);
-            }}
-            text="Compléter la liste de course"
-          />
-        </View>
-      )}
-      {status === 5 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(5);
             }}
             text="Recevoir le code Locker"
           />

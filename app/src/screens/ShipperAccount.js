@@ -14,6 +14,7 @@ import ShipperInformationPage from './ShipperInformations';
 import DeliveryTracking from './DeliveryTracking';
 import BasicButton from '../components/BasicButton';
 import {UserContext} from '../utils/UserProvider';
+import DeliveryProposals from './DeliveryProposals';
 
 const shippers = require('../assets/json/shippers.json').shippers;
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
@@ -73,24 +74,23 @@ function ShipperAccountPage({navigation}) {
           <MenuItem
             text="Informations livreur"
             icon="person-circle-outline"
-            goTo={() => {}}
+            goTo={() => {
+              navigation.push('ShipperInformationPage');
+            }}
           />
           <MenuItem
-            text="Mes livraisons"
+            text="Livraisons"
             icon="cart-outline"
             goTo={() => {
               navigation.push('DeliveryTracking');
             }}
           />
           <MenuItem
-            text="Mes disponibilités"
-            icon="log-out-outline"
-            goTo={() => {}}
-          />
-          <MenuItem
             text="Propositions de livraison"
             icon="ios-basket-outline"
-            goTo={() => {}}
+            goTo={() => {
+              navigation.push('DeliveryProposals');
+            }}
           />
         </View>
       </SafeAreaView>
@@ -125,18 +125,23 @@ function ShipperAccountStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="ShipperAccountPage"
-        options={{headerShown: false}}
+        options={{title: 'Profil livreur'}}
         component={ShipperAccountPage}
       />
       <Stack.Screen
         name="ShipperInformationPage"
-        options={{headerShown: false}}
+        options={{title: 'Informations livreur'}}
         component={ShipperInformationPage}
       />
       <Stack.Screen
         name="DeliveryTracking"
-        options={{headerShown: false}}
+        options={{title: 'Livraison en cours'}}
         component={DeliveryTracking}
+      />
+      <Stack.Screen
+        name="DeliveryProposals"
+        options={{title: 'Propositions de livraison'}}
+        component={DeliveryProposals}
       />
     </Stack.Navigator>
   );

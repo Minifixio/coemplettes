@@ -137,7 +137,6 @@ export function UserProvider(props) {
         try {
           const shipperJSON = await APIService.get('shipper', userId);
           const shipper = await shipperJSON.json();
-          console.log(shipper);
           if (shipper !== null) {
             console.log("[UserProvider] L'utilisateur a un profil shipper");
             setShipperInfos(shipper);

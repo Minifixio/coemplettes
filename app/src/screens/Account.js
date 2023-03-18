@@ -131,7 +131,7 @@ function AccountStack() {
       />
       <Stack.Screen
         name="ShipperAccountStack"
-        options={{title: 'Profil livreur'}}
+        options={{headerShown: false}}
         component={ShipperAccountStack}
       />
     </Stack.Navigator>

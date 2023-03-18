@@ -34,13 +34,13 @@ function ShipperInformationPage({navigation}) {
       await updateShipperProfile(shipperInfos);
       Toast.show({
         type: 'success',
-        text1: 'Tu es désormais livreur !',
+        text1: 'Profil livreur mis à jour',
       });
       navigation.navigate('ShipperAccountPage');
     } catch (e) {
       Toast.show({
         type: 'error',
-        text1: 'Erreur lors de la création du profil livreur',
+        text1: 'Erreur lors de la mise à jour du profil livreur',
       });
     }
   };
