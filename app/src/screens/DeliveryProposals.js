@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const delivery_proposals =
   require('../assets/json/delivery_proposals.json').delivery_proposals;
 
-const StatusItem = ({deliveryProposal}) => {
+const StatusItem = ({deliveryProposal, navigation}) => {
   const selected = deliveryProposal.status === 0 ? true : false;
   const iconName = selected ? 'cube-outline' : 'ios-close-circle-outline';
   const title = selected ? 'Commande reçue' : 'Commande refusée';
@@ -50,7 +50,9 @@ const StatusItem = ({deliveryProposal}) => {
             style={styles.cartInfoButton}
             title="Voir la commande"
             color="grey"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.push('DeliveryProposalCarts');
+            }}
           />
         )}
         {selected && (
@@ -69,7 +71,7 @@ const StatusItem = ({deliveryProposal}) => {
   );
 };
 
-function DeliveryProposals() {
+function DeliveryProposals({navigation}) {
   /**
    * MOCKUP DATA
    *
@@ -99,7 +101,9 @@ function DeliveryProposals() {
             style={styles.container}>
             <FlatList
               data={deliveryProposals}
-              renderItem={({item}) => <StatusItem deliveryProposal={item} />}
+              renderItem={({item}) => (
+                <StatusItem deliveryProposal={item} navigation={navigation} />
+              )}
               keyExtractor={item => item.id}
             />
           </LinearGradient>
