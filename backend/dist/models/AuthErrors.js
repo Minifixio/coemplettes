@@ -18,7 +18,7 @@ AuthErrors.USER_UNKNOWN = {
 };
 AuthErrors.INVALID_ACCESS_TOKEN = {
     error: "invalid_access_token",
-    error_message: "fournir un access_token invalide header"
+    error_message: "l'access_token fournit est invalide"
 };
 AuthErrors.REGISTRATION_FAILED_EMAIL = {
     error: "registration_failed_email",
@@ -34,7 +34,7 @@ AuthErrors.LOGIN_FAILED_PASSWORD = {
 };
 AuthErrors.INVALID_REFRESH_TOKEN = {
     error: "invalid_refresh_token",
-    error_message: "refresh_token invalide"
+    error_message: "le refresh_token fournit est invalide"
 };
 AuthErrors.NO_ACCESS_TOKEN = {
     error: "no_access_token",

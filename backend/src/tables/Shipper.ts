@@ -20,12 +20,6 @@ export class Shipper {
     @Column({ type: "int", nullable:false })
     price_max!: number
 
-    @Column({ type: "float", nullable:true })
-    loc_long!: number
-
-    @Column({ type: "float", nullable:true })
-    loc_lat!: number
-
     @Column({ type: "varchar", nullable:true })
     drive!: string
 

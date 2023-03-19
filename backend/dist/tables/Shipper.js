@@ -38,14 +38,6 @@ __decorate([
     __metadata("design:type", Number)
 ], Shipper.prototype, "price_max", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "float", nullable: true }),
-    __metadata("design:type", Number)
-], Shipper.prototype, "loc_long", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "float", nullable: true }),
-    __metadata("design:type", Number)
-], Shipper.prototype, "loc_lat", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Shipper.prototype, "drive", void 0);

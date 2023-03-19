@@ -345,12 +345,27 @@ class DB {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Ajout du shipper :");
             console.log(shipper);
-            yield this.AppDataSource
-                .createQueryBuilder()
-                .insert()
-                .into(Shipper_1.Shipper)
-                .values(shipper)
-                .execute();
+            const shipperFound = yield this.AppDataSource
+                .getRepository(Shipper_1.Shipper)
+                .createQueryBuilder("shipper")
+                .where("shipper.user_id = :user_id", { user_id: shipper.user_id })
+                .getOne();
+            if (shipperFound === null) {
+                yield this.AppDataSource
+                    .createQueryBuilder()
+                    .insert()
+                    .into(Shipper_1.Shipper)
+                    .values(shipper)
+                    .execute();
+            }
+            else {
+                yield this.AppDataSource
+                    .createQueryBuilder()
+                    .update(Shipper_1.Shipper)
+                    .set(shipper)
+                    .where("user_id = :user_id", { user_id: shipper.user_id })
+                    .execute();
+            }
         });
     }
     static addCart(cart, cartItems) {
