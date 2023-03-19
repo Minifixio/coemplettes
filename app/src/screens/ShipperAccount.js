@@ -15,6 +15,7 @@ import DeliveryTracking from './DeliveryTracking';
 import BasicButton from '../components/BasicButton';
 import {UserContext} from '../utils/UserProvider';
 import DeliveryProposals from './DeliveryProposals';
+import DeliveryCartCompletion from './DeliveryCartCompletion';
 
 const shippers = require('../assets/json/shippers.json').shippers;
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
@@ -142,6 +143,11 @@ function ShipperAccountStack() {
         name="DeliveryProposals"
         options={{title: 'Propositions de livraison'}}
         component={DeliveryProposals}
+      />
+      <Stack.Screen
+        name="DeliveryCartCompletion"
+        options={{title: 'Achat en cours'}}
+        component={DeliveryCartCompletion}
       />
     </Stack.Navigator>
   );

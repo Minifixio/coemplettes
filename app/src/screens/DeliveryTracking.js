@@ -53,7 +53,7 @@ const StatusItem = ({
   );
 };
 
-function DeliveryTracking() {
+function DeliveryTracking({navigation}) {
   /**
    * MOCKUP DATA
    *
@@ -103,7 +103,8 @@ function DeliveryTracking() {
           <BasicButton
             style={styles.button}
             onClick={() => {
-              setStatus(3);
+              //setStatus(3);
+              navigation.navigate('DeliveryCartCompletion');
             }}
             text="Compléter la liste de course"
           />
