@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -32,70 +32,6 @@ const Divider = () => {
   );
 };
 
-const CartItem = function ({item}) {
-  const [valid, setValid] = useState(false);
-  const [invalid, setInvalid] = useState(false);
-
-  const clickValidButton = () => {
-    setValid(!valid);
-    setInvalid(false);
-  };
-
-  const clickInvalidButton = () => {
-    setInvalid(!invalid);
-    setValid(false);
-  };
-
-  return (
-    <View style={styles.cardShadow}>
-      <LinearGradient
-        colors={
-          valid
-            ? ['#ffffff', '#88DC5F']
-            : invalid
-            ? ['#ffffff', '#DC6E5F']
-            : ['#ffffff', '#e6e6e6']
-        }
-        style={styles.productCartItemContainer}>
-        <Pressable style={styles.productCartItemPressable}>
-          <TouchableOpacity
-            style={styles.imageProductContainer}
-            onPress={() => {}}>
-            <Image style={styles.icon} source={{uri: item.product.icon_link}} />
-          </TouchableOpacity>
-          <View style={styles.nameQuantityView}>
-            <Text style={styles.productNameText}>{item.product.name}</Text>
-            <Text style={styles.productQuantityText}>x{item.quantity}</Text>
-            <Text style={styles.productQuantityTypeText}>
-              {item.product.quantity_type}
-            </Text>
-          </View>
-          <View style={styles.validationsButtonView}>
-            <Pressable
-              style={
-                !invalid
-                  ? [styles.validationsButton, styles.validationsButtonValid]
-                  : [styles.validationsButton, styles.validationsButtonDisabled]
-              }
-              onPress={clickValidButton}>
-              <Ionicons name="checkmark" size={30} color="white" />
-            </Pressable>
-            <Pressable
-              style={
-                !valid
-                  ? [styles.validationsButton, styles.validationsButtonInvalid]
-                  : [styles.validationsButton, styles.validationsButtonDisabled]
-              }
-              onPress={clickInvalidButton}>
-              <Ionicons name="close-sharp" size={30} color="white" />
-            </Pressable>
-          </View>
-        </Pressable>
-      </LinearGradient>
-    </View>
-  );
-};
-
 function DeliveryCartCompletion() {
   /**
    * MOCKUP DATA
@@ -105,10 +41,113 @@ function DeliveryCartCompletion() {
 
   const _carts = cart_response;
   const [carts, setCarts] = useState([]);
+  const [missingProductsCount, setMissingProductsCount] = useState(0);
+  const [unavailableProductsCount, setUnavailableProductsCount] = useState(0);
 
   useEffect(() => {
     setCarts(_carts);
-  }, [_carts]);
+    setMissingProductsCount(countMissingProducts());
+    setUnavailableProductsCount(countUnavailableProducts());
+  }, [_carts, countMissingProducts, countUnavailableProducts]);
+
+  const countUnavailableProducts = useCallback(() => {
+    let count = 0;
+    carts.forEach(cart => {
+      cart.items.forEach(item => {
+        if (item.status === 3) {
+          count++;
+        }
+      });
+    });
+    return count;
+  }, [carts]);
+
+  const countMissingProducts = useCallback(() => {
+    let count = 0;
+    carts.forEach(cart => {
+      cart.items.forEach(item => {
+        if (item.status === 1) {
+          count++;
+        }
+      });
+    });
+    return count;
+  }, [carts]);
+
+  const CartItem = ({item}) => {
+    const clickValidButton = () => {
+      item.status = 2;
+      setMissingProductsCount(countMissingProducts());
+      setUnavailableProductsCount(countUnavailableProducts());
+    };
+
+    const clickInvalidButton = () => {
+      item.status = 3;
+      setMissingProductsCount(countMissingProducts());
+      setUnavailableProductsCount(countUnavailableProducts());
+    };
+
+    return (
+      <View style={styles.cardShadow}>
+        <LinearGradient
+          colors={
+            item.status === 2
+              ? ['#ffffff', '#88DC5F']
+              : item.status === 3
+              ? ['#ffffff', '#DC6E5F']
+              : ['#ffffff', '#e6e6e6']
+          }
+          style={styles.productCartItemContainer}>
+          <Pressable style={styles.productCartItemPressable}>
+            <TouchableOpacity
+              style={styles.imageProductContainer}
+              onPress={() => {}}>
+              <Image
+                style={styles.icon}
+                source={{uri: item.product.icon_link}}
+              />
+            </TouchableOpacity>
+            <View style={styles.nameQuantityView}>
+              <Text style={styles.productNameText}>{item.product.name}</Text>
+              <Text style={styles.productQuantityText}>x{item.quantity}</Text>
+              <Text style={styles.productQuantityTypeText}>
+                {item.product.quantity_type}
+              </Text>
+            </View>
+            <View style={styles.validationsButtonView}>
+              <Pressable
+                style={
+                  item.status === 3
+                    ? [
+                        styles.validationsButton,
+                        styles.validationsButtonDisabled,
+                      ]
+                    : [styles.validationsButton, styles.validationsButtonValid]
+                }
+                onPress={clickValidButton}>
+                <Ionicons name="checkmark" size={30} color="white" />
+              </Pressable>
+              <Pressable
+                style={
+                  item.status === 2
+                    ? [
+                        styles.validationsButton,
+                        styles.validationsButtonDisabled,
+                      ]
+                    : [
+                        styles.validationsButton,
+                        styles.validationsButtonInvalid,
+                      ]
+                }
+                onPress={clickInvalidButton}>
+                <Ionicons name="close-sharp" size={30} color="white" />
+              </Pressable>
+            </View>
+          </Pressable>
+        </LinearGradient>
+      </View>
+    );
+  };
 
   const CartItemsList = ({cartItems, ownerName}) => {
     return (
@@ -148,10 +187,14 @@ function DeliveryCartCompletion() {
         />
         <View style={styles.bottomCard}>
           <View style={styles.totalTextView}>
-            <Text style={styles.subtotalText}>Produits manquants : 5</Text>
+            <Text style={styles.totalText}>
+              Produits indisponibles : {unavailableProductsCount}
+            </Text>
           </View>
           <View style={styles.totalTextView}>
-            <Text style={styles.subtotalText}>Produits non trouvés : 5</Text>
+            <Text style={styles.subtotalText}>
+              Il vous reste {missingProductsCount} produits à trouver
+            </Text>
           </View>
           <Divider />
           <BasicButton
@@ -280,15 +323,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'flex-start',
     width: '100%',
-    padding: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
+    padding: 3,
+    paddingLeft: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   subtotalText: {
     color: 'black',
-    fontSize: 15,
+    fontSize: 20,
   },
   totalText: {
     color: 'black',
