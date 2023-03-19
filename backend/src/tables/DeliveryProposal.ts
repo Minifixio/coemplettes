@@ -19,6 +19,15 @@ export class DeliveryProposal {
     @Column({ type: "datetime", nullable:false })
     deadline!: number
 
+    @Column({ type: "array", nullable:false })
+    carts!: number[]
+
+    @Column({ type: "int", nullable:false })
+    status!: number
+
+    @Column({ type: "string", nullable:false })
+    timeSlot!: string
+
     @ManyToOne(type => Shipper, shipper => shipper)
     @JoinColumn(
         { name: 'shipper_id', referencedColumnName: 'id'}

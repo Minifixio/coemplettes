@@ -194,6 +194,28 @@ export class DB {
         return res
     }
 
+    public static async getUnattributedCarts(): Promise<Cart[]> {
+        console.log("[DBManager] Récupération des carts non attribués dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.delivery_proposal_id = :delivery_proposal_id", {delivery_proposal_id: null})
+        .orderBy("cart.deadline", "ASC")
+        .getMany()
+        return res
+    }
+    
+    public static async getTimeSlots() {
+        console.log("[DBManager] Récupération des crénaux horaires dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Shipper)
+        .createQueryBuilder("shipper")
+        .select("shipper.disponibilities, shipper.id, shipper.price_max")
+        .where("shipper.disponibilities <> :disponibilities", {disponibilities: null})
+        .getMany()
+        return res
+    }
+
     public static async getDeliveries(shipper_id: number): Promise<Delivery[] | null> {
         console.log("[DBManager] Récupération des deliveries pour le shipper n°" + shipper_id + " dans la BDD")
         const res = await this.AppDataSource
@@ -289,6 +311,12 @@ export class DB {
         console.log("[DBManager] Ajout de la cart :")
         console.log(cart)
         cart.status=0;
+        // calcul du prix total moyen
+        let total = 0;
+        cartItems.forEach(item => {
+            total += item.product.average_price * item.quantity;
+        });
+        cart.average_price = total;
 
         const req = await this.AppDataSource
         .createQueryBuilder()
@@ -331,6 +359,15 @@ export class DB {
         .execute()
     }
 
+    public static async updateCartStatus(cartId: number, status: number) {
+        console.log("[DBManager] Mise à jour du status de la cart n°" + cartId + " dans la BDD")
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Cart)
+        .set({status: status})
+        .where("id = :id", {id: cartId})
+        .execute()
+    }
 
     // On lit un fichier JSON et on écrit ses données dans la BDD
     public static async writeFromJSON(tableName: string) {

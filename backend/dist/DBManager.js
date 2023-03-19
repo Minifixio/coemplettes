@@ -232,6 +232,30 @@ class DB {
             return res;
         });
     }
+    static getUnattributedCarts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des carts non attribués dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.delivery_proposal_id = :delivery_proposal_id", { delivery_proposal_id: null })
+                .orderBy("cart.deadline", "ASC")
+                .getMany();
+            return res;
+        });
+    }
+    static getTimeSlots() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération des crénaux horaires dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Shipper_1.Shipper)
+                .createQueryBuilder("shipper")
+                .select("shipper.disponibilities, shipper.id, shipper.price_max")
+                .where("shipper.disponibilities <> :disponibilities", { disponibilities: null })
+                .getMany();
+            return res;
+        });
+    }
     static getDeliveries(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des deliveries pour le shipper n°" + shipper_id + " dans la BDD");
@@ -334,6 +358,12 @@ class DB {
             console.log("[DBManager] Ajout de la cart :");
             console.log(cart);
             cart.status = 0;
+            // calcul du prix total moyen
+            let total = 0;
+            cartItems.forEach(item => {
+                total += item.product.average_price * item.quantity;
+            });
+            cart.average_price = total;
             const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -372,6 +402,17 @@ class DB {
                 .insert()
                 .into(Product_1.Product)
                 .values(product)
+                .execute();
+        });
+    }
+    static updateCartStatus(cartId, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Mise à jour du status de la cart n°" + cartId + " dans la BDD");
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Cart_1.Cart)
+                .set({ status: status })
+                .where("id = :id", { id: cartId })
                 .execute();
         });
     }

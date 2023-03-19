@@ -13,6 +13,7 @@ exports.Cart = void 0;
 const typeorm_1 = require("typeorm");
 const Delivery_1 = require("./Delivery");
 const User_1 = require("./User");
+const DeliveryProposal_1 = require("./DeliveryProposal");
 let Cart = class Cart {
 };
 __decorate([
@@ -24,9 +25,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Cart.prototype, "owner_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)
 ], Cart.prototype, "delivery_id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "int", nullable: true }),
+    __metadata("design:type", Number)
+], Cart.prototype, "delivery_proposal_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "datetime", nullable: false, default: () => "CURRENT_TIMESTAMP" }),
     __metadata("design:type", Date)
@@ -40,6 +45,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Cart.prototype, "status", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "float", nullable: true }),
+    __metadata("design:type", Number)
+], Cart.prototype, "average_price", void 0);
+__decorate([
     (0, typeorm_1.ManyToMany)(type => User_1.User, owner => owner),
     (0, typeorm_1.JoinColumn)({ name: 'owner_id', referencedColumnName: 'id' }),
     __metadata("design:type", User_1.User)
@@ -49,6 +58,11 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'delivery_id', referencedColumnName: 'id' }),
     __metadata("design:type", Delivery_1.Delivery)
 ], Cart.prototype, "delivery", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(type => DeliveryProposal_1.DeliveryProposal, deliveryProposal => deliveryProposal),
+    (0, typeorm_1.JoinColumn)({ name: 'delivery_proposal_id', referencedColumnName: 'id' }),
+    __metadata("design:type", Delivery_1.Delivery)
+], Cart.prototype, "delivery_proposal", void 0);
 Cart = __decorate([
     (0, typeorm_1.Entity)({ name: "carts" })
 ], Cart);
