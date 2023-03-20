@@ -9,6 +9,7 @@ import HomeStack from './Home';
 import FavoutritesPage from './Favourites';
 import CartPage from './Cart';
 import AccountStack from './Account';
+import CurrentCartOrder from './CurrentCartOrder';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

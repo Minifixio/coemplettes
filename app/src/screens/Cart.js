@@ -100,6 +100,7 @@ function CartPage({navigation}) {
       eraseCart();
       navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
     } catch (e) {
+      console.log("Erreur lors de l'ajout de carte : ", e);
       Toast.show({
         type: 'error',
         text1: "Erreur lors de l'ajout de carte!",

@@ -64,6 +64,7 @@ export function CartProvider(props) {
         addToCart,
         getTotalPrice,
         removeFromCart,
+        eraseCart,
       }}>
       {props.children}
       <Toast />
