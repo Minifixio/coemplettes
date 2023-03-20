@@ -199,8 +199,8 @@ export class DB {
         const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
-        .where("cart.delivery_proposal_id = :delivery_proposal_id", {delivery_proposal_id: null})
-        .orderBy("cart.deadline", "ASC")
+        .where("cart.status = :status", {status: 0})
+        .orderBy("cart.deadline", "ASC") // les carts les plus urgentes en premier
         .getMany()
         return res
     }

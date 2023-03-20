@@ -42,9 +42,9 @@ export class GroupedCommands {
                     continue
                 }
                 if (!timeSlotsDict[d]) {
-                    timeSlotsDict[d] = [{id: timeSlot.id, price_max: timeSlot.price_max}]
+                    timeSlotsDict[d] = [{ id: timeSlot.id, price_max: timeSlot.price_max }]
                 } else {
-                    timeSlotsDict[d].push({id: timeSlot.id, price_max: timeSlot.price_max})
+                    timeSlotsDict[d].push({ id: timeSlot.id, price_max: timeSlot.price_max })
                 }
             }
         }
@@ -62,24 +62,23 @@ export class GroupedCommands {
                 for (const cart of unattributedCarts) {
                     // Si le créneau horaire est dans la plage de livraison, on le case et si le prix max n'est pas dépassé
                     if (new Date(cart.deadline) >= timeSlotEnd && commandsPrice + cart.average_price < shipper.price_max) {
-                            commandsOfTimeSlot.push(cart.id)
-                            commandsPrice += cart.average_price
-                            // On supprime le panier de la liste des paniers non attribués
-                            unattributedCarts.splice(unattributedCarts.indexOf(cart), 1)
-                        }
-                    }
-                    // On a notre condition d'arrêt : On a atteint 90% du prix max
-                    if (commandsPrice > shipper.price_max * 0.9) {
-                        break
+                        commandsOfTimeSlot.push(cart.id)
+                        commandsPrice += cart.average_price
+                        // On supprime le panier de la liste des paniers non attribués
+                        unattributedCarts.splice(unattributedCarts.indexOf(cart), 1)
                     }
                 }
+                // On a notre condition d'arrêt : On a atteint 90% du prix max
+                if (commandsPrice > shipper.price_max * 0.9) {
+                    break
+                }
                 /* On enregistre le regroupement de commandes : 
-                    Cart attribué : changer le status à 1 (en attente de validation par le shipper) 
-                    créer une DeliveryProposal pour le shipper
-                    supprimer le créneau horaire de la liste des créneaux horaires disponibles du shipper
+                Cart attribué : changer le status à 1 (en attente de validation par le shipper) 
+                créer une DeliveryProposal pour le shipper
+                supprimer le créneau horaire de la liste des créneaux horaires disponibles du shipper
                 */
                 if (commandsOfTimeSlot.length > 0) {
-                    for(const command of commandsOfTimeSlot){
+                    for (const command of commandsOfTimeSlot) {
                         await DB.updateCartStatus(command, 1)
                     }
                     const deliveryProposal = new DeliveryProposal();
@@ -91,10 +90,12 @@ export class GroupedCommands {
                     await DB.updateTimeSlots(shipper.id, timeSlot)
                 }
             }
-
+            
         }
 
-
     }
+
+
+}
 
 }

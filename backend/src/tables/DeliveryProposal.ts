@@ -22,6 +22,9 @@ export class DeliveryProposal {
     @Column({ type: "array", nullable:false })
     carts!: number[]
 
+    /* pour un delivery_proposal encore en attente (donc non validé par le shipper sur l'app) : status=0 et delivery_id=null
+    pour un delivery_proposal validé par le shipper sur l'app : status=1
+    pour un delivery_proposal refusé par le shipper sur l'app */
     @Column({ type: "int", nullable:false })
     status!: number
 
