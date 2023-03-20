@@ -87,7 +87,7 @@ export class GroupedCommands {
                     deliveryProposal.status = 0 // 0 = en attente, 1 = acceptée, 2 = refusée
                     deliveryProposal.carts = commandsOfTimeSlot
                     await DB.addDeliveryProposal(deliveryProposal)
-                    await DB.updateTimeSlots(shipper.id, timeSlot)
+                    // await DB.updateTimeSlots(shipper.id, timeSlot)
                 }
             }
             
