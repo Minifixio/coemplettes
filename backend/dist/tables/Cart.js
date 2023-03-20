@@ -38,7 +38,11 @@ __decorate([
 ], Cart.prototype, "creation_date", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "datetime", nullable: false }),
-    __metadata("design:type", Date)
+    __metadata("design:type", Date
+    /* pour un cart non attribué : status=0 et delivery_proposal_id=null
+        pour un cart attribué mais en attente de validation : status=1
+        pour un cart validé : status=2 */
+    )
 ], Cart.prototype, "deadline", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),

@@ -84,23 +84,23 @@ class GroupedCommands {
                     if (commandsPrice > shipper.price_max * 0.9) {
                         break;
                     }
-                }
-                /* On enregistre le regroupement de commandes :
+                    /* On enregistre le regroupement de commandes :
                     Cart attribué : changer le status à 1 (en attente de validation par le shipper)
                     créer une DeliveryProposal pour le shipper
                     supprimer le créneau horaire de la liste des créneaux horaires disponibles du shipper
-                */
-                if (commandsOfTimeSlot.length > 0) {
-                    for (const command of commandsOfTimeSlot) {
-                        yield DBManager_1.DB.updateCartStatus(command, 1);
+                    */
+                    if (commandsOfTimeSlot.length > 0) {
+                        for (const command of commandsOfTimeSlot) {
+                            yield DBManager_1.DB.updateCartStatus(command, 1);
+                        }
+                        const deliveryProposal = new DeliveryProposal_1.DeliveryProposal();
+                        deliveryProposal.shipper_id = shipper.id;
+                        deliveryProposal.timeSlot = timeSlot;
+                        deliveryProposal.status = 0; // 0 = en attente, 1 = acceptée, 2 = refusée
+                        // deliveryProposal.carts = commandsOfTimeSlot
+                        yield DBManager_1.DB.addDeliveryProposal(deliveryProposal);
+                        // await DB.updateTimeSlots(shipper.id, timeSlot)
                     }
-                    const deliveryProposal = new DeliveryProposal_1.DeliveryProposal();
-                    deliveryProposal.shipper_id = shipper.id;
-                    deliveryProposal.timeSlot = timeSlot;
-                    deliveryProposal.status = 0; // 0 = en attente, 1 = acceptée, 2 = refusée
-                    deliveryProposal.carts = commandsOfTimeSlot;
-                    yield DBManager_1.DB.addDeliveryProposal(deliveryProposal);
-                    yield DBManager_1.DB.updateTimeSlots(shipper.id, timeSlot);
                 }
             }
         });

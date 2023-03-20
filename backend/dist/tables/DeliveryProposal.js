@@ -35,17 +35,9 @@ __decorate([
     __metadata("design:type", Number)
 ], DeliveryProposal.prototype, "deadline", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "array", nullable: false }),
-    __metadata("design:type", Array)
-], DeliveryProposal.prototype, "carts", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
     __metadata("design:type", Number)
 ], DeliveryProposal.prototype, "status", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "string", nullable: false }),
-    __metadata("design:type", String)
-], DeliveryProposal.prototype, "timeSlot", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
     (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'id' }),

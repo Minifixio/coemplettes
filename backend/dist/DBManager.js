@@ -146,13 +146,13 @@ class DB {
             return res;
         });
     }
-    static getShipperByID(id) {
+    static getShipperByID(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("[DBManager] Récupération des infos de shipper n°" + id + " dans la BDD");
+            console.log("[DBManager] Récupération des infos de shipper pour le user_id n°" + userId + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder("shipper")
-                .where("shipper.id = :id", { id: id })
+                .where("shipper.user_id = :user_id", { user_id: userId })
                 .getOne();
             return res;
         });
@@ -238,8 +238,8 @@ class DB {
             const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
-                .where("cart.delivery_proposal_id = :delivery_proposal_id", { delivery_proposal_id: null })
-                .orderBy("cart.deadline", "ASC")
+                .where("cart.status = :status", { status: 0 })
+                .orderBy("cart.deadline", "ASC") // les carts les plus urgentes en premier
                 .getMany();
             return res;
         });

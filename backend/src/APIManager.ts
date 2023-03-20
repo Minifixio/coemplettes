@@ -56,11 +56,14 @@ export class API {
 
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
+        {method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => DB.getCategories()},
+
+
         {method: "POST", entryPointName: "user", paramName: null, callbackParam: (user: User) => DB.addUser(user)},
         {method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper: Shipper) => DB.addShipper(shipper)},
         {method: "POST", entryPointName: "cart", paramName: null, callbackParam: (data: {cart: Cart, cart_items: CartItem[]}) => DB.addCart(data.cart, data.cart_items)},
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
-        {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},
+        {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},        
     ]
 
     authMiddleware = async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction) => {
