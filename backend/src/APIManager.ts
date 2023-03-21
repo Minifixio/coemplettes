@@ -55,7 +55,7 @@ export class API {
 
         {method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposals(shipper_id)},
         {method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id: number) => DB.getDeliveryProposalByID(id)},
-        {method: "GET", entryPointName: "delivery_proposal_summary", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposalSummary(shipper_id)},
+        {method: "GET", entryPointName: "delivery_proposal_summary", paramName: "delivery_proposal_id", callbackParam: (delivery_proposal_id: number) => DB.getDeliveryProposalSummary(delivery_proposal_id)},
 
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
@@ -67,6 +67,8 @@ export class API {
         {method: "POST", entryPointName: "cart", paramName: null, callbackParam: (data: {cart: Cart, cart_items: CartItem[]}) => DB.addCart(data.cart, data.cart_items)},
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
         {method: "POST", entryPointName: "product", paramName: null, callbackParam: (product: Product) => DB.addProduct(product)},        
+        {method: "POST", entryPointName: "delivery_status", paramName: null, callbackParam: (data: {delivery_id: number, status: number}) => DB.updateDeliveryStatus(data.delivery_id, data.status)},  
+        {method: "POST", entryPointName: "cart_status", paramName: null, callbackParam: (data: {cart_id: number, status: number}) => DB.updateCartStatus(data.cart_id, data.status)},  
     ]
 
     authMiddleware = async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction) => {

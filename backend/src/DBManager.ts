@@ -237,6 +237,7 @@ export class DB {
     }
 
     public static async getDeliverySummary(shipper_id: number): Promise<Delivery | null> {
+        console.log("[DBManager] Récupération du recap de la livraison pour le shipper n°" + shipper_id + " dans la BDD")
         const delivery = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
@@ -250,15 +251,16 @@ export class DB {
         return delivery
     }
 
-    public static async getDeliveryProposalSummary(shipper_id: number): Promise<DeliveryProposal | null> {
+    public static async getDeliveryProposalSummary(deliveryProposalId: number): Promise<DeliveryProposal | null> {
+        console.log("[DBManager] Récupération du recap de la proposition livraison n°" + deliveryProposalId + " dans la BDD")
         const deliveryProposals = await this.AppDataSource
         .getRepository(DeliveryProposal)
-        .createQueryBuilder("delivery")
-        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
-        .leftJoinAndSelect("delivery.carts", "cart")
+        .createQueryBuilder("delivery_proposal")
+        .where("delivery_proposal.id = :id", {id: deliveryProposalId})
+        .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
-        .orderBy('delivery.creation_date', 'ASC')
+        .orderBy('delivery_proposal.creation_date', 'ASC')
         .getOne()
 
         return deliveryProposals
@@ -431,6 +433,16 @@ export class DB {
         .update(Cart)
         .set({status: status})
         .where("id = :id", {id: cartId})
+        .execute()
+    }
+
+    public static async updateDeliveryStatus(deliveryId: number, status: number) {
+        console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD")
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Delivery)
+        .set({status: status})
+        .where("id = :id", {id: deliveryId})
         .execute()
     }
 
