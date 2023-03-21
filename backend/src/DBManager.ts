@@ -250,6 +250,20 @@ export class DB {
         return delivery
     }
 
+    public static async getDeliveryProposalSummary(shipper_id: number): Promise<DeliveryProposal | null> {
+        const deliveryProposals = await this.AppDataSource
+        .getRepository(DeliveryProposal)
+        .createQueryBuilder("delivery")
+        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
+        .leftJoinAndSelect("delivery.carts", "cart")
+        .leftJoinAndSelect("cart.items", "item")
+        .leftJoinAndSelect("item.product", "product")
+        .orderBy('delivery.creation_date', 'ASC')
+        .getOne()
+
+        return deliveryProposals
+    }
+
     public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
         console.log("[DBManager] Récupération des delivery proposals pour le shipper n°" + shipper_id + " dans la BDD")
         const res = await this.AppDataSource

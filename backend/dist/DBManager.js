@@ -292,6 +292,20 @@ class DB {
             return delivery;
         });
     }
+    static getDeliveryProposalSummary(shipper_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const deliveryProposals = yield this.AppDataSource
+                .getRepository(DeliveryProposal_1.DeliveryProposal)
+                .createQueryBuilder("delivery")
+                .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
+                .leftJoinAndSelect("delivery.carts", "cart")
+                .leftJoinAndSelect("cart.items", "item")
+                .leftJoinAndSelect("item.product", "product")
+                .orderBy('delivery.creation_date', 'ASC')
+                .getOne();
+            return deliveryProposals;
+        });
+    }
     static getDeliveryProposals(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des delivery proposals pour le shipper n°" + shipper_id + " dans la BDD");

@@ -33,7 +33,7 @@ __decorate([
 ], Delivery.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
-    (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'id' }),
+    (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'user_id' }),
     __metadata("design:type", Shipper_1.Shipper)
 ], Delivery.prototype, "shipper", void 0);
 __decorate([

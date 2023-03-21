@@ -40,6 +40,7 @@ class API {
             { method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliverySummary(shipper_id) },
             { method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposals(shipper_id) },
             { method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id) => DBManager_1.DB.getDeliveryProposalByID(id) },
+            { method: "GET", entryPointName: "delivery_proposal_summary", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposalSummary(shipper_id) },
             { method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
             { method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
             { method: "POST", entryPointName: "user", paramName: null, callbackParam: (user) => DBManager_1.DB.addUser(user) },

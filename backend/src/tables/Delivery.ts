@@ -18,7 +18,7 @@ export class Delivery {
 
     @ManyToOne(type => Shipper, shipper => shipper)
     @JoinColumn(
-        { name: 'shipper_id', referencedColumnName: 'id'}
+        { name: 'shipper_id', referencedColumnName: 'user_id'}
     )
     shipper!: Shipper
 

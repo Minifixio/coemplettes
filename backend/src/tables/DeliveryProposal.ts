@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from "typeorm"
+import { Cart } from "./Cart"
 import { Shipper } from "./Shipper"
 
 @Entity({name: "delivery_proposals"})
@@ -30,8 +31,11 @@ export class DeliveryProposal {
 
     @ManyToOne(type => Shipper, shipper => shipper)
     @JoinColumn(
-        { name: 'shipper_id', referencedColumnName: 'id'}
+        { name: 'shipper_id', referencedColumnName: 'user_id'}
     )
     shipper!: Shipper
+
+    @OneToMany(() => Cart, (cart) => cart.delivery_proposal)
+    carts!: Cart[]
 
 }

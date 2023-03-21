@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeliveryProposal = void 0;
 const typeorm_1 = require("typeorm");
+const Cart_1 = require("./Cart");
 const Shipper_1 = require("./Shipper");
 let DeliveryProposal = class DeliveryProposal {
 };
@@ -40,9 +41,13 @@ __decorate([
 ], DeliveryProposal.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
-    (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'id' }),
+    (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'user_id' }),
     __metadata("design:type", Shipper_1.Shipper)
 ], DeliveryProposal.prototype, "shipper", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Cart_1.Cart, (cart) => cart.delivery_proposal),
+    __metadata("design:type", Array)
+], DeliveryProposal.prototype, "carts", void 0);
 DeliveryProposal = __decorate([
     (0, typeorm_1.Entity)({ name: "delivery_proposals" })
 ], DeliveryProposal);

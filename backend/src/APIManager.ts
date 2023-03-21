@@ -55,6 +55,7 @@ export class API {
 
         {method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposals(shipper_id)},
         {method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id: number) => DB.getDeliveryProposalByID(id)},
+        {method: "GET", entryPointName: "delivery_proposal_summary", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposalSummary(shipper_id)},
 
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
