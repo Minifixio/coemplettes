@@ -47,9 +47,11 @@ export class API {
 
         {method: "GET", entryPointName: "carts", paramName: "owner_id", callbackParam: (owner_id: number) => DB.getCarts(owner_id)},
         {method: "GET", entryPointName: "cart", paramName: "id", callbackParam: (id: number) => DB.getCartByID(id)},
+        {method: "GET", entryPointName: "current_cart", paramName: "owner_id", callbackParam: (owner_id: number) => DB.getCurrentCart(owner_id)},
         
         {method: "GET", entryPointName: "deliveries", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveries(shipper_id)},
         {method: "GET", entryPointName: "delivery", paramName: "id", callbackParam: (id: number) => DB.getDeliveryByID(id)},
+        {method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliverySummary(shipper_id)},
 
         {method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id: number) => DB.getDeliveryProposals(shipper_id)},
         {method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id: number) => DB.getDeliveryProposalByID(id)},

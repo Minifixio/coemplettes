@@ -95,7 +95,7 @@ class GroupedCommands {
                         }
                         const deliveryProposal = new DeliveryProposal_1.DeliveryProposal();
                         deliveryProposal.shipper_id = shipper.id;
-                        deliveryProposal.timeSlot = timeSlot;
+                        //deliveryProposal.timeSlot = timeSlot
                         deliveryProposal.status = 0; // 0 = en attente, 1 = acceptée, 2 = refusée
                         // deliveryProposal.carts = commandsOfTimeSlot
                         yield DBManager_1.DB.addDeliveryProposal(deliveryProposal);

@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const Delivery_1 = require("./Delivery");
 const User_1 = require("./User");
 const DeliveryProposal_1 = require("./DeliveryProposal");
+const CartItem_1 = require("./CartItem");
 let Cart = class Cart {
 };
 __decorate([
@@ -67,6 +68,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'delivery_proposal_id', referencedColumnName: 'id' }),
     __metadata("design:type", Delivery_1.Delivery)
 ], Cart.prototype, "delivery_proposal", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => CartItem_1.CartItem, (cartItem) => cartItem.cart),
+    __metadata("design:type", Array)
+], Cart.prototype, "items", void 0);
 Cart = __decorate([
     (0, typeorm_1.Entity)({ name: "carts" })
 ], Cart);

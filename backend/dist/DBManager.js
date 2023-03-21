@@ -232,6 +232,17 @@ class DB {
             return res;
         });
     }
+    static getCurrentCart(owner_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de la cart courante pour le user n°" + owner_id + " dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.owner_id = :owner_id", { owner_id: owner_id })
+                .getOne();
+            return res;
+        });
+    }
     static getUnattributedCarts() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des carts non attribués dans la BDD");
@@ -265,6 +276,20 @@ class DB {
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
+        });
+    }
+    static getDeliverySummary(shipper_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const delivery = yield this.AppDataSource
+                .getRepository(Delivery_1.Delivery)
+                .createQueryBuilder("delivery")
+                .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
+                .where("delivery.status = :status", { status: 0 })
+                .leftJoinAndSelect("delivery.carts", "cart")
+                .leftJoinAndSelect("cart.items", "item")
+                .leftJoinAndSelect("item.product", "product")
+                .getOne();
+            return delivery;
         });
     }
     static getDeliveryProposals(shipper_id) {
@@ -379,6 +404,14 @@ class DB {
                 total += item.product.average_price * item.quantity;
             });
             cart.average_price = total;
+            // On supprime les cart précédentes de l'utilisateur
+            // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(Cart_1.Cart)
+                .where("owner_id = :owner_id", { owner_id: cart.owner_id })
+                .execute();
             const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -387,7 +420,7 @@ class DB {
                 .returning("id")
                 .execute();
             const cartId = req.identifiers[0].id;
-            cartItems.map(item => { item.cart_id = cartId; });
+            cartItems.map(item => { item.cart_id = cartId; item.status = 0; });
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()

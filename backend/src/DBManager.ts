@@ -194,6 +194,16 @@ export class DB {
         return res
     }
 
+    public static async getCurrentCart(owner_id: number): Promise<Cart | null> {
+        console.log("[DBManager] Récupération de la cart courante pour le user n°" + owner_id + " dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.owner_id = :owner_id", {owner_id: owner_id})
+        .getOne()
+        return res
+    }
+
     public static async getUnattributedCarts(): Promise<Cart[]> {
         console.log("[DBManager] Récupération des carts non attribués dans la BDD")
         const res = await this.AppDataSource
@@ -224,6 +234,20 @@ export class DB {
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getMany()
         return res
+    }
+
+    public static async getDeliverySummary(shipper_id: number): Promise<Delivery | null> {
+        const delivery = await this.AppDataSource
+        .getRepository(Delivery)
+        .createQueryBuilder("delivery")
+        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
+        .where("delivery.status = :status", {status: 0})
+        .leftJoinAndSelect("delivery.carts", "cart")
+        .leftJoinAndSelect("cart.items", "item")
+        .leftJoinAndSelect("item.product", "product")
+        .getOne()
+
+        return delivery
     }
 
     public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
@@ -336,6 +360,15 @@ export class DB {
         });
         cart.average_price = total;
 
+        // On supprime les cart précédentes de l'utilisateur
+        // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Cart)
+        .where("owner_id = :owner_id", { owner_id: cart.owner_id })
+        .execute()
+
         const req = await this.AppDataSource
         .createQueryBuilder()
         .insert()
@@ -345,7 +378,7 @@ export class DB {
         .execute()
 
         const cartId: number = req.identifiers[0].id
-        cartItems.map(item => {item.cart_id = cartId})
+        cartItems.map(item => {item.cart_id = cartId; item.status = 0})
 
         await this.AppDataSource
         .createQueryBuilder()
