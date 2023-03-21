@@ -32,4 +32,21 @@ export class CartService {
       }
     });
   }
+
+  static async getCurrentCart() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userId = await AuthService.getUserId();
+        console.log("[CartService] Récupération des carts de l'utilisateur");
+        const res = await APIService.get('carts', userId);
+        const carts = await res.json();
+
+        const currentCart = carts.sort(cart => cart.creation_date)[0];
+
+        resolve(currentCart);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }

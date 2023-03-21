@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import BasicButton from '../components/BasicButton';
+import {CartService} from '../services/CartService';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const carts = require('../assets/json/carts.json').carts;
-const deliveries = require('../assets/json/deliveries.json').deliveries;
 
 function CurrentCartOrder({navigation, route}) {
   /**
@@ -14,164 +16,204 @@ function CurrentCartOrder({navigation, route}) {
    * l'idée c'est d'ensuite les passer en paramètre de route
    */
 
-  const cart = carts[0];
-  const [status, setStatus] = useState(cart.status);
+  const mockup = true;
+
+  const [cart, setCart] = useState({});
+
+  useEffect(() => {
+    if (mockup) {
+      setCart(carts[0]);
+    } else {
+      const fetchCart = async () => {
+        try {
+          const currentCart = await CartService.getCurrentCart();
+          if (currentCart !== []) {
+            setCart(currentCart);
+          } else {
+            setCart({});
+          }
+        } catch (e) {
+          console.log(
+            '[CurrentCartOrder] Erreur lors du chargement des carts...',
+            e,
+          );
+        }
+      };
+      fetchCart();
+    }
+  }, [mockup, setCart]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressView}>
-        <View style={styles.progressCircleView}>
-          <View
-            style={[
-              styles.progressCircle,
-              status === 1 || status === 2 || status === 3
-                ? styles.progressCircleSelected
-                : styles.progressCircleUnselected,
-            ]}>
-            <Text style={styles.progressCircleInnerText}>1</Text>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.progressLine,
-            status >= 2
-              ? styles.progressLineSelected
-              : styles.progressLineUnselected,
-          ]}
-        />
-
-        <View style={styles.progressCircleView}>
-          <View
-            style={[
-              styles.progressCircle,
-              status >= 2
-                ? styles.progressCircleSelected
-                : styles.progressCircleUnselected,
-            ]}>
-            <Text style={styles.progressCircleInnerText}>2</Text>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.progressLine,
-            status === 3
-              ? styles.progressLineSelected
-              : styles.progressLineUnselected,
-          ]}
-        />
-
-        <View style={styles.progressCircleView}>
-          <View
-            style={[
-              styles.progressCircle,
-              status === 3
-                ? styles.progressCircleSelected
-                : styles.progressCircleUnselected,
-            ]}>
-            <Text style={styles.progressCircleInnerText}>3</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.progressTextView}>
-        <Text style={styles.progressCircleLabel}>Liste placée</Text>
-        <Text style={styles.progressCircleLabel}>Commande</Text>
-        <Text style={styles.progressCircleLabel}>Récupération</Text>
-      </View>
-
-      <View style={styles.infoView}>
-        {status === 1 && (
-          <View style={styles.infoSubView}>
-            <Text style={styles.infoText}>
-              Votre date limite : &nbsp;
-              {new Intl.DateTimeFormat('en-US').format(new Date(cart.deadline))}
-            </Text>
-            <Text style={styles.infoText}>
-              Prochaine génération de commande :
-            </Text>
-            <Text style={styles.infoTextLight}>
-              Il y actuellement 4 propositions de livreurs en cours
-            </Text>
-          </View>
-        )}
-
-        {status === 2 && (
-          <View style={styles.infoSubView}>
-            <Text style={styles.infoText}>
-              Votre date limite : &nbsp;
-              {new Intl.DateTimeFormat('en-US').format(new Date(cart.deadline))}
-            </Text>
-            <View style={styles.infoShipper}>
-              <Text style={styles.infoText}>
-                Livreur proposé : Carla George
-              </Text>
-            </View>
-
-            <Text style={styles.infoTextLight}>
-              Date de livraison prévue : 10/11/2023
-            </Text>
-            <View style={styles.estimatedPriceView}>
-              <Text style={styles.infoText}>Prix estimé :</Text>
-              <Text
-                style={[
-                  styles.estimatedPriceText,
-                  styles.estimatedPriceTextMin,
-                ]}>
-                45.10€
-              </Text>
-              <Text style={styles.infoText}> - </Text>
-              <Text
-                style={[
-                  styles.estimatedPriceText,
-                  styles.estimatedPriceTextMax,
-                ]}>
-                50.30€
-              </Text>
-            </View>
-          </View>
-        )}
-
-        {status === 3 && (
-          <View style={styles.infoSubView}>
-            <Text style={styles.infoText}>Commande livrée le 04/11/2022</Text>
-            <Text style={styles.infoText}>A récupérer avant le 07/11/2022</Text>
-          </View>
-        )}
-      </View>
-      {status === 1 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            valid={false}
-            onClick={() => {
-              setStatus(status + 1);
-            }}
-            text="Annuler la liste"
-          />
+      {cart === {} && (
+        <View style={styles.emptyTextView}>
+          <Text style={styles.emptyText}>Ton panier est vide !</Text>
+          <Ionicons name="sad" size={40} color="black" />
         </View>
       )}
-      {status === 2 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(status + 1);
-            }}
-            text="Valider et payer la caution"
-          />
-        </View>
-      )}
-      {status === 3 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(1);
-            }}
-            text="Récupérer mon code Locker"
-          />
+
+      {cart !== {} && (
+        <View style={styles.subContainer}>
+          <View style={styles.progressView}>
+            <View style={styles.progressCircleView}>
+              <View
+                style={[
+                  styles.progressCircle,
+                  cart.status === 1 || cart.status === 2 || cart.status === 3
+                    ? styles.progressCircleSelected
+                    : styles.progressCircleUnselected,
+                ]}>
+                <Text style={styles.progressCircleInnerText}>1</Text>
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.progressLine,
+                cart.status >= 2
+                  ? styles.progressLineSelected
+                  : styles.progressLineUnselected,
+              ]}
+            />
+
+            <View style={styles.progressCircleView}>
+              <View
+                style={[
+                  styles.progressCircle,
+                  cart.status >= 2
+                    ? styles.progressCircleSelected
+                    : styles.progressCircleUnselected,
+                ]}>
+                <Text style={styles.progressCircleInnerText}>2</Text>
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.progressLine,
+                cart.status === 3
+                  ? styles.progressLineSelected
+                  : styles.progressLineUnselected,
+              ]}
+            />
+
+            <View style={styles.progressCircleView}>
+              <View
+                style={[
+                  styles.progressCircle,
+                  cart.status === 3
+                    ? styles.progressCircleSelected
+                    : styles.progressCircleUnselected,
+                ]}>
+                <Text style={styles.progressCircleInnerText}>3</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.progressTextView}>
+            <Text style={styles.progressCircleLabel}>Liste placée</Text>
+            <Text style={styles.progressCircleLabel}>Commande</Text>
+            <Text style={styles.progressCircleLabel}>Récupération</Text>
+          </View>
+
+          <View style={styles.infoView}>
+            {cart.status === 1 && (
+              <View style={styles.infoSubView}>
+                <Text style={styles.infoText}>
+                  Votre date limite : &nbsp;
+                  {new Intl.DateTimeFormat('en-US').format(
+                    new Date(cart.deadline),
+                  )}
+                </Text>
+                <Text style={styles.infoText}>
+                  Prochaine génération de commande :
+                </Text>
+                <Text style={styles.infoTextLight}>
+                  Il y actuellement 4 propositions de livreurs en cours
+                </Text>
+              </View>
+            )}
+
+            {cart.status === 2 && (
+              <View style={styles.infoSubView}>
+                <Text style={styles.infoText}>
+                  Votre date limite : &nbsp;
+                  {new Intl.DateTimeFormat('en-US').format(
+                    new Date(cart.deadline),
+                  )}
+                </Text>
+                <View style={styles.infoShipper}>
+                  <Text style={styles.infoText}>
+                    Livreur proposé : Carla George
+                  </Text>
+                </View>
+
+                <Text style={styles.infoTextLight}>
+                  Date de livraison prévue : 10/11/2023
+                </Text>
+                <View style={styles.estimatedPriceView}>
+                  <Text style={styles.infoText}>Prix estimé :</Text>
+                  <Text
+                    style={[
+                      styles.estimatedPriceText,
+                      styles.estimatedPriceTextMin,
+                    ]}>
+                    45.10€
+                  </Text>
+                  <Text style={styles.infoText}> - </Text>
+                  <Text
+                    style={[
+                      styles.estimatedPriceText,
+                      styles.estimatedPriceTextMax,
+                    ]}>
+                    50.30€
+                  </Text>
+                </View>
+              </View>
+            )}
+
+            {cart.status === 3 && (
+              <View style={styles.infoSubView}>
+                <Text style={styles.infoText}>
+                  Commande livrée le 04/11/2022
+                </Text>
+                <Text style={styles.infoText}>
+                  A récupérer avant le 07/11/2022
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <View style={styles.buttonView}>
+            {cart.status === 1 && (
+              <BasicButton
+                style={styles.button}
+                valid={false}
+                onClick={() => {
+                  cart.status++;
+                }}
+                text="Annuler la liste"
+              />
+            )}
+            {cart.status === 2 && (
+              <BasicButton
+                style={styles.button}
+                onClick={() => {
+                  cart.status++;
+                }}
+                text="Valider et payer la caution"
+              />
+            )}
+            {cart.status === 3 && (
+              <BasicButton
+                style={styles.button}
+                onClick={() => {
+                  cart.status = 1;
+                }}
+                text="Récupérer mon code Locker"
+              />
+            )}
+          </View>
         </View>
       )}
     </View>
@@ -183,6 +225,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '100%',
     paddingTop: 20,
+  },
+  subContainer: {
+    display: 'flex',
+    height: '100%',
   },
   progressView: {
     display: 'flex',

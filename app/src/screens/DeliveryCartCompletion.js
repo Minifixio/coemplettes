@@ -46,11 +46,24 @@ function DeliveryCartCompletion() {
 
   useEffect(() => {
     setCarts(_carts);
-    setMissingProductsCount(countMissingProducts());
-    setUnavailableProductsCount(countUnavailableProducts());
-  }, [_carts, countMissingProducts, countUnavailableProducts]);
 
-  const countUnavailableProducts = useCallback(() => {
+    let unavailableCount = 0;
+    let missingCount = 0;
+    carts.forEach(cart => {
+      cart.items.forEach(item => {
+        if (item.status === 1) {
+          missingCount++;
+        }
+        if (item.status === 3) {
+          unavailableCount++;
+        }
+      });
+    });
+    setMissingProductsCount(missingCount);
+    setUnavailableProductsCount(unavailableCount);
+  }, [_carts, setUnavailableProductsCount, carts]);
+
+  const updateUnavailableProductsCount = useCallback(() => {
     let count = 0;
     carts.forEach(cart => {
       cart.items.forEach(item => {
@@ -59,10 +72,10 @@ function DeliveryCartCompletion() {
         }
       });
     });
-    return count;
+    setUnavailableProductsCount(count);
   }, [carts]);
 
-  const countMissingProducts = useCallback(() => {
+  const updateMissingProductsCount = useCallback(() => {
     let count = 0;
     carts.forEach(cart => {
       cart.items.forEach(item => {
@@ -71,20 +84,20 @@ function DeliveryCartCompletion() {
         }
       });
     });
-    return count;
+    setMissingProductsCount(count);
   }, [carts]);
 
   const CartItem = ({item}) => {
     const clickValidButton = () => {
       item.status = 2;
-      setMissingProductsCount(countMissingProducts());
-      setUnavailableProductsCount(countUnavailableProducts());
+      updateUnavailableProductsCount();
+      updateMissingProductsCount();
     };
 
     const clickInvalidButton = () => {
       item.status = 3;
-      setMissingProductsCount(countMissingProducts());
-      setUnavailableProductsCount(countUnavailableProducts());
+      updateUnavailableProductsCount();
+      updateMissingProductsCount();
     };
 
     return (
