@@ -369,12 +369,8 @@ export class DB {
         console.log("[DBManager] Ajout de la cart :")
         console.log(cart)
         cart.status=0;
-        // calcul du prix total moyen
-        let total = 0;
-        cartItems.forEach(item => {
-            total += item.product.average_price * item.quantity;
-        });
-        cart.average_price = total;
+
+        // Le calcul du average_price de la cart se fait désormais côté application
 
         // On supprime les cart précédentes de l'utilisateur
         // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
