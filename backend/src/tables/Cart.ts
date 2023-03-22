@@ -23,6 +23,9 @@ export class Cart {
 
     @Column({ type: "datetime", nullable:false })
     deadline!: Date
+
+    @Column({ type: "int", nullable:false })
+    distanceJourCourant!: number
     
     /* pour un cart non attribué : status=0 et delivery_proposal_id=null
         pour un cart attribué mais en attente de validation : status=1
@@ -32,6 +35,11 @@ export class Cart {
     
     @Column({ type: "float", nullable:true })
     average_price!: number
+
+    
+    @Column({ type: "int", nullable:true }) // le numéro du locker qui sera attribué une fois la Delivery déposée
+    locker_number!: number
+
 
     @ManyToMany(type => User, owner => owner)
     @JoinColumn(

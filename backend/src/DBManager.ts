@@ -175,7 +175,7 @@ export class DB {
         return res
     }
 
-    public static async getShippers(): Promise<Shipper[] | null> {
+    public static async getShippers(): Promise<Shipper[]> {
         console.log("[DBManager] Récupération de tous les shippers dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Shipper)
@@ -209,7 +209,7 @@ export class DB {
         console.log("[DBManager] Récupération des crénaux horaires dans la BDD")
         const res = await this.AppDataSource
         .getRepository(Shipper)
-        .createQueryBuilder("shipper")
+        .createQueryBuilder("timeSlot")
         .select("shipper.disponibilities, shipper.id, shipper.price_max")
         .where("shipper.disponibilities <> :disponibilities", {disponibilities: null})
         .getMany()

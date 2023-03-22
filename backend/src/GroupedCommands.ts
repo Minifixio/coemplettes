@@ -1,5 +1,6 @@
 import { DB } from './DBManager'
 import { Cart } from './tables/Cart'
+import { Shipper } from './tables/Shipper'
 import { DeliveryProposal } from './tables/DeliveryProposal'
 
 export class GroupedCommands {
@@ -9,13 +10,7 @@ export class GroupedCommands {
         GroupedCommands.createGroupedCommands()
     }
 
-    static async checkTimeSlotsCoherency(timeSlot: string) {
-        // Cette méthode vérifie la cohérence du créneau horaire passé en paramètre
-        // Avec une regex, on vérifie que le format est bien 'YYYY-MM-DD HHMM-HHMM'
-        if (!timeSlot.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{4}-[0-9]{4}$/)) {
-            return false
-        }
-        // On le transforme en date
+    static async checkTimeSlotsCoherency(timeSlot: string) { // decayed
         let date = new Date(timeSlot.substring(0, 15))
         // Si erreur, on renvoie false
         if (date.toString() === 'Invalid Date') {
@@ -25,9 +20,75 @@ export class GroupedCommands {
         return (date.getTime() > Date.now())
     }
 
+    static async calculDistanceJourCourant(cart: Cart) {
+        // On récupère la date du jour
+        let ajd = new Date().getDay()
+        // On récupère la date de la commande
+        cart.distanceJourCourant = ((new Date(cart.deadline).getDay() - ajd) % 7)
+        if (cart.distanceJourCourant == 0) {
+            cart.distanceJourCourant = 7    // dans le cas où on passe la commande pour J+7
+        }
+        // On renvoie la distance
+        return cart.distanceJourCourant
+    }
+
+    static async sortedUnattributedCarts(unattributedCarts: Cart[]) {
+        // On trie les commandes par distance au jour courant (plus proche en premier)
+        unattributedCarts.sort((a, b) => {
+            return a.distanceJourCourant - b.distanceJourCourant
+        })
+        // Ensuite, parmi les commandes ayant la même distance au jour courant, on trie par prix moyen (plus grand en premier)
+        for (let i = 2; i < 8; i++) {
+            /* on parcourt les 7 jours de la semaine qui vient, en considérant que la première 
+            commande possible est à J+2, et que la dernière est à J+7 */
+            let j = i
+            while (unattributedCarts[j].distanceJourCourant == unattributedCarts[i].distanceJourCourant) {
+                j++
+            }
+            unattributedCarts.slice(i, j).sort((a, b) => {
+                return b.average_price - a.average_price
+            })
+            i = j
+        }
+    }
+
+    static async orderShipperDisponibilities(shipper: Shipper) {
+        /* On récupère les disponibilités du livreur qui sont une string au format '0010011' 
+        (7 caractères pour les 7 jours de la semaine) avec 0=indisponible et 1=disponible
+        On réordonne la string pour que le caractère correspondant au jour actuel soit en première position*/
+        let disponibilities = shipper.disponibilities
+        let ajd = new Date().getDay()
+        let newDisponibilities = disponibilities.substring(ajd, disponibilities.length) + disponibilities.substring(0, ajd)
+    }
+
+    static async createUpdatedGroupedCommands() {
+        // Regroupement de commandes
+        // On récupère les commandes non attribuées
+        let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
+        // On trie les commandes par distance au jour courant (plus proche en premier)
+        await GroupedCommands.sortedUnattributedCarts(unattributedCarts)
+        // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
+        let shippers: Shipper[] = await DB.getShippers()
+        for (const shipper of shippers) {
+            await GroupedCommands.orderShipperDisponibilities(shipper)
+        }
+        for (let i = 2; i < 8; i++) {
+            let shippersDispoJour = []
+            for (const shipper in shippers) {
+                if (shipper.disponibilities[i] == 1) {
+                    shippersDispoJour.push(shipper)
+                }
+            }
+            // Parmi les shippers disponibles à J+2, on les trie par price_max décroissant
+            shippersDispoJour.sort((shipper: a, shipper : b) => {
+                return b.price_max - a.price_max
+            })
+        }
+
 
     static async createGroupedCommands() {
-        const unattributedCarts = await DB.getUnattributedCarts()
+        let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
+        await GroupedCommands.sortedUnattributedCarts(unattributedCarts)
         const timeSlots = await DB.getTimeSlots()
         // on a une liste de Shippers avec une valeur disponibilities : string au format 'YYYY-MM-DD HHMM-HHMM,...,YYYY-MM-DD HHMM-HHMM'
         // On réalise un dictionnaire de créneaux horaires : { 'YYYY-MM-DD HHMM-HHMM': [Shippers] }
@@ -53,8 +114,8 @@ export class GroupedCommands {
 
         // Pour chaque créneau horaire, on essaie de regrouper les commandes
         for (const timeSlot of timeSlotsSorted) {
-            let timeSlotBegin = new Date(timeSlot.substring(0, 15))
-            let timeSlotEnd = new Date(timeSlot.substring(0, 11) + timeSlot.substring(16, 20))
+            /* let timeSlotBegin = new Date(timeSlot.substring(0, 15))
+            let timeSlotEnd = new Date(timeSlot.substring(0, 11) + timeSlot.substring(16, 20)) */
             for (const shipper of timeSlotsDict[timeSlot]) {
                 let commandsOfTimeSlot = []
                 let commandsPrice = 0
@@ -90,7 +151,7 @@ export class GroupedCommands {
                     // await DB.updateTimeSlots(shipper.id, timeSlot)
                 }
             }
-            
+
         }
 
     }
@@ -98,4 +159,4 @@ export class GroupedCommands {
 
 }
 
-}
+
