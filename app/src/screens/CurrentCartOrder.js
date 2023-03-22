@@ -119,14 +119,17 @@ function CurrentCartOrder({navigation, route}) {
           <View style={styles.infoView}>
             {cart.status === 1 && (
               <View style={styles.infoSubView}>
-                <Text style={styles.infoText}>
-                  Votre date limite : &nbsp;
+                <Text style={styles.infoText}>Votre date limite : &nbsp;</Text>
+                <Text style={styles.infoTimeText}>
                   {new Intl.DateTimeFormat('en-US').format(
                     new Date(cart.deadline),
                   )}
                 </Text>
                 <Text style={styles.infoText}>
-                  Prochaine génération de commande :
+                  Cycle d'affectation de livreur dans :
+                </Text>
+                <Text style={styles.infoTimeText}>
+                  {24 - new Date().getHours()} h
                 </Text>
                 <Text style={styles.infoTextLight}>
                   Il y actuellement 4 propositions de livreurs en cours
@@ -285,6 +288,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 10,
     marginTop: 10,
+  },
+  infoTimeText: {
+    textAlign: 'center',
+    fontSize: 25,
+    color: 'black',
+    fontWeight: '900',
+    marginBottom: 30,
   },
   infoTextLight: {
     fontSize: 15,

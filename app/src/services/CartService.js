@@ -46,12 +46,10 @@ export class CartService {
       try {
         const userId = await AuthService.getUserId();
         console.log("[CartService] Récupération des carts de l'utilisateur");
-        const res = await APIService.get('carts', userId);
-        const carts = await res.json();
+        const res = await APIService.get('current_cart', userId);
+        const cart = await res.json();
 
-        const currentCart = carts.sort(cart => cart.creation_date)[0];
-
-        resolve(currentCart);
+        resolve(cart);
       } catch (e) {
         reject(e);
       }
