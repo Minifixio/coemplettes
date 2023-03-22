@@ -194,6 +194,16 @@ export class DB {
         return res
     }
 
+    public static async getCurrentCart(owner_id: number): Promise<Cart | null> {
+        console.log("[DBManager] Récupération de la cart courante pour le user n°" + owner_id + " dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.owner_id = :owner_id", {owner_id: owner_id})
+        .getOne()
+        return res
+    }
+
     public static async getUnattributedCarts(): Promise<Cart[]> {
         console.log("[DBManager] Récupération des carts non attribués dans la BDD")
         const res = await this.AppDataSource
@@ -224,6 +234,36 @@ export class DB {
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getMany()
         return res
+    }
+
+    public static async getDeliverySummary(shipper_id: number): Promise<Delivery | null> {
+        console.log("[DBManager] Récupération du recap de la livraison pour le shipper n°" + shipper_id + " dans la BDD")
+        const delivery = await this.AppDataSource
+        .getRepository(Delivery)
+        .createQueryBuilder("delivery")
+        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
+        .where("delivery.status = :status", {status: 0})
+        .leftJoinAndSelect("delivery.carts", "cart")
+        .leftJoinAndSelect("cart.items", "item")
+        .leftJoinAndSelect("item.product", "product")
+        .getOne()
+
+        return delivery
+    }
+
+    public static async getDeliveryProposalSummary(deliveryProposalId: number): Promise<DeliveryProposal | null> {
+        console.log("[DBManager] Récupération du recap de la proposition livraison n°" + deliveryProposalId + " dans la BDD")
+        const deliveryProposals = await this.AppDataSource
+        .getRepository(DeliveryProposal)
+        .createQueryBuilder("delivery_proposal")
+        .where("delivery_proposal.id = :id", {id: deliveryProposalId})
+        .leftJoinAndSelect("delivery_proposal.carts", "cart")
+        .leftJoinAndSelect("cart.items", "item")
+        .leftJoinAndSelect("item.product", "product")
+        .orderBy('delivery_proposal.creation_date', 'ASC')
+        .getOne()
+
+        return deliveryProposals
     }
 
     public static async getDeliveryProposals(shipper_id: number): Promise<DeliveryProposal[] | null> {
@@ -329,12 +369,17 @@ export class DB {
         console.log("[DBManager] Ajout de la cart :")
         console.log(cart)
         cart.status=0;
-        // calcul du prix total moyen
-        let total = 0;
-        cartItems.forEach(item => {
-            total += item.product.average_price * item.quantity;
-        });
-        cart.average_price = total;
+
+        // Le calcul du average_price de la cart se fait désormais côté application
+
+        // On supprime les cart précédentes de l'utilisateur
+        // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Cart)
+        .where("owner_id = :owner_id", { owner_id: cart.owner_id })
+        .execute()
 
         const req = await this.AppDataSource
         .createQueryBuilder()
@@ -345,7 +390,7 @@ export class DB {
         .execute()
 
         const cartId: number = req.identifiers[0].id
-        cartItems.map(item => {item.cart_id = cartId})
+        cartItems.map(item => {item.cart_id = cartId; item.status = 0})
 
         await this.AppDataSource
         .createQueryBuilder()
@@ -384,6 +429,16 @@ export class DB {
         .update(Cart)
         .set({status: status})
         .where("id = :id", {id: cartId})
+        .execute()
+    }
+
+    public static async updateDeliveryStatus(deliveryId: number, status: number) {
+        console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD")
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Delivery)
+        .set({status: status})
+        .where("id = :id", {id: deliveryId})
         .execute()
     }
 

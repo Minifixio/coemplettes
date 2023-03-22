@@ -32,7 +32,11 @@ __decorate([
     __metadata("design:type", Number)
 ], CartItem.prototype, "quantity", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => Cart_1.Cart, cart => cart),
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    __metadata("design:type", Number)
+], CartItem.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => Cart_1.Cart, (cart) => cart.items),
     (0, typeorm_1.JoinColumn)({ name: 'cart_id', referencedColumnName: 'id' }),
     __metadata("design:type", Cart_1.Cart)
 ], CartItem.prototype, "cart", void 0);

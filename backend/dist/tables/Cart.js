@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const Delivery_1 = require("./Delivery");
 const User_1 = require("./User");
 const DeliveryProposal_1 = require("./DeliveryProposal");
+const CartItem_1 = require("./CartItem");
 let Cart = class Cart {
 };
 __decorate([
@@ -38,7 +39,11 @@ __decorate([
 ], Cart.prototype, "creation_date", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "datetime", nullable: false }),
-    __metadata("design:type", Date)
+    __metadata("design:type", Date
+    /* pour un cart non attribué : status=0 et delivery_proposal_id=null
+        pour un cart attribué mais en attente de validation : status=1
+        pour un cart validé : status=2 */
+    )
 ], Cart.prototype, "deadline", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
@@ -63,6 +68,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'delivery_proposal_id', referencedColumnName: 'id' }),
     __metadata("design:type", Delivery_1.Delivery)
 ], Cart.prototype, "delivery_proposal", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => CartItem_1.CartItem, (cartItem) => cartItem.cart),
+    __metadata("design:type", Array)
+], Cart.prototype, "items", void 0);
 Cart = __decorate([
     (0, typeorm_1.Entity)({ name: "carts" })
 ], Cart);

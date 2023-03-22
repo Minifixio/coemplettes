@@ -32,20 +32,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const APIManager_1 = require("./APIManager");
-const DBManager_1 = require("./DBManager");
-const CronManager_1 = require("./CronManager");
-const dotenv = __importStar(require("dotenv"));
-dotenv.config();
-let dbPort = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306;
-let devCRON = process.env.developmentCRON ? process.env.developmentCRON : false;
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield DBManager_1.DB.initialize(dbPort);
-        const api = new APIManager_1.API(3000, 'api');
-        if (devCRON) {
-            CronManager_1.CronJobs.initCron();
-        }
-    });
+exports.CronJobs = void 0;
+const cron = __importStar(require("node-cron"));
+const GroupedCommands_1 = require("./GroupedCommands");
+class CronJobs {
+    static initCron() {
+        console.log('[CronManager] Début des tâches cron\n');
+        cron.schedule('0 0 * * *', () => __awaiter(this, void 0, void 0, function* () {
+            console.log('[CronManager] Lancement de la tâche cron\n');
+            yield GroupedCommands_1.GroupedCommands.createGroupedCommands();
+        }));
+    }
 }
-main();
+exports.CronJobs = CronJobs;

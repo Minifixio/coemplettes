@@ -146,13 +146,13 @@ class DB {
             return res;
         });
     }
-    static getShipperByID(id) {
+    static getShipperByID(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("[DBManager] Récupération des infos de shipper n°" + id + " dans la BDD");
+            console.log("[DBManager] Récupération des infos de shipper pour le user_id n°" + userId + " dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
                 .createQueryBuilder("shipper")
-                .where("shipper.id = :id", { id: id })
+                .where("shipper.user_id = :user_id", { user_id: userId })
                 .getOne();
             return res;
         });
@@ -232,14 +232,25 @@ class DB {
             return res;
         });
     }
+    static getCurrentCart(owner_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de la cart courante pour le user n°" + owner_id + " dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.owner_id = :owner_id", { owner_id: owner_id })
+                .getOne();
+            return res;
+        });
+    }
     static getUnattributedCarts() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des carts non attribués dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
-                .where("cart.delivery_proposal_id = :delivery_proposal_id", { delivery_proposal_id: null })
-                .orderBy("cart.deadline", "ASC")
+                .where("cart.status = :status", { status: 0 })
+                .orderBy("cart.deadline", "ASC") // les carts les plus urgentes en premier
                 .getMany();
             return res;
         });
@@ -265,6 +276,36 @@ class DB {
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
+        });
+    }
+    static getDeliverySummary(shipper_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération du recap de la livraison pour le shipper n°" + shipper_id + " dans la BDD");
+            const delivery = yield this.AppDataSource
+                .getRepository(Delivery_1.Delivery)
+                .createQueryBuilder("delivery")
+                .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
+                .where("delivery.status = :status", { status: 0 })
+                .leftJoinAndSelect("delivery.carts", "cart")
+                .leftJoinAndSelect("cart.items", "item")
+                .leftJoinAndSelect("item.product", "product")
+                .getOne();
+            return delivery;
+        });
+    }
+    static getDeliveryProposalSummary(deliveryProposalId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération du recap de la proposition livraison n°" + deliveryProposalId + " dans la BDD");
+            const deliveryProposals = yield this.AppDataSource
+                .getRepository(DeliveryProposal_1.DeliveryProposal)
+                .createQueryBuilder("delivery_proposal")
+                .where("delivery_proposal.id = :id", { id: deliveryProposalId })
+                .leftJoinAndSelect("delivery_proposal.carts", "cart")
+                .leftJoinAndSelect("cart.items", "item")
+                .leftJoinAndSelect("item.product", "product")
+                .orderBy('delivery_proposal.creation_date', 'ASC')
+                .getOne();
+            return deliveryProposals;
         });
     }
     static getDeliveryProposals(shipper_id) {
@@ -379,6 +420,14 @@ class DB {
                 total += item.product.average_price * item.quantity;
             });
             cart.average_price = total;
+            // On supprime les cart précédentes de l'utilisateur
+            // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(Cart_1.Cart)
+                .where("owner_id = :owner_id", { owner_id: cart.owner_id })
+                .execute();
             const req = yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -387,7 +436,7 @@ class DB {
                 .returning("id")
                 .execute();
             const cartId = req.identifiers[0].id;
-            cartItems.map(item => { item.cart_id = cartId; });
+            cartItems.map(item => { item.cart_id = cartId; item.status = 0; });
             yield this.AppDataSource
                 .createQueryBuilder()
                 .insert()
@@ -428,6 +477,17 @@ class DB {
                 .update(Cart_1.Cart)
                 .set({ status: status })
                 .where("id = :id", { id: cartId })
+                .execute();
+        });
+    }
+    static updateDeliveryStatus(deliveryId, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD");
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Delivery_1.Delivery)
+                .set({ status: status })
+                .where("id = :id", { id: deliveryId })
                 .execute();
         });
     }

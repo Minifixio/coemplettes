@@ -144,9 +144,9 @@ export class GroupedCommands {
                     }
                     const deliveryProposal = new DeliveryProposal();
                     deliveryProposal.shipper_id = shipper.id
-                    deliveryProposal.timeSlot = timeSlot
+                    //deliveryProposal.timeSlot = timeSlot
                     deliveryProposal.status = 0 // 0 = en attente, 1 = acceptée, 2 = refusée
-                    deliveryProposal.carts = commandsOfTimeSlot
+                    // deliveryProposal.carts = commandsOfTimeSlot
                     await DB.addDeliveryProposal(deliveryProposal)
                     // await DB.updateTimeSlots(shipper.id, timeSlot)
                 }
@@ -155,8 +155,4 @@ export class GroupedCommands {
         }
 
     }
-
-
 }
-
-
