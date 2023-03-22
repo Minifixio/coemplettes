@@ -97,8 +97,10 @@ function CartPage({navigation}) {
         type: 'success',
         text1: 'Carte validée !',
       });
-      eraseCart();
-      navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+      setTimeout(() => {
+        eraseCart();
+        navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+      }, 2000);
     } catch (e) {
       console.log("Erreur lors de l'ajout de carte : ", e);
       Toast.show({
@@ -173,7 +175,7 @@ function CartPage({navigation}) {
           <View style={styles.totalTextView}>
             <Text style={styles.totalText}>Total</Text>
             <Text style={styles.totalText}>
-              {Math.round(getTotalPrice() * 100) / 100 + 1.5}€
+              {Math.round((getTotalPrice() + 1.5) * 100) / 100}€
             </Text>
           </View>
 

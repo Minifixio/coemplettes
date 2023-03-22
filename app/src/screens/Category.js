@@ -12,6 +12,7 @@ function CategoryPage({navigation, route}) {
 
   useEffect(() => {
     ProductService.getProductInCategory(categoryId).then(res => {
+      console.log(res);
       setProducts(res);
     });
     navigation.setOptions({title: name});
@@ -20,9 +21,13 @@ function CategoryPage({navigation, route}) {
   const renderProductItem = ({item}) => (
     <ProductShowcase
       navigation={navigation}
+      productData={item}
       id={item.id}
       onClick={() => {
-        navigation.navigate('ProductPage', {id: item.id});
+        navigation.navigate('ProductPage', {
+          id: item.id,
+          productData: item,
+        });
       }}
     />
   );

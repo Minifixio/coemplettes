@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import InputSpinner from 'react-native-input-spinner';
@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 import {UserContext} from '../utils/UserProvider';
 
 function ShipperInformationPage({navigation}) {
-  const {updateShipperProfile} = useContext(UserContext);
+  const {updateShipperProfile, shipperInfos} = useContext(UserContext);
   const [priceMax, setPriceMax] = useState(50);
   const [capacity, setCapacity] = useState(2);
   const [disponibilities, setDisponibilities] = useState([0, 0, 0, 0, 0, 0, 0]);
@@ -21,9 +21,20 @@ function ShipperInformationPage({navigation}) {
 
   const [hasCar, setHasCar] = useState(false);
 
+  useEffect(() => {
+    if (shipperInfos !== {}) {
+      setPriceMax(shipperInfos.price_max);
+      setCapacity(shipperInfos.capacity);
+      setDisponibilities(shipperInfos.disponibilities);
+      setDrive(shipperInfos.drive);
+      setShop(shipperInfos.shop);
+      setHasCar(shipperInfos.hasCar);
+    }
+  }, [shipperInfos]);
+
   const updateProfile = async () => {
     try {
-      const shipperInfos = {
+      const shipper = {
         capacity,
         price_max: priceMax,
         drive,
@@ -31,7 +42,7 @@ function ShipperInformationPage({navigation}) {
         shop,
         disponibilities: disponibilities.join(''),
       };
-      await updateShipperProfile(shipperInfos);
+      await updateShipperProfile(shipper);
       Toast.show({
         type: 'success',
         text1: 'Profil livreur mis à jour',

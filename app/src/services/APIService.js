@@ -80,6 +80,8 @@ export class APIService {
 
       var urlPath = `${apiURL}/${entrypoint}?user_id=${userId}`;
 
+      console.log('[APIService] POST de la requêtre : ', urlPath);
+
       const res = await fetch(urlPath, options);
 
       if (res.status === 401) {

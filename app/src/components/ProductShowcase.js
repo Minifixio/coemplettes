@@ -16,6 +16,12 @@ const ProductShowcase = ({navigation, id, productData}) => {
   useEffect(() => {
     navigation.setOptions({title: ''});
     setProduct(productData);
+    // A chaque fois que la page se load, on reset les compteurs des produits
+    const unsubscribe = navigation.addListener('focus', () => {
+      setQuantity(0);
+      setIsSelected(false);
+    });
+    return unsubscribe;
   }, [id, navigation, productData]);
 
   function onClick() {

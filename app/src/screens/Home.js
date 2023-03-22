@@ -68,7 +68,7 @@ function HomePage({navigation, isConnected, setIsConnected}) {
       }
     };
     fetchData();
-  }, []);
+  }, [navigation]);
 
   const renderCategoryItem = ({item}) => (
     <CategoryItem

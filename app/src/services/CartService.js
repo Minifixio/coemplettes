@@ -6,11 +6,19 @@ export class CartService {
     return new Promise(async (resolve, reject) => {
       try {
         const userId = await AuthService.getUserId();
+
+        console.log(items);
+        let averageCartPrice = 0;
+        for (let item of items) {
+          averageCartPrice += item.totalPrice;
+        }
+
         const cart = {
           owner_id: userId,
           delivery_id: null,
           deadline: deadline,
           status: 0,
+          average_price: Math.round(averageCartPrice * 100) / 100,
         };
 
         const cartItems = items.map(item => {
