@@ -2,7 +2,7 @@
 // Le temps (en sec) durant lequel le locker reste dans l'état "true" suite à une ouverture
 const OPEN_TIME = 10;
 
-class Locker {
+export class Locker {
     static lockerStates = [false, false, false]
 
     private static changeState(lockerID: number, state: boolean) {
@@ -15,6 +15,9 @@ class Locker {
      * @param lockerID 
      */
     static openLocker(lockerID: number) {
+        if (lockerID > this.lockerStates.length) {
+            return null
+        }
         console.log(`[RPIManager] Début d'ouverture du locker n°${lockerID}`)
         this.changeState(lockerID, true)
         setTimeout(() => {

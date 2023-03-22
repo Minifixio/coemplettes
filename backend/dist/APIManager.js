@@ -16,6 +16,7 @@ exports.API = void 0;
 const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
 const AuthManager_1 = require("./AuthManager");
+const LockerManager_1 = require("./LockerManager");
 var bodyParser = require('body-parser');
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
@@ -40,14 +41,17 @@ class API {
             { method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliverySummary(shipper_id) },
             { method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposals(shipper_id) },
             { method: "GET", entryPointName: "delivery_proposal", paramName: "id", callbackParam: (id) => DBManager_1.DB.getDeliveryProposalByID(id) },
-            { method: "GET", entryPointName: "delivery_proposal_summary", paramName: "shipper_id", callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposalSummary(shipper_id) },
+            { method: "GET", entryPointName: "delivery_proposal_summary", paramName: "delivery_proposal_id", callbackParam: (delivery_proposal_id) => DBManager_1.DB.getDeliveryProposalSummary(delivery_proposal_id) },
             { method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
-            { method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => DBManager_1.DB.getCategories() },
+            { method: "GET", entryPointName: "lockers", paramName: null, callbackNoParam: () => LockerManager_1.Locker.getLockersStates() },
+            { method: "GET", entryPointName: "open_locker", paramName: "locker_id", callbackParam: (locker_id) => LockerManager_1.Locker.openLocker(locker_id) },
             { method: "POST", entryPointName: "user", paramName: null, callbackParam: (user) => DBManager_1.DB.addUser(user) },
             { method: "POST", entryPointName: "shipper", paramName: null, callbackParam: (shipper) => DBManager_1.DB.addShipper(shipper) },
             { method: "POST", entryPointName: "cart", paramName: null, callbackParam: (data) => DBManager_1.DB.addCart(data.cart, data.cart_items) },
             { method: "POST", entryPointName: "delivery_proposal", paramName: null, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
             { method: "POST", entryPointName: "product", paramName: null, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
+            { method: "POST", entryPointName: "delivery_status", paramName: null, callbackParam: (data) => DBManager_1.DB.updateDeliveryStatus(data.delivery_id, data.status) },
+            { method: "POST", entryPointName: "cart_status", paramName: null, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;

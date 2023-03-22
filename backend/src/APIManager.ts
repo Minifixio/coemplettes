@@ -8,6 +8,7 @@ import { Product } from './tables/Product';
 import { Shipper } from './tables/Shipper';
 import { User } from './tables/User';
 import { AuthManager } from './AuthManager';
+import { Locker } from './LockerManager';
 import { AuthError, AuthErrors } from './models/AuthErrors';
 import { CartItem } from './tables/CartItem';
 
@@ -59,7 +60,7 @@ export class API {
 
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
-        {method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => Locker.getLockersStates()},
+        {method: "GET", entryPointName: "lockers", paramName: null, callbackNoParam: () => Locker.getLockersStates()},
         {method: "GET", entryPointName: "open_locker", paramName: "locker_id", callbackParam: (locker_id: number) => Locker.openLocker(locker_id)},
 
 
