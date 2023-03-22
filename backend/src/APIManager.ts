@@ -59,7 +59,8 @@ export class API {
 
         {method: "GET", entryPointName: "categories", paramName: null, callbackNoParam: () => DB.getCategories()},
 
-        {method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => DB.getCategories()},
+        {method: "GET", entryPointName: "locker", paramName: null, callbackNoParam: () => Locker.getLockersStates()},
+        {method: "GET", entryPointName: "open_locker", paramName: "locker_id", callbackParam: (locker_id: number) => Locker.openLocker(locker_id)},
 
 
         {method: "POST", entryPointName: "user", paramName: null, callbackParam: (user: User) => DB.addUser(user)},

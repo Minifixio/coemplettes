@@ -1,13 +1,17 @@
-class RPIManager {
+
+// Le temps (en sec) durant lequel le locker reste dans l'état "true" suite à une ouverture
+const OPEN_TIME = 10;
+
+class Locker {
     static lockerStates = [false, false, false]
 
-    static changeState(lockerID: number, state: boolean) {
+    private static changeState(lockerID: number, state: boolean) {
         console.log(`[RPIManager] Changement d'état du locker n°${lockerID} à ${state}`);
         this.lockerStates[lockerID] = state;
     }
 
     /**
-     * On laisse un temps de 10 sec durant lequel l'état du locker est à true, puis on repasse à false
+     * On laisse un temps de OPEN_TIME sec durant lequel l'état du locker est à true, puis on repasse à false
      * @param lockerID 
      */
     static openLocker(lockerID: number) {
@@ -16,7 +20,7 @@ class RPIManager {
         setTimeout(() => {
             console.log(`[RPIManager] Fin d'ouverture du locker n°${lockerID}`)
             this.changeState(lockerID, false)
-        }, 10000);
+        }, OPEN_TIME * 1000);
     }
 
     static getLockersStates() {
