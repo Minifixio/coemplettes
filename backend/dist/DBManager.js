@@ -43,6 +43,7 @@ const Delivery_1 = require("./tables/Delivery");
 const DeliveryProposal_1 = require("./tables/DeliveryProposal");
 const Product_1 = require("./tables/Product");
 const Category_1 = require("./tables/Category");
+const FeaturedProduct_1 = require("./tables/FeaturedProduct");
 class DB {
     static initialize(dbPort) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -192,6 +193,15 @@ class DB {
                 .getRepository(Product_1.Product)
                 .createQueryBuilder("product")
                 .where("product.category_id = :category_id", { category_id: category_id })
+                .getMany();
+            return res;
+        });
+    }
+    static getFeaturedProducts() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.AppDataSource
+                .getRepository(FeaturedProduct_1.FeaturedProduct)
+                .createQueryBuilder()
                 .getMany();
             return res;
         });
