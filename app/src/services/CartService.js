@@ -55,4 +55,16 @@ export class CartService {
       }
     });
   }
+
+  static async openLocker(lockerId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log("[CartService] Récupération des carts de l'utilisateur");
+        await APIService.post('open_locker', lockerId);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }

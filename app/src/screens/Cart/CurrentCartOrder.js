@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Modal, Pressable} from 'react-native';
 import BasicButton from '../../components/BasicButton';
 import {CartService} from '../../services/CartService';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Toast from 'react-native-toast-message';
 
 const carts = require('../../assets/json/carts.json').carts;
 
 function CurrentCartOrderPage({navigation, route}) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   /**
    * MOCKUP DATAS
    * cart
@@ -44,8 +47,56 @@ function CurrentCartOrderPage({navigation, route}) {
     }
   }, [mockup, setCart]);
 
+  const openLocker = async () => {
+    try {
+      await CartService.openLocker(cart.locker_id);
+      Toast.show({
+        type: 'success',
+        text1: 'Locker ouvert !',
+      });
+      cart.status = 4;
+    } catch (e) {
+      console.log("[CurrentCartOrder] Impossible d'ouvrir le Locker : ", e);
+      Toast.show({
+        type: 'error',
+        text1: "Impossible d'ouvrir le locker !",
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Assurez-vous d'être devant le Locker
+            </Text>
+            <View style={styles.modalPressableView}>
+              <Pressable
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  openLocker();
+                }}>
+                <Text style={styles.textStyle}>Ouvrir</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Annuler</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       {cart === {} && (
         <View style={styles.emptyTextView}>
           <Text style={styles.emptyText}>Ton panier est vide !</Text>
@@ -60,7 +111,7 @@ function CurrentCartOrderPage({navigation, route}) {
               <View
                 style={[
                   styles.progressCircle,
-                  cart.status === 1 || cart.status === 2 || cart.status === 3
+                  cart.status === 0 || cart.status === 1 || cart.status === 2
                     ? styles.progressCircleSelected
                     : styles.progressCircleUnselected,
                 ]}>
@@ -71,7 +122,7 @@ function CurrentCartOrderPage({navigation, route}) {
             <View
               style={[
                 styles.progressLine,
-                cart.status >= 2
+                cart.status >= 1
                   ? styles.progressLineSelected
                   : styles.progressLineUnselected,
               ]}
@@ -81,7 +132,7 @@ function CurrentCartOrderPage({navigation, route}) {
               <View
                 style={[
                   styles.progressCircle,
-                  cart.status >= 2
+                  cart.status >= 1
                     ? styles.progressCircleSelected
                     : styles.progressCircleUnselected,
                 ]}>
@@ -92,7 +143,7 @@ function CurrentCartOrderPage({navigation, route}) {
             <View
               style={[
                 styles.progressLine,
-                cart.status === 3
+                cart.status === 2
                   ? styles.progressLineSelected
                   : styles.progressLineUnselected,
               ]}
@@ -102,7 +153,7 @@ function CurrentCartOrderPage({navigation, route}) {
               <View
                 style={[
                   styles.progressCircle,
-                  cart.status === 3
+                  cart.status === 2
                     ? styles.progressCircleSelected
                     : styles.progressCircleUnselected,
                 ]}>
@@ -118,7 +169,7 @@ function CurrentCartOrderPage({navigation, route}) {
           </View>
 
           <View style={styles.infoView}>
-            {cart.status === 1 && (
+            {cart.status === 0 && (
               <View style={styles.infoSubView}>
                 <Text style={styles.infoText}>Votre date limite : &nbsp;</Text>
                 <Text style={styles.infoTimeText}>
@@ -133,12 +184,12 @@ function CurrentCartOrderPage({navigation, route}) {
                   {24 - new Date().getHours()} h
                 </Text>
                 <Text style={styles.infoTextLight}>
-                  Il y actuellement 4 propositions de livreurs en cours
+                  Texte de description ....
                 </Text>
               </View>
             )}
 
-            {cart.status === 2 && (
+            {cart.status === 1 && (
               <View style={styles.infoSubView}>
                 <Text style={styles.infoText}>
                   Votre date limite : &nbsp;
@@ -148,7 +199,11 @@ function CurrentCartOrderPage({navigation, route}) {
                 </Text>
                 <View style={styles.infoShipper}>
                   <Text style={styles.infoText}>
-                    Livreur proposé : Carla George
+                    Livreur proposé :{' '}
+                    {cart.delivery.shipper
+                      ? cart.delivery.shipper.first_name +
+                        cart.delivery.shipper.last_name
+                      : 'Carla George'}
                   </Text>
                 </View>
 
@@ -162,34 +217,41 @@ function CurrentCartOrderPage({navigation, route}) {
                       styles.estimatedPriceText,
                       styles.estimatedPriceTextMin,
                     ]}>
-                    45.10€
+                    {cart.average_price}€
                   </Text>
-                  <Text style={styles.infoText}> - </Text>
+                  {/* <Text style={styles.infoText}> - </Text>
                   <Text
                     style={[
                       styles.estimatedPriceText,
                       styles.estimatedPriceTextMax,
                     ]}>
                     50.30€
-                  </Text>
+                  </Text> */}
                 </View>
               </View>
             )}
 
-            {cart.status === 3 && (
+            {cart.status === 2 && (
               <View style={styles.infoSubView}>
                 <Text style={styles.infoText}>
-                  Commande livrée le 04/11/2022
+                  Commande livrée le{' '}
+                  {new Date(cart.delivery.deposit_date).toLocaleString()}
                 </Text>
                 <Text style={styles.infoText}>
-                  A récupérer avant le 07/11/2022
+                  A récupérer avant le{' '}
+                  {new Date(
+                    new Date(cart.delivery.deposit_date).setTime(
+                      new Date(cart.delivery.deposit_date).getTime() +
+                        172800000,
+                    ),
+                  ).toLocaleString()}
                 </Text>
               </View>
             )}
           </View>
 
           <View style={styles.buttonView}>
-            {cart.status === 1 && (
+            {cart.status === 0 && (
               <BasicButton
                 style={styles.button}
                 valid={false}
@@ -199,27 +261,28 @@ function CurrentCartOrderPage({navigation, route}) {
                 text="Annuler la liste"
               />
             )}
-            {cart.status === 2 && (
+            {/* {cart.status === 1 && (
               <BasicButton
                 style={styles.button}
                 onClick={() => {
                   cart.status++;
                 }}
-                text="Valider et payer la caution"
+                text="Voir votre commande"
               />
-            )}
-            {cart.status === 3 && (
+            )} */}
+            {cart.status === 2 && (
               <BasicButton
                 style={styles.button}
                 onClick={() => {
-                  cart.status = 1;
+                  setModalVisible(true);
                 }}
-                text="Récupérer mon code Locker"
+                text="Ouvrir le Locker"
               />
             )}
           </View>
         </View>
       )}
+      <Toast />
     </View>
   );
 }
@@ -309,12 +372,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 30,
   },
   estimatedPriceText: {
     fontSize: 25,
     fontWeight: '500',
+    marginLeft: 10,
   },
   estimatedPriceTextMin: {
     color: 'green',
@@ -339,6 +403,55 @@ const styles = StyleSheet.create({
   },
   progressLineUnselected: {
     backgroundColor: 'grey',
+  },
+  modalView: {
+    position: 'absolute',
+    top: 250,
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    margin: 10,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: 'red',
+  },
+  buttonConfirm: {
+    backgroundColor: 'green',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    color: 'black',
+    fontSize: 20,
+  },
+  modalPressableView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

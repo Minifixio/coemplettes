@@ -92,14 +92,14 @@ function CartPage({navigation}) {
   async function confirmDeadline() {
     try {
       setOpenDatePicker(false);
-      await CartService.addCart(deadline.getTime(), items);
+      await CartService.addCart(deadline.toJSON(), items);
       Toast.show({
         type: 'success',
         text1: 'Carte validée !',
       });
       setTimeout(() => {
         eraseCart();
-        navigation.navigate('Account', {screen: 'CurrentCartOrderPage'});
+        navigation.navigate('Account');
       }, 1000);
     } catch (e) {
       console.log("Erreur lors de l'ajout de carte : ", e);
