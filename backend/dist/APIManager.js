@@ -47,7 +47,7 @@ class API {
             { method: "GET", entryPointName: "open_locker", paramName: "locker_id", auth: false, callbackParam: (locker_id) => LockerManager_1.Locker.openLocker(locker_id) },
             { method: "POST", entryPointName: "user", paramName: null, auth: true, callbackParam: (user) => DBManager_1.DB.addUser(user) },
             { method: "POST", entryPointName: "shipper", paramName: null, auth: true, callbackParam: (shipper) => DBManager_1.DB.addShipper(shipper) },
-            { method: "POST", entryPointName: "cart", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.addCart(data.cart, data.cart_items) },
+            { method: "POST", entryPointName: "cart", paramName: null, auth: false, callbackParam: (data) => DBManager_1.DB.addCart(data.cart, data.cart_items) },
             { method: "POST", entryPointName: "delivery_proposal", paramName: null, auth: true, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
             { method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
             { method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },

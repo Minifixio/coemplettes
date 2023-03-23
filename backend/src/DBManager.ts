@@ -376,6 +376,13 @@ export class DB {
 
         // On supprime les cart précédentes de l'utilisateur
         // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+        const currentCart = await this.getCurrentCart(cart.owner_id)
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(CartItem)
+        .where("cart_id = :cart_id", { cart_id: currentCart ? currentCart.id : 0 })
+        .execute()
         await this.AppDataSource
         .createQueryBuilder()
         .delete()

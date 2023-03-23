@@ -419,6 +419,13 @@ class DB {
             // Le calcul du average_price de la cart se fait désormais côté application
             // On supprime les cart précédentes de l'utilisateur
             // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
+            const currentCart = yield this.getCurrentCart(cart.owner_id);
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(CartItem_1.CartItem)
+                .where("cart_id = :cart_id", { cart_id: currentCart ? currentCart.id : 0 })
+                .execute();
             yield this.AppDataSource
                 .createQueryBuilder()
                 .delete()
