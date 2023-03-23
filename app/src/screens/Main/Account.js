@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {UserContext} from '../../utils/UserProvider';
-import CurrentCartOrder from '../Cart/CurrentCartOrder';
+import CurrentCartOrderPage from '../Cart/CurrentCartOrder';
 import ShipperAccountStack from '../Shipper/ShipperAccount';
 
 const users = require('../../assets/json/users.json').users;
@@ -127,7 +127,7 @@ function AccountStack() {
       <Stack.Screen
         name="CurrentCartOrderPage"
         options={{title: 'Ma commande'}}
-        component={CurrentCartOrder}
+        component={CurrentCartOrderPage}
       />
       <Stack.Screen
         name="ShipperAccountStack"

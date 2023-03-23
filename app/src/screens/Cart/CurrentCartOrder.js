@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const carts = require('../../assets/json/carts.json').carts;
 
-function CurrentCartOrder({navigation, route}) {
+function CurrentCartOrderPage({navigation, route}) {
   /**
    * MOCKUP DATAS
    * cart
@@ -16,7 +16,7 @@ function CurrentCartOrder({navigation, route}) {
    * l'idée c'est d'ensuite les passer en paramètre de route
    */
 
-  const mockup = true;
+  const mockup = false;
 
   const [cart, setCart] = useState({});
 
@@ -27,7 +27,8 @@ function CurrentCartOrder({navigation, route}) {
       const fetchCart = async () => {
         try {
           const currentCart = await CartService.getCurrentCart();
-          if (currentCart !== []) {
+          console.log('[CurrentCartOrder] currentCart : ', currentCart);
+          if (currentCart !== {}) {
             setCart(currentCart);
           } else {
             setCart({});
@@ -341,4 +342,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CurrentCartOrder;
+export default CurrentCartOrderPage;

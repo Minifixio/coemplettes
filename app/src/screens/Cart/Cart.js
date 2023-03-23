@@ -99,8 +99,8 @@ function CartPage({navigation}) {
       });
       setTimeout(() => {
         eraseCart();
-        navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
-      }, 2000);
+        navigation.navigate('Account', {screen: 'CurrentCartOrderPage'});
+      }, 1000);
     } catch (e) {
       console.log("Erreur lors de l'ajout de carte : ", e);
       Toast.show({
