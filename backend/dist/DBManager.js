@@ -46,6 +46,7 @@ const Category_1 = require("./tables/Category");
 const FeaturedProduct_1 = require("./tables/FeaturedProduct");
 const OAuth_1 = require("./tables/OAuth");
 const CartItem_1 = require("./tables/CartItem");
+const LockerManager_1 = require("./LockerManager");
 class DB {
     static initialize(dbPort) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -524,6 +525,36 @@ class DB {
                 skipUpdateIfNoValuesChanged: true,
             })
                 .execute();
+        });
+    }
+    static depositDelivery(deliveryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const availableLockerId = LockerManager_1.Locker.getAvailableLocker();
+            console.log("[DBManager] Dépôt de la commande " + deliveryId + " au locker n°" + availableLockerId);
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Delivery_1.Delivery)
+                .set({ status: 3, locker_id: availableLockerId })
+                .where("id = :id", { id: deliveryId })
+                .execute();
+        });
+    }
+    static retreiveDelivery(deliveryId, retreived) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (retreived) {
+                console.log("[DBManager] Récupération correcte de la commande " + deliveryId);
+                yield this.updateDeliveryStatus(deliveryId, 4);
+                // On peut supprimer les carts associés à cette delivery
+                yield this.AppDataSource
+                    .createQueryBuilder()
+                    .delete()
+                    .from(Cart_1.Cart)
+                    .where("delivery_id = :delivery_id", { delivery_id: deliveryId });
+            }
+            else {
+                console.log("[DBManager] Problème lors de la récupération de la commande " + deliveryId);
+                yield this.updateDeliveryStatus(deliveryId, 5);
+            }
         });
     }
     // On lit un fichier JSON et on écrit ses données dans la BDD

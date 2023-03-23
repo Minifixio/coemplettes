@@ -29,4 +29,10 @@ export class Locker {
     static getLockersStates() {
         return this.lockerStates
     }
+
+    // Censé donner le numéro d'un locker disponible
+    // Pour des raisons de tests, pour l'instant la fonction renvoi constamment 0
+    static getAvailableLocker() {
+        return 0;
+    }
 }

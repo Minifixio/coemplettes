@@ -17,6 +17,7 @@ import { OAuth } from './tables/OAuth';
 import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
 import { CartItem } from './tables/CartItem';
+import { Locker } from './LockerManager';
 
 export class DB {
 
@@ -488,6 +489,35 @@ export class DB {
             }
         )
         .execute()
+    }
+
+    static async depositDelivery(deliveryId: number) {
+        const availableLockerId = Locker.getAvailableLocker()
+        console.log("[DBManager] Dépôt de la commande " + deliveryId + " au locker n°" + availableLockerId)
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Delivery)
+        .set({status: 3, locker_id: availableLockerId})
+        .where("id = :id", {id: deliveryId})
+        .execute()
+    }
+
+    static async retreiveDelivery(deliveryId: number, retreived: boolean) {
+        if (retreived) {
+            console.log("[DBManager] Récupération correcte de la commande " + deliveryId)
+            await this.updateDeliveryStatus(deliveryId, 4)
+
+            // On peut supprimer les carts associés à cette delivery
+            await this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(Cart)
+                .where("delivery_id = :delivery_id", { delivery_id: deliveryId})
+
+        } else {
+            console.log("[DBManager] Problème lors de la récupération de la commande " + deliveryId)
+            await this.updateDeliveryStatus(deliveryId, 5)
+        }
     }
 
     // On lit un fichier JSON et on écrit ses données dans la BDD

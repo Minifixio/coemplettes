@@ -53,7 +53,12 @@ class API {
             { method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateDeliveryStatus(data.delivery_id, data.status) },
             { method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },
             { method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id) => DBManager_1.DB.startDeliveryShopping(delivery_id) },
-            { method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: false, callbackParam: (data) => DBManager_1.DB.endDeliveryShopping(data.delivery_id, data.carts) },
+            { method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.endDeliveryShopping(data.delivery_id, data.carts) },
+            { method: "POST", entryPointName: "delivery_deposit", paramName: null, auth: true, callbackParam: (delivery_id) => DBManager_1.DB.depositDelivery(delivery_id) },
+            // On passe un paramètre 'retreive' boolean. 
+            // retreive = true => la commande a été récupérée normalement
+            // retreive = false => la commande n'a pas pu être récupérée i.e problème !
+            { method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.retreiveDelivery(data.delivery_id, data.retreived) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;

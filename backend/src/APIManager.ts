@@ -73,8 +73,13 @@ export class API {
         {method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data: {cart_id: number, status: number}) => DB.updateCartStatus(data.cart_id, data.status)},  
 
         {method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id: number) => DB.startDeliveryShopping(delivery_id)},
-        {method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: false, callbackParam: (data: {delivery_id: number, carts: Cart[]}) => DB.endDeliveryShopping(data.delivery_id, data.carts)},
+        {method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, carts: Cart[]}) => DB.endDeliveryShopping(data.delivery_id, data.carts)},
+        {method: "POST", entryPointName: "delivery_deposit", paramName: null, auth: true, callbackParam: (delivery_id: number) => DB.depositDelivery(delivery_id)},
 
+        // On passe un paramètre 'retreive' boolean. 
+        // retreive = true => la commande a été récupérée normalement
+        // retreive = false => la commande n'a pas pu être récupérée i.e problème !
+        {method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, retreived: boolean}) => DB.retreiveDelivery(data.delivery_id, data.retreived)},
     ]
 
     authMiddleware = async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction) => {
