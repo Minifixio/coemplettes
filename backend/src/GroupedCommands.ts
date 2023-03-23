@@ -91,22 +91,29 @@ export class GroupedCommands {
                     // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
                     deadline = new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
                     status = 0,
+                    current_price = 0
                 }
                 // WARNING ! En l'état : on parcourt les commandes à J+2 uniquement
                 while (unattributedCarts[j].distanceJourCourant == i) {
-                    if (commandPrice + unattributedCarts[j].average_price <= shipper.price_max) {
+                    if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
                         // On attribue la commande au livreur
                         unattributedCarts[j].delivery_proposal_id = deliveryProposal.id
-                        commandPrice += unattributedCarts[j].average_price
+                        deliveryProposal.current_price += unattributedCarts[j].average_price
                         // on supprime la commande de la liste des commandes non attribuées
                         unattributedCarts.splice(j, 1)
                     }
                     j++
                 }
-
-                /* Pour pouvoir compléter avec des commandes à J+3, J+4, etc, il faudrait avoir un attribut "current_Price" 
-                dans la classe DeliveryProposal, qui serait mis à jour à chaque fois qu'on ajoute une commande à la DP */
-                // deliveryProposal.current_price = commandPrice
+                // On essaie de combler les trous avec les commandes pour les jours suivants
+                for (const cart of unattributedCarts) {
+                        if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
+                            unattributedCarts[j].delivery_proposal_id = deliveryProposal.id
+                            deliveryProposal.current_price += unattributedCarts[j].average_price
+                            unattributedCarts.splice(j, 1)
+                        }
+                        j++
+                    }
+                }
 
 
                 // On supprime le livreur de la liste des livreurs disponibles 
