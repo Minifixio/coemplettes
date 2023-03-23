@@ -18,12 +18,12 @@ import ProductPage from '../Products/Product';
 import {ProductService} from '../../services/ProductService';
 
 const categoriesIcons = {
-  0: require('../assets/icons/categories/fruit.png'),
-  1: require('../assets/icons/categories/vegetable.png'),
-  2: require('../assets/icons/categories/grocery.png'),
-  3: require('../assets/icons/categories/care-products.png'),
-  4: require('../assets/icons/categories/drink.png'),
-  5: require('../assets/icons/categories/cereal.png'),
+  0: require('../../assets/icons/categories/fruit.png'),
+  1: require('../../assets/icons/categories/vegetable.png'),
+  2: require('../../assets/icons/categories/grocery.png'),
+  3: require('../../assets/icons/categories/care-products.png'),
+  4: require('../../assets/icons/categories/drink.png'),
+  5: require('../../assets/icons/categories/cereal.png'),
 };
 
 const _categories = require('../../assets/json/categories.json').categories;

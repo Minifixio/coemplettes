@@ -11,7 +11,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 const delivery_proposals =
-  require('../assets/json/delivery_proposals.json').delivery_proposals;
+  require('../../assets/json/delivery_proposals.json').delivery_proposals;
 
 const StatusItem = ({deliveryProposal, navigation}) => {
   const selected = deliveryProposal.status === 0 ? true : false;

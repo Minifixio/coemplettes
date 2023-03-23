@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import BasicButton from '../components/BasicButton';
-import {CartService} from '../services/CartService';
+import BasicButton from '../../components/BasicButton';
+import {CartService} from '../../services/CartService';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const carts = require('../assets/json/carts.json').carts;
+const carts = require('../../assets/json/carts.json').carts;
 
 function CurrentCartOrder({navigation, route}) {
   /**

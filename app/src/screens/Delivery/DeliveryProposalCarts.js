@@ -12,7 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 const cart_response =
-  require('../assets/json/cart_response.json').cart_response;
+  require('../../assets/json/cart_response.json').cart_response;
 
 function DeliveryProposalCarts() {
   /**

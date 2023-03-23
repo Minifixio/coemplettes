@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-import BasicButton from '../components/BasicButton';
-const deliveries = require('../assets/json/deliveries.json').deliveries;
+import BasicButton from '../../components/BasicButton';
+const deliveries = require('../../assets/json/deliveries.json').deliveries;
 
 const StatusItem = ({
   iconName,

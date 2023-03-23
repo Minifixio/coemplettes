@@ -12,7 +12,7 @@ function ProductPage({navigation, route}) {
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState({});
   const {addToCart} = useContext(CartContext);
-  const {productData, id} = route.params;
+  const {productData} = route.params;
 
   useEffect(() => {
     navigation.setOptions({title: ''});

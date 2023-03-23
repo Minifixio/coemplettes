@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
-import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
+import BackgroundImage from '../../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../../components/BasicButton';
 import Toast from 'react-native-toast-message';
 import {UserContext} from '../../utils/UserProvider';
