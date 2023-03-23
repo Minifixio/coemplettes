@@ -52,7 +52,7 @@ export class GroupedCommands {
         }
     }
 
-    static async orderShipperDisponibilities(shipper: Shipper) {
+    static orderShipperDisponibilities(shipper: Shipper) {
         /* On récupère les disponibilités du livreur qui sont une string au format '0010011' 
         (7 caractères pour les 7 jours de la semaine) avec 0=indisponible et 1=disponible
         On réordonne la string pour que le caractère correspondant au jour actuel soit en première position*/
@@ -70,20 +70,21 @@ export class GroupedCommands {
         // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
         let shippers: Shipper[] = await DB.getShippers()
         for (const shipper of shippers) {
-            await GroupedCommands.orderShipperDisponibilities(shipper)
+            GroupedCommands.orderShipperDisponibilities(shipper)
         }
         for (let i = 2; i < 8; i++) {
             let shippersDispoJour = []
-            for (const shipper in shippers) {
-                if (shipper.disponibilities[i] == 1) {
+            for (const shipper of shippers) {
+                if (shipper.disponibilities[i] === '1') {
                     shippersDispoJour.push(shipper)
                 }
             }
             // Parmi les shippers disponibles à J+2, on les trie par price_max décroissant
-            shippersDispoJour.sort((shipper: a, shipper : b) => {
-                return b.price_max - a.price_max
+            shippersDispoJour.sort((shipper1: Shipper, shipper2: Shipper) => {
+                return shipper2.price_max - shipper1.price_max
             })
         }
+    }
 
 
     static async createGroupedCommands() {
@@ -122,7 +123,7 @@ export class GroupedCommands {
                 // On case les utilisateurs dans le créneau horaire
                 for (const cart of unattributedCarts) {
                     // Si le créneau horaire est dans la plage de livraison, on le case et si le prix max n'est pas dépassé
-                    if (new Date(cart.deadline) >= timeSlotEnd && commandsPrice + cart.average_price < shipper.price_max) {
+                    if (new Date(cart.deadline) >= new Date(timeSlot) && commandsPrice + cart.average_price < shipper.price_max) {
                         commandsOfTimeSlot.push(cart.id)
                         commandsPrice += cart.average_price
                         // On supprime le panier de la liste des paniers non attribués
