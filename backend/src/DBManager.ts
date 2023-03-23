@@ -442,6 +442,54 @@ export class DB {
         .execute()
     }
 
+    public static async startDeliveryShopping(deliveryId: number) {
+        console.log("[DBManager] Début de l'achat pour la commande " + deliveryId + " !")
+        await this.updateDeliveryStatus(deliveryId, 1)
+    }
+
+    /**
+     * Permet d'update les carts, les prix, les status des cart_items suite à l'achat
+     * @param deliveryId 
+     * @param carts les carts mises à jour i.e avec le status des carts items mis à jour et le price_to_pay mis à jour
+     */
+    public static async endDeliveryShopping(deliveryId: number, carts: Cart[]) {
+        console.log("[DBManager] Fin de l'achat pour la commande " + deliveryId + " !")
+        await this.updateDeliveryStatus(deliveryId, 2)
+
+        console.log("[DBManager] Mis à jour des prix finaux pour la commande " + deliveryId + " !")
+        // On met à jour les price_to_pay envoyés par le livreur
+        await this.AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(Cart)
+        .values(carts)
+        .orUpdate(
+            ["status", "price_to_pay"],
+            ["id"],
+            {
+                skipUpdateIfNoValuesChanged: true,
+            }
+        )
+        .execute()
+
+        console.log("[DBManager] Mis à jour des status des cart_items pour la commande " + deliveryId + " !")
+        const items = carts.reduce((acc, cur) => acc.concat(cur.items), [] as CartItem[])
+        // On met à jour les status des items (trouvés ou pas) envoyés par le livreur
+        await this.AppDataSource
+        .createQueryBuilder()
+        .insert()
+        .into(CartItem)
+        .values(items)
+        .orUpdate(
+            ["status"],
+            ["id"],
+            {
+                skipUpdateIfNoValuesChanged: true,
+            }
+        )
+        .execute()
+    }
+
     // On lit un fichier JSON et on écrit ses données dans la BDD
     public static async writeFromJSON(tableName: string) {
         fs.readFile(path.join(__dirname, `../assets/json/${tableName}.json`), 'utf8', async (error, data: any) => {

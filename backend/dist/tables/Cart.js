@@ -54,6 +54,15 @@ __decorate([
     __metadata("design:type", Number)
 ], Cart.prototype, "average_price", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "float", nullable: true }),
+    __metadata("design:type", Number)
+], Cart.prototype, "price_to_pay", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "int", nullable: true }) // le numéro du locker qui sera attribué une fois la Delivery déposée
+    ,
+    __metadata("design:type", Number)
+], Cart.prototype, "locker_id", void 0);
+__decorate([
     (0, typeorm_1.ManyToMany)(type => User_1.User, owner => owner),
     (0, typeorm_1.JoinColumn)({ name: 'owner_id', referencedColumnName: 'id' }),
     __metadata("design:type", User_1.User)

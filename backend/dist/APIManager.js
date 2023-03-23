@@ -52,6 +52,8 @@ class API {
             { method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
             { method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateDeliveryStatus(data.delivery_id, data.status) },
             { method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },
+            { method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id) => DBManager_1.DB.startDeliveryShopping(delivery_id) },
+            { method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: false, callbackParam: (data) => DBManager_1.DB.endDeliveryShopping(data.delivery_id, data.carts) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;

@@ -260,7 +260,7 @@ class DB {
             console.log("[DBManager] Récupération des crénaux horaires dans la BDD");
             const res = yield this.AppDataSource
                 .getRepository(Shipper_1.Shipper)
-                .createQueryBuilder("shipper")
+                .createQueryBuilder("timeSlot")
                 .select("shipper.disponibilities, shipper.id, shipper.price_max")
                 .where("shipper.disponibilities <> :disponibilities", { disponibilities: null })
                 .getMany();
@@ -414,12 +414,7 @@ class DB {
             console.log("[DBManager] Ajout de la cart :");
             console.log(cart);
             cart.status = 0;
-            // calcul du prix total moyen
-            let total = 0;
-            cartItems.forEach(item => {
-                total += item.product.average_price * item.quantity;
-            });
-            cart.average_price = total;
+            // Le calcul du average_price de la cart se fait désormais côté application
             // On supprime les cart précédentes de l'utilisateur
             // On part du principe que chaque utilistaeur à une seule cart active à cahque fois
             yield this.AppDataSource
@@ -488,6 +483,46 @@ class DB {
                 .update(Delivery_1.Delivery)
                 .set({ status: status })
                 .where("id = :id", { id: deliveryId })
+                .execute();
+        });
+    }
+    static startDeliveryShopping(deliveryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Début de l'achat pour la commande " + deliveryId + " !");
+            yield this.updateDeliveryStatus(deliveryId, 1);
+        });
+    }
+    /**
+     * Permet d'update les carts, les prix, les status des cart_items suite à l'achat
+     * @param deliveryId
+     * @param carts les carts mises à jour i.e avec le status des carts items mis à jour et le price_to_pay mis à jour
+     */
+    static endDeliveryShopping(deliveryId, carts) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Fin de l'achat pour la commande " + deliveryId + " !");
+            yield this.updateDeliveryStatus(deliveryId, 2);
+            console.log("[DBManager] Mis à jour des prix finaux pour la commande " + deliveryId + " !");
+            // On met à jour les price_to_pay envoyés par le livreur
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(Cart_1.Cart)
+                .values(carts)
+                .orUpdate(["status", "price_to_pay"], ["id"], {
+                skipUpdateIfNoValuesChanged: true,
+            })
+                .execute();
+            console.log("[DBManager] Mis à jour des status des cart_items pour la commande " + deliveryId + " !");
+            const items = carts.reduce((acc, cur) => acc.concat(cur.items), []);
+            // On met à jour les status des items (trouvés ou pas) envoyés par le livreur
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .insert()
+                .into(CartItem_1.CartItem)
+                .values(items)
+                .orUpdate(["status"], ["id"], {
+                skipUpdateIfNoValuesChanged: true,
+            })
                 .execute();
         });
     }
