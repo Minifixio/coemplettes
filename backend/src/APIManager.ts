@@ -66,7 +66,7 @@ export class API {
 
         {method: "POST", entryPointName: "user", paramName: null, auth: true, callbackParam: (user: User) => DB.addUser(user)},
         {method: "POST", entryPointName: "shipper", paramName: null, auth: true, callbackParam: (shipper: Shipper) => DB.addShipper(shipper)},
-        {method: "POST", entryPointName: "cart", paramName: null, auth: false, callbackParam: (data: {cart: Cart, cart_items: CartItem[]}) => DB.addCart(data.cart, data.cart_items)},
+        {method: "POST", entryPointName: "cart", paramName: null, auth: true, callbackParam: (data: {cart: Cart, cart_items: CartItem[]}) => DB.addCart(data.cart, data.cart_items)},
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, auth: true, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
         {method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product: Product) => DB.addProduct(product)},        
         {method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data: {cart_id: number, status: number}) => DB.updateCartStatus(data.cart_id, data.status)},  
