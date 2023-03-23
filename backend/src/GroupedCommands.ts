@@ -83,6 +83,36 @@ export class GroupedCommands {
             shippersDispoJour.sort((shipper1: Shipper, shipper2: Shipper) => {
                 return shipper2.price_max - shipper1.price_max
             })
+            for (const shipper of shippersDispoJour) {
+                let j = 0
+                let commandPrice = 0
+                let deliveryProposal: DeliveryProposal { // CREATION DE LA DP A CORRIGER
+                    shipper_id = shipper.id,
+                    // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
+                    deadline = new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
+                    status = 0,
+                }
+                // WARNING ! En l'état : on parcourt les commandes à J+2 uniquement
+                while (unattributedCarts[j].distanceJourCourant == i) {
+                    if (commandPrice + unattributedCarts[j].average_price <= shipper.price_max) {
+                        // On attribue la commande au livreur
+                        unattributedCarts[j].delivery_proposal_id = deliveryProposal.id
+                        commandPrice += unattributedCarts[j].average_price
+                        // on supprime la commande de la liste des commandes non attribuées
+                        unattributedCarts.splice(j, 1)
+                    }
+                    j++
+                }
+
+                /* Pour pouvoir compléter avec des commandes à J+3, J+4, etc, il faudrait avoir un attribut "current_Price" 
+                dans la classe DeliveryProposal, qui serait mis à jour à chaque fois qu'on ajoute une commande à la DP */
+                // deliveryProposal.current_price = commandPrice
+
+
+                // On supprime le livreur de la liste des livreurs disponibles 
+                shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1)
+            }
+
         }
     }
 
