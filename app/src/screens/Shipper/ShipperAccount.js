@@ -11,14 +11,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ShipperInformationPage from './ShipperInformations';
-import DeliveryTracking from './DeliveryTracking';
-import BasicButton from '../components/BasicButton';
-import {UserContext} from '../utils/UserProvider';
-import DeliveryProposals from './DeliveryProposals';
-import DeliveryCartCompletion from './DeliveryCartCompletion';
-import DeliveryProposalCarts from './DeliveryProposalCarts';
+import DeliveryTracking from '../DeliveryTracking';
+import BasicButton from '../../components/BasicButton';
+import {UserContext} from '../../utils/UserProvider';
+import DeliveryProposals from '../DeliveryProposals';
+import DeliveryCartCompletion from '../Delivery/DeliveryCartCompletion';
+import DeliveryProposalCarts from '../DeliveryProposalCarts';
 
-const shippers = require('../assets/json/shippers.json').shippers;
+const shippers = require('../../assets/json/shippers.json').shippers;
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
 
 function MenuItem({text, icon, goTo}) {

@@ -6,17 +6,16 @@ import {
   Image,
   SafeAreaView,
   FlatList,
-  Switch,
   Pressable,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import ProductShowcase from '../components/ProductShowcase';
-import CategoryPage from './Category';
-import ProductPage from './Product';
-import {ProductService} from '../services/ProductService';
+import ProductShowcase from '../../components/ProductShowcase';
+import CategoryPage from '../Products/Category';
+import ProductPage from '../Products/Product';
+import {ProductService} from '../../services/ProductService';
 
 const categoriesIcons = {
   0: require('../assets/icons/categories/fruit.png'),
@@ -27,9 +26,9 @@ const categoriesIcons = {
   5: require('../assets/icons/categories/cereal.png'),
 };
 
-const _categories = require('../assets/json/categories.json').categories;
+const _categories = require('../../assets/json/categories.json').categories;
 const _featuredProducts =
-  require('../assets/json/featured_products.json').featured_products;
+  require('../../assets/json/featured_products.json').featured_products;
 
 const CategoryItem = function ({name, color, id, navigation}) {
   return (

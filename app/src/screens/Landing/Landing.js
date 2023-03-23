@@ -12,9 +12,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RegisterPage from './RegisterPage';
 import LoginPage from './Login';
 
-import BackgroundImage from '../assets/images/StudentShopping3.jpeg';
-import Logo from '../assets/images/Logo.png';
-import BasicButton from '../components/BasicButton';
+import BackgroundImage from '../../assets/images/StudentShopping3.jpeg';
+import Logo from '../../assets/images/Logo.png';
+import BasicButton from '../../components/BasicButton';
 
 const WelcomePage = ({navigation, isConnected, setIsConnected}) => {
   return (

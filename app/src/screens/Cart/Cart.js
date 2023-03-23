@@ -9,13 +9,13 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {CartContext} from '../utils/CartProvider';
+import {CartContext} from '../../utils/CartProvider';
 import LinearGradient from 'react-native-linear-gradient';
 import SwipeableFlatList from 'react-native-swipeable-list';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import BasicButton from '../components/BasicButton';
+import BasicButton from '../../components/BasicButton';
 import DatePicker from 'react-native-date-picker';
-import {CartService} from '../services/CartService';
+import {CartService} from '../../services/CartService';
 import Toast from 'react-native-toast-message';
 
 const Divider = () => {

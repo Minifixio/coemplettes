@@ -3,13 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {CartProvider} from '../utils/CartProvider';
+import {CartProvider} from '../../utils/CartProvider';
 
 import HomeStack from './Home';
 import FavoutritesPage from './Favourites';
-import CartPage from './Cart';
+import CartPage from '../Cart/Cart';
 import AccountStack from './Account';
-import CurrentCartOrder from './CurrentCartOrder';
+import CurrentCartOrder from '../Cart/CurrentCartOrder';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

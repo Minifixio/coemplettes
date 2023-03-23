@@ -3,11 +3,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import InputSpinner from 'react-native-input-spinner';
-import BasicButton from '../components/BasicButton';
-import {AuthService} from '../services/AuthService';
-import {UserService} from '../services/UserService';
+import BasicButton from '../../components/BasicButton';
+import {AuthService} from '../../services/AuthService';
+import {UserService} from '../../services/UserService';
 import Toast from 'react-native-toast-message';
-import {UserContext} from '../utils/UserProvider';
+import {UserContext} from '../../utils/UserProvider';
 
 function ShipperInformationPage({navigation}) {
   const {updateShipperProfile, shipperInfos} = useContext(UserContext);

@@ -3,10 +3,10 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import InputSpinner from 'react-native-input-spinner';
-import BasicButton from '../components/BasicButton';
+import BasicButton from '../../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {CartContext} from '../utils/CartProvider';
+import {CartContext} from '../../utils/CartProvider';
 
 function ProductPage({navigation, route}) {
   const [quantity, setQuantity] = useState(0);

@@ -10,11 +10,11 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {UserContext} from '../utils/UserProvider';
-import CurrentCartOrder from './CurrentCartOrder';
-import ShipperAccountStack from './ShipperAccount';
+import {UserContext} from '../../utils/UserProvider';
+import CurrentCartOrder from '../CurrentCartOrder';
+import ShipperAccountStack from '../Shipper/ShipperAccount';
 
-const users = require('../assets/json/users.json').users;
+const users = require('../../assets/json/users.json').users;
 
 const profilePicture = require('../assets/icons/misc/profile_picture.png');
 

@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import BasicButton from '../components/BasicButton';
+import BasicButton from '../../components/BasicButton';
 
 const cart_response =
-  require('../assets/json/cart_response.json').cart_response;
+  require('../../assets/json/cart_response.json').cart_response;
 
 const Divider = () => {
   return (
