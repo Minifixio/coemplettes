@@ -26,6 +26,9 @@ export class DeliveryProposal {
     @Column({ type: "int", nullable:false })
     status!: number
 
+    @Column({ type: "float", nullable:false })
+    current_price!: number
+
     // @Column({ type: "string", nullable:false })
     // timeSlot!: string
 
