@@ -239,6 +239,7 @@ class DB {
             const res = yield this.AppDataSource
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
+                .leftJoinAndSelect("cart.delivery", "delivery")
                 .where("cart.owner_id = :owner_id", { owner_id: owner_id })
                 .getOne();
             return res;

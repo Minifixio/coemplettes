@@ -200,6 +200,7 @@ export class DB {
         const res = await this.AppDataSource
         .getRepository(Cart)
         .createQueryBuilder("cart")
+        .leftJoinAndSelect("cart.delivery", "delivery")
         .where("cart.owner_id = :owner_id", {owner_id: owner_id})
         .getOne()
         return res
