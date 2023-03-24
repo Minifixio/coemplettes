@@ -47,6 +47,23 @@ function CurrentCartOrderPage({navigation, route}) {
     }
   }, [mockup, setCart]);
 
+  const cancelCart = async () => {
+    try {
+      await CartService.cancelCart(cart.id);
+      Toast.show({
+        type: 'success',
+        text1: 'Commande annulée !',
+      });
+      setCart({});
+    } catch (e) {
+      console.log("[CurrentCartOrder] Impossible d'annuler la commande : ", e);
+      Toast.show({
+        type: 'error',
+        text1: "Impossible d'annuler la commande !",
+      });
+    }
+  };
+
   const openLocker = async () => {
     try {
       await CartService.openLocker(cart.locker_id);
@@ -54,7 +71,9 @@ function CurrentCartOrderPage({navigation, route}) {
         type: 'success',
         text1: 'Locker ouvert !',
       });
-      cart.status = 4;
+      let newCart = cart;
+      newCart.status = 4;
+      setCart(newCart);
     } catch (e) {
       console.log("[CurrentCartOrder] Impossible d'ouvrir le Locker : ", e);
       Toast.show({
@@ -99,7 +118,9 @@ function CurrentCartOrderPage({navigation, route}) {
 
       {cart === {} && (
         <View style={styles.emptyTextView}>
-          <Text style={styles.emptyText}>Ton panier est vide !</Text>
+          <Text style={styles.emptyText}>
+            Aucune commande en cours... Créez un panier pour commencer !
+          </Text>
           <Ionicons name="sad" size={40} color="black" />
         </View>
       )}
@@ -260,9 +281,9 @@ function CurrentCartOrderPage({navigation, route}) {
                 style={styles.button}
                 valid={false}
                 onClick={() => {
-                  cart.status++;
+                  cancelCart();
                 }}
-                text="Annuler la liste"
+                text="Annuler la commande"
               />
             )}
             {/* {cart.status === 1 && (

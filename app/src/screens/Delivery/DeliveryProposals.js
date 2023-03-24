@@ -79,6 +79,8 @@ function DeliveryProposals({navigation}) {
    **/
   const [deliveryProposals, setDeliveryProposals] = useState([]);
 
+  const mockup = false;
+
   var _deliveryProposals = delivery_proposals;
 
   useEffect(() => {
