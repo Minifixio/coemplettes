@@ -14,7 +14,7 @@ import ShipperInformationPage from './ShipperInformations';
 import DeliveryTracking from '../Delivery/DeliveryTracking';
 import BasicButton from '../../components/BasicButton';
 import {UserContext} from '../../utils/UserProvider';
-import DeliveryProposals from '../Delivery/DeliveryProposals';
+import DeliveryProposalsPage from '../Delivery/DeliveryProposals';
 import DeliveryCartCompletion from '../Delivery/DeliveryCartCompletion';
 import DeliveryProposalCarts from '../Delivery/DeliveryProposalCarts';
 
@@ -91,7 +91,7 @@ function ShipperAccountPage({navigation}) {
             text="Propositions de livraison"
             icon="ios-basket-outline"
             goTo={() => {
-              navigation.push('DeliveryProposals');
+              navigation.push('DeliveryProposalsPage');
             }}
           />
         </View>
@@ -141,9 +141,9 @@ function ShipperAccountStack() {
         component={DeliveryTracking}
       />
       <Stack.Screen
-        name="DeliveryProposals"
+        name="DeliveryProposalsPage"
         options={{title: 'Propositions de livraison'}}
-        component={DeliveryProposals}
+        component={DeliveryProposalsPage}
       />
       <Stack.Screen
         name="DeliveryCartCompletion"

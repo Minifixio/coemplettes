@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import {DeliveryService} from '../../services/DeliveryService';
 const delivery_proposals =
   require('../../assets/json/delivery_proposals.json').delivery_proposals;
 
@@ -71,7 +72,7 @@ const StatusItem = ({deliveryProposal, navigation}) => {
   );
 };
 
-function DeliveryProposals({navigation}) {
+function DeliveryProposalsPage({navigation}) {
   /**
    * MOCKUP DATA
    *
@@ -85,7 +86,35 @@ function DeliveryProposals({navigation}) {
 
   useEffect(() => {
     setDeliveryProposals(_deliveryProposals);
-  }, [_deliveryProposals]);
+    if (mockup) {
+      setDeliveryProposals(_deliveryProposals);
+    } else {
+      const fetchCart = async () => {
+        try {
+          const deliveryProposalsData =
+            await DeliveryService.getDeliveryProposals();
+          if (deliveryProposalsData.length > 0) {
+            console.log(
+              '[DeliveryProposals] Des delivery proposals de trouvé : ',
+              deliveryProposalsData,
+            );
+            setDeliveryProposals(deliveryProposalsData);
+          } else {
+            console.log(
+              '[DeliveryProposals] Pas de delivery proposals de trouvé !',
+            );
+            setDeliveryProposals([]);
+          }
+        } catch (e) {
+          console.log(
+            '[DeliveryProposals] Erreur lors du chargement des delivery proposals...',
+            e,
+          );
+        }
+      };
+      fetchCart();
+    }
+  }, [_deliveryProposals, mockup]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -217,4 +246,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeliveryProposals;
+export default DeliveryProposalsPage;

@@ -47,7 +47,14 @@ export class CartService {
         const userId = await AuthService.getUserId();
         console.log("[CartService] Récupération des carts de l'utilisateur");
         const res = await APIService.get('current_cart', userId);
-        const cart = await res.json();
+        const content = await res.text();
+
+        let cart;
+        if (content !== '') {
+          cart = JSON.parse(content);
+        } else {
+          cart = {};
+        }
 
         resolve(cart);
       } catch (e) {
@@ -61,7 +68,7 @@ export class CartService {
       try {
         console.log("[CartService] Récupération des carts de l'utilisateur");
         await APIService.post('cart_cancel', {cart_id: cartId});
-        resolve(cart);
+        resolve();
       } catch (e) {
         reject(e);
       }

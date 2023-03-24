@@ -30,10 +30,14 @@ function CurrentCartOrderPage({navigation, route}) {
       const fetchCart = async () => {
         try {
           const currentCart = await CartService.getCurrentCart();
-          console.log('[CurrentCartOrder] currentCart : ', currentCart);
-          if (currentCart !== {}) {
+          if (currentCart.id !== undefined) {
+            console.log(
+              '[CurrentCartOrder] Une cart de trouvé : ',
+              currentCart,
+            );
             setCart(currentCart);
           } else {
+            console.log('[CurrentCartOrder] Pas de cart de trouvé !');
             setCart({});
           }
         } catch (e) {
@@ -116,7 +120,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       </Modal>
 
-      {cart === {} && (
+      {cart.id === undefined && (
         <View style={styles.emptyTextView}>
           <Text style={styles.emptyText}>
             Aucune commande en cours... Créez un panier pour commencer !
@@ -125,7 +129,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {cart !== {} && (
+      {cart.id !== undefined && (
         <View style={styles.subContainer}>
           <View style={styles.progressView}>
             <View style={styles.progressCircleView}>
@@ -490,6 +494,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  emptyText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  emptyTextView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
 });
 
