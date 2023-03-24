@@ -168,7 +168,6 @@ export class GroupedCommands {
             else {
                 possibleSupermarkets = ['Cora Massy', 'Auchan Villebon', 'Leclerc Massy', 'Intermarché Moulon']
             }
-
         }
 
     }
@@ -241,5 +240,5 @@ export class GroupedCommands {
 
         }
 
-    } */
+    } 
 }

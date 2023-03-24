@@ -11,6 +11,9 @@ export class Product {
     @Column({ type: "varchar", length: 25, nullable:false })
     brand!: string
 
+    @Column({ type: "int", nullable:false })
+    reference!: number
+
     @Column({ type: "varchar", length: 25, nullable:false })
     quantity_type!: string
 
