@@ -65,7 +65,7 @@ export class GroupedCommands {
         // Regroupement de commandes
         // On récupère les commandes non attribuées
         let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
-        // On trie les commandes par distance au jour courant (plus proche en premier)
+        // On trie les commandes par distance au jour courant (plus proche en premier) et par prix
         await GroupedCommands.sortedUnattributedCarts(unattributedCarts)
         // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
         let shippers: Shipper[] = await DB.getShippers()
@@ -85,7 +85,6 @@ export class GroupedCommands {
             })
             for (const shipper of shippersDispoJour) {
                 let j = 0
-                let commandPrice = 0
                 let deliveryProposal: DeliveryProposal { // CREATION DE LA DP A CORRIGER
                     shipper_id = shipper.id,
                     // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
@@ -99,6 +98,7 @@ export class GroupedCommands {
                         // On attribue la commande au livreur
                         unattributedCarts[j].delivery_proposal_id = deliveryProposal.id
                         deliveryProposal.current_price += unattributedCarts[j].average_price
+                        unattributedCarts[j].status = 1
                         // on supprime la commande de la liste des commandes non attribuées
                         unattributedCarts.splice(j, 1)
                     }
@@ -106,16 +106,14 @@ export class GroupedCommands {
                 }
                 // On essaie de combler les trous avec les commandes pour les jours suivants
                 for (const cart of unattributedCarts) {
-                        if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
-                            unattributedCarts[j].delivery_proposal_id = deliveryProposal.id
-                            deliveryProposal.current_price += unattributedCarts[j].average_price
-                            unattributedCarts.splice(j, 1)
+                    if (cart.distanceJourCourant > i) {
+                        if (deliveryProposal.current_price + cart.average_price <= shipper.price_max) {
+                            cart.delivery_proposal_id = deliveryProposal.id
+                            deliveryProposal.current_price += cart.average_price
+                            unattributedCarts.splice(unattributedCarts.indexOf(cart), 1)
                         }
-                        j++
                     }
                 }
-
-
                 // On supprime le livreur de la liste des livreurs disponibles 
                 shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1)
             }
