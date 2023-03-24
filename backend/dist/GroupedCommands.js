@@ -78,7 +78,7 @@ class GroupedCommands {
             // Regroupement de commandes
             // On récupère les commandes non attribuées
             let unattributedCarts = yield DBManager_1.DB.getUnattributedCarts();
-            // On trie les commandes par distance au jour courant (plus proche en premier)
+            // On trie les commandes par distance au jour courant (plus proche en premier) et par prix
             yield GroupedCommands.sortedUnattributedCarts(unattributedCarts);
             // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
             let shippers = yield DBManager_1.DB.getShippers();
@@ -92,10 +92,51 @@ class GroupedCommands {
                         shippersDispoJour.push(shipper);
                     }
                 }
-                // Parmi les shippers disponibles à J+2, on les trie par price_max décroissant
+                // Parmi les shippers disponibles à J+i, on les trie par price_max décroissant
                 shippersDispoJour.sort((shipper1, shipper2) => {
                     return shipper2.price_max - shipper1.price_max;
                 });
+                let ref = 0;
+                for (const shipper of shippersDispoJour) {
+                    let j = 0;
+                    let deliveryProposal = {
+                        ref,
+                        shipper_id: shipper.id,
+                        // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
+                        deadline: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
+                        creation_date: new Date(),
+                        status: 0,
+                        current_price: 0,
+                        size: 0,
+                    };
+                    // WARNING ! En l'état, les commandes à J+i sont prioritaires sur les suivantes
+                    while (unattributedCarts[j].distanceJourCourant == i) {
+                        if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
+                            // On attribue la commande au livreur
+                            unattributedCarts[j].delivery_proposal_id = deliveryProposal.ref;
+                            deliveryProposal.current_price += unattributedCarts[j].average_price;
+                            unattributedCarts[j].status = 1;
+                            // on supprime la commande de la liste des commandes non attribuées
+                            unattributedCarts.splice(j, 1);
+                        }
+                        j++;
+                    }
+                    // On essaie de combler les trous avec les commandes pour les jours suivants
+                    for (const cart of unattributedCarts) {
+                        if (cart.distanceJourCourant > i) {
+                            if (deliveryProposal.current_price + cart.average_price <= shipper.price_max) {
+                                cart.delivery_proposal_id = deliveryProposal.ref;
+                                deliveryProposal.current_price += cart.average_price;
+                                unattributedCarts.splice(unattributedCarts.indexOf(cart), 1);
+                            }
+                        }
+                    }
+                    /* On supprime le livreur de la liste des livreurs disponibles
+                    WARNING : actuellement la suppression est fait dans tous les cas, donc même si le shipper n'a pas reçu de commande
+                    On pourrait mettre un if deliveryProposal.curent_price > 1 pour checker, mais le shipper resterait toujours dispo */
+                    shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1);
+                    ref++;
+                }
             }
         });
     }

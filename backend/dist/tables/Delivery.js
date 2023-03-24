@@ -25,6 +25,10 @@ __decorate([
 ], Delivery.prototype, "shipper_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "datetime", nullable: false }),
+    __metadata("design:type", Date)
+], Delivery.prototype, "deadline", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "datetime", nullable: true }),
     __metadata("design:type", Date
     // 0 = la commande a été attribuée au livreur qui l'a accepté 
     // 1 = la commande est en cours d'achat
@@ -33,7 +37,7 @@ __decorate([
     // 4 = la commande a été récupérée normalement par le user sans soucis
     // 5 = problème lors de la récupération
     )
-], Delivery.prototype, "deadline", void 0);
+], Delivery.prototype, "deposit_date", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)

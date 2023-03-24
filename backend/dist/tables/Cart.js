@@ -75,7 +75,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(type => DeliveryProposal_1.DeliveryProposal, deliveryProposal => deliveryProposal),
     (0, typeorm_1.JoinColumn)({ name: 'delivery_proposal_id', referencedColumnName: 'id' }),
-    __metadata("design:type", Delivery_1.Delivery)
+    __metadata("design:type", DeliveryProposal_1.DeliveryProposal)
 ], Cart.prototype, "delivery_proposal", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => CartItem_1.CartItem, (cartItem) => cartItem.cart),

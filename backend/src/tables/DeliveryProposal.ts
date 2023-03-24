@@ -15,10 +15,10 @@ export class DeliveryProposal {
 
     // A voir sur la syntaxe : default: () => "CURRENT_TIMESTAMP"
     @Column({ type: "datetime", nullable:true, default: () => "CURRENT_TIMESTAMP" })
-    creation_date!: number
+    creation_date!: Date 
 
     @Column({ type: "datetime", nullable:false })
-    deadline!: number
+    deadline!: Date
 
     /* pour un delivery_proposal encore en attente (donc non validé par le shipper sur l'app) : status=0 et delivery_id=null
     pour un delivery_proposal validé par le shipper sur l'app : status=1
@@ -36,9 +36,9 @@ export class DeliveryProposal {
     @JoinColumn(
         { name: 'shipper_id', referencedColumnName: 'user_id'}
     )
-    shipper!: Shipper
+    shipper!: Shipper | undefined
 
     @OneToMany(() => Cart, (cart) => cart.delivery_proposal)
-    carts!: Cart[]
+    carts!: Cart[] | undefined
 
 }

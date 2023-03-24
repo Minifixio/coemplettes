@@ -290,6 +290,16 @@ export class DB {
         return res
     }
 
+    public static async getDeliveryProposalsNextID(): Promise<number> {
+        console.log("[DBManager] Récupération de l'ID max des delivery proposals")
+        const res = await this.AppDataSource
+        .getRepository(DeliveryProposal)
+        .createQueryBuilder("delivery_proposal")
+        .orderBy('delivery_proposal.id', 'DESC')
+        .getOne()
+        return (res?.id ? res?.id : 0)
+    }
+
     public static async getCategories(): Promise<Category[] | null> {
         console.log("[DBManager] Récupération des categories dans la BDD")
         const res = await this.AppDataSource

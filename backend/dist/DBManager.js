@@ -180,6 +180,18 @@ class DB {
             return res;
         });
     }
+    static getDeliveryDeadline(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de la deadline de la delivery n°" + id + " dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.delivery_id = :id", { id: id })
+                .orderBy('cart.deadline', 'DESC')
+                .getOne();
+            return ((res === null || res === void 0 ? void 0 : res.deadline) ? res === null || res === void 0 ? void 0 : res.deadline : null);
+        });
+    }
     static getDeliveryProposalByID(id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des infos de la delivery proposal n°" + id + " dans la BDD");
@@ -275,6 +287,7 @@ class DB {
             const res = yield this.AppDataSource
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
+                .leftJoinAndSelect("delivery.shipper", "shipper")
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
@@ -319,6 +332,17 @@ class DB {
                 .where("delivery_proposal.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .getMany();
             return res;
+        });
+    }
+    static getDeliveryProposalsNextID() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de l'ID max des delivery proposals");
+            const res = yield this.AppDataSource
+                .getRepository(DeliveryProposal_1.DeliveryProposal)
+                .createQueryBuilder("delivery_proposal")
+                .orderBy('delivery_proposal.id', 'DESC')
+                .getOne();
+            return ((res === null || res === void 0 ? void 0 : res.id) ? res === null || res === void 0 ? void 0 : res.id : 0);
         });
     }
     static getCategories() {
@@ -480,6 +504,16 @@ class DB {
                 .createQueryBuilder()
                 .update(Cart_1.Cart)
                 .set({ status: status })
+                .where("id = :id", { id: cartId })
+                .execute();
+        });
+    }
+    static cancelCart(cartId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(Cart_1.Cart)
                 .where("id = :id", { id: cartId })
                 .execute();
         });
