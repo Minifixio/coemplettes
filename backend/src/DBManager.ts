@@ -464,6 +464,16 @@ export class DB {
     }
 
     public static async cancelCart(cartId: number) {
+        console.log("[DBManager] Suppression de la cart n°" + cartId + " dans la BDD")
+
+        // On supprime d'abord les cart_item
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(CartItem)
+        .where("cart_id = :cart_id", {cart_id: cartId})
+        .execute()
+
         await this.AppDataSource
         .createQueryBuilder()
         .delete()
