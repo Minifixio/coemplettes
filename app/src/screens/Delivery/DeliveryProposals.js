@@ -52,7 +52,9 @@ const StatusItem = ({deliveryProposal, navigation}) => {
             title="Voir la commande"
             color="grey"
             onPress={() => {
-              navigation.push('DeliveryProposalCarts');
+              navigation.push('DeliveryProposalCarts', {
+                deliveryProposalId: deliveryProposal.id,
+              });
             }}
           />
         )}

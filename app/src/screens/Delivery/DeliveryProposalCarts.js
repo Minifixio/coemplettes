@@ -10,23 +10,55 @@ import {
   Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {DeliveryService} from '../../services/DeliveryService';
 
 const cart_response =
   require('../../assets/json/cart_response.json').cart_response;
 
-function DeliveryProposalCarts() {
+function DeliveryProposalCarts({route, navigation}) {
   /**
    * MOCKUP DATA
    *
    * _carts
    * */
 
+  const mockup = false;
   const _carts = cart_response;
   const [carts, setCarts] = useState([]);
+  const {deliveryProposalId} = route.params;
 
   useEffect(() => {
-    setCarts(_carts);
-  }, [_carts]);
+    if (mockup) {
+      setCarts(_carts);
+    } else {
+      const fetchCart = async () => {
+        try {
+          const deliveryProposalsData =
+            await DeliveryService.getDeliveryProposalsSummary(
+              deliveryProposalId,
+            );
+          if (deliveryProposalsData.carts.length > 0) {
+            console.log(
+              '[DeliveryProposals] Des cart pour la delivery proposal de trouvées : ',
+              deliveryProposalsData.carts,
+            );
+            setCarts(deliveryProposalsData.carts);
+          } else {
+            console.log(
+              '[DeliveryProposals] Pas de carts pour la delivery proposal de trouvé !',
+            );
+            setCarts([]);
+          }
+        } catch (e) {
+          console.log(
+            '[DeliveryProposals] Erreur lors du chargement des delivery proposals...',
+            e,
+          );
+        }
+      };
+      fetchCart();
+    }
+  }, [_carts, deliveryProposalId, mockup]);
 
   const CartItem = ({item}) => {
     return (
