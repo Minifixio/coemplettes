@@ -79,7 +79,7 @@ export class GroupedCommands {
                     shippersDispoJour.push(shipper)
                 }
             }
-            // Parmi les shippers disponibles à J+2, on les trie par price_max décroissant
+            // Parmi les shippers disponibles à J+i, on les trie par price_max décroissant
             shippersDispoJour.sort((shipper1: Shipper, shipper2: Shipper) => {
                 return shipper2.price_max - shipper1.price_max
             })
@@ -92,7 +92,7 @@ export class GroupedCommands {
                     status = 0,
                     current_price = 0
                 }
-                // WARNING ! En l'état : on parcourt les commandes à J+2 uniquement
+                // WARNING ! En l'état, les commandes à J+i sont prioritaires sur les suivantes
                 while (unattributedCarts[j].distanceJourCourant == i) {
                     if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
                         // On attribue la commande au livreur
@@ -114,7 +114,9 @@ export class GroupedCommands {
                         }
                     }
                 }
-                // On supprime le livreur de la liste des livreurs disponibles 
+                /* On supprime le livreur de la liste des livreurs disponibles 
+                WARNING : actuellement la suppression est fait dans tous les cas, donc même si le shipper n'a pas reçu de commande
+                On pourrait mettre un if deliveryProposal.curent_price > 1 pour checker, mais le shipper resterait toujours dispo */
                 shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1)
             }
 
