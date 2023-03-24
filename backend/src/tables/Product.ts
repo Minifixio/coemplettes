@@ -9,6 +9,9 @@ export class Product {
     name!: string
 
     @Column({ type: "varchar", length: 25, nullable:false })
+    brand!: string
+
+    @Column({ type: "varchar", length: 25, nullable:false })
     quantity_type!: string
 
     @Column({ type: "varchar", length: 100, nullable:false })
