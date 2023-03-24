@@ -48,11 +48,12 @@ export class API {
 
         {method: "GET", entryPointName: "carts", paramName: "owner_id", auth: true, callbackParam: (owner_id: number) => DB.getCarts(owner_id)},
         {method: "GET", entryPointName: "cart", paramName: "id", auth: true, callbackParam: (id: number) => DB.getCartByID(id)},
-        {method: "GET", entryPointName: "current_cart", paramName: "owner_id", auth: false, callbackParam: (owner_id: number) => DB.getCurrentCart(owner_id)},
-        
+        {method: "GET", entryPointName: "current_cart", paramName: "owner_id", auth: true, callbackParam: (owner_id: number) => DB.getCurrentCart(owner_id)},
+
         {method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getDeliveries(shipper_id)},
         {method: "GET", entryPointName: "delivery", paramName: "id", auth: true, callbackParam: (id: number) => DB.getDeliveryByID(id)},
         {method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getDeliverySummary(shipper_id)},
+        {method: "GET", entryPointName: "delivery_deadline", paramName: "delivery_id", auth: true, callbackParam: (delivery_id: number) => DB.getDeliveryDeadline(delivery_id)},
 
         {method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getDeliveryProposals(shipper_id)},
         {method: "GET", entryPointName: "delivery_proposal", paramName: "id", auth: true, callbackParam: (id: number) => DB.getDeliveryProposalByID(id)},
@@ -70,6 +71,7 @@ export class API {
         {method: "POST", entryPointName: "delivery_proposal", paramName: null, auth: true, callbackParam: (delivery_proposal: DeliveryProposal) => DB.addDeliveryProposal(delivery_proposal)},
         {method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product: Product) => DB.addProduct(product)},        
         {method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data: {cart_id: number, status: number}) => DB.updateCartStatus(data.cart_id, data.status)},  
+        {method: "POST", entryPointName: "cart_cancel", paramName: null, auth: true, callbackParam: (cart_id: number) => DB.cancelCart(cart_id)},  
 
         {method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, status: number}) => DB.updateDeliveryStatus(data.delivery_id, data.status)},  
         {method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id: number) => DB.startDeliveryShopping(delivery_id)},

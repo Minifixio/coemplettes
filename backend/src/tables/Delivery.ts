@@ -12,6 +12,9 @@ export class Delivery {
 
     @Column({ type: "datetime", nullable:false })
     deadline!: Date
+
+    @Column({ type: "datetime", nullable:true })
+    deposit_date!: Date
     
     // 0 = la commande a été attribuée au livreur qui l'a accepté 
     // 1 = la commande est en cours d'achat

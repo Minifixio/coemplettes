@@ -147,6 +147,17 @@ export class DB {
         return res
     }
 
+    public static async getDeliveryDeadline(id: number): Promise<Date | null> {
+        console.log("[DBManager] Récupération de la deadline de la delivery n°" + id + " dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.delivery_id = :id", { id: id })
+        .orderBy('cart.deadline', 'DESC')
+        .getOne()
+        return (res?.deadline ? res?.deadline : null)
+    }
+
     public static async getDeliveryProposalByID(id: number): Promise<DeliveryProposal | null> {
         console.log("[DBManager] Récupération des infos de la delivery proposal n°" + id + " dans la BDD")
         const res = await this.AppDataSource
@@ -233,6 +244,7 @@ export class DB {
         const res = await this.AppDataSource
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
+        .leftJoinAndSelect("delivery.shipper", "shipper")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getMany()
         return res
@@ -437,6 +449,15 @@ export class DB {
         .createQueryBuilder()
         .update(Cart)
         .set({status: status})
+        .where("id = :id", {id: cartId})
+        .execute()
+    }
+
+    public static async cancelCart(cartId: number) {
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(Cart)
         .where("id = :id", {id: cartId})
         .execute()
     }

@@ -59,7 +59,7 @@ export class Cart {
     @JoinColumn(
         { name: 'delivery_proposal_id', referencedColumnName: 'id'}
     )
-    delivery_proposal!: Delivery
+    delivery_proposal!: DeliveryProposal
 
     @OneToMany(() => CartItem, (cartItem) => cartItem.cart)
     items!: CartItem[]
