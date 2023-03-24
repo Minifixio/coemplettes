@@ -62,8 +62,6 @@ export class API {
         {method: "GET", entryPointName: "categories", paramName: null, auth: true, callbackNoParam: () => DB.getCategories()},
 
         {method: "GET", entryPointName: "lockers", paramName: null, auth: false, callbackNoParam: () => Locker.getLockersStates()},
-        {method: "GET", entryPointName: "open_locker", paramName: "locker_id", auth: false, callbackParam: (locker_id: number) => Locker.openLocker(locker_id)},
-
 
         {method: "POST", entryPointName: "user", paramName: null, auth: true, callbackParam: (user: User) => DB.addUser(user)},
         {method: "POST", entryPointName: "shipper", paramName: null, auth: true, callbackParam: (shipper: Shipper) => DB.addShipper(shipper)},
@@ -77,11 +75,12 @@ export class API {
         {method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id: number) => DB.startDeliveryShopping(delivery_id)},
         {method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, carts: Cart[]}) => DB.endDeliveryShopping(data.delivery_id, data.carts)},
         {method: "POST", entryPointName: "delivery_deposit", paramName: null, auth: true, callbackParam: (delivery_id: number) => DB.depositDelivery(delivery_id)},
-
         // On passe un paramètre 'retreive' boolean. 
         // retreive = true => la commande a été récupérée normalement
         // retreive = false => la commande n'a pas pu être récupérée i.e problème !
         {method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, retreived: boolean}) => DB.retreiveDelivery(data.delivery_id, data.retreived)},
+
+        {method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (locker_id: number) => Locker.openLocker(locker_id)},
     ]
 
     authMiddleware = async (req: Request<RequestParams, ResponseBody, RequestBody, RequestQuery>, res: Response, next: NextFunction) => {

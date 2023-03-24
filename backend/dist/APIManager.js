@@ -45,7 +45,6 @@ class API {
             { method: "GET", entryPointName: "delivery_proposal_summary", paramName: "delivery_proposal_id", auth: true, callbackParam: (delivery_proposal_id) => DBManager_1.DB.getDeliveryProposalSummary(delivery_proposal_id) },
             { method: "GET", entryPointName: "categories", paramName: null, auth: true, callbackNoParam: () => DBManager_1.DB.getCategories() },
             { method: "GET", entryPointName: "lockers", paramName: null, auth: false, callbackNoParam: () => LockerManager_1.Locker.getLockersStates() },
-            { method: "GET", entryPointName: "open_locker", paramName: "locker_id", auth: false, callbackParam: (locker_id) => LockerManager_1.Locker.openLocker(locker_id) },
             { method: "POST", entryPointName: "user", paramName: null, auth: true, callbackParam: (user) => DBManager_1.DB.addUser(user) },
             { method: "POST", entryPointName: "shipper", paramName: null, auth: true, callbackParam: (shipper) => DBManager_1.DB.addShipper(shipper) },
             { method: "POST", entryPointName: "cart", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.addCart(data.cart, data.cart_items) },
@@ -61,6 +60,7 @@ class API {
             // retreive = true => la commande a été récupérée normalement
             // retreive = false => la commande n'a pas pu être récupérée i.e problème !
             { method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.retreiveDelivery(data.delivery_id, data.retreived) },
+            { method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (locker_id) => LockerManager_1.Locker.openLocker(locker_id) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;
