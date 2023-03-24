@@ -10,7 +10,7 @@ export class GroupedCommands {
         GroupedCommands.createGroupedCommands()
     }
 
-    static async checkTimeSlotsCoherency(timeSlot: string) { // decayed
+    static checkTimeSlotsCoherency(timeSlot: string) { // decayed
         let date = new Date(timeSlot.substring(0, 15))
         // Si erreur, on renvoie false
         if (date.toString() === 'Invalid Date') {
@@ -20,7 +20,7 @@ export class GroupedCommands {
         return (date.getTime() > Date.now())
     }
 
-    static async calculDistanceJourCourant(cart: Cart) {
+    static calculDistanceJourCourant(cart: Cart) {
         // On récupère la date du jour
         let ajd = new Date().getDay()
         // On récupère la date de la commande
@@ -32,7 +32,7 @@ export class GroupedCommands {
         return cart.distanceJourCourant
     }
 
-    static async sortedUnattributedCarts(unattributedCarts: Cart[]) {
+    static sortedUnattributedCarts(unattributedCarts: Cart[]) {
         // On trie les commandes par distance au jour courant (plus proche en premier)
         unattributedCarts.sort((a, b) => {
             return a.distanceJourCourant - b.distanceJourCourant
@@ -61,7 +61,7 @@ export class GroupedCommands {
         let newDisponibilities = disponibilities.substring(ajd, disponibilities.length) + disponibilities.substring(0, ajd)
     }
 
-    static async createUpdatedGroupedCommands() {
+    static async createGroupedCommands() {
         // Regroupement de commandes
         // On récupère les commandes non attribuées
         let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
@@ -147,8 +147,32 @@ export class GroupedCommands {
         }
     }
 
+    static async chooseSupermarket(deliveryProposal : DeliveryProposal) { // A CORRIGER// A REMPLACER PAR LEUR ID
+        /* Choix du supermarché : Cora Massy ou Auchan Villebon : uniquement voiture
+        Leclerc Massy ou Intermarché Moulon : aussi vélo 
+        Leclerc : uniquement drive
+        */
+        let possibleSupermarkets = []
+        if (!deliveryProposal.shipper.has_car) {
+            if (!deliveryProposal.shipper.drive) {
+                possibleSupermarkets = ['Intermarché Moulon'] 
+            }
+            else {
+                possibleSupermarkets = ['Leclerc Massy', 'Intermarché Moulon']
+            }
+        }
+        else {
+            if (!deliveryProposal.shipper.drive) {
+                possibleSupermarkets = ['Cora Massy', 'Auchan Villebon', 'Intermarché Moulon']
+            }
+            else {
+                possibleSupermarkets = ['Cora Massy', 'Auchan Villebon', 'Leclerc Massy', 'Intermarché Moulon']
+            }
+        }
 
-    static async createGroupedCommands() {
+    }
+
+    static async createOldGroupedCommands() {   // decayed
         let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
         await GroupedCommands.sortedUnattributedCarts(unattributedCarts)
         const timeSlots = await DB.getTimeSlots()
@@ -216,5 +240,5 @@ export class GroupedCommands {
 
         }
 
-    }
+    } 
 }

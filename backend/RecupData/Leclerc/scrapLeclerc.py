@@ -1,24 +1,41 @@
-# Just copy in a file the html element which ID is "ulListeProduits"
-
 from bs4 import BeautifulSoup
+import os
+import html
+import re
 
-soup = BeautifulSoup(open('test1.html', 'r'), 'html.parser')
+# We first need to get a list of all the html files in the data folder
 
-lst = soup.find_all('li','liWCRS310_Product')
-
+fileList = os.listdir('data')
 prodExp = []
 SupProdExp = []
-product_id = 0
+tmpid = 0
 
-print(len(lst))
+for file in fileList:
+    # We open the file and read it
+    opFile = open('data/'+file, 'r',encoding='utf-8').read()
+    # We unescape the html file
+    opFile = html.unescape(opFile)
+    # BeautifulSoup is used to parse the html file
+    soup = BeautifulSoup(opFile, 'html.parser')
+    # We get the list of all the products
+    lst = soup.select('.liWCRS310_Product')
+    print(len(lst))
 
-for elem in lst:
-    if elem['data-vignette'] == 'recette':
-        continue
-    data = [product_id]
-    product_id += 1
-    name = elem.find('div', 'divWCRS310_Content').find('p', 'pWCRS310_Desc').a.text
-    elemprix = elem.find('div', 'divWCRS310_Content').find('div', 'divWCRS310_PrixUnitaire').find_all('p')
-    prix = elemprix[0].text + elemprix[2].text
-    print(name)
-    print(prix)
+    elemProdExp = []
+    elemSupProdExp = []
+
+    # We loop through the list of products
+    for elem in lst:
+        print(elem['id'])
+        if elem['data-vignette'] == 'bientotDisponible':
+            print(elem.select('.divWCRS310_Content')[0].img['alt'])
+            print(elem.select('.divWCRS310_Content')[0].img['src'])
+        else:
+            print(elem.select('.divWCRS310_Content')[0].select('.aWCRS310_Product')[0].img['alt'])
+            print(elem.select('.divWCRS310_Content')[0].select('.aWCRS310_Product')[0].img['src'])
+
+        plst = []
+        for p in elem.select('.divWCRS310_PrixUnitaire')[0].find_all('p'):
+            plst.append(re.sub(r'\s+', '', p.text))
+        price = plst[0]+plst[2]+plst[1]
+        print(price)

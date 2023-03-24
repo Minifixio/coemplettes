@@ -10,13 +10,14 @@ export class SupermarketProduct {
     @Column({ type: "int", nullable:false })
     product_id!: number
 
+    // Liste provisoire des supermarchés : Cora Massy, Leclerc Massy, Auchan Villebon-sur-Yvette, Intermarché du Moulon ?
     @Column({ type: "int", nullable:false })
     supermarket_id!: number
 
     @Column({ type: "int", nullable:false })
     price!: number
 
-    @Column({ type: "boolean", nullable:false })
+    @Column({ type: "boolean", nullable:true })
     is_available!: boolean
 
     @ManyToOne(type => Product, product => product)
