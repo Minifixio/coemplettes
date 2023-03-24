@@ -61,7 +61,7 @@ export class GroupedCommands {
         let newDisponibilities = disponibilities.substring(ajd, disponibilities.length) + disponibilities.substring(0, ajd)
     }
 
-    static async createUpdatedGroupedCommands() {
+    static async createGroupedCommands() {
         // Regroupement de commandes
         // On récupère les commandes non attribuées
         let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
@@ -173,7 +173,7 @@ export class GroupedCommands {
 
     }
 
-    static async createGroupedCommands() {
+    static async createOldGroupedCommands() {   // decayed
         let unattributedCarts: Cart[] = await DB.getUnattributedCarts()
         await GroupedCommands.sortedUnattributedCarts(unattributedCarts)
         const timeSlots = await DB.getTimeSlots()
@@ -241,5 +241,5 @@ export class GroupedCommands {
 
         }
 
-    }
+    } */
 }
