@@ -233,12 +233,16 @@ function CurrentCartOrderPage({navigation, route}) {
 
             {cart.status === 2 && (
               <View style={styles.infoSubView}>
-                <Text style={styles.infoText}>
-                  Commande livrée le{' '}
+                <Text style={styles.infoText}>Commande livrée le</Text>
+                <Text style={styles.infoTextBold}>
                   {new Date(cart.delivery.deposit_date).toLocaleString()}
                 </Text>
-                <Text style={styles.infoText}>
-                  A récupérer avant le{' '}
+              </View>
+            )}
+            {cart.status === 2 && (
+              <View style={styles.infoSubView}>
+                <Text style={styles.infoText}>A récupérer avant le</Text>
+                <Text style={styles.infoTextBold}>
                   {new Date(
                     new Date(cart.delivery.deposit_date).setTime(
                       new Date(cart.delivery.deposit_date).getTime() +
@@ -342,28 +346,41 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '70%',
     padding: 10,
+    textAlign: 'center',
   },
   infoSubView: {
     display: 'flex',
+    backgroundColor: 'white',
+    margin: 10,
+    elevation: 10,
+    borderRadius: 10,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   infoText: {
     fontSize: 20,
     color: 'black',
     fontWeight: '600',
-    marginBottom: 10,
-    marginTop: 10,
+    margin: 5,
+    textAlign: 'center',
   },
   infoTimeText: {
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 30,
     color: 'black',
-    fontWeight: '900',
+    fontWeight: 'bold',
     marginBottom: 30,
   },
   infoTextLight: {
     fontSize: 15,
     color: 'grey',
     fontWeight: '400',
+  },
+  infoTextBold: {
+    fontSize: 28,
+    color: 'black',
+    fontWeight: 'bold',
   },
   infoShipper: {
     display: 'flex',
