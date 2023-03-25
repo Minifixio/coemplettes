@@ -18,6 +18,7 @@ import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
 import { CartItem } from './tables/CartItem';
 import { Locker } from './LockerManager';
+import { DeliveryProposalPartial } from './models/DeliveryProposalPartial';
 
 export class DB {
 
@@ -461,6 +462,14 @@ export class DB {
         .execute()
     }
 
+    public static async addDeliveryProposals(deliveryProposals: DeliveryProposal[]) {
+        console.log("[DBManager] Ajout des delivery proposals : ", deliveryProposals)
+
+        for(let deliveryProposal of deliveryProposals) {
+            await this.AppDataSource.getRepository(DeliveryProposal).save(deliveryProposal)
+        }
+    }
+
     public static async addDeliveryProposal(delivery_proposal: DeliveryProposal) {
         console.log("[DBManager] Ajout de la delivery proposal :")
         console.log(delivery_proposal)
@@ -471,6 +480,7 @@ export class DB {
         .values(delivery_proposal)
         .execute()
     }
+
 
     public static async addProduct(product: Product) {
         console.log("[DBManager] Ajout du produit :")

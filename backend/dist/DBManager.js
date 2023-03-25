@@ -503,6 +503,14 @@ class DB {
                 .execute();
         });
     }
+    static addDeliveryProposals(deliveryProposals) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Ajout des delivery proposals : ", deliveryProposals);
+            for (let deliveryProposal of deliveryProposals) {
+                yield this.AppDataSource.getRepository(DeliveryProposal_1.DeliveryProposal).save(deliveryProposal);
+            }
+        });
+    }
     static addDeliveryProposal(delivery_proposal) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Ajout de la delivery proposal :");

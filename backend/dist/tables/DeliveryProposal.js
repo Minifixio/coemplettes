@@ -17,7 +17,7 @@ let DeliveryProposal = class DeliveryProposal {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", Object)
 ], DeliveryProposal.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: false }),
@@ -54,7 +54,7 @@ __decorate([
 ], DeliveryProposal.prototype, "shipper", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Cart_1.Cart, (cart) => cart.delivery_proposal),
-    __metadata("design:type", Object)
+    __metadata("design:type", Array)
 ], DeliveryProposal.prototype, "carts", void 0);
 DeliveryProposal = __decorate([
     (0, typeorm_1.Entity)({ name: "delivery_proposals" })

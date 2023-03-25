@@ -5,7 +5,7 @@ import { Shipper } from "./Shipper"
 @Entity({name: "delivery_proposals"})
 export class DeliveryProposal {
     @PrimaryGeneratedColumn()
-    id!: number
+    id: number | undefined
 
     @Column({ type: "int", nullable:false })
     shipper_id!: number
@@ -39,6 +39,6 @@ export class DeliveryProposal {
     shipper!: Shipper
 
     @OneToMany(() => Cart, (cart) => cart.delivery_proposal)
-    carts!: Cart[] | undefined
+    carts!: Cart[] 
 
 }

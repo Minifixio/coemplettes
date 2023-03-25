@@ -107,16 +107,15 @@ class GroupedCommands {
                 });
                 console.log("sorted shippersDispoJour " + i, shippersDispoJour);
                 for (const shipper of shippersDispoJour) {
-                    let deliveryProposal = {
-                        shipper_id: shipper.id,
-                        // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
-                        deadline: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-                        creation_date: new Date(),
-                        status: 0,
-                        current_price: 0,
-                        size: 0,
-                        carts: []
-                    };
+                    let deliveryProposal = new DeliveryProposal_1.DeliveryProposal();
+                    deliveryProposal.shipper_id = shipper.user_id;
+                    // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
+                    deliveryProposal.deadline = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
+                    deliveryProposal.creation_date = new Date();
+                    deliveryProposal.status = 0;
+                    deliveryProposal.current_price = 0;
+                    deliveryProposal.size = 0;
+                    deliveryProposal.carts = [];
                     let j = 0;
                     // WARNING ! En l'état, les commandes à J+i sont prioritaires sur les suivantes
                     while (unattributedCarts[j].distanceJourCourant == i) {
@@ -152,6 +151,7 @@ class GroupedCommands {
                 }
             }
             console.log("deliveryProposals", deliveryProposals);
+            yield DBManager_1.DB.addDeliveryProposals(deliveryProposals);
         });
     }
     static chooseSupermarket(deliveryProposal) {

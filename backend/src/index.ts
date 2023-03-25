@@ -10,7 +10,7 @@ let devCRON = process.env.developmentCRON ? process.env.developmentCRON : false
 
 async function main() {
     await DB.initialize(dbPort)
-    //const api = new API(3000, 'api')
+    // const api = new API(3000, 'api')
     GroupedCommands.createGroupedCommands()
     if (devCRON) {CronJobs.initCron()}
 }

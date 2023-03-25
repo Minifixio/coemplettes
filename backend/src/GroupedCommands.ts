@@ -3,19 +3,6 @@ import { Cart } from './tables/Cart'
 import { Shipper } from './tables/Shipper'
 import { DeliveryProposal } from './tables/DeliveryProposal'
 
-// On crée une interface pour l'objet en quesiton
-// Il faudra retransformer cet objet en DeliveryProposal ensuite
-// L'ID sera calculé par la BDD
-// On utilise un référence (ref) pour l'instant pour identifier les DP
-interface DeliveryProposalPartial {
-    shipper_id: number,
-    deadline: Date,
-    creation_date: Date,
-    status: number,
-    current_price: number
-    size: number
-    carts: Cart[]
-}
 export class GroupedCommands {
     static async cron() {
         // Cette méthode réalise les regroupements de commandes
@@ -120,16 +107,17 @@ export class GroupedCommands {
 
 
             for (const shipper of shippersDispoJour) {
-                let deliveryProposal: DeliveryProposalPartial = { // CREATION DE LA DP A CORRIGER
-                    shipper_id: shipper.id,
-                    // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
-                    deadline: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-                    creation_date: new Date(),
-                    status: 0,
-                    current_price: 0,
-                    size: 0,
-                    carts: []
-                }
+                let deliveryProposal = new DeliveryProposal()
+                deliveryProposal.shipper_id = shipper.user_id
+
+                // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
+                deliveryProposal.deadline = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000)
+
+                deliveryProposal.creation_date = new Date()
+                deliveryProposal.status = 0
+                deliveryProposal.current_price = 0
+                deliveryProposal.size = 0
+                deliveryProposal.carts = []
 
                 let j = 0;
                 // WARNING ! En l'état, les commandes à J+i sont prioritaires sur les suivantes
@@ -169,6 +157,7 @@ export class GroupedCommands {
             }
         }
         console.log("deliveryProposals", deliveryProposals)
+        await DB.addDeliveryProposals(deliveryProposals)
     }
 
     static async chooseSupermarket(deliveryProposal : DeliveryProposal) { // A CORRIGER// A REMPLACER PAR LEUR ID

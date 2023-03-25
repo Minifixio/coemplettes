@@ -42,7 +42,7 @@ let devCRON = process.env.developmentCRON ? process.env.developmentCRON : false;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         yield DBManager_1.DB.initialize(dbPort);
-        //const api = new API(3000, 'api')
+        // const api = new API(3000, 'api')
         GroupedCommands_1.GroupedCommands.createGroupedCommands();
         if (devCRON) {
             CronManager_1.CronJobs.initCron();
