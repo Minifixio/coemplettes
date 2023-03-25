@@ -26,6 +26,30 @@ export class DeliveryService {
     });
   }
 
+  static async getCurrentDelivery() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userId = await AuthService.getUserId();
+        console.log(
+          "[DeliveryService] Récupération de la delivery en cours de l'utilisateur",
+        );
+        const res = await APIService.get('current_delivery', userId);
+        const content = await res.text();
+
+        let currentDelivery;
+        if (content !== '') {
+          currentDelivery = JSON.parse(content);
+        } else {
+          currentDelivery = {};
+        }
+
+        resolve(currentDelivery);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
   static async getDeliverySummary(deliveryId) {
     return new Promise(async (resolve, reject) => {
       try {

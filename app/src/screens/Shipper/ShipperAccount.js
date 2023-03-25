@@ -17,6 +17,8 @@ import {UserContext} from '../../utils/UserProvider';
 import DeliveryProposalsPage from '../Delivery/DeliveryProposals';
 import DeliveryCartCompletion from '../Delivery/DeliveryCartCompletion';
 import DeliveryProposalCarts from '../Delivery/DeliveryProposalCarts';
+import DeliveryHistoryCarts from '../Delivery/DeliveryHistoryCarts';
+import DeliveryHistoryPage from '../Delivery/DeliveryHistory';
 
 const shippers = require('../../assets/json/shippers.json').shippers;
 const profilePicture = require('../../assets/icons/misc/profile_picture.png');
@@ -81,7 +83,14 @@ function ShipperAccountPage({navigation}) {
             }}
           />
           <MenuItem
-            text="Livraisons"
+            text="Historique des livraisons"
+            icon="md-albums-outline"
+            goTo={() => {
+              navigation.push('DeliveryHistoryPage');
+            }}
+          />
+          <MenuItem
+            text="Livraison en cours"
             icon="cart-outline"
             goTo={() => {
               navigation.push('DeliveryTracking');
@@ -127,7 +136,7 @@ function ShipperAccountStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="ShipperAccountPage"
-        options={{title: 'Profil livreur'}}
+        options={{title: 'Profil livreur', headerShown: false}}
         component={ShipperAccountPage}
       />
       <Stack.Screen
@@ -151,9 +160,19 @@ function ShipperAccountStack() {
         component={DeliveryCartCompletion}
       />
       <Stack.Screen
+        name="DeliveryHistoryPage"
+        options={{title: 'Historique des livraisons'}}
+        component={DeliveryHistoryPage}
+      />
+      <Stack.Screen
         name="DeliveryProposalCarts"
         options={{title: 'Aperçu de la commande'}}
         component={DeliveryProposalCarts}
+      />
+      <Stack.Screen
+        name="DeliveryHistoryCarts"
+        options={{title: 'Aperçu de la commande'}}
+        component={DeliveryHistoryCarts}
       />
     </Stack.Navigator>
   );

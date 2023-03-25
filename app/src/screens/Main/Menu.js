@@ -8,6 +8,7 @@ import HomeStack from './Home';
 import FavoutritesPage from './Favourites';
 import CartPage from '../Cart/Cart';
 import AccountStack from './Account';
+import ShipperAccountStack from '../Shipper/ShipperAccount';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,6 +27,8 @@ function MainPage({isConnected, setIsConnected}) {
               iconName = focused ? 'person-circle' : 'person-circle-outline';
             } else if (route.name === 'FavoutritesPage') {
               iconName = focused ? 'star' : 'star-outline';
+            } else if (route.name === 'ShipperAccountStack') {
+              iconName = focused ? 'ios-receipt' : 'ios-receipt-outline';
             } else if (route.name === 'CartPage') {
               iconName = focused ? 'basket' : 'basket-outline';
               size = 35;
@@ -60,10 +63,15 @@ function MainPage({isConnected, setIsConnected}) {
           options={{title: 'Compte', headerShown: false}}
         />
         <Tab.Screen
+          name="ShipperAccountStack"
+          options={{title: 'Livraisons', headerShown: false}}
+          component={ShipperAccountStack}
+        />
+        {/* <Tab.Screen
           name="FavoutritesPage"
           component={FavoutritesPage}
           options={{title: 'Favorits'}}
-        />
+        /> */}
         <Tab.Screen
           name="CartPage"
           component={CartPage}

@@ -15,7 +15,7 @@ import {DeliveryService} from '../../services/DeliveryService';
 const carts_mockup =
   require('../../assets/json/cart_response.json').cart_response;
 
-function DeliveryProposalCarts({route, navigation}) {
+function DeliveryHistoryCarts({route, navigation}) {
   /**
    * MOCKUP DATA
    *
@@ -24,7 +24,7 @@ function DeliveryProposalCarts({route, navigation}) {
 
   const mockup = false;
   const [carts, setCarts] = useState([]);
-  const {deliveryProposalId} = route.params;
+  const {deliveryId} = route.params;
 
   useEffect(() => {
     if (mockup) {
@@ -32,32 +32,31 @@ function DeliveryProposalCarts({route, navigation}) {
     } else {
       const fetchCart = async () => {
         try {
-          const deliveryProposalsData =
-            await DeliveryService.getDeliveryProposalsSummary(
-              deliveryProposalId,
-            );
-          if (deliveryProposalsData.carts.length > 0) {
+          const deliveryData = await DeliveryService.getDeliverySummary(
+            deliveryId,
+          );
+          if (deliveryData.carts.length > 0) {
             console.log(
-              '[DeliveryProposals] Des cart pour la delivery proposal de trouvées : ',
-              deliveryProposalsData.carts,
+              '[DeliveryHistoryCarts] Des cart pour la delivery de trouvées : ',
+              deliveryData.carts,
             );
-            setCarts(deliveryProposalsData.carts);
+            setCarts(deliveryData.carts);
           } else {
             console.log(
-              '[DeliveryProposals] Pas de carts pour la delivery proposal de trouvé !',
+              '[DeliveryHistoryCarts] Pas de carts pour la delivery de trouvé !',
             );
             setCarts([]);
           }
         } catch (e) {
           console.log(
-            '[DeliveryProposals] Erreur lors du chargement des cart pour la delivery proposals...',
+            '[DeliveryHistoryCarts] Erreur lors du chargement des cart pour la delivery...',
             e,
           );
         }
       };
       fetchCart();
     }
-  }, [deliveryProposalId, mockup]);
+  }, [deliveryId, mockup]);
 
   const CartItem = ({item}) => {
     return (
@@ -242,4 +241,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeliveryProposalCarts;
+export default DeliveryHistoryCarts;

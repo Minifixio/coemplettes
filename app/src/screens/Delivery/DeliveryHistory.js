@@ -12,17 +12,15 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {DeliveryService} from '../../services/DeliveryService';
-const delivery_proposals =
-  require('../../assets/json/delivery_proposals.json').delivery_proposals;
+const deliveriesMockup =
+  require('../../assets/json/deliveries.json').deliveries;
 
-const StatusItem = ({deliveryProposal, navigation}) => {
-  const selected = deliveryProposal.status === 0 ? true : false;
+const StatusItem = ({delivery, navigation}) => {
+  const selected = delivery.status === 0 ? true : false;
   const iconName = selected ? 'cube-outline' : 'ios-close-circle-outline';
   const title = selected ? 'Commande reçue' : 'Commande refusée';
-  const deadline = new Date(deliveryProposal.deadline).toLocaleDateString('fr');
-  const creationDate = new Date(
-    deliveryProposal.creation_date,
-  ).toLocaleDateString('fr');
+  const deadline = new Date(delivery.deadline).toLocaleDateString('fr');
+  const depositDate = new Date(delivery.deposit_date).toLocaleDateString('fr');
 
   return (
     <View style={styles.statusItemContainer}>
@@ -43,86 +41,69 @@ const StatusItem = ({deliveryProposal, navigation}) => {
       <View style={styles.statusItemTextView}>
         <Text style={styles.statusItemTitle}>{title}</Text>
         <Text style={styles.statusItemSubtitle}>
-          Proposée le : {creationDate}
+          Déposée le : {depositDate}
         </Text>
         <Text style={styles.statusItemSubtitle}>Deadline : {deadline}</Text>
 
-        {selected && (
-          <Button
-            style={styles.cartInfoButton}
-            title="Voir la commande"
-            color="grey"
-            onPress={() => {
-              navigation.push('DeliveryProposalCarts', {
-                deliveryProposalId: deliveryProposal.id,
-              });
-            }}
-          />
-        )}
-        {selected && (
-          <Pressable style={styles.acceptButton} onPress={() => {}}>
-            <LinearGradient
-              start={{x: 0.0, y: 0.25}}
-              end={{x: 0.5, y: 1.0}}
-              colors={['#a1f542', '#539903']}
-              style={styles.linearGradientAcceptButton}>
-              <Text style={styles.acceptButtonText}>Accepter la commande</Text>
-            </LinearGradient>
-          </Pressable>
-        )}
+        <Button
+          style={styles.cartInfoButton}
+          title="Voir la commande"
+          color="grey"
+          onPress={() => {
+            navigation.push('DeliveryHistoryCarts', {
+              deliveryId: delivery.id,
+            });
+          }}
+        />
       </View>
     </View>
   );
 };
 
-function DeliveryProposalsPage({navigation}) {
+function DeliveryHistoryPage({navigation}) {
   /**
    * MOCKUP DATA
    *
    * _deliveryProposals
    **/
-  const [deliveryProposals, setDeliveryProposals] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const mockup = false;
 
-  var _deliveryProposals = delivery_proposals;
-
   useEffect(() => {
     setLoading(true);
-    setDeliveryProposals(_deliveryProposals);
     if (mockup) {
-      setDeliveryProposals(_deliveryProposals);
+      setDeliveries(deliveriesMockup);
       setLoading(false);
     } else {
-      const fetchDeliveryProposals = async () => {
+      const fetchDeliveries = async () => {
         try {
-          const deliveryProposalsData =
-            await DeliveryService.getDeliveryProposals();
-          if (deliveryProposalsData.length > 0) {
+          const deliveriesData = await DeliveryService.getDeliveries();
+          if (deliveriesData.length > 0) {
             console.log(
-              '[DeliveryProposals] Des delivery proposals de trouvé : ',
-              deliveryProposalsData,
+              '[DeliveryHistoryPage] Des deliveries de trouvé : ',
+              deliveriesData,
             );
-            setDeliveryProposals(deliveryProposalsData);
+            setDeliveries(deliveriesData);
           } else {
             console.log(
-              '[DeliveryProposals] Pas de delivery proposals de trouvé !',
+              '[DeliveryHistoryPage] Pas de deliveries de trouvées !',
             );
-            setDeliveryProposals([]);
+            setDeliveries([]);
           }
           setLoading(false);
         } catch (e) {
           console.log(
-            '[DeliveryProposals] Erreur lors du chargement des delivery proposals...',
+            '[DeliveryHistoryPage] Erreur lors du chargement des deliveries...',
             e,
           );
           setLoading(false);
         }
       };
-      fetchDeliveryProposals();
+      fetchDeliveries();
     }
-  }, [_deliveryProposals, mockup]);
+  }, [mockup, setDeliveries]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,22 +113,22 @@ function DeliveryProposalsPage({navigation}) {
         </View>
       )}
 
-      {deliveryProposals.length === 0 && !loading && (
+      {deliveries.length === 0 && !loading && (
         <View style={styles.emptyTextView}>
-          <Text style={styles.emptyText}>Pas de propositions reçues...</Text>
+          <Text style={styles.emptyText}>Historique de commandes vide</Text>
           <Ionicons name="sad" size={40} color="black" />
         </View>
       )}
 
-      {deliveryProposals.length > 0 && !loading && (
+      {deliveries.length > 0 && !loading && (
         <SafeAreaView style={styles.container}>
           <LinearGradient
             colors={['#ffffff', '#f2f2f2']}
             style={styles.container}>
             <FlatList
-              data={deliveryProposals}
+              data={deliveries}
               renderItem={({item}) => (
-                <StatusItem deliveryProposal={item} navigation={navigation} />
+                <StatusItem delivery={item} navigation={navigation} />
               )}
               keyExtractor={item => item.id}
             />
@@ -265,4 +246,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeliveryProposalsPage;
+export default DeliveryHistoryPage;

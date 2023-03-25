@@ -79,7 +79,7 @@ function AccountPage({navigation}) {
             navigation.push('CurrentCartOrderPage');
           }}
         />
-        <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} />
+        {/* <MenuItem text="Mes favorits" icon="heart-outline" goTo={() => {}} /> */}
         {isShipper && (
           <MenuItem
             text="Profil livreur"

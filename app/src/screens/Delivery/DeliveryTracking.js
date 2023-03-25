@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,12 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import BasicButton from '../../components/BasicButton';
+import {DeliveryService} from '../../services/DeliveryService';
 const deliveries = require('../../assets/json/deliveries.json').deliveries;
 
 const StatusItem = ({
@@ -59,67 +61,120 @@ function DeliveryTracking({navigation}) {
    *
    * status
    **/
-  var [status, setStatus] = useState(deliveries[0].status);
+  const mockup = false;
+  const [delivery, setDelivery] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    if (mockup) {
+      setDelivery(deliveries[0]);
+      setLoading(false);
+    } else {
+      const fetchCurrentDelivery = async () => {
+        try {
+          const currentDelivery = await DeliveryService.getCurrentDelivery();
+          if (currentDelivery.id !== undefined) {
+            console.log(
+              '[DeliveryTracking] Une delivery courante de trouvée : ',
+              currentDelivery,
+            );
+            setDelivery(currentDelivery);
+          } else {
+            console.log('[DeliveryTracking] Pas delivery courante de trouvé !');
+            setDelivery({});
+          }
+          setLoading(false);
+        } catch (e) {
+          console.log(
+            '[DeliveryTracking] Erreur lors de la delivery courante...',
+            e,
+          );
+          setLoading(false);
+        }
+      };
+      fetchCurrentDelivery();
+    }
+  }, [mockup, setDelivery]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <LinearGradient
-          colors={['#ffffff', '#f2f2f2']}
-          style={styles.container}>
-          <StatusItem
-            title="Commande acceptée"
-            subtitle="13/03/2023"
-            iconName="md-checkmark"
-            selected={status >= 1}
-          />
-          <StatusItem
-            title="Commande en cours d'achat"
-            subtitle="14/03/2023"
-            iconName="ios-cart-outline"
-            selected={status >= 2}
-          />
-          <StatusItem
-            title="Commande déposée"
-            subtitle="14/03/2023"
-            iconName="ios-archive-outline"
-            selected={status >= 3}
-          />
-        </LinearGradient>
-      </ScrollView>
-      {status === 1 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(2);
-            }}
-            text="Je débute l'achat"
-          />
+      {loading && (
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
         </View>
       )}
-      {status === 2 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              //setStatus(3);
-              navigation.navigate('DeliveryCartCompletion');
-            }}
-            text="Compléter la liste de course"
-          />
+
+      {delivery.id === undefined && !loading && (
+        <View style={styles.emptyTextView}>
+          <Text style={styles.emptyText}>
+            Aucune livraisons en cours... Créez un panier pour commencer !
+          </Text>
+          <Text style={styles.infoText}>
+            Prochain cycle d'affectation de commandes dans :
+            {24 - new Date().getHours()} h
+          </Text>
+          <Ionicons name="sad" size={40} color="black" />
         </View>
       )}
-      {status === 3 && (
-        <View style={styles.buttonView}>
-          <BasicButton
-            style={styles.button}
-            onClick={() => {
-              setStatus(4);
-            }}
-            text="Recevoir le code Locker"
-          />
-        </View>
+
+      {delivery.id !== undefined && !loading && (
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollView}>
+            <LinearGradient
+              colors={['#ffffff', '#f2f2f2']}
+              style={styles.container}>
+              <StatusItem
+                title="Commande acceptée"
+                subtitle="13/03/2023"
+                iconName="md-checkmark"
+                selected={delivery.status >= 1}
+              />
+              <StatusItem
+                title="Commande en cours d'achat"
+                subtitle="14/03/2023"
+                iconName="ios-cart-outline"
+                selected={delivery.status >= 2}
+              />
+              <StatusItem
+                title="Commande déposée"
+                subtitle="14/03/2023"
+                iconName="ios-archive-outline"
+                selected={delivery.status >= 3}
+              />
+            </LinearGradient>
+          </ScrollView>
+          {delivery.status === 1 && (
+            <View style={styles.buttonView}>
+              <BasicButton
+                style={styles.button}
+                onClick={() => {}}
+                text="Je débute l'achat"
+              />
+            </View>
+          )}
+          {delivery.status === 2 && (
+            <View style={styles.buttonView}>
+              <BasicButton
+                style={styles.button}
+                onClick={() => {
+                  //setStatus(3);
+                  navigation.navigate('DeliveryCartCompletion');
+                }}
+                text="Compléter la liste de course"
+              />
+            </View>
+          )}
+          {delivery.status === 3 && (
+            <View style={styles.buttonView}>
+              <BasicButton
+                style={styles.button}
+                onClick={() => {}}
+                text="Recevoir le code Locker"
+              />
+            </View>
+          )}
+        </SafeAreaView>
       )}
     </SafeAreaView>
   );
@@ -192,6 +247,30 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     bottom: 10,
+  },
+  infoText: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: '600',
+    margin: 5,
+    textAlign: 'center',
+  },
+  emptyText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  emptyTextView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
 });
 

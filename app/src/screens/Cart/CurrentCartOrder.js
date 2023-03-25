@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Modal, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
 import BasicButton from '../../components/BasicButton';
 import {CartService} from '../../services/CartService';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,14 +16,13 @@ const carts = require('../../assets/json/carts.json').carts;
 
 function CurrentCartOrderPage({navigation, route}) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   /**
    * MOCKUP DATAS
    * cart
    * delivery
    * status
-   *
-   * l'idée c'est d'ensuite les passer en paramètre de route
    */
 
   const mockup = false;
@@ -24,8 +30,10 @@ function CurrentCartOrderPage({navigation, route}) {
   const [cart, setCart] = useState({});
 
   useEffect(() => {
+    setLoading(true);
     if (mockup) {
       setCart(carts[0]);
+      setLoading(false);
     } else {
       const fetchCart = async () => {
         try {
@@ -40,11 +48,13 @@ function CurrentCartOrderPage({navigation, route}) {
             console.log('[CurrentCartOrder] Pas de cart de trouvé !');
             setCart({});
           }
+          setLoading(false);
         } catch (e) {
           console.log(
             '[CurrentCartOrder] Erreur lors du chargement des carts...',
             e,
           );
+          setLoading(false);
         }
       };
       fetchCart();
@@ -120,7 +130,13 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       </Modal>
 
-      {cart.id === undefined && (
+      {loading && (
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )}
+
+      {cart.id === undefined && !loading && (
         <View style={styles.emptyTextView}>
           <Text style={styles.emptyText}>
             Aucune commande en cours... Créez un panier pour commencer !
@@ -129,7 +145,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {cart.id !== undefined && (
+      {cart.id !== undefined && !loading && (
         <View style={styles.subContainer}>
           <View style={styles.progressView}>
             <View style={styles.progressCircleView}>
@@ -506,6 +522,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
 });
 
