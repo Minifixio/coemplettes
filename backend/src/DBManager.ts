@@ -18,7 +18,6 @@ import { TokenResponse } from './models/TokenResponse';
 import { UserDefault } from './models/UserDefault';
 import { CartItem } from './tables/CartItem';
 import { Locker } from './LockerManager';
-import { DeliveryProposalPartial } from './models/DeliveryProposalPartial';
 
 export class DB {
 
@@ -520,6 +519,46 @@ export class DB {
         .from(Cart)
         .where("id = :id", {id: cartId})
         .execute()
+    }
+
+    public static async acceptDeliveryProposal(deliveryProposalId: number) {
+        console.log("[DBManager] Acceptation de la delivery proposal n°" + deliveryProposalId + " dans la BDD")
+
+        const deliveryProposal = (await this.AppDataSource.getRepository(DeliveryProposal).find({
+            relations: {
+                carts: true,
+            },
+            where: {
+                id: deliveryProposalId
+            },
+            take: 1
+        }))[0]
+
+        if (deliveryProposal === undefined) {
+            return
+        }
+
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Cart)
+        .set({delivery_proposal_id: null})
+        .where("delivery_proposal_id = :id", {id: deliveryProposalId})
+        .execute()
+
+        // On supprime toutes les delivery proposals précédentes de l'utilisateur lors de l'accéptation d'une delivery proposal
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(DeliveryProposal)
+        .where("shipper_id = :id", {id: deliveryProposal.shipper_id})
+        .execute()
+
+        let delivery = new Delivery()
+        delivery.carts = deliveryProposal.carts
+        delivery.shipper_id = deliveryProposal.shipper_id
+        delivery.deadline = deliveryProposal.carts.map(cart => cart.deadline).reduce((a, b) => a < b ? a : b)
+        delivery.status = 0
+        await this.AppDataSource.getRepository(Delivery).save(delivery)
     }
 
     public static async updateDeliveryStatus(deliveryId: number, status: number) {

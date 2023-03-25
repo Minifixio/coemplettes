@@ -11,6 +11,7 @@ import { AuthManager } from './AuthManager';
 import { Locker } from './LockerManager';
 import { AuthError, AuthErrors } from './models/AuthErrors';
 import { CartItem } from './tables/CartItem';
+import { GroupedCommands } from './GroupedCommands';
 
 var bodyParser = require('body-parser')
 
@@ -73,6 +74,7 @@ export class API {
         {method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data: {cart_id: number, status: number}) => DB.updateCartStatus(data.cart_id, data.status)},  
         {method: "POST", entryPointName: "cart_cancel", paramName: null, auth: true, callbackParam: (data: {cart_id: number}) => DB.cancelCart(data.cart_id)},  
 
+        {method: "POST", entryPointName: "delivery_proposal_accept", paramName: null, auth: false, callbackParam: (data: {delivery_proposal_id: number}) => DB.acceptDeliveryProposal(data.delivery_proposal_id)},  
         {method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, status: number}) => DB.updateDeliveryStatus(data.delivery_id, data.status)},  
         {method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (data: {delivery_id: number}) => DB.startDeliveryShopping(data.delivery_id)},
         {method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, carts: Cart[]}) => DB.endDeliveryShopping(data.delivery_id, data.carts)},
@@ -81,6 +83,8 @@ export class API {
         // retreive = true => la commande a été récupérée normalement
         // retreive = false => la commande n'a pas pu être récupérée i.e problème !
         {method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data: {delivery_id: number, retreived: boolean}) => DB.retreiveDelivery(data.delivery_id, data.retreived)},
+
+        {method: "POST", entryPointName: "generate_grouped_commands", paramName: null, auth: false, callbackParam: () => GroupedCommands.createGroupedCommands()},  
 
         {method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (data: {locker_id: number}) => Locker.openLocker(data.locker_id)},
     ]

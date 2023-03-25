@@ -564,6 +564,43 @@ class DB {
                 .execute();
         });
     }
+    static acceptDeliveryProposal(deliveryProposalId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Acceptation de la delivery proposal n°" + deliveryProposalId + " dans la BDD");
+            const deliveryProposal = (yield this.AppDataSource.getRepository(DeliveryProposal_1.DeliveryProposal).find({
+                relations: {
+                    carts: true,
+                },
+                where: {
+                    id: deliveryProposalId
+                },
+                take: 1
+            }))[0];
+            console.log(deliveryProposal);
+            if (deliveryProposal === undefined) {
+                return;
+            }
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Cart_1.Cart)
+                .set({ delivery_proposal_id: null })
+                .where("delivery_proposal_id = :id", { id: deliveryProposalId })
+                .execute();
+            // On supprime toutes les delivery proposals précédentes de l'utilisateur lors de l'accéptation d'une delivery proposal
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(DeliveryProposal_1.DeliveryProposal)
+                .where("shipper_id = :id", { id: deliveryProposal.shipper_id })
+                .execute();
+            let delivery = new Delivery_1.Delivery();
+            delivery.carts = deliveryProposal.carts;
+            delivery.shipper_id = deliveryProposal.shipper_id;
+            delivery.deadline = deliveryProposal.carts.map(cart => cart.deadline).reduce((a, b) => a < b ? a : b);
+            delivery.status = 0;
+            yield this.AppDataSource.getRepository(Delivery_1.Delivery).save(delivery);
+        });
+    }
     static updateDeliveryStatus(deliveryId, status) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD");

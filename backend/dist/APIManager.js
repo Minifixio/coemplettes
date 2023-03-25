@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const DBManager_1 = require("./DBManager");
 const AuthManager_1 = require("./AuthManager");
 const LockerManager_1 = require("./LockerManager");
+const GroupedCommands_1 = require("./GroupedCommands");
 var bodyParser = require('body-parser');
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
@@ -54,6 +55,7 @@ class API {
             { method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
             { method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },
             { method: "POST", entryPointName: "cart_cancel", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.cancelCart(data.cart_id) },
+            { method: "POST", entryPointName: "delivery_proposal_accept", paramName: null, auth: false, callbackParam: (data) => DBManager_1.DB.acceptDeliveryProposal(data.delivery_proposal_id) },
             { method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateDeliveryStatus(data.delivery_id, data.status) },
             { method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.startDeliveryShopping(data.delivery_id) },
             { method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.endDeliveryShopping(data.delivery_id, data.carts) },
@@ -62,6 +64,7 @@ class API {
             // retreive = true => la commande a été récupérée normalement
             // retreive = false => la commande n'a pas pu être récupérée i.e problème !
             { method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.retreiveDelivery(data.delivery_id, data.retreived) },
+            { method: "POST", entryPointName: "generate_grouped_commands", paramName: null, auth: false, callbackParam: () => GroupedCommands_1.GroupedCommands.createGroupedCommands() },
             { method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (data) => LockerManager_1.Locker.openLocker(data.locker_id) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
