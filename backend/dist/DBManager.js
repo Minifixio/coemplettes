@@ -234,6 +234,22 @@ class DB {
             return res;
         });
     }
+    static getAvailableShippers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de tous les shippers disponibles dans la BDD");
+            let shippers = yield this.AppDataSource
+                .getRepository(Shipper_1.Shipper)
+                .createQueryBuilder("shipper")
+                .leftJoinAndSelect("shipper.deliveries", "deliveries")
+                .getMany();
+            shippers = shippers.filter((shipper) => {
+                return shipper.deliveries.filter((delivery) => {
+                    return delivery.status !== 0 && delivery.status !== 1 && delivery.status !== 2 && delivery.status !== 3;
+                }).length !== 0;
+            });
+            return shippers;
+        });
+    }
     static getCarts(owner_id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des carts pour le user n°" + owner_id + " dans la BDD");
@@ -293,6 +309,18 @@ class DB {
             return res;
         });
     }
+    static getCurrentDelivery(shipper_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération de la delivery courante pour le shipper n°" + shipper_id + " dans la BDD");
+            const res = yield this.AppDataSource
+                .getRepository(Delivery_1.Delivery)
+                .createQueryBuilder("delivery")
+                .leftJoinAndSelect("delivery.shipper", "shipper")
+                .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
+                .getOne();
+            return res;
+        });
+    }
     static getDeliverySummary(shipper_id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération du recap de la livraison pour le shipper n°" + shipper_id + " dans la BDD");
@@ -301,6 +329,7 @@ class DB {
                 .createQueryBuilder("delivery")
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
                 .where("delivery.status = :status", { status: 0 })
+                .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
                 .leftJoinAndSelect("delivery.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
@@ -315,6 +344,7 @@ class DB {
                 .getRepository(DeliveryProposal_1.DeliveryProposal)
                 .createQueryBuilder("delivery_proposal")
                 .where("delivery_proposal.id = :id", { id: deliveryProposalId })
+                .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
                 .leftJoinAndSelect("delivery_proposal.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
@@ -510,6 +540,14 @@ class DB {
     }
     static cancelCart(cartId) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Suppression de la cart n°" + cartId + " dans la BDD");
+            // On supprime d'abord les cart_item
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(CartItem_1.CartItem)
+                .where("cart_id = :cart_id", { cart_id: cartId })
+                .execute();
             yield this.AppDataSource
                 .createQueryBuilder()
                 .delete()

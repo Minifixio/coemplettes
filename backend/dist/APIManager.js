@@ -29,6 +29,7 @@ class API {
             { method: "GET", entryPointName: "users", paramName: null, auth: true, callbackNoParam: () => DBManager_1.DB.getUsers() },
             { method: "GET", entryPointName: "user", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getUserByID(id) },
             { method: "GET", entryPointName: "shippers", paramName: null, auth: true, callbackNoParam: () => DBManager_1.DB.getShippers() },
+            { method: "GET", entryPointName: "available_shippers", paramName: null, auth: false, callbackNoParam: () => DBManager_1.DB.getAvailableShippers() },
             { method: "GET", entryPointName: "shipper", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getShipperByID(id) },
             { method: "GET", entryPointName: "products", paramName: "category_id", auth: true, callbackParam: (category_id) => DBManager_1.DB.getProducts(category_id) },
             { method: "GET", entryPointName: "product", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getProductByID(id) },
@@ -36,8 +37,9 @@ class API {
             { method: "GET", entryPointName: "carts", paramName: "owner_id", auth: true, callbackParam: (owner_id) => DBManager_1.DB.getCarts(owner_id) },
             { method: "GET", entryPointName: "cart", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getCartByID(id) },
             { method: "GET", entryPointName: "current_cart", paramName: "owner_id", auth: true, callbackParam: (owner_id) => DBManager_1.DB.getCurrentCart(owner_id) },
-            { method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: false, callbackParam: (shipper_id) => DBManager_1.DB.getDeliveries(shipper_id) },
+            { method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliveries(shipper_id) },
             { method: "GET", entryPointName: "delivery", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getDeliveryByID(id) },
+            { method: "GET", entryPointName: "current_delivery", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getCurrentDelivery(shipper_id) },
             { method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliverySummary(shipper_id) },
             { method: "GET", entryPointName: "delivery_deadline", paramName: "delivery_id", auth: true, callbackParam: (delivery_id) => DBManager_1.DB.getDeliveryDeadline(delivery_id) },
             { method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposals(shipper_id) },
@@ -51,16 +53,16 @@ class API {
             { method: "POST", entryPointName: "delivery_proposal", paramName: null, auth: true, callbackParam: (delivery_proposal) => DBManager_1.DB.addDeliveryProposal(delivery_proposal) },
             { method: "POST", entryPointName: "product", paramName: null, auth: true, callbackParam: (product) => DBManager_1.DB.addProduct(product) },
             { method: "POST", entryPointName: "cart_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateCartStatus(data.cart_id, data.status) },
-            { method: "POST", entryPointName: "cart_cancel", paramName: null, auth: true, callbackParam: (cart_id) => DBManager_1.DB.cancelCart(cart_id) },
+            { method: "POST", entryPointName: "cart_cancel", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.cancelCart(data.cart_id) },
             { method: "POST", entryPointName: "delivery_status", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.updateDeliveryStatus(data.delivery_id, data.status) },
-            { method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (delivery_id) => DBManager_1.DB.startDeliveryShopping(delivery_id) },
+            { method: "POST", entryPointName: "delivery_start_shopping", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.startDeliveryShopping(data.delivery_id) },
             { method: "POST", entryPointName: "delivery_end_shopping", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.endDeliveryShopping(data.delivery_id, data.carts) },
-            { method: "POST", entryPointName: "delivery_deposit", paramName: null, auth: true, callbackParam: (delivery_id) => DBManager_1.DB.depositDelivery(delivery_id) },
+            { method: "POST", entryPointName: "delivery_deposit", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.depositDelivery(data.delivery_id) },
             // On passe un paramètre 'retreive' boolean. 
             // retreive = true => la commande a été récupérée normalement
             // retreive = false => la commande n'a pas pu être récupérée i.e problème !
             { method: "POST", entryPointName: "delivery_retreive", paramName: null, auth: true, callbackParam: (data) => DBManager_1.DB.retreiveDelivery(data.delivery_id, data.retreived) },
-            { method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (locker_id) => LockerManager_1.Locker.openLocker(locker_id) },
+            { method: "POST", entryPointName: "open_locker", paramName: null, auth: false, callbackParam: (data) => LockerManager_1.Locker.openLocker(data.locker_id) },
         ];
         this.authMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const authHeader = req.headers.authorization;

@@ -39,6 +39,7 @@ export class API {
         {method: "GET", entryPointName: "user", paramName: "id", auth: true, callbackParam: (id: number) => DB.getUserByID(id)},
 
         {method: "GET", entryPointName: "shippers", paramName: null, auth: true, callbackNoParam: () => DB.getShippers()},
+        {method: "GET", entryPointName: "available_shippers", paramName: null, auth: false, callbackNoParam: () => DB.getAvailableShippers()},
         {method: "GET", entryPointName: "shipper", paramName: "id", auth: true, callbackParam: (id: number) => DB.getShipperByID(id)},
 
         {method: "GET", entryPointName: "products", paramName: "category_id", auth: true, callbackParam: (category_id: number) => DB.getProducts(category_id)},
@@ -50,8 +51,9 @@ export class API {
         {method: "GET", entryPointName: "cart", paramName: "id", auth: true, callbackParam: (id: number) => DB.getCartByID(id)},
         {method: "GET", entryPointName: "current_cart", paramName: "owner_id", auth: true, callbackParam: (owner_id: number) => DB.getCurrentCart(owner_id)},
 
-        {method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: false, callbackParam: (shipper_id: number) => DB.getDeliveries(shipper_id)},
+        {method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getDeliveries(shipper_id)},
         {method: "GET", entryPointName: "delivery", paramName: "id", auth: true, callbackParam: (id: number) => DB.getDeliveryByID(id)},
+        {method: "GET", entryPointName: "current_delivery", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getCurrentDelivery(shipper_id)},
         {method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", auth: true, callbackParam: (shipper_id: number) => DB.getDeliverySummary(shipper_id)},
         {method: "GET", entryPointName: "delivery_deadline", paramName: "delivery_id", auth: true, callbackParam: (delivery_id: number) => DB.getDeliveryDeadline(delivery_id)},
 

@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", Date
     /* pour un delivery_proposal encore en attente (donc non validé par le shipper sur l'app) : status=0 et delivery_id=null
     pour un delivery_proposal validé par le shipper sur l'app : status=1
-    pour un delivery_proposal refusé par le shipper sur l'app : status=2 */
+    pour un delivery_proposal refusé par le shipper sur l'app : status revient à 0*/
     )
 ], DeliveryProposal.prototype, "deadline", void 0);
 __decorate([
@@ -50,7 +50,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
     (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'user_id' }),
-    __metadata("design:type", Object)
+    __metadata("design:type", Shipper_1.Shipper)
 ], DeliveryProposal.prototype, "shipper", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Cart_1.Cart, (cart) => cart.delivery_proposal),

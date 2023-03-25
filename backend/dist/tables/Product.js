@@ -22,6 +22,14 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "name", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 255, nullable: false }),
+    __metadata("design:type", String)
+], Product.prototype, "brand", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    __metadata("design:type", Number)
+], Product.prototype, "reference", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 25, nullable: false }),
     __metadata("design:type", String)
 ], Product.prototype, "quantity_type", void 0);
@@ -30,11 +38,11 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)
 ], Product.prototype, "category_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", nullable: false }),
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
 ], Product.prototype, "icon_link", void 0);
 __decorate([

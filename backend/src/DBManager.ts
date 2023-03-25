@@ -196,6 +196,23 @@ export class DB {
         return res
     }
 
+    public static async getAvailableShippers(): Promise<Shipper[]> {
+        console.log("[DBManager] Récupération de tous les shippers disponibles dans la BDD")
+        let shippers = await this.AppDataSource
+        .getRepository(Shipper)
+        .createQueryBuilder("shipper")
+        .leftJoinAndSelect("shipper.deliveries", "deliveries")
+        .getMany()
+
+        shippers = shippers.filter((shipper) => {
+            return shipper.deliveries.filter((delivery) => {
+                return delivery.status !== 0 && delivery.status !== 1 && delivery.status !== 2 && delivery.status !== 3
+                }).length !== 0
+        })
+
+        return shippers
+    }
+
     public static async getCarts(owner_id: number): Promise<Cart[] | null> {
         console.log("[DBManager] Récupération des carts pour le user n°" + owner_id + " dans la BDD")
         const res = await this.AppDataSource
@@ -250,6 +267,17 @@ export class DB {
         return res
     }
 
+    public static async getCurrentDelivery(shipper_id: number): Promise<Delivery | null> {
+        console.log("[DBManager] Récupération de la delivery courante pour le shipper n°" + shipper_id + " dans la BDD")
+        const res = await this.AppDataSource
+        .getRepository(Delivery)
+        .createQueryBuilder("delivery")
+        .leftJoinAndSelect("delivery.shipper", "shipper")
+        .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
+        .getOne()
+        return res
+    }
+
     public static async getDeliverySummary(shipper_id: number): Promise<Delivery | null> {
         console.log("[DBManager] Récupération du recap de la livraison pour le shipper n°" + shipper_id + " dans la BDD")
         const delivery = await this.AppDataSource
@@ -257,6 +285,7 @@ export class DB {
         .createQueryBuilder("delivery")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .where("delivery.status = :status", {status: 0})
+        .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
@@ -271,6 +300,7 @@ export class DB {
         .getRepository(DeliveryProposal)
         .createQueryBuilder("delivery_proposal")
         .where("delivery_proposal.id = :id", {id: deliveryProposalId})
+        .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
         .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")

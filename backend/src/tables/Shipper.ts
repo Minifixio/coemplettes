@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from "typeorm"
+import { Delivery } from "./Delivery"
 
 @Entity({name: "shippers"})
 export class Shipper {
@@ -28,4 +29,7 @@ export class Shipper {
 
     @Column({ type: "varchar", nullable:true })
     disponibilities!: string
+
+    @OneToMany(() => Delivery, (delivery) => delivery.shipper)
+    deliveries!: Delivery[]
 }

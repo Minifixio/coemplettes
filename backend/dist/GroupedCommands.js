@@ -21,49 +21,52 @@ class GroupedCommands {
         });
     }
     static checkTimeSlotsCoherency(timeSlot) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let date = new Date(timeSlot.substring(0, 15));
-            // Si erreur, on renvoie false
-            if (date.toString() === 'Invalid Date') {
-                return false;
-            }
-            // On vérifie que la date est bien dans le futur
-            return (date.getTime() > Date.now());
-        });
+        let date = new Date(timeSlot.substring(0, 15));
+        // Si erreur, on renvoie false
+        if (date.toString() === 'Invalid Date') {
+            return false;
+        }
+        // On vérifie que la date est bien dans le futur
+        return (date.getTime() > Date.now());
     }
     static calculDistanceJourCourant(cart) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // On récupère la date du jour
-            let ajd = new Date().getDay();
-            // On récupère la date de la commande
-            cart.distanceJourCourant = ((new Date(cart.deadline).getDay() - ajd) % 7);
-            if (cart.distanceJourCourant == 0) {
-                cart.distanceJourCourant = 7; // dans le cas où on passe la commande pour J+7
-            }
-            // On renvoie la distance
-            return cart.distanceJourCourant;
-        });
+        // On récupère la date du jour
+        let ajd = new Date();
+        // On récupère la date de la commande
+        console.log(cart.deadline, Math.round(((new Date(cart.deadline)).getTime() - ajd.getTime()) / 86400000));
+        cart.distanceJourCourant = Math.round(((new Date(cart.deadline)).getTime() - ajd.getTime()) / 86400000);
+        if (cart.distanceJourCourant == 0) {
+            cart.distanceJourCourant = 7; // dans le cas où on passe la commande pour J+7
+        }
+        // On renvoie la distance
+        return cart.distanceJourCourant;
     }
-    static sortedUnattributedCarts(unattributedCarts) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // On trie les commandes par distance au jour courant (plus proche en premier)
-            unattributedCarts.sort((a, b) => {
+    static sortUnattributedCarts(unattributedCarts) {
+        for (let cart of unattributedCarts) {
+            GroupedCommands.calculDistanceJourCourant(cart);
+        }
+        // On trie les commandes par distance au jour courant (plus proche en premier)
+        unattributedCarts.sort((a, b) => {
+            if (a.distanceJourCourant == b.distanceJourCourant) {
+                return b.average_price - a.average_price;
+            }
+            else {
                 return a.distanceJourCourant - b.distanceJourCourant;
-            });
-            // Ensuite, parmi les commandes ayant la même distance au jour courant, on trie par prix moyen (plus grand en premier)
-            for (let i = 2; i < 8; i++) {
-                /* on parcourt les 7 jours de la semaine qui vient, en considérant que la première
-                commande possible est à J+2, et que la dernière est à J+7 */
-                let j = i;
-                while (unattributedCarts[j].distanceJourCourant == unattributedCarts[i].distanceJourCourant) {
-                    j++;
-                }
-                unattributedCarts.slice(i, j).sort((a, b) => {
-                    return b.average_price - a.average_price;
-                });
-                i = j;
             }
         });
+        // // Ensuite, parmi les commandes ayant la même distance au jour courant, on trie par prix moyen (plus grand en premier)
+        // for (let i = 2; i < 8; i++) {
+        //     /* on parcourt les 7 jours de la semaine qui vient, en considérant que la première 
+        //     commande possible est à J+2, et que la dernière est à J+7 */
+        //     let j = i
+        //     while (unattributedCarts[j].distanceJourCourant == unattributedCarts[i].distanceJourCourant) {
+        //         j++
+        //     }
+        //     unattributedCarts.slice(i, j).sort((a, b) => {
+        //         return b.average_price - a.average_price
+        //     })
+        //     i = j
+        // }
     }
     static orderShipperDisponibilities(shipper) {
         /* On récupère les disponibilités du livreur qui sont une string au format '0010011'
@@ -72,20 +75,26 @@ class GroupedCommands {
         let disponibilities = shipper.disponibilities;
         let ajd = new Date().getDay();
         let newDisponibilities = disponibilities.substring(ajd, disponibilities.length) + disponibilities.substring(0, ajd);
+        shipper.disponibilities = newDisponibilities;
     }
-    static createUpdatedGroupedCommands() {
+    static createGroupedCommands() {
         return __awaiter(this, void 0, void 0, function* () {
             // Regroupement de commandes
             // On récupère les commandes non attribuées
             let unattributedCarts = yield DBManager_1.DB.getUnattributedCarts();
+            console.log("unattributedCarts", unattributedCarts);
             // On trie les commandes par distance au jour courant (plus proche en premier) et par prix
-            yield GroupedCommands.sortedUnattributedCarts(unattributedCarts);
+            GroupedCommands.sortUnattributedCarts(unattributedCarts);
+            console.log("sorted unattributedCarts", unattributedCarts);
             // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
             let shippers = yield DBManager_1.DB.getShippers();
+            console.log("shippers", shippers);
             for (const shipper of shippers) {
                 GroupedCommands.orderShipperDisponibilities(shipper);
             }
-            for (let i = 2; i < 8; i++) {
+            console.log("sorted shippers", shippers);
+            let deliveryProposals = [];
+            for (let i = 0; i < 7; i++) {
                 let shippersDispoJour = [];
                 for (const shipper of shippers) {
                     if (shipper.disponibilities[i] === '1') {
@@ -96,11 +105,9 @@ class GroupedCommands {
                 shippersDispoJour.sort((shipper1, shipper2) => {
                     return shipper2.price_max - shipper1.price_max;
                 });
-                let ref = 0;
+                console.log("sorted shippersDispoJour " + i, shippersDispoJour);
                 for (const shipper of shippersDispoJour) {
-                    let j = 0;
                     let deliveryProposal = {
-                        ref,
                         shipper_id: shipper.id,
                         // on fixe la deadline à aujourd'hui + 2 jours : à voir comment on veut stocker la date
                         deadline: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
@@ -108,42 +115,74 @@ class GroupedCommands {
                         status: 0,
                         current_price: 0,
                         size: 0,
+                        carts: []
                     };
+                    let j = 0;
                     // WARNING ! En l'état, les commandes à J+i sont prioritaires sur les suivantes
                     while (unattributedCarts[j].distanceJourCourant == i) {
-                        if (deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
+                        if (unattributedCarts[j].status == 0 && deliveryProposal.current_price + unattributedCarts[j].average_price <= shipper.price_max) {
+                            console.log("la cart d'id " + unattributedCarts[j].id + " a été attribuée à la delivery proposal " + deliveryProposal);
                             // On attribue la commande au livreur
-                            unattributedCarts[j].delivery_proposal_id = deliveryProposal.ref;
+                            deliveryProposal.carts.push(unattributedCarts[j]);
                             deliveryProposal.current_price += unattributedCarts[j].average_price;
                             unattributedCarts[j].status = 1;
                             // on supprime la commande de la liste des commandes non attribuées
-                            unattributedCarts.splice(j, 1);
                         }
                         j++;
                     }
                     // On essaie de combler les trous avec les commandes pour les jours suivants
                     for (const cart of unattributedCarts) {
-                        if (cart.distanceJourCourant > i) {
+                        if (cart.status == 0 && cart.distanceJourCourant > i) {
                             if (deliveryProposal.current_price + cart.average_price <= shipper.price_max) {
-                                cart.delivery_proposal_id = deliveryProposal.ref;
+                                console.log("la cart d'id " + cart.id + " a été attribuée à la delivery proposal " + deliveryProposal);
+                                deliveryProposal.carts.push(cart);
                                 deliveryProposal.current_price += cart.average_price;
-                                unattributedCarts.splice(unattributedCarts.indexOf(cart), 1);
+                                cart.status = 1;
                             }
                         }
                     }
                     /* On supprime le livreur de la liste des livreurs disponibles
                     WARNING : actuellement la suppression est fait dans tous les cas, donc même si le shipper n'a pas reçu de commande
                     On pourrait mettre un if deliveryProposal.curent_price > 1 pour checker, mais le shipper resterait toujours dispo */
-                    shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1);
-                    ref++;
+                    //shippersDispoJour.splice(shippersDispoJour.indexOf(shipper), 1)
+                    console.log("deliveryProposal", deliveryProposal);
+                    if (deliveryProposal.carts.length > 0) {
+                        deliveryProposals.push(deliveryProposal);
+                    }
+                }
+            }
+            console.log("deliveryProposals", deliveryProposals);
+        });
+    }
+    static chooseSupermarket(deliveryProposal) {
+        return __awaiter(this, void 0, void 0, function* () {
+            /* Choix du supermarché : Cora Massy ou Auchan Villebon : uniquement voiture
+            Leclerc Massy ou Intermarché Moulon : aussi vélo
+            Leclerc : uniquement drive
+            */
+            let possibleSupermarkets = [];
+            if (!deliveryProposal.shipper.has_car) {
+                if (!deliveryProposal.shipper.drive) {
+                    possibleSupermarkets = ['Intermarché Moulon'];
+                }
+                else {
+                    possibleSupermarkets = ['Leclerc Massy', 'Intermarché Moulon'];
+                }
+            }
+            else {
+                if (!deliveryProposal.shipper.drive) {
+                    possibleSupermarkets = ['Cora Massy', 'Auchan Villebon', 'Intermarché Moulon'];
+                }
+                else {
+                    possibleSupermarkets = ['Cora Massy', 'Auchan Villebon', 'Leclerc Massy', 'Intermarché Moulon'];
                 }
             }
         });
     }
-    static createGroupedCommands() {
+    static createOldGroupedCommands() {
         return __awaiter(this, void 0, void 0, function* () {
             let unattributedCarts = yield DBManager_1.DB.getUnattributedCarts();
-            yield GroupedCommands.sortedUnattributedCarts(unattributedCarts);
+            yield GroupedCommands.sortUnattributedCarts(unattributedCarts);
             const timeSlots = yield DBManager_1.DB.getTimeSlots();
             // on a une liste de Shippers avec une valeur disponibilities : string au format 'YYYY-MM-DD HHMM-HHMM,...,YYYY-MM-DD HHMM-HHMM'
             // On réalise un dictionnaire de créneaux horaires : { 'YYYY-MM-DD HHMM-HHMM': [Shippers] }
