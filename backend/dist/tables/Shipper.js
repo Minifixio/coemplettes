@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Shipper = void 0;
 const typeorm_1 = require("typeorm");
 const Delivery_1 = require("./Delivery");
+const User_1 = require("./User");
 let Shipper = class Shipper {
 };
 __decorate([
@@ -31,6 +32,14 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Shipper.prototype, "has_car", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
+    __metadata("design:type", Boolean)
+], Shipper.prototype, "drive", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
+    __metadata("design:type", Boolean)
+], Shipper.prototype, "shop", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "int", nullable: true }),
     __metadata("design:type", Number)
 ], Shipper.prototype, "deliveries_count", void 0);
@@ -41,19 +50,16 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
     __metadata("design:type", String)
-], Shipper.prototype, "drive", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
-    __metadata("design:type", Boolean)
-], Shipper.prototype, "shop", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
-    __metadata("design:type", String)
 ], Shipper.prototype, "disponibilities", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Delivery_1.Delivery, (delivery) => delivery.shipper),
     __metadata("design:type", Array)
 ], Shipper.prototype, "deliveries", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => User_1.User, (user) => user.shipper),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id', referencedColumnName: 'id' }),
+    __metadata("design:type", User_1.User)
+], Shipper.prototype, "user", void 0);
 Shipper = __decorate([
     (0, typeorm_1.Entity)({ name: "shippers" })
 ], Shipper);

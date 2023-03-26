@@ -287,7 +287,7 @@ export class DB {
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
-        .where("delivery.status = :status", {status: 0})
+        .where("delivery.status != :status", {status: 4})
         .leftJoinAndSelect("delivery.shipper", "shipper")
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")

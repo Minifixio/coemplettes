@@ -268,6 +268,9 @@ class DB {
                 .getRepository(Cart_1.Cart)
                 .createQueryBuilder("cart")
                 .leftJoinAndSelect("cart.delivery", "delivery")
+                .leftJoinAndSelect("delivery.shipper", "shipper")
+                .leftJoinAndSelect("shipper.user", "user")
+                .leftJoinAndSelect("cart.delivery_proposal", "delivery_proposal")
                 .where("cart.owner_id = :owner_id", { owner_id: owner_id })
                 .getOne();
             return res;
@@ -328,11 +331,12 @@ class DB {
                 .getRepository(Delivery_1.Delivery)
                 .createQueryBuilder("delivery")
                 .where("delivery.shipper_id = :shipper_id", { shipper_id: shipper_id })
-                .where("delivery.status = :status", { status: 0 })
-                .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
+                .where("delivery.status != :status", { status: 4 })
+                .leftJoinAndSelect("delivery.shipper", "shipper")
                 .leftJoinAndSelect("delivery.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
+                .leftJoinAndSelect("shipper.user", "user")
                 .getOne();
             return delivery;
         });
@@ -348,6 +352,7 @@ class DB {
                 .leftJoinAndSelect("delivery_proposal.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
+                .leftJoinAndSelect("shipper.user", "user")
                 .orderBy('delivery_proposal.creation_date', 'ASC')
                 .getOne();
             return deliveryProposals;
@@ -576,14 +581,13 @@ class DB {
                 },
                 take: 1
             }))[0];
-            console.log(deliveryProposal);
             if (deliveryProposal === undefined) {
                 return;
             }
             yield this.AppDataSource
                 .createQueryBuilder()
                 .update(Cart_1.Cart)
-                .set({ delivery_proposal_id: null })
+                .set({ delivery_proposal_id: null, status: 1 })
                 .where("delivery_proposal_id = :id", { id: deliveryProposalId })
                 .execute();
             // On supprime toutes les delivery proposals précédentes de l'utilisateur lors de l'accéptation d'une delivery proposal
