@@ -10,12 +10,12 @@ const Separator = () => <View style={styles.separator} />;
 function RegisterPage({navigation}) {
   const {register} = useContext(UserContext);
 
-  const [firstName, setFirstName] = useState('Lolo');
-  const [lastName, setLastName] = useState('Popo');
-  const [email, setEmail] = useState('lolo@telecom-paris.fr');
+  const [firstName, setFirstName] = useState('User');
+  const [lastName, setLastName] = useState('Test');
+  const [email, setEmail] = useState('user0@telecom-paris.fr');
   const [school, setSchool] = useState('Telecom Paris');
-  const [phone, setPhone] = useState('0645342398');
-  const [password, setPassword] = useState('haha');
+  const [phone, setPhone] = useState('0102030405');
+  const [password, setPassword] = useState('password');
 
   const registerUser = async () => {
     try {

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -41,8 +41,9 @@ function MenuItem({text, icon, goTo}) {
 }
 
 function ShipperAccountPage({navigation}) {
-  const {shipperInfos} = useContext(UserContext);
+  const {getShipperInfos, updateShipperProfile} = useContext(UserContext);
   const [isShipper, setIsShipper] = useState(false);
+  const [shipperInfos, setShipperInfos] = useState(false);
 
   /**
    * MOCKUP DATAS
@@ -54,16 +55,23 @@ function ShipperAccountPage({navigation}) {
   const _isShipper = false;
   const _shipper = shippers[0];
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
+    const shipper = await getShipperInfos();
+    setShipperInfos(shipper);
     console.log('[ShipperAccount] Shipper infos : ', shipperInfos);
-    if (shipperInfos.user_id) {
+    if (shipper.user_id) {
       console.log('[ShipperAccount] He is a shipper !');
       setIsShipper(true);
     } else {
       console.log('[ShipperAccount] He is not a shipper !');
       setIsShipper(false);
     }
-  }, [shipperInfos, isShipper, setIsShipper]);
+    //await updateShipperProfile(shipper);
+  }, [getShipperInfos, shipperInfos]);
+
+  useEffect(() => {
+    fetchData().catch(e => console.log(e));
+  }, [fetchData]);
 
   if (isShipper) {
     return (

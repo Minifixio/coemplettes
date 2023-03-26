@@ -36,8 +36,7 @@ export function UserProvider(props) {
     const loadUser = async () => {
       return new Promise(async (resolve, reject) => {
         try {
-          const userId = await AuthService.loadUser();
-          await updateInfos(userId);
+          await updateInfos();
           resolve();
         } catch (e) {
           console.log('[UserProvider] Error while loading the user : ', e);
@@ -102,9 +101,9 @@ export function UserProvider(props) {
   const login = (email, password) =>
     new Promise(async (resolve, reject) => {
       try {
-        const userId = await AuthService.login(email, password);
+        await AuthService.login(email, password);
         console.log('[AuthProvider] Connexion avec succès! \n');
-        await updateInfos(userId);
+        await updateInfos();
         setIsLoggedIn(true);
         resolve();
       } catch (e) {
@@ -116,9 +115,9 @@ export function UserProvider(props) {
   const register = async (user, password) =>
     new Promise(async (resolve, reject) => {
       try {
-        const userId = await AuthService.register(user, password);
+        await AuthService.register(user, password);
         console.log('[Register] Enregistrement avec succès! \n');
-        await updateInfos(userId);
+        await updateInfos();
         setIsLoggedIn(true);
         resolve();
       } catch (e) {
@@ -127,7 +126,34 @@ export function UserProvider(props) {
       }
     });
 
-  const updateInfos = userId => {
+  const getShipperInfos = async () => {
+    const userId = userInfos.id;
+    return new Promise(async (resolve, reject) => {
+      if (shipperInfos.id !== undefined) {
+        resolve(shipperInfos);
+      }
+
+      console.log('[UserProvider] Récupération des infos shipper');
+
+      try {
+        const shipperJSON = await APIService.get('shipper', userId);
+        let shipper = await shipperJSON.json();
+        if (shipper !== null) {
+          console.log("[UserProvider] L'utilisateur a un profil shipper");
+        } else {
+          shipper = {};
+        }
+        resolve(shipper);
+      } catch (e) {
+        console.log("[UserProvider] L'utilisateur n'a pas de profil shipper");
+        console.log(e);
+        resolve({});
+      }
+    });
+  };
+
+  const updateInfos = async () => {
+    const userId = await AuthService.getUserId();
     return new Promise(async (resolve, reject) => {
       console.log('[UserProvider] Mises à jour des infos utilisateurs');
       try {
@@ -172,6 +198,8 @@ export function UserProvider(props) {
         userInfos,
         shipperInfos,
         updateShipperProfile,
+        updateInfos,
+        getShipperInfos,
       }}>
       {props.children}
     </UserContext.Provider>

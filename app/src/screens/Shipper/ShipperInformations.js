@@ -22,13 +22,14 @@ function ShipperInformationPage({navigation}) {
   const [hasCar, setHasCar] = useState(false);
 
   useEffect(() => {
-    if (shipperInfos !== {}) {
+    if (shipperInfos.id !== undefined) {
+      console.log('[ShipperInformations]', shipperInfos);
       setPriceMax(shipperInfos.price_max);
       setCapacity(shipperInfos.capacity);
       setDisponibilities(shipperInfos.disponibilities);
       setDrive(shipperInfos.drive);
       setShop(shipperInfos.shop);
-      setHasCar(shipperInfos.hasCar);
+      setHasCar(shipperInfos.has_car);
     }
   }, [shipperInfos]);
 
@@ -146,8 +147,9 @@ function ShipperInformationPage({navigation}) {
             text="Lundi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[0]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[0] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -163,8 +165,9 @@ function ShipperInformationPage({navigation}) {
             text="Mardi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[1]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[1] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -180,8 +183,9 @@ function ShipperInformationPage({navigation}) {
             text="Mercredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[2]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[2] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -197,8 +201,9 @@ function ShipperInformationPage({navigation}) {
             text="Jeudi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[3]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[3] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -214,8 +219,9 @@ function ShipperInformationPage({navigation}) {
             text="Vendredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[4]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[4] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -231,8 +237,9 @@ function ShipperInformationPage({navigation}) {
             text="Samedi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[5]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[5] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
@@ -248,8 +255,9 @@ function ShipperInformationPage({navigation}) {
             text="Dimanche"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
+            isChecked={disponibilities[6]}
             onPress={isChecked => {
-              const d = disponibilities;
+              let d = disponibilities;
               d[6] = isChecked ? 1 : 0;
               setDisponibilities(d);
             }}
