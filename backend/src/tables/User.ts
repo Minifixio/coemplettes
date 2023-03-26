@@ -1,5 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from "typeorm"
 import { UserInterface } from "../models/User"
+import { Cart } from "./Cart"
+import { Shipper } from "./Shipper"
 
 @Entity({name: "users"})
 export class User implements UserInterface {
@@ -23,4 +25,7 @@ export class User implements UserInterface {
 
     @Column({ type: "varchar", length: 200, nullable:false })
     pwdhash!: string
+
+    @OneToOne(() => Shipper, (shipper) => shipper.user)
+    shipper!: Shipper
 }

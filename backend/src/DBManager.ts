@@ -229,6 +229,9 @@ export class DB {
         .getRepository(Cart)
         .createQueryBuilder("cart")
         .leftJoinAndSelect("cart.delivery", "delivery")
+        .leftJoinAndSelect("delivery.shipper", "shipper")
+        .leftJoinAndSelect("shipper.user", "user")
+        .leftJoinAndSelect("cart.delivery_proposal", "delivery_proposal")
         .where("cart.owner_id = :owner_id", {owner_id: owner_id})
         .getOne()
         return res
@@ -285,10 +288,11 @@ export class DB {
         .createQueryBuilder("delivery")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .where("delivery.status = :status", {status: 0})
-        .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
+        .leftJoinAndSelect("delivery.shipper", "shipper")
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
+        .leftJoinAndSelect("shipper.user", "shipper")
         .getOne()
 
         return delivery
@@ -304,6 +308,7 @@ export class DB {
         .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
+        .leftJoinAndSelect("shipper.user", "shipper")
         .orderBy('delivery_proposal.creation_date', 'ASC')
         .getOne()
 
@@ -541,7 +546,7 @@ export class DB {
         await this.AppDataSource
         .createQueryBuilder()
         .update(Cart)
-        .set({delivery_proposal_id: null})
+        .set({delivery_proposal_id: null, status: 1})
         .where("delivery_proposal_id = :id", {id: deliveryProposalId})
         .execute()
 
