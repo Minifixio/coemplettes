@@ -26,7 +26,7 @@ function ShipperInformationPage({navigation}) {
       console.log('[ShipperInformations]', shipperInfos);
       setPriceMax(shipperInfos.price_max);
       setCapacity(shipperInfos.capacity);
-      setDisponibilities(shipperInfos.disponibilities);
+      setDisponibilities(shipperInfos.disponibilities.split('').map(Number));
       setDrive(shipperInfos.drive);
       setShop(shipperInfos.shop);
       setHasCar(shipperInfos.has_car);
@@ -147,7 +147,11 @@ function ShipperInformationPage({navigation}) {
             text="Lundi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[0]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[0] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[0] = isChecked ? 1 : 0;
@@ -165,7 +169,11 @@ function ShipperInformationPage({navigation}) {
             text="Mardi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[1]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[1] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[1] = isChecked ? 1 : 0;
@@ -183,7 +191,11 @@ function ShipperInformationPage({navigation}) {
             text="Mercredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[2]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[2] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[2] = isChecked ? 1 : 0;
@@ -201,7 +213,11 @@ function ShipperInformationPage({navigation}) {
             text="Jeudi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[3]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[3] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[3] = isChecked ? 1 : 0;
@@ -219,7 +235,11 @@ function ShipperInformationPage({navigation}) {
             text="Vendredi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[4]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[4] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[4] = isChecked ? 1 : 0;
@@ -237,7 +257,11 @@ function ShipperInformationPage({navigation}) {
             text="Samedi"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[5]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[5] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[5] = isChecked ? 1 : 0;
@@ -255,7 +279,11 @@ function ShipperInformationPage({navigation}) {
             text="Dimanche"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={disponibilities[6]}
+            isChecked={
+              shipperInfos.disponibilities
+                ? shipperInfos.disponibilities[6] === '1'
+                : false
+            }
             onPress={isChecked => {
               let d = disponibilities;
               d[6] = isChecked ? 1 : 0;

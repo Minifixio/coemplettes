@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../../components/BasicButton';
 
-const cart_response =
+const carts_mockup =
   require('../../assets/json/cart_response.json').cart_response;
 
 const Divider = () => {
@@ -32,20 +32,24 @@ const Divider = () => {
   );
 };
 
-function DeliveryCartCompletion() {
+function DeliveryCartCompletion({navigation, cartsData}) {
   /**
    * MOCKUP DATA
    *
    * _carts
    * */
 
-  const _carts = cart_response;
+  const mockup = false;
   const [carts, setCarts] = useState([]);
   const [missingProductsCount, setMissingProductsCount] = useState(0);
   const [unavailableProductsCount, setUnavailableProductsCount] = useState(0);
 
   useEffect(() => {
-    setCarts(_carts);
+    if (mockup) {
+      setCarts(carts_mockup);
+    } else {
+      setCarts(cartsData);
+    }
 
     let unavailableCount = 0;
     let missingCount = 0;
@@ -61,7 +65,7 @@ function DeliveryCartCompletion() {
     });
     setMissingProductsCount(missingCount);
     setUnavailableProductsCount(unavailableCount);
-  }, [_carts, setUnavailableProductsCount, carts]);
+  }, [setUnavailableProductsCount, carts, mockup, cartsData]);
 
   const updateUnavailableProductsCount = useCallback(() => {
     let count = 0;

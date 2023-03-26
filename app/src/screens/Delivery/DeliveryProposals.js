@@ -24,6 +24,21 @@ const StatusItem = ({deliveryProposal, navigation}) => {
     deliveryProposal.creation_date,
   ).toLocaleDateString('fr');
 
+  const acceptDeliveyProposal = async () => {
+    try {
+      await DeliveryService.acceptDeliveryProposal(deliveryProposal.id);
+      console.log(
+        '[DeliveryProposals] Delivery proposal acceptée avec succès !',
+      );
+      navigation.navigate('DeliveryTracking');
+    } catch (e) {
+      console.log(
+        "[DeliveryProposals] Erreur lors de l'acceptation de la delivery proposal...",
+        e,
+      );
+    }
+  };
+
   return (
     <View style={styles.statusItemContainer}>
       <View
@@ -60,7 +75,11 @@ const StatusItem = ({deliveryProposal, navigation}) => {
           />
         )}
         {selected && (
-          <Pressable style={styles.acceptButton} onPress={() => {}}>
+          <Pressable
+            style={styles.acceptButton}
+            onPress={() => {
+              acceptDeliveyProposal();
+            }}>
             <LinearGradient
               start={{x: 0.0, y: 0.25}}
               end={{x: 0.5, y: 1.0}}

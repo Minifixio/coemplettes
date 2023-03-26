@@ -89,10 +89,10 @@ function CartPage({navigation}) {
     setOpenDatePicker(true);
   }
 
-  async function confirmDeadline() {
+  async function confirmDeadline(date) {
     try {
       setOpenDatePicker(false);
-      await CartService.addCart(deadline.toJSON(), items);
+      await CartService.addCart(date.toJSON(), items);
       Toast.show({
         type: 'success',
         text1: 'Carte validée !',
@@ -196,7 +196,7 @@ function CartPage({navigation}) {
             open={openDatePicker}
             date={deadline}
             onConfirm={date => {
-              confirmDeadline();
+              confirmDeadline(date);
             }}
             onCancel={() => {
               setOpenDatePicker(false);

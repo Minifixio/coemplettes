@@ -41,7 +41,7 @@ function MenuItem({text, icon, goTo}) {
 }
 
 function ShipperAccountPage({navigation}) {
-  const {getShipperInfos, updateShipperProfile} = useContext(UserContext);
+  const {getShipperInfos} = useContext(UserContext);
   const [isShipper, setIsShipper] = useState(false);
   const [shipperInfos, setShipperInfos] = useState(false);
 
@@ -56,18 +56,19 @@ function ShipperAccountPage({navigation}) {
   const _shipper = shippers[0];
 
   const fetchData = useCallback(async () => {
-    const shipper = await getShipperInfos();
-    setShipperInfos(shipper);
-    console.log('[ShipperAccount] Shipper infos : ', shipperInfos);
-    if (shipper.user_id) {
-      console.log('[ShipperAccount] He is a shipper !');
-      setIsShipper(true);
-    } else {
-      console.log('[ShipperAccount] He is not a shipper !');
-      setIsShipper(false);
-    }
+    await getShipperInfos().then(shipper => {
+      setShipperInfos(shipper);
+      console.log('[ShipperAccount] Shipper infos : ', shipper);
+      if (shipper.user_id) {
+        console.log('[ShipperAccount] He is a shipper !');
+        setIsShipper(true);
+      } else {
+        console.log('[ShipperAccount] He is not a shipper !');
+        setIsShipper(false);
+      }
+    });
     //await updateShipperProfile(shipper);
-  }, [getShipperInfos, shipperInfos]);
+  }, [getShipperInfos]);
 
   useEffect(() => {
     fetchData().catch(e => console.log(e));

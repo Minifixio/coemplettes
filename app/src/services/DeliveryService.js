@@ -33,7 +33,7 @@ export class DeliveryService {
         console.log(
           "[DeliveryService] Récupération de la delivery en cours de l'utilisateur",
         );
-        const res = await APIService.get('current_delivery', userId);
+        const res = await APIService.get('delivery_summary', userId);
         const content = await res.text();
 
         let currentDelivery;
@@ -93,7 +93,7 @@ export class DeliveryService {
     return new Promise(async (resolve, reject) => {
       try {
         console.log(
-          `[CartService] Récupération des détails de la delivery proposal n°${deliveryProposalId} de l'utilisateur`,
+          `[DeliveryService] Récupération des détails de la delivery proposal n°${deliveryProposalId} de l'utilisateur`,
         );
         const res = await APIService.get(
           'delivery_proposal_summary',
@@ -107,5 +107,35 @@ export class DeliveryService {
     });
   }
 
-  static async acceptDelivery() {}
+  static async acceptDeliveryProposal(deliveryProposalId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log(
+          `[DeliveryService] Acceptation de la delivery proposal n°${deliveryProposalId} de l'utilisateur`,
+        );
+        await APIService.post('delivery_proposal_accept', {
+          delivery_proposal_id: deliveryProposalId,
+        });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  static async deliveryStartShopping(deliveryId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log(
+          `[DeliveryService] Début de l'acaht de la delivery n°${deliveryId} de l'utilisateur`,
+        );
+        await APIService.post('delivery_start_shopping', {
+          delivery_id: deliveryId,
+        });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }

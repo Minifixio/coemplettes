@@ -97,6 +97,21 @@ function DeliveryTracking({navigation}) {
     }
   }, [mockup, setDelivery]);
 
+  const startDeliveryShopping = async () => {
+    console.log("[DeliveryTracking] Début de l'achat !");
+    try {
+      await DeliveryService.deliveryStartShopping(delivery.id);
+      setDelivery({...delivery, status: 1});
+    } catch (e) {
+      console.log("[DeliveryTracking] Erreur lors du début de l'achat...", e);
+    }
+  };
+
+  const completeCarts = async () => {
+    console.log('[DeliveryTracking] Début de la complétion des carts !');
+    navigation.navigate('DeliveryCartCompletion', {cartsData: delivery.carts});
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {loading && (
@@ -128,32 +143,34 @@ function DeliveryTracking({navigation}) {
                 title="Commande acceptée"
                 subtitle="13/03/2023"
                 iconName="md-checkmark"
-                selected={delivery.status >= 1}
+                selected={delivery.status >= 0}
               />
               <StatusItem
                 title="Commande en cours d'achat"
                 subtitle="14/03/2023"
                 iconName="ios-cart-outline"
-                selected={delivery.status >= 2}
+                selected={delivery.status >= 1}
               />
               <StatusItem
                 title="Commande déposée"
                 subtitle="14/03/2023"
                 iconName="ios-archive-outline"
-                selected={delivery.status >= 3}
+                selected={delivery.status >= 2}
               />
             </LinearGradient>
           </ScrollView>
-          {delivery.status === 1 && (
+          {delivery.status === 0 && (
             <View style={styles.buttonView}>
               <BasicButton
                 style={styles.button}
-                onClick={() => {}}
+                onClick={() => {
+                  startDeliveryShopping();
+                }}
                 text="Je débute l'achat"
               />
             </View>
           )}
-          {delivery.status === 2 && (
+          {delivery.status === 1 && (
             <View style={styles.buttonView}>
               <BasicButton
                 style={styles.button}
@@ -165,7 +182,7 @@ function DeliveryTracking({navigation}) {
               />
             </View>
           )}
-          {delivery.status === 3 && (
+          {delivery.status === 2 && (
             <View style={styles.buttonView}>
               <BasicButton
                 style={styles.button}
