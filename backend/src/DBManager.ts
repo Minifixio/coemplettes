@@ -292,7 +292,7 @@ export class DB {
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
-        .leftJoinAndSelect("shipper.user", "shipper")
+        .leftJoinAndSelect("shipper.user", "user")
         .getOne()
 
         return delivery
@@ -308,7 +308,7 @@ export class DB {
         .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
-        .leftJoinAndSelect("shipper.user", "shipper")
+        .leftJoinAndSelect("shipper.user", "user")
         .orderBy('delivery_proposal.creation_date', 'ASC')
         .getOne()
 
