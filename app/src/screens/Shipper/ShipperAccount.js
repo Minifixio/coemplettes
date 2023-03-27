@@ -19,6 +19,7 @@ import DeliveryCartCompletion from '../Delivery/DeliveryCartCompletion';
 import DeliveryProposalCarts from '../Delivery/DeliveryProposalCarts';
 import DeliveryHistoryCarts from '../Delivery/DeliveryHistoryCarts';
 import DeliveryHistoryPage from '../Delivery/DeliveryHistory';
+import ShipperCharterPage from './ShipperCharter';
 
 const shippers = require('../../assets/json/shippers.json').shippers;
 const profilePicture = require('../../assets/icons/misc/profile_picture.png');
@@ -129,7 +130,7 @@ function ShipperAccountPage({navigation}) {
           <BasicButton
             style={styles.button}
             onClick={() => {
-              navigation.push('ShipperInformationPage');
+              navigation.push('ShipperCharterPage');
             }}
             text="Devenir livreur"
           />
@@ -147,6 +148,11 @@ function ShipperAccountStack() {
         name="ShipperAccountPage"
         options={{title: 'Profil livreur', headerShown: false}}
         component={ShipperAccountPage}
+      />
+      <Stack.Screen
+        name="ShipperCharterPage"
+        options={{title: 'Charte de livreur'}}
+        component={ShipperCharterPage}
       />
       <Stack.Screen
         name="ShipperInformationPage"
