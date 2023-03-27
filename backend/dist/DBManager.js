@@ -668,6 +668,12 @@ class DB {
                 .set({ status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON() })
                 .where("id = :id", { id: deliveryId })
                 .execute();
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Cart_1.Cart)
+                .set({ status: 3 })
+                .where("delivery_id = :id", { id: deliveryId })
+                .execute();
         });
     }
     static retreiveDelivery(deliveryId, retreived) {

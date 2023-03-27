@@ -25,9 +25,10 @@ export class Cart {
     @Column({ type: "datetime", nullable:false })
     deadline!: Date
     
-    /* pour un cart non attribué : status=0 et delivery_proposal_id=null
-        pour un cart attribué mais en attente de validation : status=1
-        pour un cart validé : status=2 */
+    // 0 = en attente d'attribution à une delivery
+    // 1 = attribuée à un livreur
+    // 3 = livrée
+    // 4 = erreur
     @Column({ type: "int", nullable:false })
     status!: number
     

@@ -635,6 +635,13 @@ export class DB {
         .set({status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON()})
         .where("id = :id", {id: deliveryId})
         .execute()
+
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Cart)
+        .set({status: 3})
+        .where("delivery_id = :id", {id: deliveryId})
+        .execute()
     }
 
     static async retreiveDelivery(deliveryId: number, retreived: boolean) {
