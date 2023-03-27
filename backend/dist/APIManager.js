@@ -41,7 +41,7 @@ class API {
             { method: "GET", entryPointName: "deliveries", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliveries(shipper_id) },
             { method: "GET", entryPointName: "delivery", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getDeliveryByID(id) },
             { method: "GET", entryPointName: "current_delivery", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getCurrentDelivery(shipper_id) },
-            { method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliverySummary(shipper_id) },
+            { method: "GET", entryPointName: "delivery_summary", paramName: "shipper_id", auth: false, callbackParam: (shipper_id) => DBManager_1.DB.getDeliverySummary(shipper_id) },
             { method: "GET", entryPointName: "delivery_deadline", paramName: "delivery_id", auth: true, callbackParam: (delivery_id) => DBManager_1.DB.getDeliveryDeadline(delivery_id) },
             { method: "GET", entryPointName: "delivery_proposals", paramName: "shipper_id", auth: true, callbackParam: (shipper_id) => DBManager_1.DB.getDeliveryProposals(shipper_id) },
             { method: "GET", entryPointName: "delivery_proposal", paramName: "id", auth: true, callbackParam: (id) => DBManager_1.DB.getDeliveryProposalByID(id) },

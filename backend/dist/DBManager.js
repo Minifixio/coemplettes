@@ -336,6 +336,7 @@ class DB {
                 .leftJoinAndSelect("delivery.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
+                .leftJoinAndSelect("cart.owner", "owner")
                 .leftJoinAndSelect("shipper.user", "user")
                 .getOne();
             return delivery;
@@ -352,6 +353,7 @@ class DB {
                 .leftJoinAndSelect("delivery_proposal.carts", "cart")
                 .leftJoinAndSelect("cart.items", "item")
                 .leftJoinAndSelect("item.product", "product")
+                .leftJoinAndSelect("cart.owner", "owner")
                 .leftJoinAndSelect("shipper.user", "user")
                 .orderBy('delivery_proposal.creation_date', 'ASC')
                 .getOne();
@@ -663,7 +665,7 @@ class DB {
             yield this.AppDataSource
                 .createQueryBuilder()
                 .update(Delivery_1.Delivery)
-                .set({ status: 3, locker_id: availableLockerId })
+                .set({ status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON() })
                 .where("id = :id", { id: deliveryId })
                 .execute();
         });

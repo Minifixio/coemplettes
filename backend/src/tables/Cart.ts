@@ -43,7 +43,7 @@ export class Cart {
     @Column({ type: "int", nullable:true }) // le numéro du locker qui sera attribué une fois la Delivery déposée
     locker_id!: number
 
-    @ManyToMany(type => User, owner => owner)
+    @ManyToOne(type => User, owner => owner)
     @JoinColumn(
         { name: 'owner_id', referencedColumnName: 'id'}
     )

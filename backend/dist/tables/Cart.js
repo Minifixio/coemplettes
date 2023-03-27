@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Cart.prototype, "locker_id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(type => User_1.User, owner => owner),
+    (0, typeorm_1.ManyToOne)(type => User_1.User, owner => owner),
     (0, typeorm_1.JoinColumn)({ name: 'owner_id', referencedColumnName: 'id' }),
     __metadata("design:type", User_1.User)
 ], Cart.prototype, "owner", void 0);

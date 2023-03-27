@@ -292,6 +292,7 @@ export class DB {
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
+        .leftJoinAndSelect("cart.owner", "owner")
         .leftJoinAndSelect("shipper.user", "user")
         .getOne()
 
@@ -308,6 +309,7 @@ export class DB {
         .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
+        .leftJoinAndSelect("cart.owner", "owner")
         .leftJoinAndSelect("shipper.user", "user")
         .orderBy('delivery_proposal.creation_date', 'ASC')
         .getOne()
@@ -630,7 +632,7 @@ export class DB {
         await this.AppDataSource
         .createQueryBuilder()
         .update(Delivery)
-        .set({status: 3, locker_id: availableLockerId})
+        .set({status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON()})
         .where("id = :id", {id: deliveryId})
         .execute()
     }

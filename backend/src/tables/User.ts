@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, OneToMany } from "typeorm"
 import { UserInterface } from "../models/User"
 import { Cart } from "./Cart"
 import { Shipper } from "./Shipper"
@@ -28,4 +28,7 @@ export class User implements UserInterface {
 
     @OneToOne(() => Shipper, (shipper) => shipper.user)
     shipper!: Shipper
+
+    @OneToMany(() => Cart, (cart) => cart.owner)
+    carts!: Cart[]
 }
