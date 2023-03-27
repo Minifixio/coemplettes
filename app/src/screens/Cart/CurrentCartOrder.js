@@ -277,9 +277,7 @@ function CurrentCartOrderPage({navigation, route}) {
                       <Ionicons name="time-outline" size={40} color="black" />
                     </View>
                     <View>
-                      <Text style={styles.infoText}>
-                        Commande en attente d'achat...
-                      </Text>
+                      <Text style={styles.infoText}>En attente d'achat...</Text>
                     </View>
                   </View>
                 )}
@@ -289,9 +287,7 @@ function CurrentCartOrderPage({navigation, route}) {
                       <Ionicons name="cart-outline" size={40} color="black" />
                     </View>
                     <View>
-                      <Text style={styles.infoText}>
-                        Commande en cours d'achat...
-                      </Text>
+                      <Text style={styles.infoText}>En cours d'achat...</Text>
                     </View>
                   </View>
                 )}
@@ -306,7 +302,7 @@ function CurrentCartOrderPage({navigation, route}) {
                     </View>
                     <View>
                       <Text style={styles.infoText}>
-                        Commande en attente de dépôt...
+                        En attente de dépôt...
                       </Text>
                     </View>
                   </View>

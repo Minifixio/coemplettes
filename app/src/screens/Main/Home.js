@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   categoriesContainer: {
     display: 'flex',
     backgroundColor: '#e6e6e6',
-    height: '15%',
+    height: '17%',
   },
   fetauredContainer: {
     display: 'flex',
