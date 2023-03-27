@@ -231,36 +231,37 @@ function CurrentCartOrderPage({navigation, route}) {
             )}
 
             {cart.status === 1 && (
-              <View style={styles.infoSubView}>
-                <Text style={styles.infoText}>
-                  Votre date limite : &nbsp;
-                  {new Intl.DateTimeFormat('en-US').format(
-                    new Date(cart.deadline),
-                  )}
-                </Text>
-                <View style={styles.infoShipper}>
+              <View style={styles.container}>
+                <View style={styles.infoSubView}>
                   <Text style={styles.infoText}>
-                    Livreur proposé :{' '}
-                    {cart.delivery.shipper
-                      ? cart.delivery.shipper.first_name +
-                        cart.delivery.shipper.last_name
-                      : 'Carla George'}
+                    Votre date limite : &nbsp;
+                    {new Intl.DateTimeFormat('en-US').format(
+                      new Date(cart.deadline),
+                    )}
                   </Text>
-                </View>
+                  <View style={styles.infoShipper}>
+                    <Text style={styles.infoText}>
+                      Livreur :{' '}
+                      {cart.delivery.shipper
+                        ? cart.delivery.shipper.first_name +
+                          cart.delivery.shipper.last_name
+                        : 'Carla George'}
+                    </Text>
+                  </View>
 
-                <Text style={styles.infoTextLight}>
-                  Date de livraison prévue : 10/11/2023
-                </Text>
-                <View style={styles.estimatedPriceView}>
-                  <Text style={styles.infoText}>Prix estimé :</Text>
-                  <Text
-                    style={[
-                      styles.estimatedPriceText,
-                      styles.estimatedPriceTextMin,
-                    ]}>
-                    {cart.average_price}€
+                  <Text style={styles.infoTextLight}>
+                    Date de livraison prévue : 10/11/2023
                   </Text>
-                  {/* <Text style={styles.infoText}> - </Text>
+                  <View style={styles.estimatedPriceView}>
+                    <Text style={styles.infoText}>Prix estimé :</Text>
+                    <Text
+                      style={[
+                        styles.estimatedPriceText,
+                        styles.estimatedPriceTextMin,
+                      ]}>
+                      {cart.average_price}€
+                    </Text>
+                    {/* <Text style={styles.infoText}> - </Text>
                   <Text
                     style={[
                       styles.estimatedPriceText,
@@ -268,7 +269,48 @@ function CurrentCartOrderPage({navigation, route}) {
                     ]}>
                     50.30€
                   </Text> */}
+                  </View>
                 </View>
+                {cart.delivery.status === 0 && (
+                  <View style={styles.infoSubView}>
+                    <View>
+                      <Ionicons name="time-outline" size={40} color="black" />
+                    </View>
+                    <View>
+                      <Text style={styles.infoText}>
+                        Commande en attente d'achat...
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {cart.delivery.status === 1 && (
+                  <View style={styles.infoSubView}>
+                    <View>
+                      <Ionicons name="cart-outline" size={40} color="black" />
+                    </View>
+                    <View>
+                      <Text style={styles.infoText}>
+                        Commande en cours d'achat...
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {cart.delivery.status === 2 && (
+                  <View style={styles.infoSubView}>
+                    <View>
+                      <Ionicons
+                        name="archive-outline"
+                        size={40}
+                        color="black"
+                      />
+                    </View>
+                    <View>
+                      <Text style={styles.infoText}>
+                        Commande en attente de dépôt...
+                      </Text>
+                    </View>
+                  </View>
+                )}
               </View>
             )}
 

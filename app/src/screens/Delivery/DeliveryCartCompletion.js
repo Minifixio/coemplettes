@@ -12,6 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../../components/BasicButton';
+import Toast from 'react-native-toast-message';
 
 const carts_mockup =
   require('../../assets/json/cart_response.json').cart_response;
@@ -32,7 +33,7 @@ const Divider = () => {
   );
 };
 
-function DeliveryCartCompletion({navigation, cartsData}) {
+function DeliveryCartCompletion({navigation, route}) {
   /**
    * MOCKUP DATA
    *
@@ -40,6 +41,7 @@ function DeliveryCartCompletion({navigation, cartsData}) {
    * */
 
   const mockup = false;
+  const {cartsData} = route.params;
   const [carts, setCarts] = useState([]);
   const [missingProductsCount, setMissingProductsCount] = useState(0);
   const [unavailableProductsCount, setUnavailableProductsCount] = useState(0);
@@ -51,14 +53,15 @@ function DeliveryCartCompletion({navigation, cartsData}) {
       setCarts(cartsData);
     }
 
+    console.log('[DeliveryCartCompletion] Voici les carts : ', cartsData);
     let unavailableCount = 0;
     let missingCount = 0;
     carts.forEach(cart => {
       cart.items.forEach(item => {
-        if (item.status === 1) {
+        if (item.status === 0) {
           missingCount++;
         }
-        if (item.status === 3) {
+        if (item.status === 2) {
           unavailableCount++;
         }
       });
@@ -71,7 +74,7 @@ function DeliveryCartCompletion({navigation, cartsData}) {
     let count = 0;
     carts.forEach(cart => {
       cart.items.forEach(item => {
-        if (item.status === 3) {
+        if (item.status === 2) {
           count++;
         }
       });
@@ -83,7 +86,7 @@ function DeliveryCartCompletion({navigation, cartsData}) {
     let count = 0;
     carts.forEach(cart => {
       cart.items.forEach(item => {
-        if (item.status === 1) {
+        if (item.status === 0) {
           count++;
         }
       });
@@ -91,15 +94,29 @@ function DeliveryCartCompletion({navigation, cartsData}) {
     setMissingProductsCount(count);
   }, [carts]);
 
+  const validateShopping = () => {
+    console.log('[DeliveryCartCompletion] Validation de la livraison');
+    if (missingProductsCount > 0) {
+      console.log('[DeliveryCartCompletion] Il manque des produits');
+      Toast.show({
+        type: 'error',
+        text1: 'Veuillez compléter le statut de tous les produits',
+      });
+    } else {
+      console.log('[DeliveryCartCompletion] Tous les produits sont validés');
+      navigation.navigate('DeliveryCartPricesPage', {cartsData: carts});
+    }
+  };
+
   const CartItem = ({item}) => {
     const clickValidButton = () => {
-      item.status = 2;
+      item.status = 1;
       updateUnavailableProductsCount();
       updateMissingProductsCount();
     };
 
     const clickInvalidButton = () => {
-      item.status = 3;
+      item.status = 2;
       updateUnavailableProductsCount();
       updateMissingProductsCount();
     };
@@ -108,9 +125,9 @@ function DeliveryCartCompletion({navigation, cartsData}) {
       <View style={styles.cardShadow}>
         <LinearGradient
           colors={
-            item.status === 2
+            item.status === 1
               ? ['#ffffff', '#88DC5F']
-              : item.status === 3
+              : item.status === 2
               ? ['#ffffff', '#DC6E5F']
               : ['#ffffff', '#e6e6e6']
           }
@@ -134,7 +151,7 @@ function DeliveryCartCompletion({navigation, cartsData}) {
             <View style={styles.validationsButtonView}>
               <Pressable
                 style={
-                  item.status === 3
+                  item.status === 2
                     ? [
                         styles.validationsButton,
                         styles.validationsButtonDisabled,
@@ -217,12 +234,13 @@ function DeliveryCartCompletion({navigation, cartsData}) {
           <BasicButton
             style={styles.validationButton}
             onClick={() => {
-              //navigation.navigate('CurrentCartOrderPage', {screen: 'Account'});
+              validateShopping();
             }}
             text="Valider l'achat"
           />
         </View>
       </LinearGradient>
+      <Toast />
     </SafeAreaView>
   );
 }

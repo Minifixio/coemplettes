@@ -94,8 +94,13 @@ function DeliveryTracking({navigation}) {
         }
       };
       fetchCurrentDelivery();
+
+      const unsubscribe = navigation.addListener('focus', () => {
+        fetchCurrentDelivery();
+      });
+      return unsubscribe;
     }
-  }, [mockup, setDelivery]);
+  }, [mockup, navigation, setDelivery]);
 
   const startDeliveryShopping = async () => {
     console.log("[DeliveryTracking] Début de l'achat !");
@@ -176,7 +181,7 @@ function DeliveryTracking({navigation}) {
                 style={styles.button}
                 onClick={() => {
                   //setStatus(3);
-                  navigation.navigate('DeliveryCartCompletion');
+                  completeCarts();
                 }}
                 text="Compléter la liste de course"
               />

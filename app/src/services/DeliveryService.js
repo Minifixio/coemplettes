@@ -138,4 +138,22 @@ export class DeliveryService {
       }
     });
   }
+
+  static async deliveryEndShopping(deliveryId, carts) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log(
+          `[DeliveryService] Fin de l'acaht de la delivery n°${deliveryId} de l'utilisateur. Voici les carts :`,
+          carts,
+        );
+        await APIService.post('delivery_end_shopping', {
+          delivery_id: deliveryId,
+          carts,
+        });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
 }

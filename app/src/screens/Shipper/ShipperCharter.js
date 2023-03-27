@@ -9,7 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 
-function ShipperCharterPage() {
+function ShipperCharterPage({navigation}) {
   const [acceptCharter, setAcceptCharter] = useState(false);
 
   return (
@@ -86,12 +86,16 @@ function ShipperCharterPage() {
         /> */}
         <Pressable
           style={[
-            !acceptCharter
+            acceptCharter
               ? styles.acceptButtonValid
               : styles.acceptButtonDisabled,
             styles.acceptButton,
           ]}
-          onPress={() => {}}>
+          onPress={() => {
+            if (acceptCharter) {
+              navigation.navigate('ShipperInformationPage');
+            }
+          }}>
           <Text style={styles.buttonText}>Créer son profil livreur</Text>
         </Pressable>
       </View>
