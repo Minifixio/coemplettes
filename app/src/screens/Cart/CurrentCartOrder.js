@@ -242,9 +242,10 @@ function CurrentCartOrderPage({navigation, route}) {
                   <View style={styles.infoShipper}>
                     <Text style={styles.infoText}>
                       Livreur :{' '}
-                      {cart.delivery.shipper
-                        ? cart.delivery.shipper.first_name +
-                          cart.delivery.shipper.last_name
+                      {cart.delivery.shipper.user
+                        ? cart.delivery.shipper.user.first_name +
+                          ' ' +
+                          cart.delivery.shipper.user.last_name
                         : 'Carla George'}
                     </Text>
                   </View>

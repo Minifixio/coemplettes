@@ -215,7 +215,10 @@ function DeliveryCartCompletion({navigation, route}) {
         <FlatList
           data={carts}
           renderItem={({item}) => (
-            <CartItemsList cartItems={item.items} ownerName={item.owner_name} />
+            <CartItemsList
+              cartItems={item.items}
+              ownerName={item.owner.last_name + ' ' + item.owner.first_name}
+            />
           )}
           keyExtractor={item => item.id}
         />

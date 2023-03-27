@@ -63,8 +63,8 @@ function DeliveryCartPricesPage({navigation, route}) {
 
   const StatusItem = ({cart}) => {
     const iconName = 'cash-outline';
-    const user = cart.user
-      ? cart.user.first_name + ' ' + cart.user.last_name
+    const user = cart.owner
+      ? cart.owner.first_name + ' ' + cart.owner.last_name
       : 'John Doe';
     const productsCount = cart.items.length;
     const deadline = new Date(cart.deadline).toLocaleDateString('fr');
