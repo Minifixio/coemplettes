@@ -14,7 +14,7 @@ export class SupermarketProduct {
     @Column({ type: "int", nullable:false })
     supermarket_id!: number
 
-    @Column({ type: "int", nullable:false })
+    @Column({ type: "float", nullable:false })
     price!: number
 
     @Column({ type: "boolean", nullable:true })
