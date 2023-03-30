@@ -80,14 +80,15 @@ function CurrentCartOrderPage({navigation, route}) {
 
   const openLocker = async () => {
     try {
-      await CartService.openLocker(cart.locker_id);
-      Toast.show({
-        type: 'success',
-        text1: 'Locker ouvert !',
-      });
-      let newCart = cart;
-      newCart.status = 4;
-      setCart(newCart);
+      // await CartService.openLocker(cart.locker_id);
+      // Toast.show({
+      //   type: 'success',
+      //   text1: 'Locker ouvert !',
+      // });
+      // let newCart = cart;
+      // newCart.status = 4;
+      // setCart(newCart);
+      navigation.navigate('CartFinishPage', {cartData: cart});
     } catch (e) {
       console.log("[CurrentCartOrder] Impossible d'ouvrir le Locker : ", e);
       Toast.show({
@@ -224,9 +225,21 @@ function CurrentCartOrderPage({navigation, route}) {
                 <Text style={styles.infoTimeText}>
                   {24 - new Date().getHours()} h
                 </Text>
-                <Text style={styles.infoTextLight}>
-                  Texte de description ....
-                </Text>
+              </View>
+            )}
+            {cart.status === 0 && cart.delivery_proposal_id !== null && (
+              <View style={styles.infoSubView}>
+                <View>
+                  <Ionicons name="push-outline" size={40} color="black" />
+                </View>
+                <View>
+                  <Text style={styles.infoText}>
+                    Votre commande a été proposée à un livreur.
+                  </Text>
+                  <Text style={styles.infoTextLight}>
+                    Il a {24 - new Date().getHours()} h pour l'accepter ou pas{' '}
+                  </Text>
+                </View>
               </View>
             )}
 
@@ -315,7 +328,9 @@ function CurrentCartOrderPage({navigation, route}) {
               <View style={styles.infoSubView}>
                 <Text style={styles.infoText}>Commande livrée le</Text>
                 <Text style={styles.infoTextBold}>
-                  {new Date(cart.delivery.deposit_date).toLocaleString()}
+                  {new Date(cart.delivery.deposit_date).toLocaleDateString(
+                    'fr-FR',
+                  )}
                 </Text>
               </View>
             )}
@@ -328,8 +343,14 @@ function CurrentCartOrderPage({navigation, route}) {
                       new Date(cart.delivery.deposit_date).getTime() +
                         172800000,
                     ),
-                  ).toLocaleString()}
+                  ).toLocaleDateString('fr-FR')}
                 </Text>
+              </View>
+            )}
+            {cart.status === 2 && (
+              <View style={styles.infoSubView}>
+                <Text style={styles.infoText}>Prix final :</Text>
+                <Text style={styles.infoTextBold}>{cart.price_to_pay}€</Text>
               </View>
             )}
           </View>
@@ -360,7 +381,7 @@ function CurrentCartOrderPage({navigation, route}) {
                 onClick={() => {
                   setModalVisible(true);
                 }}
-                text="Ouvrir le Locker"
+                text="Payer et ouvrir le Locker"
               />
             )}
           </View>
@@ -456,6 +477,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'grey',
     fontWeight: '400',
+    textAlign: 'center',
   },
   infoTextBold: {
     fontSize: 28,

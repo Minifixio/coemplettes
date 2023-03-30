@@ -7,11 +7,15 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  Pressable,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import BasicButton from '../../components/BasicButton';
 import {DeliveryService} from '../../services/DeliveryService';
+import Toast from 'react-native-toast-message';
+
 const deliveries = require('../../assets/json/deliveries.json').deliveries;
 
 const StatusItem = ({
@@ -64,6 +68,7 @@ function DeliveryTracking({navigation}) {
   const mockup = false;
   const [delivery, setDelivery] = useState({});
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -117,8 +122,61 @@ function DeliveryTracking({navigation}) {
     navigation.navigate('DeliveryCartCompletion', {cartsData: delivery.carts});
   };
 
+  const depositDelivery = async () => {
+    console.log('[DeliveryTracking] Début du dépôt de la delivery !');
+    try {
+      await DeliveryService.depositDelivery(delivery.id);
+      Toast.show({
+        type: 'success',
+        text1: 'Locker ouvert !',
+      });
+      setTimeout(() => {
+        navigation.goBack();
+      });
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: "Erreur de l'ouverture du Locker !",
+      });
+      console.log(
+        '[DeliveryTracking] Erreur lors du dépôt de la delivery...',
+        e,
+      );
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Assurez-vous d'être devant le Locker
+            </Text>
+            <View style={styles.modalPressableView}>
+              <Pressable
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  depositDelivery();
+                }}>
+                <Text style={styles.textStyle}>Ouvrir et déposer</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Annuler</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
       {loading && (
         <View style={[styles.container, styles.horizontal]}>
           <ActivityIndicator size="large" color="#00ff00" />
@@ -191,13 +249,16 @@ function DeliveryTracking({navigation}) {
             <View style={styles.buttonView}>
               <BasicButton
                 style={styles.button}
-                onClick={() => {}}
-                text="Recevoir le code Locker"
+                onClick={() => {
+                  setModalVisible(true);
+                }}
+                text="Ouvrir le Locker"
               />
             </View>
           )}
         </SafeAreaView>
       )}
+      <Toast />
     </SafeAreaView>
   );
 }
@@ -293,6 +354,61 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
+  },
+  centeredView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalView: {
+    width: '90%',
+    position: 'absolute',
+    top: 250,
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    margin: 10,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: 'red',
+  },
+  buttonConfirm: {
+    backgroundColor: 'green',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    color: 'black',
+    fontSize: 20,
+  },
+  modalPressableView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 

@@ -15,6 +15,21 @@ import {DeliveryService} from '../../services/DeliveryService';
 const carts_mockup =
   require('../../assets/json/cart_response.json').cart_response;
 
+const Divider = () => {
+  return (
+    <View
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={{
+        height: 10,
+        color: 'black',
+        width: '90%',
+        borderBottomColor: 'black',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      }}
+    />
+  );
+};
+
 function DeliveryProposalCarts({route, navigation}) {
   /**
    * MOCKUP DATA
@@ -58,6 +73,14 @@ function DeliveryProposalCarts({route, navigation}) {
       fetchCart();
     }
   }, [deliveryProposalId, mockup]);
+
+  const getTotalPrice = () => {
+    let s = 0;
+    carts.forEach(cart => {
+      s += cart.average_price;
+    });
+    return s;
+  };
 
   const CartItem = ({item}) => {
     return (
@@ -122,10 +145,36 @@ function DeliveryProposalCarts({route, navigation}) {
         <FlatList
           data={carts}
           renderItem={({item}) => (
-            <CartItemsList cartItems={item.items} ownerName={item.owner_name} />
+            <CartItemsList
+              cartItems={item.items}
+              ownerName={item.owner.first_name + ' ' + item.owner.last_name}
+            />
           )}
           keyExtractor={item => item.id}
         />
+        <View style={styles.bottomCard}>
+          <View style={styles.totalTextView}>
+            <Text style={styles.subtotalText}>Sous-total</Text>
+            <Text style={styles.subtotalText}>
+              {Math.round(getTotalPrice() * 100) / 100}€
+            </Text>
+          </View>
+          <View style={styles.totalTextView}>
+            <Text style={styles.subtotalText}>Pour le livreur</Text>
+            <Text style={styles.subtotalText}>
+              {Math.round(getTotalPrice() * 0.1 * 100) / 100}€
+            </Text>
+          </View>
+
+          <Divider />
+
+          <View style={styles.totalTextView}>
+            <Text style={styles.totalText}>Total des items</Text>
+            <Text style={styles.totalText}>
+              {Math.round(getTotalPrice() * 100) / 100}€
+            </Text>
+          </View>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -239,6 +288,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     fontWeight: '800',
     right: 10,
+  },
+  bottomCard: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'left',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 16,
+    elevation: 24,
+    paddingBottom: 30,
   },
 });
 

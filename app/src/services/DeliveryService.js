@@ -143,12 +143,28 @@ export class DeliveryService {
     return new Promise(async (resolve, reject) => {
       try {
         console.log(
-          `[DeliveryService] Fin de l'acaht de la delivery n°${deliveryId} de l'utilisateur. Voici les carts :`,
+          `[DeliveryService] Fin de l'achat de la delivery n°${deliveryId} de l'utilisateur. Voici les carts :`,
           carts,
         );
         await APIService.post('delivery_end_shopping', {
           delivery_id: deliveryId,
           carts,
+        });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  static async depositDelivery(deliveryId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log(
+          `[DeliveryService] Dépôt de la delivery n°${deliveryId} de l'utilisateur.`,
+        );
+        await APIService.post('delivery_deposit', {
+          delivery_id: deliveryId,
         });
         resolve();
       } catch (e) {

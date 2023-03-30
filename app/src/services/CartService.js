@@ -79,7 +79,19 @@ export class CartService {
     return new Promise(async (resolve, reject) => {
       try {
         console.log("[CartService] Récupération des carts de l'utilisateur");
-        await APIService.post('open_locker', lockerId);
+        await APIService.post('open_locker', {locker_id: lockerId});
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  static async finishCart(cartId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log("[CartService] Finalisation de carts de l'utilisateur");
+        await APIService.post('cart_finish', {cart_id: cartId});
         resolve();
       } catch (e) {
         reject(e);

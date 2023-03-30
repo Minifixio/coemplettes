@@ -13,6 +13,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {UserContext} from '../../utils/UserProvider';
 import CurrentCartOrderPage from '../Cart/CurrentCartOrder';
 import ShipperAccountStack from '../Shipper/ShipperAccount';
+import CartFinishPage from '../Cart/CartFinish';
+import CartFinishCameraPage from '../Cart/CartFinishCamera';
 
 const users = require('../../assets/json/users.json').users;
 
@@ -133,6 +135,16 @@ function AccountStack() {
         name="ShipperAccountStack"
         options={{headerShown: false}}
         component={ShipperAccountStack}
+      />
+      <Stack.Screen
+        name="CartFinishPage"
+        options={{headerShown: false}}
+        component={CartFinishPage}
+      />
+      <Stack.Screen
+        name="CartFinishCameraPage"
+        options={{headerShown: false}}
+        component={CartFinishCameraPage}
       />
     </Stack.Navigator>
   );

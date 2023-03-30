@@ -63,7 +63,7 @@ function DeliveryCartPricesPage({navigation, route}) {
 
   const StatusItem = ({cart}) => {
     const iconName = 'cash-outline';
-    const user = cart.owner
+    const user = cart.user
       ? cart.owner.first_name + ' ' + cart.owner.last_name
       : 'John Doe';
     const productsCount = cart.items.length;
@@ -148,7 +148,9 @@ function DeliveryCartPricesPage({navigation, route}) {
         </View>
         <View style={styles.totalTextView}>
           <Text style={styles.subtotalText}>Pour le livreur</Text>
-          <Text style={styles.subtotalText}>1.5€</Text>
+          <Text style={styles.subtotalText}>
+            {Math.round(getTotalPrice() * 0.1 * 100) / 100}€
+          </Text>
         </View>
 
         <Divider />
@@ -156,7 +158,7 @@ function DeliveryCartPricesPage({navigation, route}) {
         <View style={styles.totalTextView}>
           <Text style={styles.totalText}>Total</Text>
           <Text style={styles.totalText}>
-            {Math.round((totalPrice + 1.5) * 100) / 100}€
+            {Math.round(totalPrice * 1.1 * 100) / 100}€
           </Text>
         </View>
 

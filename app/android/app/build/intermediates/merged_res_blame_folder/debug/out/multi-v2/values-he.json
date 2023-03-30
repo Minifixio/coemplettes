@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.coemplettesapp-mergeDebugResources-34:/values-he/values-he.xml",
+            "outputFile": "com.coemplettesapp-mergeDebugResources-45:/values-he/values-he.xml",
             "map": [
                 {
                     "source": "/Users/emile/Documents/ETUDES/Télécom Paris/1A/PACT/dev/pact74/app/node_modules/react-native-date-picker/android/build/intermediates/packaged_res/debug/values-he/values-he.xml",
