@@ -568,6 +568,23 @@ export class DB {
         await this.AppDataSource.getRepository(Delivery).save(delivery)
     }
 
+    public static async delcineDeliveryProposal(deliveryProposalId: number) {
+        console.log("[DBManager] Refus de la delivery proposal n°" + deliveryProposalId + " dans la BDD")
+        await this.AppDataSource
+        .createQueryBuilder()
+        .delete()
+        .from(DeliveryProposal)
+        .where("id = :id", {id: deliveryProposalId})
+        .execute()
+
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Cart)
+        .set({delivery_proposal_id: null})
+        .where("delivery_proposal_id = :id", {id: deliveryProposalId})
+        .execute()
+    }
+
     public static async updateDeliveryStatus(deliveryId: number, status: number) {
         console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD")
         await this.AppDataSource
@@ -632,16 +649,39 @@ export class DB {
         await this.AppDataSource
         .createQueryBuilder()
         .update(Delivery)
-        .set({status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON()})
+        .set({status: 3, deposit_date: (new Date()).toJSON()})
         .where("id = :id", {id: deliveryId})
         .execute()
 
         await this.AppDataSource
         .createQueryBuilder()
         .update(Cart)
-        .set({status: 3})
+        .set({status: 3, locker_id: availableLockerId})
         .where("delivery_id = :id", {id: deliveryId})
         .execute()
+    }
+
+    static async finishCart(cartId: number, retreived: boolean) {
+        console.log("[DBManager] Récupération du cart n°" + cartId)
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(Cart)
+        .set({status: retreived ? 4 : 5})
+        .where("id = :id", {id: cartId})
+        .execute()
+    }
+
+    static async retreiveCart(cartId: number) {
+        console.log("[DBManager] Récupération du cart n°" + cartId)
+        const cart = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.id = :id", {id: cartId})
+        .getOne()
+
+        console.log("[DBManager] Récupération du cart n°" + cartId + " au locker n°" + cart?.locker_id)
+
+        Locker.openLocker(cart?.locker_id ? cart?.locker_id : 0)
     }
 
     static async retreiveDelivery(deliveryId: number, retreived: boolean) {

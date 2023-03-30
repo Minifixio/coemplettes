@@ -28,7 +28,8 @@ export class Cart {
     // 0 = en attente d'attribution à une delivery
     // 1 = attribuée à un livreur
     // 3 = livrée
-    // 4 = erreur
+    // 4 = récupérée par l'utilisateur
+    // 5 = problème
     @Column({ type: "int", nullable:false })
     status!: number
     
