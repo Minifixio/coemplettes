@@ -5,7 +5,7 @@ export class Supermarket {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @Column({ type: "varchar", length: 100, nullable:true })
+    @Column({ type: "varchar", length: 100, nullable:false })
     name!: string
 
     @Column({ type: "float", nullable:true })
@@ -16,4 +16,7 @@ export class Supermarket {
 
     @Column({ type: "varchar", length: 200, nullable:true })
     business_hours!: string
+
+    @Column({ type: "int", nullable:false })
+    postal_code!: number
 }
