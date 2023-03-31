@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../../components/BasicButton';
 import {CartService} from '../../services/CartService';
 import {DeliveryService} from '../../services/DeliveryService';
+import Toast from 'react-native-toast-message';
 
 const LineTitle = () => {
   return (
@@ -26,6 +27,7 @@ const LineTitle = () => {
 
 function CartFinishPage({navigation, route}) {
   const {cartData} = route.params;
+  const [issues, setIssues] = useState([true, true, true]);
   const [shipperMessage, setShipperMessage] = useState('');
   const [litigesMessage, setLitigesMessage] = useState('');
 
@@ -34,6 +36,21 @@ function CartFinishPage({navigation, route}) {
   useEffect(() => {
     setCarts(cartData);
   }, [cartData, cart]);
+
+  const finishCart = async () => {
+    try {
+      await CartService.finishCart(cart.id, issues === [false, false, false]);
+      Toast.show({
+        type: 'success',
+        text1: 'Commande terminée !',
+      });
+      setTimeout(() => {
+        navigation.navigate('AccountPage');
+      }, 1000);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -56,8 +73,8 @@ function CartFinishPage({navigation, route}) {
             text="Tous les produits étaient présents"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={false}
-            onPress={isChecked => {}}
+            isChecked={!issues[0]}
+            onPress={isChecked => setIssues([!isChecked, issues[1], issues[2]])}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -70,8 +87,8 @@ function CartFinishPage({navigation, route}) {
             text="Tous les produits étaient en bon état"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={false}
-            onPress={isChecked => {}}
+            isChecked={!issues[1]}
+            onPress={isChecked => setIssues([issues[0], !isChecked, issues[2]])}
           />
           <BouncyCheckbox
             style={styles.checkbox}
@@ -84,8 +101,8 @@ function CartFinishPage({navigation, route}) {
             text="La commande a été bien organisée"
             iconStyle={{borderColor: 'green'}}
             innerIconStyle={{borderWidth: 2}}
-            isChecked={false}
-            onPress={isChecked => {}}
+            isChecked={!issues[2]}
+            onPress={isChecked => setIssues([issues[0], issues[1], !isChecked])}
           />
         </View>
         <View style={styles.subView}>
@@ -137,6 +154,7 @@ function CartFinishPage({navigation, route}) {
           />
         </View>
       </View>
+      <Toast />
     </View>
   );
 }

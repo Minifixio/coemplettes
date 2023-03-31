@@ -87,11 +87,14 @@ export class CartService {
     });
   }
 
-  static async finishCart(cartId) {
+  static async finishCart(cartId, retreived) {
     return new Promise(async (resolve, reject) => {
       try {
         console.log("[CartService] Finalisation de carts de l'utilisateur");
-        await APIService.post('cart_finish', {cart_id: cartId});
+        await APIService.post('cart_finish', {
+          cart_id: cartId,
+          retreived: retreived,
+        });
         resolve();
       } catch (e) {
         reject(e);
