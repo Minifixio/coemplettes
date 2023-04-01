@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
 import BasicButton from '../../components/BasicButton';
 import LinearGradient from 'react-native-linear-gradient';
 import {UserService} from '../../services/UserService';
+import Toast from 'react-native-toast-message';
+
 const profilePicture = require('../../assets/icons/misc/profile_picture.png');
 
 const Separator = () => <View style={styles.separator} />;
@@ -16,8 +18,33 @@ function AccountInformationsPage() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const updateInfos = () => {
+  const updateInfos = async () => {
     console.log('[AccountInformations] Récupération des infos...');
+    try {
+      if (password !== passwordConfirm) {
+        Toast.show({
+          type: 'error',
+          text1: 'Confirmez correctement le mot de passe',
+        });
+      } else {
+        await UserService.updateUserProfile({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          school,
+          phone,
+          password,
+        });
+        setTimeout(() => {
+          Toast.show({
+            type: 'success',
+            text1: 'Mise à jour des informations !',
+          });
+        }, 2000);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -95,6 +122,7 @@ function AccountInformationsPage() {
         />
 
         <Separator />
+        <Separator />
 
         <TextInput
           style={styles.textInput}
@@ -122,13 +150,15 @@ function AccountInformationsPage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'space-between',
   },
   photoView: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 5,
+    paddingTop: 20,
   },
   profileImage: {
     width: 100,
@@ -167,7 +197,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: 'white',
     alignItems: 'center',
     textAlign: 'left',
   },

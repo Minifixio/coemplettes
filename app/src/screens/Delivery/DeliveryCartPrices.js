@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   FlatList,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -63,7 +64,7 @@ function DeliveryCartPricesPage({navigation, route}) {
 
   const StatusItem = ({cart}) => {
     const iconName = 'cash-outline';
-    const user = cart.user
+    const user = cart.owner
       ? cart.owner.first_name + ' ' + cart.owner.last_name
       : 'John Doe';
     const productsCount = cart.items.length;
@@ -117,6 +118,20 @@ function DeliveryCartPricesPage({navigation, route}) {
                 }}
               />
             </View>
+
+            <Pressable
+              style={styles.photoPressable}
+              onPress={() =>
+                navigation.navigate('DeliveryCartPricesCameraPage')
+              }>
+              <Text style={styles.photoText}>Prendre une photo du ticket</Text>
+              <Ionicons
+                style={styles.statusItemIcon}
+                name={'camera-outline'}
+                size={35}
+                color={'grey'}
+              />
+            </Pressable>
           </View>
         </View>
       </View>
@@ -334,6 +349,23 @@ const styles = StyleSheet.create({
   },
   validationButton: {
     size: '90%',
+  },
+  photoPressable: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#e8e8e8',
+    padding: 5,
+    elevation: 10,
+    borderRadius: 10,
+    marginTop: 15,
+  },
+  photoText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'black',
+    marginRight: 10,
   },
 });
 

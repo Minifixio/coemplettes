@@ -21,6 +21,7 @@ import DeliveryHistoryCarts from '../Delivery/DeliveryHistoryCarts';
 import DeliveryHistoryPage from '../Delivery/DeliveryHistory';
 import ShipperCharterPage from './ShipperCharter';
 import DeliveryCartPricesPage from '../Delivery/DeliveryCartPrices';
+import DeliveryCartPricesCameraPage from '../Delivery/DeliveryCartPricesCamera';
 
 const shippers = require('../../assets/json/shippers.json').shippers;
 const profilePicture = require('../../assets/icons/misc/profile_picture.png');
@@ -179,6 +180,11 @@ function ShipperAccountStack() {
         name="DeliveryCartPricesPage"
         options={{title: 'Remplir les prix'}}
         component={DeliveryCartPricesPage}
+      />
+      <Stack.Screen
+        name="DeliveryCartPricesCameraPage"
+        options={{headerShown: false}}
+        component={DeliveryCartPricesCameraPage}
       />
       <Stack.Screen
         name="DeliveryHistoryPage"

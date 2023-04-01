@@ -67,14 +67,17 @@ export class UserService {
     });
   }
 
-  static updateUserProfile(userInfos) {
+  static async updateUserProfile(user) {
     return new Promise(async (resolve, reject) => {
-      console.log('[UserService] Updating user : ', userInfos);
+      console.log('[UserService] Mise à jour du user : ', user);
       try {
-        await APIService.post('user_update', userInfos);
+        const userId = await AuthService.getUserId();
+        user.id = userId;
+        console.log(user);
+        await APIService.post('user_update', user);
         resolve();
       } catch (e) {
-        console.log("[UserService] Impossible de mettre à jour l'utilisateur");
+        console.log('[UserService] Impossible de mettre à jour le user');
         reject(e);
       }
     });
