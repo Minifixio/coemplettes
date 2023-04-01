@@ -39,13 +39,16 @@ export class GroupedCommands {
         }
 
         // On trie les commandes par distance au jour courant (plus proche en premier)
-        unattributedCarts.sort((a, b) => {
-            if (a.distanceJourCourant == b.distanceJourCourant){
-                return b.average_price - a.average_price
-            } else {
-                return a.distanceJourCourant - b.distanceJourCourant
-            }
-        })
+        if (unattributedCarts.length > 1) {
+            unattributedCarts.sort((a, b) => {
+                if (a.distanceJourCourant == b.distanceJourCourant){
+                    return b.average_price - a.average_price
+                } else {
+                    return a.distanceJourCourant - b.distanceJourCourant
+                }
+            })
+        }
+
         // // Ensuite, parmi les commandes ayant la même distance au jour courant, on trie par prix moyen (plus grand en premier)
         // for (let i = 2; i < 8; i++) {
         //     /* on parcourt les 7 jours de la semaine qui vient, en considérant que la première 
@@ -81,7 +84,7 @@ export class GroupedCommands {
         console.log("sorted unattributedCarts", unattributedCarts);
 
         // On récupère les disponibilités des shipper disponibles à J+2, J+3, J+4, J+5, J+6 et J+7
-        let shippers: Shipper[] = await DB.getShippers()
+        let shippers: Shipper[] = await DB.getAvailableShippers()
         console.log("shippers", shippers);
 
         for (const shipper of shippers) {

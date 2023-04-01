@@ -196,6 +196,7 @@ export class DB {
         return res
     }
 
+
     public static async getAvailableShippers(): Promise<Shipper[]> {
         console.log("[DBManager] Récupération de tous les shippers disponibles dans la BDD")
         let shippers = await this.AppDataSource
@@ -232,6 +233,8 @@ export class DB {
         .leftJoinAndSelect("delivery.shipper", "shipper")
         .leftJoinAndSelect("shipper.user", "user")
         .leftJoinAndSelect("cart.delivery_proposal", "delivery_proposal")
+        .leftJoinAndSelect("cart.items", "item")
+        .leftJoinAndSelect("item.product", "product")
         .where("cart.owner_id = :owner_id", {owner_id: owner_id})
         .getOne()
         return res
@@ -395,6 +398,17 @@ export class DB {
 
         const id: number = req.identifiers[0].id
         return id
+    }
+
+    public static async updateUser(user: User) {
+        console.log("[DBManager] Mise à jour des info du user :")
+        console.log(user)
+        await this.AppDataSource
+        .createQueryBuilder()
+        .update(User)
+        .set(user)
+        .where("id = :id", {id: user.id})
+        .execute()
     }
 
     public static async addShipper(shipper: Shipper) {
@@ -656,19 +670,52 @@ export class DB {
         await this.AppDataSource
         .createQueryBuilder()
         .update(Cart)
-        .set({status: 3, locker_id: availableLockerId})
+        .set({status: 2, locker_id: availableLockerId})
         .where("delivery_id = :id", {id: deliveryId})
         .execute()
     }
 
     static async finishCart(cartId: number, retreived: boolean) {
-        console.log("[DBManager] Récupération du cart n°" + cartId)
+        console.log("[DBManager] Finalisation du cart n°" + cartId)
         await this.AppDataSource
         .createQueryBuilder()
         .update(Cart)
-        .set({status: retreived ? 4 : 5})
+        .set({status: retreived ? 3 : 4})
         .where("id = :id", {id: cartId})
         .execute()
+
+        const cart = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.id = :id", {id: cartId})
+        .getOne()
+
+        if (cart) {
+            await this.finishDelivery(cart?.delivery_id)
+        }
+    }
+
+    static async finishDelivery(deliveryId: number) {
+        console.log("[DBManager] Test de finalisation de la delivery n°" + deliveryId)
+        const carts = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.delivery_id = :delivery_id", {delivery_id: deliveryId})
+        .getMany()
+
+        const finished = carts.every(cart => cart.status === 3 || cart.status === 4)
+
+        if (finished) {
+            const valid = carts.every(cart => cart.status === 3)
+            const nextStatus = valid ? 4 : 5
+            console.log("[DBManager] Finalisation de la delivery n°" + deliveryId + (valid ? " validée" : " non validée"))
+            await this.AppDataSource
+            .createQueryBuilder()
+            .update(Delivery)
+            .set({status: nextStatus})
+            .where("id = :id", {id: deliveryId})
+            .execute()
+        } 
     }
 
     static async retreiveCart(cartId: number) {
