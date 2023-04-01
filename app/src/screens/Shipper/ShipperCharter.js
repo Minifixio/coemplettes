@@ -18,49 +18,114 @@ function ShipperCharterPage({navigation}) {
         <Text style={[styles.text, styles.header]}>Charte du livreur</Text>
 
         <Text style={[styles.text, styles.subHeader]}>
-          What is Lorem Ipsum?
+          Données personnelles
         </Text>
         <Text style={[styles.text]}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
+          Nous sommes susceptibles de collecter les données suivantes vous
+          concernant : uniquement les donnéees que vous avez renseigneées, car
+          nous n'enregistrons pas via des cookies et autres traceurs vos données
+          d’utilisation lorsque vous accédez à nos services. Nous n'effectuons
+          pas de mesure d'audience et nous ne recevons pas de données
+          personnelles vous concernant de la part de nos partenaires. Le
+          caractère obligatoire ou facultatif des données que vous renseignez
+          vous est signalé lors de leur collecte par une astérisque. Pour vous
+          inscrire sur Co-Emplettes en tant qu'Utilisateur, vous devez nous
+          communiquer votre nom et prénom, votre adresse électronique, votre
+          numéro de téléphone, et votre école. Lorsque vous créer votre compte
+          livreur, vous devez compléter vos informations issues du profil
+          Utilisateur en y ajoutant vos disponibilités sur chaque jour de la
+          semaine à venir, votre possession d'une voiture si c'est le cas, le
+          prix maximal que vous acceptez de payer pour une commande, et vos
+          préférences concernant des courses en drive ou en magasin.
         </Text>
 
         <Text style={[styles.text, styles.subHeader]}>
-          Where does it come from?
+          Durée de conservation
         </Text>
         <Text style={[styles.text]}>
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It
-          has roots in a piece of classical Latin literature from 45 BC, making
-          it over 2000 years old. Richard McClintock, a Latin professor at
-          Hampden-Sydney College in Virginia, looked up one of the more obscure
-          Latin words, consectetur, from a Lorem Ipsum passage, and going
-          through the cites of the word in classical literature, discovered the
-          undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-          1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
-          Evil) by Cicero, written in 45 BC. This book is a treatise on the
-          theory of ethics, very popular during the Renaissance. The first line
-          of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
-          section 1.10.32.
+          - Les données relatives à une commande particulière (produits de la
+          liste de course) sont supprimées après la récupération de la commande
+          par les Utilisateurs et la validation de son prix. En particulier, la
+          photo du ticket de caisse prise par le livreur est conservée 30 jours
+          après sa publication sur nos serveurs.
         </Text>
 
-        <Text style={[styles.text, styles.subHeader]}>Why do we use it?</Text>
         <Text style={[styles.text]}>
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using 'Content here, content here', making it
-          look like readable English. Many desktop publishing packages and web
-          page editors now use Lorem Ipsum as their default model text, and a
-          search for 'lorem ipsum' will uncover many web sites still in their
-          infancy. Various versions have evolved over the years, sometimes by
-          accident, sometimes on purpose (injected humour and the like).
+          - Votre Compte Utilisateur est considéré comme inactif si vous avez
+          supprimé manuellement votre Compte Personnel, ou bien si durant 3
+          années consécutives, vous ne vous êtes pas connecté à celui-ci.
+        </Text>
+
+        <Text style={[styles.text, styles.subHeader]}>
+          Sécurité de vos données :
+        </Text>
+        <Text style={[styles.text]}>
+          Nous protégeons vos informations à l’aide de mesures de sécurité
+          physiques, électroniques et administratives. Nos mesures de protection
+          incluent notamment des pare-feu, des contrôles d’accès physiques aux
+          centres de données de la DSI de Télécom Paris qui héberge nos serveurs
+          et des contrôles d’autorisation d’accès aux informations.
+        </Text>
+
+        <Text style={[styles.text, styles.subHeader]}>
+          Engagement du livreur :
+        </Text>
+        <Text style={[styles.text]}>
+          En temps que livreur vous vous engagez :
+        </Text>
+        <Text style={[styles.text]}>
+          - à respecter les dates limites de dépôts et de complétion des
+          commandes de vos client.
+        </Text>
+        <Text style={[styles.text]}>
+          - à respecter à compléter les paniers correctement avec tous les
+          produits et en signalant si ces derniers ne sont pas disponibles -
+          fournir une photo du ticket de caisse à renseigner sur l'application à
+          la fin de chaque achat pour garantir la véracité du prix finalement
+          payé - à assurer un bon dépôt des commandes en respectant le transfert
+          des produits livrés ainsi que les infrastrucures de dépôt (locker)
+        </Text>
+        <Text style={[styles.text]}>
+          - fournir une photo du ticket de caisse à renseigner sur l'application
+          à la fin de chaque achat pour garantir la véracité du prix finalement
+          payé
+        </Text>
+        <Text style={[styles.text]}>
+          - à assurer un bon dépôt des commandes en respectant le transfert des
+          produits livrés ainsi que les infrastrucures de dépôt (locker)
+        </Text>
+
+        <Text style={[styles.text, styles.subHeader]}>Vos droits :</Text>
+        <Text style={[styles.text]}>
+          Droit d'accès : il s’agit de votre droit d’obtenir la confirmation que
+          vos données sont traitées ou non, et si oui, d’accéder à ces données.
+        </Text>
+
+        <Text style={[styles.text]}>
+          Droit de rectification : il s’agit de votre droit d’obtenir, dans les
+          meilleurs délais, que vos données inexactes soient rectifiées, et que
+          vos données incomplètes soient complétées. Vous pouvez en outre, à
+          tout moment, modifier les données personnelles de votre Compte
+          Personnel. Il vous suffit de vous rendre dans votre Compte Personnel
+          et de cliquer sur l’onglet « Paramètres ».
+        </Text>
+
+        <Text style={[styles.text]}>
+          Droit de suppression/Effacement : il s’agit de votre droit d’obtenir,
+          dans les meilleurs délais, l’effacement de vos données, sous réserve
+          des motifs et exceptions pouvant justifier leur conservation.
+        </Text>
+
+        <Text style={[styles.text]}>
+          Droit à la portabilité : il s’agit de votre droit de recevoir vos
+          données dans un format structuré, couramment utilisé, lisible par
+          machine et interopérable, et de les transmettre à un autre responsable
+          du traitement sans que nous y fassions obstacle.
+        </Text>
+
+        <Text style={[styles.text]}>
+          Directives en cas de décès : vous avez le droit de donner des
+          directives pour le sort de vos données personnelles en cas de décès.
         </Text>
 
         <View style={styles.switchView}>

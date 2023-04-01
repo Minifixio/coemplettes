@@ -15,6 +15,8 @@ import CurrentCartOrderPage from '../Cart/CurrentCartOrder';
 import ShipperAccountStack from '../Shipper/ShipperAccount';
 import CartFinishPage from '../Cart/CartFinish';
 import CartFinishCameraPage from '../Cart/CartFinishCamera';
+import CartCompletionPage from '../Cart/CartCompletion';
+import AccountInformationsPage from './AccountInformations';
 
 const users = require('../../assets/json/users.json').users;
 
@@ -72,7 +74,9 @@ function AccountPage({navigation}) {
         <MenuItem
           text="Informations personnelles"
           icon="person-circle-outline"
-          goTo={() => {}}
+          goTo={() => {
+            navigation.push('AccountInformationsPage');
+          }}
         />
         <MenuItem
           text="Mes commandes"
@@ -127,6 +131,11 @@ function AccountStack() {
         component={AccountPage}
       />
       <Stack.Screen
+        name="AccountInformationsPage"
+        options={{title: ''}}
+        component={AccountInformationsPage}
+      />
+      <Stack.Screen
         name="CurrentCartOrderPage"
         options={{title: 'Ma commande'}}
         component={CurrentCartOrderPage}
@@ -145,6 +154,11 @@ function AccountStack() {
         name="CartFinishCameraPage"
         options={{headerShown: false}}
         component={CartFinishCameraPage}
+      />
+      <Stack.Screen
+        name="CartCompletionPage"
+        options={{title: "Résumé de l'achat"}}
+        component={CartCompletionPage}
       />
     </Stack.Navigator>
   );

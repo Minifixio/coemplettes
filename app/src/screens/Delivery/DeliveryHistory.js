@@ -16,9 +16,9 @@ const deliveriesMockup =
   require('../../assets/json/deliveries.json').deliveries;
 
 const StatusItem = ({delivery, navigation}) => {
-  const selected = delivery.status === 0 ? true : false;
-  const iconName = selected ? 'cube-outline' : 'ios-close-circle-outline';
-  const title = selected ? 'Commande reçue' : 'Commande refusée';
+  const valid = delivery.status === 4 ? true : false;
+  const iconName = valid ? 'ios-checkmark-sharp' : 'ios-close-circle-outline';
+  const title = valid ? 'Commande complétée' : 'Commande complétée (problème)';
   const deadline = new Date(delivery.deadline).toLocaleDateString('fr');
   const depositDate = new Date(delivery.deposit_date).toLocaleDateString('fr');
 
@@ -27,7 +27,7 @@ const StatusItem = ({delivery, navigation}) => {
       <View
         style={[
           styles.statusItemIconView,
-          selected
+          valid
             ? styles.statusItemIconViewSelected
             : styles.statusItemIconViewUnselected,
         ]}>
@@ -35,7 +35,7 @@ const StatusItem = ({delivery, navigation}) => {
           style={styles.statusItemIcon}
           name={iconName}
           size={40}
-          color={selected ? '#159c00' : 'grey'}
+          color={valid ? '#159c00' : 'red'}
         />
       </View>
       <View style={styles.statusItemTextView}>
@@ -127,9 +127,11 @@ function DeliveryHistoryPage({navigation}) {
             style={styles.container}>
             <FlatList
               data={deliveries}
-              renderItem={({item}) => (
-                <StatusItem delivery={item} navigation={navigation} />
-              )}
+              renderItem={({item}) =>
+                item.status > 3 && (
+                  <StatusItem delivery={item} navigation={navigation} />
+                )
+              }
               keyExtractor={item => item.id}
             />
           </LinearGradient>

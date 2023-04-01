@@ -39,7 +39,10 @@ function CartFinishPage({navigation, route}) {
 
   const finishCart = async () => {
     try {
-      await CartService.finishCart(cart.id, issues === [false, false, false]);
+      await CartService.finishCart(
+        cart.id,
+        !issues[0] && !issues[1] && !issues[2],
+      );
       Toast.show({
         type: 'success',
         text1: 'Commande terminée !',
@@ -54,9 +57,11 @@ function CartFinishPage({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      <Text>Retour sur la commande</Text>
-      <View>
-        <View style={styles.subView}>
+      <View style={styles.mainTitleView}>
+        <Text style={styles.mainTitle}>Retour sur la commande</Text>
+      </View>
+      <View style={styles.subContainer}>
+        <View style={[styles.subView, styles.subViewFirst]}>
           <View style={styles.titleView}>
             <LineTitle />
             <Text style={styles.title}>A propos des produits</Text>
@@ -144,11 +149,11 @@ function CartFinishPage({navigation, route}) {
             placeholderTextColor="grey"
           />
         </View>
-        <View style={styles.subView}>
+        <View style={[styles.subView, styles.subViewLast]}>
           <BasicButton
             style={styles.validationButton}
             onClick={() => {
-              CartService.finishCart(cart.id);
+              finishCart();
             }}
             text="Valider"
           />
@@ -162,6 +167,22 @@ function CartFinishPage({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  subContainer: {
+    display: 'flex',
+    width: '100%',
+  },
+  mainTitle: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: 'black',
+  },
+  mainTitleView: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   titleView: {
     display: 'flex',
@@ -188,11 +209,17 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   subView: {
-    marginTop: 40,
+    marginTop: 20,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  subViewFirst: {
+    marginTop: 0,
+  },
+  subViewLast: {
+    marginTop: 10,
   },
   title: {
     fontSize: 25,

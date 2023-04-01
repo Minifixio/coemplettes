@@ -67,19 +67,53 @@ export class UserService {
     });
   }
 
+  static updateUserProfile(userInfos) {
+    return new Promise(async (resolve, reject) => {
+      console.log('[UserService] Updating user : ', userInfos);
+      try {
+        await APIService.post('user_update', userInfos);
+        resolve();
+      } catch (e) {
+        console.log("[UserService] Impossible de mettre à jour l'utilisateur");
+        reject(e);
+      }
+    });
+  }
+
   static getShipperProfile() {
     return new Promise(async (resolve, reject) => {
       console.log('[UserService] Récupération du profile shipper');
       try {
         const userId = await AuthService.getUserId();
-        const shipperProfile = await APIService.get('userId', userId);
+        const shipperProfile = await APIService.get('shipper', userId);
+        const shipperInfos = await shipperProfile.json();
         if (shipperProfile == null) {
           reject();
         } else {
-          resolve();
+          resolve(shipperInfos);
         }
       } catch (e) {
         console.log('[UserService] Impossible de récupérer le profile shipper');
+        reject(e);
+      }
+    });
+  }
+
+  static getUserProfile() {
+    return new Promise(async (resolve, reject) => {
+      console.log('[UserService] Récupération du profile user');
+      try {
+        const userId = await AuthService.getUserId();
+        const userProfile = await APIService.get('user', userId);
+        const userInfos = await userProfile.json();
+        console.log(userInfos);
+        if (userProfile == null) {
+          reject();
+        } else {
+          resolve(userInfos);
+        }
+      } catch (e) {
+        console.log('[UserService] Impossible de récupérer le profile user');
         reject(e);
       }
     });

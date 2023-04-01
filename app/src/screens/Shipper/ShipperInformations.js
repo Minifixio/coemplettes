@@ -59,9 +59,9 @@ function ShipperInformationPage({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.mainTextView}>
+      {/* <View style={styles.mainTextView}>
         <Text style={styles.mainText}>Profil livreur</Text>
-      </View>
+      </View> */}
       <View style={styles.priceMaxView}>
         <Text style={styles.priceMaxText}>Prix maximum d'une commande</Text>
         <InputSpinner

@@ -6,6 +6,7 @@ import {
   Modal,
   Pressable,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import BasicButton from '../../components/BasicButton';
 import {CartService} from '../../services/CartService';
@@ -80,14 +81,14 @@ function CurrentCartOrderPage({navigation, route}) {
 
   const openLocker = async () => {
     try {
-      // await CartService.openLocker(cart.locker_id);
-      // Toast.show({
-      //   type: 'success',
-      //   text1: 'Locker ouvert !',
-      // });
-      // let newCart = cart;
-      // newCart.status = 4;
-      // setCart(newCart);
+      await CartService.openLocker(cart.locker_id);
+      Toast.show({
+        type: 'success',
+        text1: 'Locker ouvert !',
+      });
+      let newCart = cart;
+      newCart.status = 4;
+      setCart(newCart);
       navigation.navigate('CartFinishPage', {cartData: cart});
     } catch (e) {
       console.log("[CurrentCartOrder] Impossible d'ouvrir le Locker : ", e);
@@ -137,7 +138,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {cart.id === undefined && !loading && (
+      {(cart.id === undefined || cart.status > 3) && !loading && (
         <View style={styles.emptyTextView}>
           <Text style={styles.emptyText}>
             Aucune commande en cours... Créez un panier pour commencer !
@@ -146,7 +147,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {cart.id !== undefined && !loading && (
+      {cart.id !== undefined && cart.status < 4 && !loading && (
         <View style={styles.subContainer}>
           <View style={styles.progressView}>
             <View style={styles.progressCircleView}>
@@ -351,6 +352,16 @@ function CurrentCartOrderPage({navigation, route}) {
               <View style={styles.infoSubView}>
                 <Text style={styles.infoText}>Prix final :</Text>
                 <Text style={styles.infoTextBold}>{cart.price_to_pay}€</Text>
+                <Button
+                  style={styles.cartInfoButton}
+                  title="Voir la commande"
+                  color="grey"
+                  onPress={() => {
+                    navigation.push('CartCompletionPage', {
+                      cartData: cart,
+                    });
+                  }}
+                />
               </View>
             )}
           </View>
@@ -524,6 +535,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   modalView: {
+    display: 'flex',
+    justifyContent: 'center',
     position: 'absolute',
     top: 250,
     margin: 20,
@@ -539,6 +552,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  centeredView: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     borderRadius: 20,

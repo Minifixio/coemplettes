@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -9,12 +10,14 @@ import {
   ActivityIndicator,
   Modal,
   Pressable,
+  FlatList,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import BasicButton from '../../components/BasicButton';
 import {DeliveryService} from '../../services/DeliveryService';
 import Toast from 'react-native-toast-message';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const deliveries = require('../../assets/json/deliveries.json').deliveries;
 
@@ -183,11 +186,9 @@ function DeliveryTracking({navigation}) {
         </View>
       )}
 
-      {delivery.id === undefined && !loading && (
+      {(delivery.id === undefined || delivery.status > 3) && !loading && (
         <View style={styles.emptyTextView}>
-          <Text style={styles.emptyText}>
-            Aucune livraisons en cours... Créez un panier pour commencer !
-          </Text>
+          <Text style={styles.emptyText}>Aucune livraison en cours... !</Text>
           <Text style={styles.infoText}>
             Prochain cycle d'affectation de commandes dans :
             {24 - new Date().getHours()} h
@@ -196,32 +197,95 @@ function DeliveryTracking({navigation}) {
         </View>
       )}
 
-      {delivery.id !== undefined && !loading && (
+      {delivery.id !== undefined && delivery.status < 4 && !loading && (
         <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.scrollView}>
+          <View style={styles.scrollView}>
             <LinearGradient
               colors={['#ffffff', '#f2f2f2']}
               style={styles.container}>
               <StatusItem
                 title="Commande acceptée"
-                subtitle="13/03/2023"
+                subtitle={
+                  'Deadline : ' +
+                  new Intl.DateTimeFormat('en-US').format(
+                    new Date(delivery.deadline),
+                  )
+                }
                 iconName="md-checkmark"
                 selected={delivery.status >= 0}
               />
               <StatusItem
                 title="Commande en cours d'achat"
-                subtitle="14/03/2023"
+                subtitle={
+                  'Deadline : ' +
+                  new Intl.DateTimeFormat('en-US').format(
+                    new Date(delivery.deadline),
+                  )
+                }
                 iconName="ios-cart-outline"
                 selected={delivery.status >= 1}
               />
               <StatusItem
                 title="Commande déposée"
-                subtitle="14/03/2023"
+                subtitle={new Intl.DateTimeFormat('en-US').format(
+                  new Date(delivery.deposit_date),
+                )}
                 iconName="ios-archive-outline"
                 selected={delivery.status >= 2}
               />
+              <View style={styles.statusItemContainer}>
+                <View
+                  style={[
+                    styles.statusItemIconView,
+                    delivery.carts.every(cart => cart.status > 2)
+                      ? styles.statusItemIconViewSelected
+                      : styles.statusItemIconViewUnselected,
+                  ]}>
+                  <Ionicons
+                    style={styles.statusItemIcon}
+                    name="receipt-outline"
+                    size={40}
+                    color={
+                      delivery.carts.every(cart => cart.status > 2)
+                        ? '#159c00'
+                        : 'grey'
+                    }
+                  />
+                </View>
+                <View style={styles.statusItemTextView}>
+                  <Text style={styles.statusItemTitle}>Commande récupérée</Text>
+                  <FlatList
+                    style={styles.cartItemsList}
+                    data={delivery.carts}
+                    renderItem={({item}) => {
+                      return (
+                        <BouncyCheckbox
+                          style={styles.checkbox}
+                          textStyle={{
+                            textDecorationLine: 'none',
+                          }}
+                          size={25}
+                          fillColor={item.status === 4 ? 'red' : 'green'}
+                          unfillColor="#FFFFFF"
+                          text={
+                            item.owner.first_name +
+                            ' ' +
+                            item.owner.last_name +
+                            (item.status === 3 ? ' (problème)' : '')
+                          }
+                          iconStyle={{borderColor: 'green'}}
+                          innerIconStyle={{borderWidth: 2}}
+                          isChecked={item.status >= 3}
+                          disableBuiltInState={true}
+                          onPress={isChecked => {}}
+                        />
+                      );
+                    }}
+                  />
+                </View>
+              </View>
             </LinearGradient>
-          </ScrollView>
+          </View>
           {delivery.status === 0 && (
             <View style={styles.buttonView}>
               <BasicButton
@@ -269,6 +333,9 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     height: '100%',
+  },
+  checkbox: {
+    marginTop: 5,
   },
   statusItemContainer: {
     margin: 10,
@@ -349,6 +416,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+    padding: 5,
   },
   horizontal: {
     flexDirection: 'row',

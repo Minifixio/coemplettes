@@ -121,7 +121,10 @@ function DeliveryHistoryCarts({route, navigation}) {
         <FlatList
           data={carts}
           renderItem={({item}) => (
-            <CartItemsList cartItems={item.items} ownerName={item.owner_name} />
+            <CartItemsList
+              cartItems={item.items}
+              ownerName={item.owner.first_name + ' ' + item.owner.last_name}
+            />
           )}
           keyExtractor={item => item.id}
         />
