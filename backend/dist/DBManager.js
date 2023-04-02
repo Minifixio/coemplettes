@@ -242,11 +242,17 @@ class DB {
                 .createQueryBuilder("shipper")
                 .leftJoinAndSelect("shipper.deliveries", "deliveries")
                 .getMany();
-            shippers = shippers.filter((shipper) => {
-                return shipper.deliveries.filter((delivery) => {
-                    return delivery.status !== 0 && delivery.status !== 1 && delivery.status !== 2 && delivery.status !== 3;
-                }).length !== 0;
-            });
+            const res = [];
+            for (let shipper of shippers) {
+                if (shipper.deliveries.length === 0) {
+                    res.push(shipper);
+                }
+                else {
+                    if (shipper.deliveries.every(delivery => delivery.status > 3)) {
+                        res.push(shipper);
+                    }
+                }
+            }
             return shippers;
         });
     }
@@ -271,6 +277,8 @@ class DB {
                 .leftJoinAndSelect("delivery.shipper", "shipper")
                 .leftJoinAndSelect("shipper.user", "user")
                 .leftJoinAndSelect("cart.delivery_proposal", "delivery_proposal")
+                .leftJoinAndSelect("cart.items", "item")
+                .leftJoinAndSelect("item.product", "product")
                 .where("cart.owner_id = :owner_id", { owner_id: owner_id })
                 .getOne();
             return res;
@@ -445,6 +453,18 @@ class DB {
             return id;
         });
     }
+    static updateUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Mise à jour des info du user :");
+            console.log(user);
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(User_1.User)
+                .set(user)
+                .where("id = :id", { id: user.id })
+                .execute();
+        });
+    }
     static addShipper(shipper) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Ajout du shipper :");
@@ -607,6 +627,23 @@ class DB {
             yield this.AppDataSource.getRepository(Delivery_1.Delivery).save(delivery);
         });
     }
+    static delcineDeliveryProposal(deliveryProposalId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Refus de la delivery proposal n°" + deliveryProposalId + " dans la BDD");
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .delete()
+                .from(DeliveryProposal_1.DeliveryProposal)
+                .where("id = :id", { id: deliveryProposalId })
+                .execute();
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Cart_1.Cart)
+                .set({ delivery_proposal_id: null })
+                .where("delivery_proposal_id = :id", { id: deliveryProposalId })
+                .execute();
+        });
+    }
     static updateDeliveryStatus(deliveryId, status) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Mise à jour du status de la livraison n°" + deliveryId + " dans la BDD");
@@ -665,15 +702,69 @@ class DB {
             yield this.AppDataSource
                 .createQueryBuilder()
                 .update(Delivery_1.Delivery)
-                .set({ status: 3, locker_id: availableLockerId, deposit_date: (new Date()).toJSON() })
+                .set({ status: 3, deposit_date: (new Date()).toJSON() })
                 .where("id = :id", { id: deliveryId })
                 .execute();
             yield this.AppDataSource
                 .createQueryBuilder()
                 .update(Cart_1.Cart)
-                .set({ status: 3 })
+                .set({ status: 2, locker_id: availableLockerId })
                 .where("delivery_id = :id", { id: deliveryId })
                 .execute();
+            LockerManager_1.Locker.openLocker(availableLockerId);
+        });
+    }
+    static finishCart(cartId, retreived) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Finalisation du cart n°" + cartId);
+            yield this.AppDataSource
+                .createQueryBuilder()
+                .update(Cart_1.Cart)
+                .set({ status: retreived ? 3 : 4 })
+                .where("id = :id", { id: cartId })
+                .execute();
+            const cart = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.id = :id", { id: cartId })
+                .getOne();
+            if (cart) {
+                yield this.finishDelivery(cart === null || cart === void 0 ? void 0 : cart.delivery_id);
+            }
+        });
+    }
+    static finishDelivery(deliveryId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Test de finalisation de la delivery n°" + deliveryId);
+            const carts = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.delivery_id = :delivery_id", { delivery_id: deliveryId })
+                .getMany();
+            const finished = carts.every(cart => cart.status === 3 || cart.status === 4);
+            if (finished) {
+                const valid = carts.every(cart => cart.status === 3);
+                const nextStatus = valid ? 4 : 5;
+                console.log("[DBManager] Finalisation de la delivery n°" + deliveryId + (valid ? " validée" : " non validée"));
+                yield this.AppDataSource
+                    .createQueryBuilder()
+                    .update(Delivery_1.Delivery)
+                    .set({ status: nextStatus })
+                    .where("id = :id", { id: deliveryId })
+                    .execute();
+            }
+        });
+    }
+    static retreiveCart(cartId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("[DBManager] Récupération du cart n°" + cartId);
+            const cart = yield this.AppDataSource
+                .getRepository(Cart_1.Cart)
+                .createQueryBuilder("cart")
+                .where("cart.id = :id", { id: cartId })
+                .getOne();
+            console.log("[DBManager] Récupération du cart n°" + cartId + " au locker n°" + (cart === null || cart === void 0 ? void 0 : cart.locker_id));
+            LockerManager_1.Locker.openLocker((cart === null || cart === void 0 ? void 0 : cart.locker_id) ? cart === null || cart === void 0 ? void 0 : cart.locker_id : 0);
         });
     }
     static retreiveDelivery(deliveryId, retreived) {

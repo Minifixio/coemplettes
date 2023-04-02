@@ -18,7 +18,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Supermarket.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: true }),
+    (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
 ], Supermarket.prototype, "name", void 0);
 __decorate([
@@ -33,6 +33,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 200, nullable: true }),
     __metadata("design:type", String)
 ], Supermarket.prototype, "business_hours", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    __metadata("design:type", Number)
+], Supermarket.prototype, "postal_code", void 0);
 Supermarket = __decorate([
     (0, typeorm_1.Entity)({ name: "supermarkets" })
 ], Supermarket);

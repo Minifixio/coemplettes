@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", Number)
 ], SupermarketProduct.prototype, "supermarket_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "int", nullable: false }),
+    (0, typeorm_1.Column)({ type: "float", nullable: false }),
     __metadata("design:type", Number)
 ], SupermarketProduct.prototype, "price", void 0);
 __decorate([

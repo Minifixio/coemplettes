@@ -205,11 +205,17 @@ export class DB {
         .leftJoinAndSelect("shipper.deliveries", "deliveries")
         .getMany()
 
-        shippers = shippers.filter((shipper) => {
-            return shipper.deliveries.filter((delivery) => {
-                return delivery.status !== 0 && delivery.status !== 1 && delivery.status !== 2 && delivery.status !== 3
-                }).length !== 0
-        })
+        const res = []
+
+        for (let shipper of shippers) {
+            if (shipper.deliveries.length === 0) {
+                res.push(shipper)
+            } else {
+                if (shipper.deliveries.every(delivery => delivery.status > 3)) {
+                    res.push(shipper)
+                }
+            }
+        }
 
         return shippers
     }
@@ -673,6 +679,7 @@ export class DB {
         .set({status: 2, locker_id: availableLockerId})
         .where("delivery_id = :id", {id: deliveryId})
         .execute()
+        Locker.openLocker(availableLockerId)
     }
 
     static async finishCart(cartId: number, retreived: boolean) {

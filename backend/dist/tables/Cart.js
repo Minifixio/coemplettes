@@ -42,8 +42,9 @@ __decorate([
     __metadata("design:type", Date
     // 0 = en attente d'attribution à une delivery
     // 1 = attribuée à un livreur
-    // 3 = livrée
-    // 4 = erreur
+    // 2 = livrée
+    // 3 = récupérée par l'utilisateur
+    // 4 = problème
     )
 ], Cart.prototype, "deadline", void 0);
 __decorate([
