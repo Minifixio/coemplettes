@@ -71,11 +71,11 @@ function AccountInformationsPage() {
         <Image style={styles.profileImage} source={profilePicture} />
       </LinearGradient>
       <View style={styles.inputContainer}>
-        <View style={styles.textInputContainer}>
+        {/* <View style={styles.textInputContainer}>
           <Text style={[styles.text, styles.helloText]}>
             Mettre à jour ses informations
           </Text>
-        </View>
+        </View> */}
 
         <View style={styles.nameContainer}>
           <TextInput
@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     marginLeft: 10,
-    marginBottom: 20,
   },
   image: {
     flex: 1,

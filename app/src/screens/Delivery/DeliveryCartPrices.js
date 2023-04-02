@@ -81,44 +81,49 @@ function DeliveryCartPricesPage({navigation, route}) {
     return (
       <View style={styles.statusItemContainer}>
         <View style={styles.statusItemCard}>
-          <View style={[styles.statusItemIconView]}>
-            <Ionicons
-              style={styles.statusItemIcon}
-              name={iconName}
-              size={40}
-              color={'grey'}
-            />
-          </View>
-          <View style={styles.statusItemTextView}>
-            <Text style={styles.statusItemTitle}>{user}</Text>
-            <Text style={styles.statusItemSubtitle}>Deadline : {deadline}</Text>
-            <Text style={styles.statusItemSubtitle}>
-              {productsCount} produits - {unavailableProductsCount} manquants
-            </Text>
-            <View style={styles.inputSpinnerView}>
-              <Text style={styles.inputSpinnerText}>Prix final </Text>
-              <InputSpinner
-                style={styles.inputSpinner}
-                skin="square"
-                colorLeft="#539903"
-                colorRight="#539903"
-                height={40}
-                max={100}
-                min={0}
-                step={0.5}
-                colorMax={'#f04048'}
-                colorMin={'#40c5f4'}
-                value={cart.average_price}
-                placeholder={'Prix' + user}
-                type="float"
-                onChange={num => {
-                  cart.price_to_pay = num;
-                  const p = getTotalPrice();
-                  setTotalPrice(p);
-                }}
+          <View style={styles.statusItemCardSubView}>
+            <View style={[styles.statusItemIconView]}>
+              <Ionicons
+                style={styles.statusItemIcon}
+                name={iconName}
+                size={40}
+                color={'grey'}
               />
             </View>
-
+            <View style={styles.statusItemTextView}>
+              <Text style={styles.statusItemTitle}>{user}</Text>
+              <Text style={styles.statusItemSubtitle}>
+                Deadline : {deadline}
+              </Text>
+              <Text style={styles.statusItemSubtitle}>
+                {productsCount} produits - {unavailableProductsCount} manquants
+              </Text>
+              <View style={styles.inputSpinnerView}>
+                <Text style={styles.inputSpinnerText}>Prix final </Text>
+                <InputSpinner
+                  style={styles.inputSpinner}
+                  skin="square"
+                  colorLeft="#539903"
+                  colorRight="#539903"
+                  height={40}
+                  max={100}
+                  min={0}
+                  step={0.5}
+                  colorMax={'#f04048'}
+                  colorMin={'#40c5f4'}
+                  value={cart.average_price}
+                  placeholder={'Prix' + user}
+                  type="float"
+                  onChange={num => {
+                    cart.price_to_pay = num;
+                    const p = getTotalPrice();
+                    setTotalPrice(p);
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.pressableView}>
             <Pressable
               style={styles.photoPressable}
               onPress={() =>
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: 'white',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
     borderRadius: 16,
@@ -221,8 +226,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 6,
   },
+  statusItemCardSubView: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   inputSpinner: {
     width: '60%',
+  },
+  pressableView: {
+    display: 'flex',
+    width: '90%',
   },
   inputSpinnerView: {
     display: 'flex',

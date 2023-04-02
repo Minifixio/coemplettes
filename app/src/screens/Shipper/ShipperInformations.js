@@ -2,6 +2,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Switch} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import CheckBox from '@react-native-community/checkbox';
 import InputSpinner from 'react-native-input-spinner';
 import BasicButton from '../../components/BasicButton';
 import {AuthService} from '../../services/AuthService';
@@ -10,10 +11,18 @@ import Toast from 'react-native-toast-message';
 import {UserContext} from '../../utils/UserProvider';
 
 function ShipperInformationPage({navigation}) {
-  const {updateShipperProfile, shipperInfos} = useContext(UserContext);
+  const {getShipperInfos, updateShipperProfile} = useContext(UserContext);
   const [priceMax, setPriceMax] = useState(50);
   const [capacity, setCapacity] = useState(2);
-  const [disponibilities, setDisponibilities] = useState([0, 0, 0, 0, 0, 0, 0]);
+  const [disponibilities, setDisponibilities] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   // Indiquent si le shipper peut aller au Drive / en magasin
   const [drive, setDrive] = useState(false);
@@ -22,16 +31,24 @@ function ShipperInformationPage({navigation}) {
   const [hasCar, setHasCar] = useState(false);
 
   useEffect(() => {
-    if (shipperInfos.id !== undefined) {
-      console.log('[ShipperInformations]', shipperInfos);
-      setPriceMax(shipperInfos.price_max);
-      setCapacity(shipperInfos.capacity);
-      setDisponibilities(shipperInfos.disponibilities.split('').map(Number));
-      setDrive(shipperInfos.drive);
-      setShop(shipperInfos.shop);
-      setHasCar(shipperInfos.has_car);
-    }
-  }, [shipperInfos]);
+    const fetchData = async () => {
+      try {
+        const shipperInfos = await getShipperInfos();
+        console.log('[ShipperInformations]', shipperInfos);
+        setPriceMax(shipperInfos.price_max);
+        setCapacity(shipperInfos.capacity);
+        setDisponibilities(
+          shipperInfos.disponibilities.split('').map(c => c === '1'),
+        );
+        setDrive(shipperInfos.drive);
+        setShop(shipperInfos.shop);
+        setHasCar(shipperInfos.has_car);
+      } catch (e) {
+        console.log('[ShipperInformations] Erreur :', e);
+      }
+    };
+    fetchData();
+  }, [getShipperInfos]);
 
   const updateProfile = async () => {
     try {
@@ -41,7 +58,9 @@ function ShipperInformationPage({navigation}) {
         drive,
         has_car: hasCar,
         shop,
-        disponibilities: disponibilities.join(''),
+        disponibilities: disponibilities
+          .map(valeur => (valeur ? '1' : '0'))
+          .join(''),
       };
       await updateShipperProfile(shipper);
       Toast.show({
@@ -80,7 +99,7 @@ function ShipperInformationPage({navigation}) {
           }}
         />
       </View>
-      <View style={styles.capacityView}>
+      {/* <View style={styles.capacityView}>
         <Text style={styles.capacityText}>Capacité maximale (en sacs)</Text>
         <InputSpinner
           skin="square"
@@ -97,7 +116,7 @@ function ShipperInformationPage({navigation}) {
             setCapacity(num);
           }}
         />
-      </View>
+      </View> */}
       <View style={styles.switchesView}>
         <View style={styles.switchCaseView}>
           <Text style={styles.switchText}>Voiture ?</Text>
@@ -136,161 +155,115 @@ function ShipperInformationPage({navigation}) {
       <View style={styles.disponibilitiesView}>
         <Text style={styles.disponibilitiesText}>Disponibilités </Text>
         <View style={styles.checkboxesView}>
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Lundi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[0] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[0] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Mardi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[1] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[1] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Mercredi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[2] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[2] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Jeudi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[3] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[3] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Vendredi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[4] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[4] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Samedi"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[5] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[5] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            textStyle={{
-              textDecorationLine: 'none',
-            }}
-            size={25}
-            fillColor="green"
-            unfillColor="#FFFFFF"
-            text="Dimanche"
-            iconStyle={{borderColor: 'green'}}
-            innerIconStyle={{borderWidth: 2}}
-            isChecked={
-              shipperInfos.disponibilities
-                ? shipperInfos.disponibilities[6] === '1'
-                : false
-            }
-            onPress={isChecked => {
-              let d = disponibilities;
-              d[6] = isChecked ? 1 : 0;
-              setDisponibilities(d);
-            }}
-          />
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[0]}
+              onValueChange={newValue => {
+                setDisponibilities([newValue, ...disponibilities.slice(1)]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Lundi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[1]}
+              onValueChange={newValue => {
+                setDisponibilities([
+                  disponibilities[0],
+                  newValue,
+                  ...disponibilities.slice(2),
+                ]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Mardi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[2]}
+              onValueChange={newValue => {
+                setDisponibilities([
+                  ...disponibilities.slice(0, 2),
+                  newValue,
+                  ...disponibilities.slice(3),
+                ]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Mercredi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[3]}
+              onValueChange={newValue => {
+                setDisponibilities([
+                  ...disponibilities.slice(0, 3),
+                  newValue,
+                  ...disponibilities.slice(4),
+                ]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Jeudi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[4]}
+              onValueChange={newValue => {
+                setDisponibilities([
+                  ...disponibilities.slice(0, 4),
+                  newValue,
+                  ...disponibilities.slice(5),
+                ]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Vendredi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[5]}
+              onValueChange={newValue => {
+                setDisponibilities([
+                  ...disponibilities.slice(0, 5),
+                  newValue,
+                  disponibilities[6],
+                ]);
+                console.log(disponibilities);
+              }}
+            />
+            <Text style={styles.checkboxText}>Samedi</Text>
+          </View>
+
+          <View style={styles.checkboxView}>
+            <CheckBox
+              disabled={false}
+              value={disponibilities[6]}
+              onValueChange={newValue => {
+                setDisponibilities([...disponibilities.slice(0, 6), newValue]);
+              }}
+            />
+            <Text style={styles.checkboxText}>Dimanche</Text>
+          </View>
         </View>
+      </View>
+      <View style={styles.buttonHolidayView}>
+        <BasicButton
+          style={styles.buttonHoliday}
+          selected={false}
+          height={50}
+          onClick={() => {
+            updateProfile();
+          }}
+          text="Passer en mode vacances"
+        />
       </View>
       <View style={styles.buttonView}>
         <BasicButton
@@ -385,7 +358,21 @@ const styles = StyleSheet.create({
   checkbox: {
     margin: 5,
   },
+  checkboxView: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkboxText: {
+    color: 'black',
+    fontSize: 15,
+  },
   buttonView: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonHolidayView: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
