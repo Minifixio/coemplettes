@@ -67,7 +67,7 @@ function AccountInformationsPage() {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#ffffff', '#f2f2f2']} style={styles.photoView}>
+      <LinearGradient colors={['#d4d4d4', '#ffffff']} style={styles.photoView}>
         <Image style={styles.profileImage} source={profilePicture} />
       </LinearGradient>
       <View style={styles.inputContainer}>
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 20,
+    height: '20%',
   },
   profileImage: {
     width: 100,
@@ -192,6 +193,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     bottom: 0,
+    height: '80%',
     display: 'flex',
     paddingBottom: 10,
     padding: 10,

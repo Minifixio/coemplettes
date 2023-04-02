@@ -38,10 +38,10 @@ function CartCompletionPage({navigation, route}) {
   useEffect(() => {
     setCart(cartData);
 
-    console.log('[CartCompletion] Voici la cart : ', cartData);
+    console.log('[CartCompletion] Voici la cart : ', cart);
     let unavailableCount = 0;
     let missingCount = 0;
-    cart.items.forEach(item => {
+    cartData.items.forEach(item => {
       if (item.status === 0) {
         missingCount++;
       }
@@ -51,7 +51,7 @@ function CartCompletionPage({navigation, route}) {
     });
     setMissingProductsCount(missingCount);
     setUnavailableProductsCount(unavailableCount);
-  }, [setUnavailableProductsCount, cartData, cart.items]);
+  }, [setUnavailableProductsCount, cartData, cart.items, cart]);
 
   const updateUnavailableProductsCount = useCallback(() => {
     let count = 0;
@@ -115,7 +115,7 @@ function CartCompletionPage({navigation, route}) {
               </Pressable>
               <Pressable
                 style={
-                  item.status === 2
+                  item.status === 1
                     ? [
                         styles.validationsButton,
                         styles.validationsButtonDisabled,
@@ -164,19 +164,13 @@ function CartCompletionPage({navigation, route}) {
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={['#ffffff', '#f2f2f2']} style={styles.container}>
         <CartItemsList cartItems={cart.items} />
-        <View style={styles.bottomCard}>
+        {/* <View style={styles.bottomCard}>
           <View style={styles.totalTextView}>
             <Text style={styles.totalText}>
               Produits indisponibles : {unavailableProductsCount}
             </Text>
           </View>
-          <View style={styles.totalTextView}>
-            <Text style={styles.subtotalText}>
-              Il vous reste {missingProductsCount} produits à trouver
-            </Text>
-          </View>
-          <Divider />
-        </View>
+        </View> */}
       </LinearGradient>
       <Toast />
     </SafeAreaView>
@@ -310,6 +304,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   bottomCard: {
+    position: 'absolute',
+    bottom: 0,
+    height: 100,
     width: '100%',
     display: 'flex',
     alignItems: 'center',
