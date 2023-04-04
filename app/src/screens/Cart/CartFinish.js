@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
-    paddingTop: 20,
+    paddingBottom: 5,
+    paddingTop: 10,
   },
   titleView: {
     display: 'flex',

@@ -10,8 +10,8 @@ const Separator = () => <View style={styles.separator} />;
 function LoginPage({navigation, setIsConnected}) {
   const {login} = useContext(UserContext);
 
-  const [email, setEmail] = useState('user0@telecom-paris.fr');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const userLogin = async () => {
     try {

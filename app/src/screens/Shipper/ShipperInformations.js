@@ -76,6 +76,30 @@ function ShipperInformationPage({navigation}) {
     }
   };
 
+  const vacationMode = async () => {
+    try {
+      const shipper = {
+        capacity,
+        price_max: priceMax,
+        drive,
+        has_car: hasCar,
+        shop,
+        disponibilities: '0000000',
+      };
+      await updateShipperProfile(shipper);
+      Toast.show({
+        type: 'success',
+        text1: 'Profil livreur mis à jour, mode vacances activé',
+      });
+      navigation.navigate('ShipperAccountPage');
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: 'Erreur lors de la mise à jour du profil livreur',
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <View style={styles.mainTextView}>
@@ -254,25 +278,27 @@ function ShipperInformationPage({navigation}) {
           </View>
         </View>
       </View>
-      <View style={styles.buttonHolidayView}>
-        <BasicButton
-          style={styles.buttonHoliday}
-          selected={false}
-          height={50}
-          onClick={() => {
-            updateProfile();
-          }}
-          text="Passer en mode vacances"
-        />
-      </View>
-      <View style={styles.buttonView}>
-        <BasicButton
-          style={styles.button}
-          onClick={() => {
-            updateProfile();
-          }}
-          text="Valider mon profil"
-        />
+      <View style={styles.buttonsView}>
+        <View style={styles.buttonHolidayView}>
+          <BasicButton
+            style={styles.buttonHoliday}
+            selected={false}
+            height={50}
+            onClick={() => {
+              vacationMode();
+            }}
+            text="Passer en mode vacances"
+          />
+        </View>
+        <View style={styles.buttonView}>
+          <BasicButton
+            style={styles.button}
+            onClick={() => {
+              updateProfile();
+            }}
+            text="Valider mon profil"
+          />
+        </View>
       </View>
       <Toast />
     </SafeAreaView>
@@ -376,6 +402,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonsView: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 

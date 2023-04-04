@@ -138,7 +138,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {(cart.id === undefined || cart.status > 3) && !loading && (
+      {(cart.id === undefined || cart.status >= 3) && !loading && (
         <View style={styles.emptyTextView}>
           <Text style={styles.emptyText}>
             Aucune commande en cours... Créez un panier pour commencer !
@@ -147,7 +147,7 @@ function CurrentCartOrderPage({navigation, route}) {
         </View>
       )}
 
-      {cart.id !== undefined && cart.status < 4 && !loading && (
+      {cart.id !== undefined && cart.status < 3 && !loading && (
         <View style={styles.subContainer}>
           <View style={styles.progressView}>
             <View style={styles.progressCircleView}>
@@ -264,9 +264,9 @@ function CurrentCartOrderPage({navigation, route}) {
                     </Text>
                   </View>
 
-                  <Text style={styles.infoTextLight}>
-                    Date de livraison prévue : 10/11/2023
-                  </Text>
+                  {/* <Text style={styles.infoTextLight}>
+                    En attente du début de la course...
+                  </Text> */}
                   <View style={styles.estimatedPriceView}>
                     <Text style={styles.infoText}>Prix estimé :</Text>
                     <Text

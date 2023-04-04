@@ -231,7 +231,7 @@ function DeliveryTracking({navigation}) {
                   new Date(delivery.deposit_date),
                 )}
                 iconName="ios-archive-outline"
-                selected={delivery.status >= 2}
+                selected={delivery.status >= 3}
               />
               <View style={styles.statusItemContainer}>
                 <View
@@ -271,7 +271,7 @@ function DeliveryTracking({navigation}) {
                             item.owner.first_name +
                             ' ' +
                             item.owner.last_name +
-                            (item.status === 3 ? ' (problème)' : '')
+                            (item.status === 4 ? ' (problème)' : '')
                           }
                           iconStyle={{borderColor: 'green'}}
                           innerIconStyle={{borderWidth: 2}}
