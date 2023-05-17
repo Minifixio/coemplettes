@@ -1,8 +1,6 @@
-=== Suivis des modules (Après PAN1)
+=== Avancement final
 
-Insérez ici votre biblio et vos avancées techniques par module (réunions
-experts, pseudo-code d’algorithmes, description détaillée de vos réalisations, etc.).
+Nous avons réussi à avoir une version de notre projet presque finie pour la présentation du PAN3 : application fonctionnelle qui communique bien avec la base de données remplie de produits et de profils étudiants, étude SES poussée (même sur des aspects juridiques que nous n'avions pas envisagés au départ, comme le droit des données personnelles et issue des sites Web des supermarchés), algorithme de matching de commandes fonctionnel, locker connecté qui s'ouvre et se ferme sur demande.
+Néanmoins, à la veille du PAN3, il manquait encore le système de paiement et de caution sur l'application, en réalité compliqué à mettre en place pour des raisons de sécurité.
 
-
-
-
+Lors du PAN3, notre jury nous a suggéré de créer des filtres pour les produits (Indication du nutriscore, produits bio / vegan / hygiéniques, etc), ce que nous sommes en train de réaliser pour le PAN4. Nous sommes aussi en train de réaliser un deuxième locker connecté, plus grand que le précédent, pour gérer au niveau du backend la coordination de plusieurs lockers. Le jury nous a demandé de vérifier avec notre expert SES que les CGU que nous écrites pour Co-Emplettes sont correctes, ce que nous allons faire à notre prochaine réunion avec lui.
