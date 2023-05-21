@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import os
-import html
+
 import re
 
 # We first need to get a list of all the html files in the data folder
@@ -21,12 +21,17 @@ for file in fileList:
     lst = soup.select('.liWCRS310_Product')
     print(len(lst))
 
+    marques = [elem.text for elem in soup.select('#divBlocsFiltres')[0].select('.divWCRS315_Wrap')[1].find_all('label')]
+    print(marques)
+
     elemProdExp = []
     elemSupProdExp = []
 
     # We loop through the list of products
     for elem in lst:
         print(elem['id'])
+        if elem['data-vignette'] == 'recette':
+            continue
         if elem['data-vignette'] == 'bientotDisponible':
             print(elem.select('.divWCRS310_Content')[0].img['alt'])
             print(elem.select('.divWCRS310_Content')[0].img['src'])

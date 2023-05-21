@@ -1,7 +1,7 @@
 import html
 import os
 
-fileList = os.listdir('Leclerc/data/')
+fileList = os.listdir('Leclerc/obsolete/data/')
 
 for file in fileList:
     fileR = open('Leclerc/data/{}'.format(file), 'r').read()
