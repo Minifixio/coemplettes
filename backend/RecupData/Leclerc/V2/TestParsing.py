@@ -5,6 +5,8 @@ import html
 """
 Notes strcuture des objets produits
 
+Match 1 : 
+
 Exemple :
 "objElement": {
                     "sNoPointLivraison": "079111", <-- OSEF

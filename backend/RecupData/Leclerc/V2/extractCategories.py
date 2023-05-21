@@ -1,6 +1,7 @@
 import os
 import json
 import html
+import re
 
 # importation des categories deja existantes
 categories = [cat.split(';') for cat in open('dataFolder/categories.csv', 'r').read().split('\n')]
@@ -9,8 +10,8 @@ produits = [produit.split(';') for produit in open('dataFolder/produits.csv', 'r
 
 # list files
 fileNames = os.listdir("leclercScrap")
-for fileName in fileNames:
-
+if 1:
+    fileName = fileNames[0]
     fileOpen = open("leclercScrap/" + fileName, 'r')
     file = fileOpen.read()
     fileOpen.close()
@@ -24,17 +25,19 @@ for fileName in fileNames:
             if catID not in [cat[0] for cat in categories]:
                 categories.append([catID, catName])
 
-    fileSplit = file.split('Utilitaires.widget.initOptions(')
+    # fileSplit = file.split('Utilitaires.widget.initOptions(')
 
-    filtres = fileSplit[6].replace(');', '')
-    filtres = filtres.replace("'ctl00_ctl00_mainMutiUnivers_main_ctl01_pnlBlocsFiltres',", '')
-    elemFiltres = json.loads(html.unescape(filtres))
+    # Recuperation des parties utiles du fichiers
+    fileSplit = re.findall("\'ctl00_ctl00_mainMutiUnivers_main_(.*?)\}\);", file)
+    # 1er formatage
+    fileSplit = [dataJson.split(',', 1) for dataJson in fileSplit]
+    # 2nd formatage
+    dicSplit = {dataJson[0][:-1]: dataJson[1]+'}' for dataJson in fileSplit}
 
-    data = fileSplit[8].replace(');', '')
-    print(data[:100])
-    data = filtres.replace("'ctl00_ctl00_mainMutiUnivers_main_ctl01_pnlBlocsFiltres',", '')
-    elemProduits = json.loads(html.unescape(data))
+    filtres = json.loads(html.unescape(dicSplit['ctl01_pnlBlocsFiltres']))
 
+    for elem in filtres:
+        print(elem)
 
     # # sauvegarde des categories
     # catFile = open('dataFolder/categories.csv', 'w')
