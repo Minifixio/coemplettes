@@ -8,6 +8,14 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import {CartContext} from '../../utils/CartProvider';
 
+const nutriscoreIcons = {
+  A: require('../../assets/icons/nutriscores/nutriscore-A.png'),
+  B: require('../../assets/icons/nutriscores/nutriscore-B.png'),
+  C: require('../../assets/icons/nutriscores/nutriscore-C.png'),
+  D: require('../../assets/icons/nutriscores/nutriscore-D.png'),
+  E: require('../../assets/icons/nutriscores/nutriscore-E.png'),
+};
+
 function ProductPage({navigation, route}) {
   const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState({});
@@ -34,6 +42,9 @@ function ProductPage({navigation, route}) {
         <Text style={[styles.text, styles.quantityText]}>
           {product.quantity_type}
         </Text>
+        <View style={styles.nutriscoreContainer}>
+          <Image style={styles.nutriscoreIcon} source={nutriscoreIcons.A} />
+        </View>
         <View style={styles.buttonsContainer}>
           <InputSpinner
             style={styles.inputSpinner}
@@ -106,6 +117,14 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+  },
+  nutriscoreIcon: {
+    width: '100%',
+    height: '100%',
+  },
+  nutriscoreContainer: {
+    width: '30%',
+    height: 60,
   },
 });
 

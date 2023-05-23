@@ -26,10 +26,6 @@ const categoriesIcons = {
   5: require('../../assets/icons/categories/cereal.png'),
 };
 
-const _categories = require('../../assets/json/categories.json').categories;
-const _featuredProducts =
-  require('../../assets/json/featured_products.json').featured_products;
-
 const CategoryItem = function ({name, color, id, navigation}) {
   return (
     <Pressable
@@ -178,6 +174,7 @@ const styles = StyleSheet.create({
   fetauredColumnWrapperStyle: {
     flex: 1,
     justifyContent: 'space-around',
+    paddingTop: 20,
   },
   featuredFlatList: {
     height: '100%',

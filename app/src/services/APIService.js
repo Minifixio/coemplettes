@@ -1,6 +1,6 @@
 import {AuthService} from './AuthService';
 
-const apiURL = 'http://137.194.211.70';
+const apiURL = 'https://pact-28.r2.enst.fr';
 
 export class APIService {
   static async get(entrypoint, param, auth = true) {

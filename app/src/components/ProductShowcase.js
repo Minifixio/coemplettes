@@ -7,6 +7,8 @@ import InputSpinner from 'react-native-input-spinner';
 
 import {CartContext} from '../utils/CartProvider';
 
+const bioIcon = require('../assets/icons/misc/bio.png');
+
 const ProductShowcase = ({navigation, id, productData}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -55,6 +57,9 @@ const ProductShowcase = ({navigation, id, productData}) => {
 
   return (
     <LinearGradient colors={['#ffffff', '#e6e6e6']} style={styles.container}>
+      <View style={styles.bioLabelContainer}>
+        <Image style={styles.bioIcon} source={bioIcon} />
+      </View>
       <View style={styles.productContainer}>
         <Pressable style={styles.pressableProduct} onPress={onClick}>
           <Image style={styles.image} source={{uri: product.icon_link}} />
@@ -170,6 +175,22 @@ const styles = StyleSheet.create({
   inputSpinnerView: {
     height: 40,
     display: 'flex',
+  },
+  bioLabelContainer: {
+    display: 'flex',
+    width: 35,
+    height: 35,
+    top: -5,
+    right: -5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 20,
+  },
+  bioIcon: {
+    width: 35,
+    height: 35,
   },
 });
 
