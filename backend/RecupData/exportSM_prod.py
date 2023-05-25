@@ -13,8 +13,9 @@ for i in range(1, len(list)):
     ref = list[i][1]
     cursor.execute("SELECT id FROM products WHERE reference = %s", (ref,))
     product_id = cursor.fetchone()[0]
-    zip = list[i][9]
-    cursor.execute("SELECT id FROM supermarkets WHERE postal_code = %s", (zip,))
+
+    nom = list[i][7] + ' ' + list[i][8]
+    cursor.execute("SELECT id FROM supermarkets WHERE nom = %s", (zip,))
     supermarket_id = cursor.fetchone()[0]
     cursor.execute(req, (product_id, supermarket_id, list[i][5]))
     conn.commit()
