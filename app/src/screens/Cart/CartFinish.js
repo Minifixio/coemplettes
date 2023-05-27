@@ -1,6 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import BasicButton from '../../components/BasicButton';
@@ -32,6 +40,10 @@ function CartFinishPage({navigation, route}) {
   const [litigesMessage, setLitigesMessage] = useState('');
 
   const [cart, setCarts] = useState([]);
+
+  const copyToClipboard = () => {
+    Clipboard.setString('hello world');
+  };
 
   useEffect(() => {
     setCarts(cartData);
@@ -141,6 +153,23 @@ function CartFinishPage({navigation, route}) {
             <Text style={styles.title}>Message au livreur</Text>
             <LineTitle />
           </View>
+          <View style={styles.copyClipboardView}>
+            <Text style={styles.copyClipboardText}>Téléphone :</Text>
+            <TouchableOpacity
+              style={styles.copyClipboardTouchable}
+              onPress={() => copyToClipboard()}>
+              <Ionicons
+                style={styles.statusItemIcon}
+                name={'copy-outline'}
+                size={30}
+                color={'grey'}
+              />
+              <Text style={styles.copyClipboardNumberText}>
+                {cart.delivery.shipper.user.phone}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <TextInput
             style={styles.input}
             onChangeText={() => {}}
@@ -232,6 +261,31 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: '90%',
+  },
+  copyClipboardNumberText: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  copyClipboardText: {
+    fontSize: 20,
+    color: 'black',
+  },
+  copyClipboardView: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  copyClipboardTouchable: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: 'lightgrey',
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
   },
 });
 

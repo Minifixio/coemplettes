@@ -231,7 +231,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   inputSpinner: {
-    width: '60%',
+    width: '50%',
+    marginLeft: 20,
   },
   pressableView: {
     display: 'flex',

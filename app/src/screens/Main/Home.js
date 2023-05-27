@@ -24,6 +24,7 @@ const categoriesIcons = {
   3: require('../../assets/icons/categories/care-products.png'),
   4: require('../../assets/icons/categories/drink.png'),
   5: require('../../assets/icons/categories/cereal.png'),
+  6: require('../../assets/icons/categories/bio.png'),
 };
 
 const CategoryItem = function ({name, color, id, navigation}) {
