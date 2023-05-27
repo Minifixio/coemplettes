@@ -42,9 +42,15 @@ function ProductPage({navigation, route}) {
         <Text style={[styles.text, styles.quantityText]}>
           {product.quantity_type}
         </Text>
-        <View style={styles.nutriscoreContainer}>
-          <Image style={styles.nutriscoreIcon} source={nutriscoreIcons.A} />
-        </View>
+        {product.nutriscore && (
+          <View style={styles.nutriscoreContainer}>
+            <Image
+              style={styles.nutriscoreIcon}
+              source={nutriscoreIcons[product.nutriscore]}
+            />
+          </View>
+        )}
+
         <View style={styles.buttonsContainer}>
           <InputSpinner
             style={styles.inputSpinner}
