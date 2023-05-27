@@ -23,8 +23,12 @@ prodSM = {produit.split(';')[0]: produit.split(';')[1:] for produit in
 # list files
 fileNames = os.listdir("leclercScrap")
 for fileName in fileNames:
+    print(fileName)
+    if fileName[0] =='.':
+        print('ignored')
+        continue
     fileOpen = open("leclercScrap/" + fileName, 'r')
-    file = fileOpen.read()
+    file = html.unescape(fileOpen.read().replace('&quot;', ''))
     fileOpen.close()
 
     ## TRAITEMENT DES CATEGORIES
@@ -34,8 +38,8 @@ for fileName in fileNames:
     for line in fileList:
         # ajout des categories et de leurs ID
         if '--sf--' in line and 'Filtres=4-' in line:
-            catID = html.unescape(line.split('Filtres=4-')[1][:6])
-            catName = html.unescape(line.split('--sf--')[1][:-2])
+            catID = line.split('Filtres=4-')[1][:6]
+            catName = line.split('--sf--')[1][:-2]
             if catID not in categories.keys():
                 categories[catID] = catName
 
@@ -46,7 +50,7 @@ for fileName in fileNames:
     # 2nd formatage
     dicSplit = {dataJson[0][:-1]: dataJson[1] + '}' for dataJson in fileSplit}
 
-    jsonFiltres = json.loads(html.unescape(dicSplit['ctl01_pnlBlocsFiltres']))
+    jsonFiltres = json.loads(dicSplit['ctl01_pnlBlocsFiltres'])
 
     ## TRAITEMENT DES FILTRES
     # Les iIDBloc importants sont:
@@ -60,11 +64,14 @@ for fileName in fileNames:
                 # On ajoute la marque
                 marques[str(elem['iIdValeur'])] = elem['sLibelle']
 
-    for marque in marques.keys():
-        print(marque, marques[marque])
-
     # On récupère les produits
-    jsonProds = json.loads(html.unescape(dicSplit['ctl05_pnlElementProduit']))
+    # try :
+    jsonProds = json.loads(dicSplit['ctl05_pnlElementProduit'])
+    # except :
+    #     erFile = open('erreurParsing/errorFile.json', 'a')
+    #     erFile.write(dicSplit['ctl05_pnlElementProduit'])
+    #     erFile.close()
+    #     exit()
 
     lstProds = jsonProds['objContenu']['lstElements']
     assoProdFiltres = jsonProds['lstAssocFiltreProduit']
@@ -92,9 +99,10 @@ for fileName in fileNames:
         prodCatID = prod['niIdSousFamille']
 
         # Telechargement de l'image
-        prodImUrl = 'https://fd7-photos.leclercdrive.fr/image.ashx?id={}&use=l&cat=p&typeid=i'.format(str(prod['niIdPhotoEnLigne']-1))
-        prodIm = requests.get(prodImUrl,stream=True).content
-        with open('dataFolder/imagesProds/'+str(prodID)+'.jpg','wb') as handler:
+        prodImUrl = 'https://fd7-photos.leclercdrive.fr/image.ashx?id={}&use=l&cat=p&typeid=i'.format(
+            str(prod['niIdPhotoEnLigne'] - 1))
+        prodIm = requests.get(prodImUrl, stream=True).content
+        with open('dataFolder/imagesProds/' + str(prodID) + '.jpg', 'wb') as handler:
             handler.write(prodIm)
 
         prodImPath = prodID + '.jpg'
