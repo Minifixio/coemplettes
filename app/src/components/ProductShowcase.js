@@ -57,9 +57,11 @@ const ProductShowcase = ({navigation, id, productData}) => {
 
   return (
     <LinearGradient colors={['#ffffff', '#e6e6e6']} style={styles.container}>
-      <View style={styles.bioLabelContainer}>
-        <Image style={styles.bioIcon} source={bioIcon} />
-      </View>
+      {productData.is_bio && (
+        <View style={styles.bioLabelContainer}>
+          <Image style={styles.bioIcon} source={bioIcon} />
+        </View>
+      )}
       <View style={styles.productContainer}>
         <Pressable style={styles.pressableProduct} onPress={onClick}>
           <Image style={styles.image} source={{uri: product.icon_link}} />
