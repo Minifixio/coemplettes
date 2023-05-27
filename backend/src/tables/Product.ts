@@ -28,4 +28,10 @@ export class Product {
 
     @Column({ type: "float", nullable:false })
     average_price!: number
+
+    @Column({ type: "boolean", nullable:true })
+    is_bio!: boolean
+
+    @Column({ type: "varchar", nullable:true })
+    nutriscore!: string
 }
