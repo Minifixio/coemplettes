@@ -56,9 +56,12 @@ for fileName in fileNames:
     # On récupère les marques présentes
     for elem in jsonFiltres['lstValeursFiltres']:
         if elem['iIdBloc'] == 1:
-            if elem['iIdValeur'] not in marques.keys():
+            if str(elem['iIdValeur']) not in marques.keys():
                 # On ajoute la marque
-                marques[elem['iIdValeur']] = elem['sLibelle']
+                marques[str(elem['iIdValeur'])] = elem['sLibelle']
+
+    for marque in marques.keys():
+        print(marque, marques[marque])
 
     # On récupère les produits
     jsonProds = json.loads(html.unescape(dicSplit['ctl05_pnlElementProduit']))
@@ -67,7 +70,7 @@ for fileName in fileNames:
     assoProdFiltres = jsonProds['lstAssocFiltreProduit']
     for objProd in lstProds:
         prod = objProd['objElement']
-        prodID = prod['iIdProduit']
+        prodID = str(prod['iIdProduit'])
 
         try:
             prodNameWl = re.split('\s+|-', prod['sLibelleLigne1']) + re.split('\s+|-', prod['sLibelleLigne2'])
@@ -81,7 +84,7 @@ for fileName in fileNames:
         prodQtt = re.findall('([0-9]*[xX]*[0-9]+\s*[a-zA-Z]+$)|([xX][0-9]+$)', prodName)
         if prodQtt != []:
             prodQtt = prodQtt[0][0] if prodQtt[0][0] != '' else prodQtt[0][1]
-            prodName = prodName.replace(prodQtt, '')
+            prodName = prodName.replace(' ' + prodQtt, '')
             prodQtt = prodQtt.replace(' ', '')
         else:
             prodQtt = '1p'
@@ -89,32 +92,54 @@ for fileName in fileNames:
         prodCatID = prod['niIdSousFamille']
 
         # Telechargement de l'image
-        # prodImUrl = 'https://fd7-photos.leclercdrive.fr/image.ashx?id={}&use=l&cat=p&typeid=i'.format(str(prod['niIdPhotoEnLigne']-1))
-        # prodIm = requests.get(prodImUrl,stream=True).content
-        # with open('dataFolder/imagesProds/'+str(prodID)+'.jpg','wb') as handler:
-        #     handler.write(prodIm)
+        prodImUrl = 'https://fd7-photos.leclercdrive.fr/image.ashx?id={}&use=l&cat=p&typeid=i'.format(str(prod['niIdPhotoEnLigne']-1))
+        prodIm = requests.get(prodImUrl,stream=True).content
+        with open('dataFolder/imagesProds/'+str(prodID)+'.jpg','wb') as handler:
+            handler.write(prodIm)
 
-        prodImPath = str(prodID) + '.jpg'
+        prodImPath = prodID + '.jpg'
         prodPrix = prod['nrPVBRIIDeduit']
-
-        produits[prodID] = [prodID, prodName, prodCatID, prodQtt, prodImPath, prodPrix]
+        prodDisp = 1 if prod['iQteDisponible'] > 0 else 0
+        # On ajoute le produit dans le dictionnaire produits
+        # le '' correspond à la marque
+        # le 0 correspond au BIO (0 = non, 1 = oui)
+        # le '' correspond au nutriscore
+        produits[prodID] = [prodName, prodCatID, prodQtt, prodImPath, '#', 0, '#']
+        prodSM[prodID] = [prodPrix, 1, prodDisp]
 
     for asso in assoProdFiltres:
         if asso['iIdBloc'] == 1:
             # On récupère la marque grâce à l'id contenu dans asso
-            prodMarque = marques[asso['iIdValeur']]
-            print(prodMarque)
+            prodMarque = marques[str(asso['iIdValeur'])]
+            produits[str(asso["iIdProduit"])][4] = prodMarque
+        if asso['iIdBloc'] == 3:
+            # On récupère si l'élément est BIO
+            if asso['iIdValeur'] == 1:
+                produits[str(asso["iIdProduit"])][5] = 1
+        if asso['iIdBloc'] == 12:
+            # On récupère le nutriscore
+            produits[str(asso["iIdProduit"])][6] = ['A', 'B', 'C', 'D', 'E'][asso['iIdValeur'] - 1]
 
-    # # sauvegarde des categories
-    # catFile = open('dataFolder/categories.csv', 'w')
-    # for cat in categories:
-    #     if cat != ['']:
-    #         catFile.write(cat[0] + ';' + cat[1] + '\n')
-    # catFile.close()
-    #
-    # # sauvegarde des marques
-    # marquesFile = open('dataFolder/marques.csv', 'w')
-    # for marque in marques:
-    #     if marque != ['']:
-    #         marquesFile.write(marque[0] + ';' + marque[1] + '\n')
-    # marquesFile.close()
+    # On sauvegarde les données des produits
+prodFile = open('dataFolder/produits.csv', 'w')
+for prodKey in produits.keys():
+    prodFile.write(prodKey + ';' + ';'.join([str(elem) for elem in produits[prodKey]]) + '\n')
+prodFile.close()
+
+# On sauvegarde les données des produits pour le supermarché
+supProdFile = open('dataFolder/supermarket_products.csv', 'w')
+for prodSMKey in prodSM.keys():
+    supProdFile.write(prodSMKey + ';' + ';'.join([str(elem) for elem in prodSM[prodSMKey]]) + '\n')
+supProdFile.close()
+
+# sauvegarde des categories
+catFile = open('dataFolder/categories.csv', 'w')
+for catKey in categories.keys():
+    catFile.write(catKey + ';' + categories[catKey] + '\n')
+catFile.close()
+
+# sauvegarde des marques
+marquesFile = open('dataFolder/marques.csv', 'w')
+for marqueKey in marques.keys():
+    marquesFile.write(marqueKey + ';' + marques[marqueKey] + '\n')
+marquesFile.close()
