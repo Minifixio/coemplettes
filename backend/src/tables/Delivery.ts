@@ -25,6 +25,9 @@ export class Delivery {
     @Column({ type: "int", nullable:true })
     status!: number
 
+    @Column({ type: "int", nullable:true })
+    suggested_supermarket_id!: number
+
     @ManyToOne(type => Shipper, shipper => shipper)
     @JoinColumn(
         { name: 'shipper_id', referencedColumnName: 'user_id'}

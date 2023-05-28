@@ -1,9 +1,13 @@
 
+import { DB } from './DBManager'
+
 // Le temps (en sec) durant lequel le locker reste dans l'état "true" suite à une ouverture
 const OPEN_TIME = 10;
 
 export class Locker {
-    static lockerStates = [false, false, false]
+
+    // Deux lockers pour l'instant
+    static lockerStates = [false, false]
 
     private static changeState(lockerID: number, state: boolean) {
         console.log(`[RPIManager] Changement d'état du locker n°${lockerID} à ${state}`);
@@ -30,9 +34,18 @@ export class Locker {
         return this.lockerStates
     }
 
-    // Censé donner le numéro d'un locker disponible
-    // Pour des raisons de tests, pour l'instant la fonction renvoi constamment 0
-    static getAvailableLocker() {
-        return 0;
+    // Donne le numéro d'un locker disponible
+    static async getAvailableLocker() {
+
+        let i = 0;
+        while (i < this.lockerStates.length) {
+            const numberOfCartsInLocker = await DB.getAmountOfCartsInLocker(i)
+            if (numberOfCartsInLocker > 3) {
+                i++;
+            } else {
+                return i;
+            }
+        }
+        return this.lockerStates.length - 1;
     }
 }

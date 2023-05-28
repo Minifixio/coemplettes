@@ -357,12 +357,28 @@ export class DB {
 
     public static async getProducts(category_id: number): Promise<Product[] | null> {
         console.log("[DBManager] Récupération des produits pour la catégorie n°" + category_id + " dans la BDD")
-        const res = await this.AppDataSource
-        .getRepository(Product)
-        .createQueryBuilder("product")
-        .where("product.category_id = :category_id", {category_id: category_id})
-        .getMany()
-        return res
+
+        const category = await this.AppDataSource
+        .getRepository(Category)
+        .createQueryBuilder("category")
+        .where("category.id = :id", {id: category_id})
+        .getOne()
+
+        if (category?.name === "Bio") {
+            const res = await this.AppDataSource
+            .getRepository(Product)
+            .createQueryBuilder("product")
+            .where("product.is_bio = :is_bio", {is_bio: true})
+            .getMany()
+            return res
+        } else {
+            const res = await this.AppDataSource
+            .getRepository(Product)
+            .createQueryBuilder("product")
+            .where("product.category_id = :category_id", {category_id: category_id})
+            .getMany()
+            return res
+        }
     }
 
     public static async getFeaturedProducts(): Promise<FeaturedProduct[] | null> {
@@ -585,6 +601,7 @@ export class DB {
         delivery.shipper_id = deliveryProposal.shipper_id
         delivery.deadline = deliveryProposal.carts.map(cart => cart.deadline).reduce((a, b) => a < b ? a : b)
         delivery.status = 0
+        delivery.suggested_supermarket_id = deliveryProposal.suggested_supermarket_id;
         await this.AppDataSource.getRepository(Delivery).save(delivery)
     }
 
@@ -664,7 +681,7 @@ export class DB {
     }
 
     static async depositDelivery(deliveryId: number) {
-        const availableLockerId = Locker.getAvailableLocker()
+        const availableLockerId = await Locker.getAvailableLocker()
         console.log("[DBManager] Dépôt de la commande " + deliveryId + " au locker n°" + availableLockerId)
         await this.AppDataSource
         .createQueryBuilder()
@@ -754,6 +771,16 @@ export class DB {
             console.log("[DBManager] Problème lors de la récupération de la commande " + deliveryId)
             await this.updateDeliveryStatus(deliveryId, 5)
         }
+    }
+
+    static async getAmountOfCartsInLocker(locker_id: number) {
+        const res = await this.AppDataSource
+        .getRepository(Cart)
+        .createQueryBuilder("cart")
+        .where("cart.locker_id = :locker_id", {locker_id: locker_id})
+        .getMany()
+
+        return res.length
     }
 
     // On lit un fichier JSON et on écrit ses données dans la BDD

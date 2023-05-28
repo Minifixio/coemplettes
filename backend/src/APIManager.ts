@@ -13,7 +13,8 @@ import { AuthError, AuthErrors } from './models/AuthErrors';
 import { CartItem } from './tables/CartItem';
 import { GroupedCommands } from './GroupedCommands';
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+const path = require('path')
 
 interface RequestParams {
     [key: string]: string;
@@ -157,6 +158,9 @@ export class API {
         this.app.listen(this.port, () => {
             console.log(`[API] Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
+
+        // On initialise les données statiques
+        this.app.use('/static', express.static(path.resolve(__dirname, '../static/')))
 
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
         this.app.get('/', (req: Request, res: Response) => {

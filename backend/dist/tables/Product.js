@@ -49,6 +49,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: "float", nullable: false }),
     __metadata("design:type", Number)
 ], Product.prototype, "average_price", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
+    __metadata("design:type", Boolean)
+], Product.prototype, "is_bio", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Product.prototype, "nutriscore", void 0);
 Product = __decorate([
     (0, typeorm_1.Entity)({ name: "products" })
 ], Product);

@@ -403,12 +403,27 @@ class DB {
     static getProducts(category_id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("[DBManager] Récupération des produits pour la catégorie n°" + category_id + " dans la BDD");
-            const res = yield this.AppDataSource
-                .getRepository(Product_1.Product)
-                .createQueryBuilder("product")
-                .where("product.category_id = :category_id", { category_id: category_id })
-                .getMany();
-            return res;
+            const category = yield this.AppDataSource
+                .getRepository(Category_1.Category)
+                .createQueryBuilder("category")
+                .where("category.id = :id", { id: category_id })
+                .getOne();
+            if ((category === null || category === void 0 ? void 0 : category.name) === "Bio") {
+                const res = yield this.AppDataSource
+                    .getRepository(Product_1.Product)
+                    .createQueryBuilder("product")
+                    .where("product.is_bio = :is_bio", { is_bio: true })
+                    .getMany();
+                return res;
+            }
+            else {
+                const res = yield this.AppDataSource
+                    .getRepository(Product_1.Product)
+                    .createQueryBuilder("product")
+                    .where("product.category_id = :category_id", { category_id: category_id })
+                    .getMany();
+                return res;
+            }
         });
     }
     static getFeaturedProducts() {
@@ -624,6 +639,7 @@ class DB {
             delivery.shipper_id = deliveryProposal.shipper_id;
             delivery.deadline = deliveryProposal.carts.map(cart => cart.deadline).reduce((a, b) => a < b ? a : b);
             delivery.status = 0;
+            delivery.suggested_supermarket_id = deliveryProposal.suggested_supermarket_id;
             yield this.AppDataSource.getRepository(Delivery_1.Delivery).save(delivery);
         });
     }

@@ -18,7 +18,8 @@ const DBManager_1 = require("./DBManager");
 const AuthManager_1 = require("./AuthManager");
 const LockerManager_1 = require("./LockerManager");
 const GroupedCommands_1 = require("./GroupedCommands");
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const path = require('path');
 class API {
     // On passe en param le port et le tag qui sera dans l'URL d'appel de l'API
     // le tag? signifie que ce dernier n'est pas indispensable à passer en paramètre
@@ -128,6 +129,8 @@ class API {
         this.app.listen(this.port, () => {
             console.log(`[API] Le serveur est live à l'adresse : https://localhost:${this.port}\n`);
         });
+        // On initialise les données statiques
+        this.app.use('/static', express_1.default.static(path.resolve(__dirname, '../static/')));
         // On dit que l'entrée '/' (par défaut) ous donne un message esxpliquant que l'application fonctionne
         this.app.get('/', (req, res) => {
             res.send('Backend CoEmplettes !');

@@ -157,6 +157,10 @@ export class GroupedCommands {
                 if (deliveryProposal.carts.length > 0) {
                     deliveryProposals.push(deliveryProposal);
                 }
+
+                // TODO
+                // Calculer le prix optimal pour chaque supermarché et attribuer le supermarché en conséquence
+                deliveryProposal.suggested_supermarket_id = 1;
             }
         }
         console.log("deliveryProposals", deliveryProposals)

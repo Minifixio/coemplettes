@@ -48,6 +48,10 @@ __decorate([
     __metadata("design:type", Number)
 ], DeliveryProposal.prototype, "current_price", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "int", nullable: true }),
+    __metadata("design:type", Number)
+], DeliveryProposal.prototype, "suggested_supermarket_id", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(type => Shipper_1.Shipper, shipper => shipper),
     (0, typeorm_1.JoinColumn)({ name: 'shipper_id', referencedColumnName: 'user_id' }),
     __metadata("design:type", Shipper_1.Shipper)
