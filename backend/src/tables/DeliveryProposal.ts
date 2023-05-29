@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from "typeorm"
 import { Cart } from "./Cart"
 import { Shipper } from "./Shipper"
+import { Supermarket } from "./Supermarket"
 
 @Entity({name: "delivery_proposals"})
 export class DeliveryProposal {
@@ -44,4 +45,13 @@ export class DeliveryProposal {
     @OneToMany(() => Cart, (cart) => cart.delivery_proposal)
     carts!: Cart[] 
 
+    @ManyToOne(type => Supermarket, suggested_supermarket => suggested_supermarket)
+    @JoinColumn(
+        { name: 'suggested_supermarket_id', referencedColumnName: 'id'}
+    )
+    suggested_supermarket!: Supermarket
+}
+
+function OneToOne(arg0: (type: any) => any, arg1: (supermarket: any) => any): (target: DeliveryProposal, propertyKey: "SuggestedSupermarket") => void {
+    throw new Error("Function not implemented.")
 }

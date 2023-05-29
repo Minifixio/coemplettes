@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm"
 import { Cart } from "./Cart"
 import { Shipper } from "./Shipper"
+import { Supermarket } from "./Supermarket"
 
 @Entity({name: "deliveries"})
 export class Delivery {
@@ -36,4 +37,10 @@ export class Delivery {
 
     @OneToMany(() => Cart, (cart) => cart.delivery)
     carts!: Cart[]
+
+    @ManyToOne(type => Supermarket, suggested_supermarket => suggested_supermarket)
+    @JoinColumn(
+        { name: 'suggested_supermarket_id', referencedColumnName: 'id'}
+    )
+    suggested_supermarket!: Supermarket
 }

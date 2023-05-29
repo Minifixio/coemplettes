@@ -285,6 +285,7 @@ export class DB {
         .getRepository(Delivery)
         .createQueryBuilder("delivery")
         .leftJoinAndSelect("delivery.shipper", "shipper")
+        .leftJoinAndSelect("delivery.suggested_supermarket", "suggested_supermarket")
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .getOne()
         return res
@@ -298,6 +299,7 @@ export class DB {
         .where("delivery.shipper_id = :shipper_id", {shipper_id: shipper_id})
         .where("delivery.status != :status", {status: 4})
         .leftJoinAndSelect("delivery.shipper", "shipper")
+        .leftJoinAndSelect("delivery.suggested_supermarket", "suggested_supermarket")
         .leftJoinAndSelect("delivery.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
@@ -315,6 +317,7 @@ export class DB {
         .createQueryBuilder("delivery_proposal")
         .where("delivery_proposal.id = :id", {id: deliveryProposalId})
         .leftJoinAndSelect("delivery_proposal.shipper", "shipper")
+        .leftJoinAndSelect("delivery_proposal.suggested_supermarket", "suggested_supermarket")
         .leftJoinAndSelect("delivery_proposal.carts", "cart")
         .leftJoinAndSelect("cart.items", "item")
         .leftJoinAndSelect("item.product", "product")
