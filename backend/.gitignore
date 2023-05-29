@@ -7,3 +7,4 @@ db_init.sqlite
 .env
 /RecupData/Leclerc/V2/dataFolder/imagesProds/
 /static/*
+/RecupData/Leclerc/V2/dataFolder/imagesCats/
