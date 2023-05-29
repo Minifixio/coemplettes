@@ -27,14 +27,24 @@ function AccountInformationsPage() {
           text1: 'Confirmez correctement le mot de passe',
         });
       } else {
-        await UserService.updateUserProfile({
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          school,
-          phone,
-          password,
-        });
+        if (password.length === 0) {
+          await UserService.updateUserProfile({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            school,
+            phone,
+          });
+        } else {
+          await UserService.updateUserProfile({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            school,
+            phone,
+            password,
+          });
+        }
         setTimeout(() => {
           Toast.show({
             type: 'success',

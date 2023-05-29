@@ -1,5 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ImageBackground,
+  Button,
+} from 'react-native';
 import BackgroundImage from '../../assets/images/StudentShopping3.jpeg';
 import BasicButton from '../../components/BasicButton';
 import Toast from 'react-native-toast-message';
@@ -30,8 +37,21 @@ function LoginPage({navigation, setIsConnected}) {
     }
   };
 
+  const fillLogin = () => {
+    setEmail('user0@telecom-paris.fr');
+    setPassword('password');
+  };
+
   return (
     <View style={styles.container}>
+      <View style={styles.demoButtonContainer}>
+        <Button
+          title="démo"
+          style={styles.demoButton}
+          color="lightgrey"
+          onPress={() => fillLogin()}
+        />
+      </View>
       <ImageBackground
         source={BackgroundImage}
         resizeMode="cover"
@@ -125,6 +145,15 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  demoButtonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 10,
   },
 });
 

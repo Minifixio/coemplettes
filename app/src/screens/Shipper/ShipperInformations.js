@@ -112,7 +112,7 @@ function ShipperInformationPage({navigation}) {
           colorLeft="#539903"
           colorRight="#539903"
           height={40}
-          max={100}
+          max={1000}
           min={0}
           step={1}
           colorMax={'#f04048'}

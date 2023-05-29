@@ -95,7 +95,7 @@ function CartPage({navigation}) {
       await CartService.addCart(date.toJSON(), items);
       Toast.show({
         type: 'success',
-        text1: 'Carte validée !',
+        text1: 'Commande envoyée !',
       });
       setTimeout(() => {
         eraseCart();

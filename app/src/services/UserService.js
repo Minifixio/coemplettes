@@ -74,7 +74,7 @@ export class UserService {
         const userId = await AuthService.getUserId();
         user.id = userId;
         console.log(user);
-        await APIService.post('user_update', user);
+        await APIService.post('update_user', user);
         resolve();
       } catch (e) {
         console.log('[UserService] Impossible de mettre à jour le user');

@@ -89,6 +89,12 @@ const StatusItem = ({deliveryProposal, navigation}) => {
             </LinearGradient>
           </Pressable>
         )}
+        <View style={styles.suggestedSupermarketView}>
+          <Text style={styles.suggestedSupermarketText}>
+            Supermarché suggéré :{' '}
+            <Text style={styles.suggestedSupermarketTextBold}>Auchan</Text>
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -281,6 +287,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
+  },
+  suggestedSupermarketView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'grey',
+    padding: 5,
+    marginTop: 10,
+    borderRadius: 10,
+  },
+  suggestedSupermarketText: {
+    color: 'black',
+    fontSize: 15,
+  },
+  suggestedSupermarketTextBold: {
+    fontWeight: 'bold',
   },
 });
 

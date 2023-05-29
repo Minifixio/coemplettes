@@ -113,12 +113,14 @@ function DeliveryHistoryPage({navigation}) {
         </View>
       )}
 
-      {deliveries.length === 0 && !loading && (
-        <View style={styles.emptyTextView}>
-          <Text style={styles.emptyText}>Historique de commandes vide</Text>
-          <Ionicons name="sad" size={40} color="black" />
-        </View>
-      )}
+      {(deliveries.length === 0 ||
+        deliveries.filter(d => d.status > 3).length === 0) &&
+        !loading && (
+          <View style={styles.emptyTextView}>
+            <Text style={styles.emptyText}>Historique de commandes vide</Text>
+            <Ionicons name="sad" size={40} color="black" />
+          </View>
+        )}
 
       {deliveries.length > 0 && !loading && (
         <SafeAreaView style={styles.container}>
