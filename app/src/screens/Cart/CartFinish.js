@@ -165,7 +165,7 @@ function CartFinishPage({navigation, route}) {
                 color={'grey'}
               />
               <Text style={styles.copyClipboardNumberText}>
-                {cart.delivery.shipper.user.phone}
+                {cartData.delivery.shipper.user.phone}
               </Text>
             </TouchableOpacity>
           </View>

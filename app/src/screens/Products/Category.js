@@ -31,6 +31,11 @@ function CategoryPage({navigation, route}) {
       setNutriscores(newNutriscores);
     }
 
+    if (newNutriscores.length === 5) {
+      setShownProducts(products);
+      return;
+    }
+
     const productWithNutriscore = products.filter(p =>
       newNutriscores.includes(p.nutriscore),
     );
