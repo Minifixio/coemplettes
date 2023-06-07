@@ -1,0 +1,20 @@
+{
+    "delivery_proposals": [
+        {
+            "id": 0,
+            "shipper_id": 1,
+            "size": 3,
+            "status": 0,
+            "creation_date": "2023-16-03T22:00:00.000Z",
+            "deadline": "2023-19-02T22:00:00.000Z"
+        },
+        {
+            "id": 1,
+            "shipper_id": 1,
+            "size": 4,
+            "status": 1,
+            "creation_date": "2023-16-03T22:00:00.000Z",
+            "deadline": "2023-19-02T22:00:00.000Z"
+        }
+    ]
+}

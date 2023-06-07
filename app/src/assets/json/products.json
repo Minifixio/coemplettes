@@ -1,0 +1,140 @@
+{
+    "products": [
+        {
+            "id":0,
+            "name": "Citron",
+            "category_id":0,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0219901211000040878PRIMARY_512x512/B2CD/",
+            "average_price":1.20
+        },
+        {
+            "id":1,
+            "name": "Poivron",
+            "category_id":1,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0220100225000648660PRIMARY_512x512/B2CD/",
+            "average_price":0.50
+        },
+        {
+            "id":2,
+            "name": "Granola",
+            "category_id":2,
+            "quantity_type": "paquet de 12",
+            "icon_link": "https://media.auchan.fr/A0220160317000591469PRIMARY_512x512/B2CD/",
+            "average_price":3.76
+        },
+        {
+            "id":3,
+            "name": "Le Marseillais Vanille",
+            "category_id":3,
+            "quantity_type": "flacon 300ml",
+            "icon_link": "https://media.auchan.fr/P02000000000TW9PRIMARY_512x512/B2CD/",
+            "average_price":4.56
+        },
+        {
+            "id":4,
+            "name": "Coca-Cola",
+            "category_id":4,
+            "quantity_type": "1L",
+            "icon_link": "https://media.auchan.fr/A0220131018000141418PRIMARY_512x512/B2CD/",
+            "average_price":2.30
+        },
+        {
+            "id":5,
+            "name": "Riz",
+            "category_id":5,
+            "quantity_type": "500g",
+            "icon_link": "https://media.auchan.fr/P020000000016C7PRIMARY_512x512/B2CD/",
+            "average_price":2.13
+        },
+        {
+            "id":6,
+            "name": "PANZANI Fusilli",
+            "category_id":5,
+            "quantity_type": "500g",
+            "icon_link": "https://media.auchan.fr/A0220041022000537637PRIMARY_512x512/B2CD/",
+            "average_price":1.87
+        },
+        {
+            "id":7,
+            "name": "Poireau",
+            "category_id":1,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0220211014000347726PRIMARY_512x512/B2CD/",
+            "average_price":0.76
+        },
+        {
+            "id":8,
+            "name": "Pomme Golden bio",
+            "category_id":0,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/MEDIASTEP114480849_512x512/B2CD/",
+            "average_price":0.23
+        },
+        {
+            "id":9,
+            "name": "Kiwi",
+            "category_id":0,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0219901211000040913PRIMARY_512x512/B2CD/",
+            "average_price":0.34
+        },
+        {
+            "id":10,
+            "name": "Courgettes 1er prix",
+            "category_id":1,
+            "quantity_type": "kg",
+            "icon_link": "https://media.auchan.fr/A0219870327000035321PRIMARY_512x512/B2CD/",
+            "average_price":2.10
+        },
+        {
+            "id":11,
+            "name": "MILKA lait et Daim",
+            "category_id":2,
+            "quantity_type": "2x100g",
+            "icon_link": "https://media.auchan.fr/A0220080212000532186PRIMARY_512x512/B2CD/",
+            "average_price":3.12
+        },
+        {
+            "id":12,
+            "name": "GERBLE Biscuits cookies pépites de chocolat sans gluten",
+            "category_id":2,
+            "quantity_type": "6 pièces",
+            "icon_link": "https://media.auchan.fr/A0220060925000766163PRIMARY_512x512/B2CD/",
+            "average_price":4.51
+        },
+        {
+            "id":13,
+            "name": "SIGNAL White Now",
+            "category_id":3,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/P02000000000BWNPRIMARY_512x512/B2CD/",
+            "average_price":1.45
+        },
+        {
+            "id":14,
+            "name": "ELMEX Dentifrice anti-caries",
+            "category_id":3,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0220150618000070530PRIMARY_512x512/B2CD/",
+            "average_price":1.89
+        },
+        {
+            "id":15,
+            "name": "FANTA citron",
+            "category_id":4,
+            "quantity_type": "1.25L",
+            "icon_link": "https://media.auchan.fr/P02000000001D3CPRIMARY_512x512/B2CD/",
+            "average_price":2.02
+        },
+        {
+            "id":16,
+            "name": "Quinoa Tipiak",
+            "category_id":5,
+            "quantity_type": "200g",
+            "icon_link": "https://media.auchan.fr/P02000000000HB8PRIMARY_512x512/B2CD/",
+            "average_price":4.12
+        }
+    ]
+}

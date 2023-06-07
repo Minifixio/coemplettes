@@ -1,0 +1,22 @@
+{
+	"deliveries": [
+		{
+			"id": 0,
+			"shipper_id": 2,
+			"deadline": "2023-06-02T22:00:00.000Z",
+			"status": 1
+		},
+		{
+			"id": 1,
+			"shipper_id": 3,
+			"deadline": "2023-06-02T22:00:00.000Z",
+			"status": 1
+		},
+		{
+			"id": 2,
+			"shipper_id": 4,
+			"deadline": "2023-06-02T22:00:00.000Z",
+			"status": 1
+		}
+	]
+}

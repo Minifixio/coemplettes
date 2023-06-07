@@ -1,0 +1,40 @@
+{
+    "categories": [
+        {
+          "id": 0,
+          "name": "Fruits",
+          "icon": "fruit.png",
+          "color": "#FF7D5A"
+        },
+        {
+          "id": 1,
+          "name": "Legumes",
+          "icon": "vegetable.png",
+          "color": "#0AD300"
+        },
+        {
+          "id": 2,
+          "name": "Epicerie",
+          "icon": "grocery.png",
+          "color": "#FFFF5A"
+        },
+        {
+          "id": 3,
+          "name": "Soins",
+          "icon": "care-products.png",
+          "color": "#FF80F7"
+        },
+        {
+          "id": 4,
+          "name": "Boisons",
+          "icon": "drink.png",
+          "color": "#2EE5FE"
+        },
+        {
+          "id": 5,
+          "name": "Céréales",
+          "icon": "cereal.png",
+          "color": "#F1B600"
+        }
+      ]
+}
