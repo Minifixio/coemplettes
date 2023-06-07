@@ -1,0 +1,529 @@
+{
+                    "lstBlocsFiltres": [{
+                        "iIdBloc": 2,
+                        "neTypeBloc": 2,
+                        "sLibelle": "En ce moment",
+                        "fMultiSelection": true,
+                        "niNbAffichage": 6,
+                        "iNbValeursMinimum": 1
+                    }, {
+                        "iIdBloc": 1,
+                        "neTypeBloc": 3,
+                        "sLibelle": "Marques",
+                        "fMultiSelection": true,
+                        "niNbAffichage": 6,
+                        "iNbValeursMinimum": 2
+                    }, {
+                        "iIdBloc": 3,
+                        "sLibelle": "Labels qualité",
+                        "fMultiSelection": true,
+                        "niNbAffichage": 6,
+                        "iNbValeursMinimum": 1
+                    }, {
+                        "iIdBloc": 12,
+                        "sLibelle": "Nutri-score",
+                        "fMultiSelection": true,
+                        "niNbAffichage": 6,
+                        "iNbValeursMinimum": 1,
+                        "objPictoFiltreBloc": {
+                            "sNom": "WCTD_pictoAide",
+                            "sUrl": "https://mgt.leclercdrive.fr/drive/legal/magasin-079111-Massy-Palaiseau/aide-en-ligne.aspx?sSelfService=29",
+                            "fEstCliquable": true
+                        }
+                    }, {
+                        "iIdBloc": 14,
+                        "sLibelle": "Notes des clients",
+                        "fMultiSelection": true,
+                        "niNbAffichage": 6,
+                        "iNbValeursMinimum": 1
+                    }],
+                    "lstValeursFiltres": [{
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 5992,
+                        "sIdValeurUrl": "1-5992",
+                        "sLibelle": "Marque Repère",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 2,
+                            "neTypeBloc": 2,
+                            "sLibelle": "En ce moment",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 2,
+                        "iIdValeur": 2,
+                        "niTypeValeur": 1,
+                        "sIdValeurUrl": "2-2",
+                        "sLibelle": "Les promotions",
+                        "fEstEnPromotion": true
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 3,
+                            "sLibelle": "Labels qualité",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 3,
+                        "iIdValeur": 1,
+                        "sIdValeurUrl": "3-1",
+                        "sLibelle": "Bio",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 14,
+                            "sLibelle": "Notes des clients",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 14,
+                        "iIdValeur": 1,
+                        "sIdValeurUrl": "14-1",
+                        "sLibelle": "5",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 2,
+                            "neTypeBloc": 2,
+                            "sLibelle": "En ce moment",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 2,
+                        "iIdValeur": 3,
+                        "niTypeValeur": 2,
+                        "sIdValeurUrl": "2-3",
+                        "sLibelle": "Les nouveautés",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 12,
+                            "sLibelle": "Nutri-score",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1,
+                            "objPictoFiltreBloc": {
+                                "sNom": "WCTD_pictoAide",
+                                "sUrl": "https://mgt.leclercdrive.fr/drive/legal/magasin-079111-Massy-Palaiseau/aide-en-ligne.aspx?sSelfService=29",
+                                "fEstCliquable": true
+                            }
+                        },
+                        "iIdBloc": 12,
+                        "iIdValeur": 2,
+                        "sIdValeurUrl": "12-2",
+                        "sLibelle": "B",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 14,
+                            "sLibelle": "Notes des clients",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 14,
+                        "iIdValeur": 2,
+                        "sIdValeurUrl": "14-2",
+                        "sLibelle": "4",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 12,
+                            "sLibelle": "Nutri-score",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1,
+                            "objPictoFiltreBloc": {
+                                "sNom": "WCTD_pictoAide",
+                                "sUrl": "https://mgt.leclercdrive.fr/drive/legal/magasin-079111-Massy-Palaiseau/aide-en-ligne.aspx?sSelfService=29",
+                                "fEstCliquable": true
+                            }
+                        },
+                        "iIdBloc": 12,
+                        "iIdValeur": 3,
+                        "sIdValeurUrl": "12-3",
+                        "sLibelle": "C",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 14,
+                            "sLibelle": "Notes des clients",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 14,
+                        "iIdValeur": 3,
+                        "sIdValeurUrl": "14-3",
+                        "sLibelle": "3",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 12,
+                            "sLibelle": "Nutri-score",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1,
+                            "objPictoFiltreBloc": {
+                                "sNom": "WCTD_pictoAide",
+                                "sUrl": "https://mgt.leclercdrive.fr/drive/legal/magasin-079111-Massy-Palaiseau/aide-en-ligne.aspx?sSelfService=29",
+                                "fEstCliquable": true
+                            }
+                        },
+                        "iIdBloc": 12,
+                        "iIdValeur": 4,
+                        "sIdValeurUrl": "12-4",
+                        "sLibelle": "D",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 14,
+                            "sLibelle": "Notes des clients",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 14,
+                        "iIdValeur": 4,
+                        "sIdValeurUrl": "14-4",
+                        "sLibelle": "2",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 12,
+                            "sLibelle": "Nutri-score",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1,
+                            "objPictoFiltreBloc": {
+                                "sNom": "WCTD_pictoAide",
+                                "sUrl": "https://mgt.leclercdrive.fr/drive/legal/magasin-079111-Massy-Palaiseau/aide-en-ligne.aspx?sSelfService=29",
+                                "fEstCliquable": true
+                            }
+                        },
+                        "iIdBloc": 12,
+                        "iIdValeur": 5,
+                        "sIdValeurUrl": "12-5",
+                        "sLibelle": "E",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 14,
+                            "sLibelle": "Notes des clients",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 1
+                        },
+                        "iIdBloc": 14,
+                        "iIdValeur": 5,
+                        "sIdValeurUrl": "14-5",
+                        "sLibelle": "1",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 37735,
+                        "sIdValeurUrl": "1-37735",
+                        "sLibelle": "Bio Village",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 615782,
+                        "sIdValeurUrl": "1-615782",
+                        "sLibelle": "Bjorg",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 500326,
+                        "sIdValeurUrl": "1-500326",
+                        "sLibelle": "Bonne maman",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 435302,
+                        "sIdValeurUrl": "1-435302",
+                        "sLibelle": "Brossard",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 45927,
+                        "sIdValeurUrl": "1-45927",
+                        "sLibelle": "Chaque jour sans Gluten",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 32324198,
+                        "sIdValeurUrl": "1-32324198",
+                        "sLibelle": "Doowap",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 2407,
+                        "sIdValeurUrl": "1-2407",
+                        "sLibelle": "Eco +",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 12903,
+                        "sIdValeurUrl": "1-12903",
+                        "sLibelle": "Epi d'Or",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 18536,
+                        "sIdValeurUrl": "1-18536",
+                        "sLibelle": "HARRYS",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 636262,
+                        "sIdValeurUrl": "1-636262",
+                        "sLibelle": "Ker Cadelac",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 663142,
+                        "sIdValeurUrl": "1-663142",
+                        "sLibelle": "La Boulangère",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 725350,
+                        "sIdValeurUrl": "1-725350",
+                        "sLibelle": "La fournée dorée",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 637542,
+                        "sIdValeurUrl": "1-637542",
+                        "sLibelle": "Le Ster",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 11899494,
+                        "sIdValeurUrl": "1-11899494",
+                        "sLibelle": "Les 3 Meuniers",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 1383,
+                        "sIdValeurUrl": "1-1383",
+                        "sLibelle": "Nos régions ont du talent",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 4711,
+                        "sIdValeurUrl": "1-4711",
+                        "sLibelle": "P'tit déli",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 16232,
+                        "sIdValeurUrl": "1-16232",
+                        "sLibelle": "Pasquier",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 633702,
+                        "sIdValeurUrl": "1-633702",
+                        "sLibelle": "Pitch",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 471654,
+                        "sIdValeurUrl": "1-471654",
+                        "sLibelle": "St Michel",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 51303,
+                        "sIdValeurUrl": "1-51303",
+                        "sLibelle": "Tradizioni d'Italia",
+                        "fEstEnPromotion": false
+                    }, {
+                        "objFiltreBloc": {
+                            "iIdBloc": 1,
+                            "neTypeBloc": 3,
+                            "sLibelle": "Marques",
+                            "fMultiSelection": true,
+                            "niNbAffichage": 6,
+                            "iNbValeursMinimum": 2
+                        },
+                        "iIdBloc": 1,
+                        "iIdValeur": 432486,
+                        "sIdValeurUrl": "1-432486",
+                        "sLibelle": "Whaou !",
+                        "fEstEnPromotion": false
+                    }]
+                }

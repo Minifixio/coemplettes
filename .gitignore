@@ -16,3 +16,11 @@ _book
 
 *.log
 .*.swp
+
+# Emile : local dev
+app/.git
+app/.gitignore
+backend/.env
+
+# Temp : android app
+# app
