@@ -1,0 +1,52 @@
+{
+    "featured_products": [
+        {
+            "id":0,
+            "name": "Citron",
+            "category_id":0,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0219901211000040878PRIMARY_512x512/B2CD/",
+            "average_price":1.20
+        },
+        {
+            "id":1,
+            "name": "Poivron",
+            "category_id":1,
+            "quantity_type": "pièce",
+            "icon_link": "https://media.auchan.fr/A0220100225000648660PRIMARY_512x512/B2CD/",
+            "average_price":0.50
+        },
+        {
+            "id":2,
+            "name": "Granola",
+            "category_id":2,
+            "quantity_type": "paquet de 12",
+            "icon_link": "https://media.auchan.fr/A0220160317000591469PRIMARY_512x512/B2CD/",
+            "average_price":3.76
+        },
+        {
+            "id":3,
+            "name": "Le Marseillais Vanille",
+            "category_id":3,
+            "quantity_type": "flacon 300ml",
+            "icon_link": "https://media.auchan.fr/P02000000000TW9PRIMARY_512x512/B2CD/",
+            "average_price":4.56
+        },
+        {
+            "id":4,
+            "name": "Coca-Cola",
+            "category_id":4,
+            "quantity_type": "1L",
+            "icon_link": "https://media.auchan.fr/A0220131018000141418PRIMARY_512x512/B2CD/",
+            "average_price":2.30
+        },
+        {
+            "id":5,
+            "name": "Riz",
+            "category_id":5,
+            "quantity_type": "500g",
+            "icon_link": "https://media.auchan.fr/P020000000016C7PRIMARY_512x512/B2CD/",
+            "average_price":2.13
+        }
+    ]
+}

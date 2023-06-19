@@ -1,0 +1,157 @@
+{
+	"users": [
+		{
+			"id": 0,
+			"first_name": "John",
+			"last_name": "McQueen",
+			"school": "Télécom Paris",
+			"email": "aaa@telecom-paris.fr",
+			"phone": "+33663018638",
+			"pwdhash": "aaa"
+		},
+		{
+			"id": 1,
+			"first_name": "Alex",
+			"last_name": "Hector",
+			"school": "Télécom Paris",
+			"email": "alllexxx@telecom-paris.fr",
+			"phone": "+33624711637",
+			"pwdhash": "mmd1DUeGDKgwXv1Dfs1LVOSIMQVgS1mUZtbrwwYJ"
+		},
+		{
+			"id": 2,
+			"first_name": "Zander",
+			"last_name": "Washington",
+			"school": "Télécom Paris",
+			"email": "3BAhqUK5XX@telecom-paris.fr",
+			"phone": "+33616628250",
+			"pwdhash": "PcUPeo9vuA0aCNVDAvMu9Z9bNUFbFO4kzCxlxSWu"
+		},
+		{
+			"id": 3,
+			"first_name": "Tony",
+			"last_name": "Pena",
+			"school": "Télécom Paris",
+			"email": "4n0clusffG@telecom-paris.fr",
+			"phone": "+33661565268",
+			"pwdhash": "JKEpIuUtznFgFJ1u6Wmj43Z8iSPSvSF92WXDUBTX"
+		},
+		{
+			"id": 4,
+			"first_name": "Kasen",
+			"last_name": "Carlson",
+			"school": "Télécom Paris",
+			"email": "fTNFXFNuIq@telecom-paris.fr",
+			"phone": "+33635227882",
+			"pwdhash": "hcJhu0RwnY0urBaE8MRzNHdOAgwoo9bt0Wqki5n0"
+		},
+		{
+			"id": 5,
+			"first_name": "Elsa",
+			"last_name": "Bentley",
+			"school": "Télécom Paris",
+			"email": "3jwdw4T3y8@telecom-paris.fr",
+			"phone": "+33628026241",
+			"pwdhash": "IpZrGnfRlWA2ptgyjIbgMzGa5Wga5wr21me6aycd"
+		},
+		{
+			"id": 6,
+			"first_name": "Xander",
+			"last_name": "Velasquez",
+			"school": "Télécom Paris",
+			"email": "0GuiPawPnI@telecom-paris.fr",
+			"phone": "+33665836038",
+			"pwdhash": "oUe37uHbjJKhjqicYGvsMdaxyUwGQxB1TWCUBKUe"
+		},
+		{
+			"id": 7,
+			"first_name": "Mariam",
+			"last_name": "Palmer",
+			"school": "Télécom Paris",
+			"email": "d39thYSYCG@telecom-paris.fr",
+			"phone": "+33652633516",
+			"pwdhash": "utzjJyyjBUcGbfvopl7p3G3vfHfWWSySxtupxjEN"
+		},
+		{
+			"id": 8,
+			"first_name": "Asa",
+			"last_name": "Banks",
+			"school": "Télécom Paris",
+			"email": "3pLNcrWt5z@telecom-paris.fr",
+			"phone": "+33675755251",
+			"pwdhash": "va2kySwyZOP7eCam4LGTiaOnNeZauQbtdOSHXUB1"
+		},
+		{
+			"id": 9,
+			"first_name": "Addisyn",
+			"last_name": "Underwood",
+			"school": "Télécom Paris",
+			"email": "VhQgLiFKf7@telecom-paris.fr",
+			"phone": "+33645030452",
+			"pwdhash": "iFXNcX3s5QOFx3LC5c5kvuXzYRh4f3uTpRGnRqCa"
+		},
+		{
+			"id": 10,
+			"first_name": "German",
+			"last_name": "Newton",
+			"school": "Télécom Paris",
+			"email": "VBjZFW831T@telecom-paris.fr",
+			"phone": "+33651067382",
+			"pwdhash": "kANx3YmAvYinAT4BLeE8Eoz6ACFLEbZr8vtcXGY0"
+		},
+		{
+			"id": 11,
+			"first_name": "Dawson",
+			"last_name": "Watts",
+			"school": "Télécom Paris",
+			"email": "OFvmjFrVzK@telecom-paris.fr",
+			"phone": "+33652613836",
+			"pwdhash": "8vjERCt4xny7tjCzjHCkjHBjVt7j7jgk25jhPzGe"
+		},
+		{
+			"id": 12,
+			"first_name": "Landon",
+			"last_name": "Morton",
+			"school": "Télécom Paris",
+			"email": "g51MyvAHgO@telecom-paris.fr",
+			"phone": "+33675403858",
+			"pwdhash": "SY2SLpfZpx3XtYBNKv4xXru1fXn1SSVOrMLm9TCV"
+		},
+		{
+			"id": 13,
+			"first_name": "Lennon",
+			"last_name": "Zamora",
+			"school": "Télécom Paris",
+			"email": "oBjOf08IH4@telecom-paris.fr",
+			"phone": "+33665021227",
+			"pwdhash": "BSQtXwh3EiLvMPxtRO5Hc3p9Yk09gxoC7A0eIR6T"
+		},
+		{
+			"id": 14,
+			"first_name": "Samuel",
+			"last_name": "Crosby",
+			"school": "Télécom Paris",
+			"email": "OQSgQBgeeD@telecom-paris.fr",
+			"phone": "+33682646048",
+			"pwdhash": "CBrBbRiyyseUBzBjhofSMCTPi1QCvMAHWVWkvObq"
+		},
+		{
+			"id": 15,
+			"first_name": "Annabella",
+			"last_name": "Mcknight",
+			"school": "Télécom Paris",
+			"email": "ul3t65Kjos@telecom-paris.fr",
+			"phone": "+33605810403",
+			"pwdhash": "Wsfn9kzR959QsgyWxoGUv0XwphCByFjagKhQN46i"
+		},
+		{
+			"id": 16,
+			"first_name": "Kaley",
+			"last_name": "Leblanc",
+			"school": "Télécom Paris",
+			"email": "5uhHz5o4FW@telecom-paris.fr",
+			"phone": "+33625575075",
+			"pwdhash": "PJ8AKd1Xf0oJh5pkecVrYbUYf2jpXZ92QwgIiBEV"
+		}
+	]
+}

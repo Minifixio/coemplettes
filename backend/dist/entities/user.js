@@ -37,6 +37,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 100, nullable: false }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 200, nullable: false }),
+    __metadata("design:type", String)
+], User.prototype, "pwdhash", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)({ name: "users" })
 ], User);

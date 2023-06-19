@@ -22,24 +22,26 @@
 |===
 | Tâche | Description | Critères de réussite pour l'intégration au PAN3
 | T1 | Backend | Serveur fournissant les services nécessaire au fonctionnement de l'application
-| T1.1 | Modéliser la BDD | BDD fonctionnelle, données utilisateurs et produits
-| T1.2 | Mise en place de l'API | L'application communique avec le serveur
-| T1.3 | Implémentation de l'algorithme de choix du trajet optimal | Le trajet en voiture proposé au livreur est optimal
-| T1.4 | Remplissage de la base de donnée des produits | La BDD contient assez de données produits exploitables
-| T1.5 | Ajout de la méthode de paiement | Les utilisateurs peuvent régler leurs courses sur l'application 
+| T1.1 | Modéliser la BDD | BDD fonctionnelle, données utilisateurs et produits | Réalisée
+| T1.2 | Mise en place de l'API | L'application communique avec le serveur | Réalisée
+| T1.3 | Implémentation de l'algorithme de choix du trajet optimal | Le trajet en voiture proposé au livreur est optimal | Trajet proposé en fonction du meilleur supermarché
+| T1.4 | Remplissage de la base de donnée des produits | La BDD contient assez de données produits exploitables | Réalisée (5000 produits)
+| T1.5 | Ajout de la méthode de paiement | Les utilisateurs peuvent régler leurs courses sur l'application | Pas encore implémenté
 | T2 | SES | 
-| T2.1 | Etude de marché | Comparaison des offres disponibles
-| T2.2 | Business Model | Notre position par rapport au marché
+| T2.1 | Etude de marché | Comparaison des offres disponibles | Réalisée
+| T2.2 | Business Model | Notre position par rapport au marché | Réalisée
 | T3 | Conception de l'application | L'application est utilisable
-| T3.1 | Design de l'application (maquette) | 
-| T3.2 | Développement des fonctions de bases | Les fonctions de base sont intégré à l'application
-| T3.3 | Intégration du Backend | L'application communique avec le serveur (connexion, liste des produits...)
+| T3.1 | Design de l'application (maquette) | Réalisée
+| T3.2 | Développement des fonctions de bases | Les fonctions de base sont intégré à l'application | Réalisée
+| T3.3 | Intégration du Backend | L'application communique avec le serveur (connexion, liste des produits...) | Réalisée
 | T3.4 | Ajout fonctionnalité utilisateurs |
-| T4 | Création du locker | Le locker est fonctionnel et communique avec le serveur
-| T4.1 | Création du circuit éléctronique | Le système contient tous les éléments nécessaires (serrures, carte de contrôle...)
-| T4.2 | Connexion avec le Backend | Le système arrive à communiquer avec le serveur
-| T4.3 | Construction du locker | 
+| T4 | Création du locker | Le locker est fonctionnel et communique avec le serveur 
+| T4.1 | Création du circuit éléctronique | Le système contient tous les éléments nécessaires (serrures, carte de contrôle...) | Réalisée
+| T4.2 | Connexion avec le Backend | Le système arrive à communiquer avec le serveur | Réalisée
+| T4.3 | Construction du locker | Réalisée
 | T5 | Tests et intégrations |
-| T5.1 | Vérifier que tout les modules fonctionnent entre eux | Faire fonctionner l'application
-| T5.2 | Création de profils utilisateurs afin de générer des commandes | Mise en commun efficace des courses 
+| T5.1 | Vérifier que tout les modules fonctionnent entre eux | Faire fonctionner l'application | Réalisée
+| T5.2 | Création de profils utilisateurs afin de générer des commandes | Mise en commun efficace des courses | Réalisée
 |===
+
+Nous avons même ajouté certaines fonctionnalités et tâches qui ne sont pas dans le cahier des charges initial, comme le choix d'un modèle d'économie collaborative pour le fonctionnement de l'application, et un modèle associatif pour notre organisation interne (côté SES). Et au niveau de la BDD + application, nous avons ajouté certains filtres sur les produits (Nutriscore, catégories : bio, vegan, produits d'hygiène, etc.)

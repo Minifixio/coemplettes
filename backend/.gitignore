@@ -2,3 +2,9 @@ node_modules
 package-lock.json
 src/credentials.ts
 db_init.sqlite
+
+# Fichiers env
+.env
+/RecupData/Leclerc/V2/dataFolder/imagesProds/
+/static/*
+/RecupData/Leclerc/V2/dataFolder/imagesCats/

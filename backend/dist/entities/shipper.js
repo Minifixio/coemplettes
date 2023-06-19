@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Shipper = void 0;
 const typeorm_1 = require("typeorm");
-const user_1 = require("./user");
 let Shipper = class Shipper {
 };
 __decorate([
@@ -47,10 +46,17 @@ __decorate([
     __metadata("design:type", Number)
 ], Shipper.prototype, "loc_lat", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => user_1.User, user => user),
-    (0, typeorm_1.JoinColumn)({ name: 'user_id', referencedColumnName: 'id' }),
-    __metadata("design:type", user_1.User)
-], Shipper.prototype, "user", void 0);
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Shipper.prototype, "drive", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "boolean", nullable: true }),
+    __metadata("design:type", Boolean)
+], Shipper.prototype, "shop", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", nullable: true }),
+    __metadata("design:type", String)
+], Shipper.prototype, "availability", void 0);
 Shipper = __decorate([
     (0, typeorm_1.Entity)({ name: "shippers" })
 ], Shipper);
